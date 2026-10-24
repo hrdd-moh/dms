@@ -50,7 +50,7 @@
 <body class="bg-[#f4f7f6] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900 pb-16 lg:pb-0">
 
   <!-- ================= TOP HEADER BAR ================= -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
+  <header id="app-header" class="hidden bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
       
       <!-- Institutional Logo & Titles -->
@@ -121,7 +121,7 @@
   </header>
 
   <!-- ================= MAIN CONTAINER ================= -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
+  <main id="app-main" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
 
     <!-- HERO GREEN BANNER -->
     <div class="bg-gradient-to-r from-[#143e2e] via-[#1b503b] to-[#267355] rounded-3xl p-5 sm:p-7 text-white shadow-md relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-5 border border-emerald-600/30">
@@ -407,7 +407,7 @@
   </main>
 
   <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
-  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 z-40 flex items-center justify-around text-xs shadow-lg">
+  <nav id="app-mobile-nav" class="hidden lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 z-40 flex items-center justify-around text-xs shadow-lg">
     <button onclick="switchBureauTab('docs')" class="flex flex-col items-center gap-1 text-slate-600 hover:text-emerald-700">
       <span class="text-base">📚</span>
       <span class="text-[10px] font-semibold">បណ្ណាល័យ</span>
@@ -432,9 +432,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- LOGIN MODAL (កែសម្រួលឱ្យដើរ ១០០% + ប៊ូតុងសម្អាត Cache) -->
-  <!-- LOGIN MODAL (មានសុវត្ថិភាព គ្មាន Quick Login) -->
-  <!-- LOGIN MODAL (មានសុវត្ថិភាព គ្មាន Quick Login) -->
+  <!-- LOGIN MODAL (មានសុវត្ថិភាពខ្ពស់ គ្មាន Quick Login) -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-20 h-20 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
@@ -459,72 +457,6 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-    </div>
-  </div>
-      <div>
-        <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V2</h3>
-        <p class="text-xs text-emerald-800 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
-      </div>
-      <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label>
-          <input type="text" id="login-username" required autocomplete="username" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="បញ្ចូលឈ្មោះគណនី...">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
-          <div class="relative">
-            <input type="password" id="login-password" required autocomplete="current-password" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••">
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">👁️</button>
-          </div>
-        </div>
-        <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
-        <button type="submit" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ចូលប្រព័ន្ធ (Sign In)</button>
-      </form>
-    </div>
-  </div>
-      <div>
-        <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V2</h3>
-        <p class="text-xs text-emerald-800 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
-      </div>
-      <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label>
-          <input type="text" id="login-username" required autocomplete="username" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="ឧ. admin ឬ user1">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
-          <div class="relative">
-            <input type="password" id="login-password" required autocomplete="current-password" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••">
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">👁️</button>
-          </div>
-        </div>
-        <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
-        <button type="submit" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ចូលប្រព័ន្ធ (Sign In)</button>
-      </form>
-      
-      <!-- 1-CLICK QUICK LOGIN BUTTONS (ចុច Login ភ្លាមៗ ១០០%) -->
-      <div class="pt-3 border-t border-slate-100 text-xs space-y-1.5 text-left">
-        <div class="flex items-center justify-between mb-1">
-          <p class="text-[11px] font-bold text-slate-500">⚡ ចុចដើម្បី Login ភ្លាមៗ:</p>
-          <button type="button" onclick="resetAuthCache()" class="text-[10px] text-rose-600 hover:underline font-bold">🔄 សម្អាត Cache</button>
-        </div>
-        <button type="button" onclick="quickLogin('admin', 'admin123')" class="w-full text-left px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-semibold flex items-center justify-between transition cursor-pointer">
-          <span>👑 Admin: <strong>admin</strong> / <strong>admin123</strong></span>
-          <span class="text-[10px] bg-amber-200 px-1.5 py-0.5 rounded text-amber-800 font-bold">ចុច Login</span>
-        </button>
-        <button type="button" onclick="quickLogin('user1', '123')" class="w-full text-left px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 border border-slate-200 text-slate-700 font-medium flex items-center justify-between transition cursor-pointer">
-          <span>🏢 ការិយាល័យទី១: <strong>user1</strong> / <strong>123</strong></span>
-          <span class="text-[10px] bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-800 font-bold">ចុច Login</span>
-        </button>
-        <button type="button" onclick="quickLogin('user2', '123')" class="w-full text-left px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 border border-slate-200 text-slate-700 font-medium flex items-center justify-between transition cursor-pointer">
-          <span>🏢 ការិយាល័យទី២: <strong>user2</strong> / <strong>123</strong></span>
-          <span class="text-[10px] bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-800 font-bold">ចុច Login</span>
-        </button>
-        <button type="button" onclick="quickLogin('user3', '123')" class="w-full text-left px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 border border-slate-200 text-slate-700 font-medium flex items-center justify-between transition cursor-pointer">
-          <span>🏢 ការិយាល័យទី៣: <strong>user3</strong> / <strong>123</strong></span>
-          <span class="text-[10px] bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-800 font-bold">ចុច Login</span>
-        </button>
-      </div>
     </div>
   </div>
 
@@ -704,7 +636,7 @@
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
           <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V2 (User Manual)</h4>
           <p><strong>១. ផ្ទាំងបញ្ចូលរហ័ស (Quick Entry Panel)៖</strong> អ្នកអាចបញ្ចូលឯកសារ ឬទិន្នន័យបានភ្លាមៗនៅលើផ្ទាំងខាងស្ដាំដៃ ដោយមិនចាំបាច់រង់ចាំបើកផ្ទាំង Pop-up ឡើយ។</p>
-          <p><strong>២. ការបង្ហោះឯកសារ៖</strong> ឯកសារត្រូវមានទំហំ ≤ 10MB។ ប្រព័ន្ធនឹងបញ្ជូនទៅផ្ទុកក្នុង Google Drive ស្ថាប័នដោយស្វ័យប្រវត្តិ។</p>
+          <p><strong>២. ការបង្ហោះឯកសារ៖</strong> ឯកសារត្រូវមានទំហំ ≤ 10MB។ ប្រព័ន្ធនឹងបញ្ជូនទៅផ្ទុកក្នុង Google Drive ស្ថាប័នដោយស្វ័យប្រវត្តិ。</p>
           <p><strong>៣. ការទាញរបាយការណ៍៖</strong> អាច Export ជា Excel (.xlsx) ផ្លូវការ, CSV ឬចុចលើ Preview ដើម្បីផ្ទៀងផ្ទាត់ក្បាលសំបុត្រ និងហត្ថលេខាមុននឹងបោះពុម្ព។</p>
         </div>
       </div>
@@ -810,7 +742,6 @@
       }
     }
 
-    // មុខងារជំនួយសម្រាប់ហៅ Supabase ដោយមិនឱ្យគាំង (.catch លើ Supabase V2 Query Builder)
     async function safeDbExec(promise) {
       if (!db || !promise) return;
       try {
@@ -877,7 +808,7 @@
     function getLocal(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
     function setLocal(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 
-    // គណនីស្នូលដើម (ការពារមិនឱ្យត្រូវជំនួស ឬបាត់បង់ជាដាច់ខាត)
+    // គណនីស្នូលដើម
     const defaultUsers = [
       { id: 1, username: 'admin', password: 'admin123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', bureau: 'all', permissions: { admin: true, read: true, upload: true, download: true } },
       { id: 2, username: 'user1', password: '123', fullname: 'មន្ត្រីមុនពេលបម្រើការងារ', bureau: 'bureau_1', permissions: { admin: false, read: true, upload: true, download: true } },
@@ -891,7 +822,6 @@
         customList.forEach(cu => {
           if (!cu || !cu.username) return;
           const uname = String(cu.username).trim().toLowerCase();
-          // មិនអនុញ្ញាតឱ្យទិន្នន័យខាងក្រៅមកកែប្រែលេខសម្ងាត់របស់គណនីស្នូលទាំង ៤ ឡើយ
           const isCore = merged.some(m => m.username.toLowerCase() === uname);
           if (!isCore && cu.password) {
             merged.push(cu);
@@ -919,7 +849,22 @@
     let countriesData = getLocal(STORAGE_KEYS.COUNTRIES, defaultCountries);
     let usersData = mergeWithCoreUsers(getLocal(STORAGE_KEYS.USERS, defaultUsers));
     let auditLogs = getLocal(STORAGE_KEYS.LOGS, []);
-    let currentUser = getLocal(STORAGE_KEYS.SESSION, null);
+    
+    // បង្ខំឱ្យផ្ទៀងផ្ទាត់ Login ថ្មីជានិច្ច លើកលែងតែមាន Session បណ្តោះអាសន្ន
+    function getSessionUser() {
+      try {
+        const v = sessionStorage.getItem(STORAGE_KEYS.SESSION);
+        return v ? JSON.parse(v) : null;
+      } catch (e) { return null; }
+    }
+    function setSessionUser(u) {
+      try {
+        if (u) sessionStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(u));
+        else sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+      } catch (e) {}
+    }
+
+    let currentUser = getSessionUser();
     let activeBureauKey = getLocal(STORAGE_KEYS.ACTIVE_BUREAU, 'bureau_1');
     let activeTab = 'docs';
 
@@ -996,15 +941,17 @@
           setLocal(STORAGE_KEYS.USERS, usersData);
         }
 
-        renderBureauWorkspace();
-        renderAnalyticsChart('training');
-        populateCountryDropdowns();
+        if (currentUser && currentUser.username) {
+          renderBureauWorkspace();
+          renderAnalyticsChart('training');
+          populateCountryDropdowns();
+        }
       }).catch(err => {
         console.warn("Background sync note:", err);
       });
     }
 
-    // ៦. LOGS & AUTH CONTROL (កែសម្រួលមិនឱ្យគាំងពេល Login)
+    // ៦. LOGS & AUTH CONTROL
     function logActivity(action, target) {
       try {
         const now = new Date();
@@ -1029,10 +976,21 @@
 
     function checkAuth() {
       const loginModal = document.getElementById('modal-login');
+      const appHeader = document.getElementById('app-header');
+      const appMain = document.getElementById('app-main');
+      const appMobileNav = document.getElementById('app-mobile-nav');
+
       if (!currentUser || !currentUser.username) {
         if (loginModal) loginModal.classList.remove('hidden');
+        if (appHeader) appHeader.classList.add('hidden');
+        if (appMain) appMain.classList.add('hidden');
+        if (appMobileNav) appMobileNav.classList.add('hidden');
       } else {
         if (loginModal) loginModal.classList.add('hidden');
+        if (appHeader) appHeader.classList.remove('hidden');
+        if (appMain) appMain.classList.remove('hidden');
+        if (appMobileNav) appMobileNav.classList.remove('hidden');
+
         document.getElementById('current-user-fullname').innerText = currentUser.fullname || currentUser.username;
         
         const isSuperAdmin = (currentUser.permissions && currentUser.permissions.admin === true) || currentUser.bureau === 'all';
@@ -1087,7 +1045,6 @@
       }
     }
 
-    // មុខងារបម្លែងលេខខ្មែរមកជាលេខឡាតាំង (Auto Normalize Khmer Digits)
     function normalizeKhmerDigits(str) {
       if (str === null || str === undefined) return '';
       const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
@@ -1103,23 +1060,6 @@
       pInput.type = (pInput.type === 'password') ? 'text' : 'password';
     }
 
-    function resetAuthCache() {
-      localStorage.removeItem(STORAGE_KEYS.USERS);
-      localStorage.removeItem(STORAGE_KEYS.SESSION);
-      usersData = mergeWithCoreUsers([]);
-      setLocal(STORAGE_KEYS.USERS, usersData);
-      alert('✅ បានសម្អាត Cache គណនីរួចរាល់! សូមចុច Login ម្តងទៀត។');
-    }
-
-    // មុខងារ 1-CLICK QUICK LOGIN
-    function quickLogin(username, password) {
-      const uInput = document.getElementById('login-username');
-      const pInput = document.getElementById('login-password');
-      if (uInput) uInput.value = username;
-      if (pInput) pInput.value = password;
-      executeLogin(username, password);
-    }
-
     function handleLogin(e) {
       if (e) e.preventDefault();
       const u = normalizeKhmerDigits(document.getElementById('login-username').value).toLowerCase();
@@ -1131,13 +1071,11 @@
       const cleanU = normalizeKhmerDigits(u).toLowerCase();
       const cleanP = normalizeKhmerDigits(p);
 
-      // ១. ពិនិត្យមើលក្នុងគណនីស្នូល (defaultUsers) មុនគេបង្អស់
       let user = defaultUsers.find(x => 
         String(x.username).toLowerCase() === cleanU && 
         normalizeKhmerDigits(x.password) === cleanP
       );
 
-      // ២. បើមិនមែនគណនីស្នូល ទើបស្វែងរកក្នុងបញ្ជីគណនីបន្ថែម (usersData)
       if (!user && Array.isArray(usersData)) {
         user = usersData.find(x => 
           x && x.username && x.password !== undefined &&
@@ -1156,7 +1094,7 @@
             download: true
           }
         };
-        setLocal(STORAGE_KEYS.SESSION, currentUser);
+        setSessionUser(currentUser);
         if (currentUser.bureau && currentUser.bureau !== 'all') {
           activeBureauKey = currentUser.bureau;
           setLocal(STORAGE_KEYS.ACTIVE_BUREAU, activeBureauKey);
@@ -1177,7 +1115,9 @@
     function handleLogout() {
       if (confirm('តើអ្នកពិតជាចង់ចាកចេញពីប្រព័ន្ធមែនទេ?')) {
         currentUser = null;
-        localStorage.removeItem(STORAGE_KEYS.SESSION);
+        setSessionUser(null);
+        document.getElementById('login-username').value = '';
+        document.getElementById('login-password').value = '';
         checkAuth();
       }
     }
@@ -1227,7 +1167,6 @@
       renderBureauWorkspace();
     }
 
-    // ៧. ក្រាហ្វិកស្ថិតិ ANALYTICS
     function renderAnalyticsChart(type) {
       const bars = document.getElementById('analytics-bars-container');
       const labels = document.getElementById('analytics-labels-container');
@@ -1291,7 +1230,6 @@
       }
     }
 
-    // ៨. ផ្ទាំងបញ្ចូលទិន្នន័យរហ័សខាងស្ដាំដៃ (QUICK ENTRY PANEL)
     function renderSideForm() {
       const container = document.getElementById('side-form-container');
       const titleEl = document.getElementById('side-panel-header-title');
@@ -1449,7 +1387,6 @@
       }
     }
 
-    // ៩. RENDER DATA TABLES
     function renderDocs() {
       const tbody = document.getElementById('docs-table-body');
       if (!tbody) return;
@@ -1632,7 +1569,6 @@
       `).join('');
     }
 
-    // ១០. រក្សាទុកទិន្នន័យ
     function handleFileSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1915,7 +1851,6 @@
       }
     }
 
-    // ១១. LOCATION & TOOLS ENGINE
     function toggleToolsMenu() {
       document.getElementById('tools-dropdown').classList.toggle('hidden');
     }
