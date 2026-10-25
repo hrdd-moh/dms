@@ -420,7 +420,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- LOGIN MODAL -->
+  <!-- LOGIN MODAL (មានសុវត្ថិភាពខ្ពស់ គ្មាន Quick Login) -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-20 h-20 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
@@ -465,26 +465,7 @@
         <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📖 User Manual</button>
       </div>
 
-      <!-- SETTINGS TAB (Settings & Change Password & Create User) -->
       <div id="syscontent-settings" class="space-y-4 flex-1 overflow-y-auto pr-1">
-        <!-- CHANGE PASSWORD SECTION (NEW) -->
-        <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
-          <h4 class="text-xs font-bold text-emerald-900 mb-2.5">🔐 ប្ដូរពាក្យសម្ងាត់ផ្ទាល់ខ្លួន (Change Password)</h4>
-          <form onsubmit="handleChangePassword(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-end">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ចាស់</label>
-              <input type="password" id="old-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ថ្មី</label>
-              <input type="password" id="new-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <button type="submit" class="w-full py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 shadow-xs transition">💾 ផ្លាស់ប្ដូរ Password</button>
-            </div>
-          </form>
-        </div>
-
         <div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
           <h4 class="text-xs font-bold text-slate-800 mb-2.5">➕ បង្កើតគណនីមន្ត្រីថ្មី (ភ្ជាប់ Permissions ភ្លាមៗ)</h4>
           <form onsubmit="handleCreateUser(event)" class="space-y-3">
@@ -619,14 +600,10 @@
         </div>
       </div>
 
-      <!-- LOGGING TAB WITH SEARCH BOX (NEW) -->
-      <div id="syscontent-logging" class="space-y-3 flex-1 overflow-y-auto pr-1 hidden">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs pb-1">
-          <div class="flex items-center gap-2 w-full sm:w-auto">
-            <span>🔍</span>
-            <input type="text" id="log-search-input" oninput="renderLogsTable()" placeholder="ស្វែងរកតាមសកម្មភាព ឬឈ្មោះមន្ត្រី..." class="form-input-focus border border-slate-200 rounded-xl px-3 py-1.5 text-xs w-full sm:w-72 bg-slate-50">
-          </div>
-          <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold self-end sm:self-auto">ជម្រះ Logs ចាស់ៗ</button>
+      <div id="syscontent-logging" class="space-y-2.5 flex-1 overflow-y-auto pr-1 hidden">
+        <div class="flex justify-between items-center text-xs pb-1">
+          <span class="text-slate-500 font-medium">កំណត់ត្រាសកម្មភាពមន្ត្រីក្នុងប្រព័ន្ធ</span>
+          <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold">ជម្រះ Logs ចាស់ៗ</button>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
           <table class="w-full text-left">
@@ -740,6 +717,7 @@
 
   <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2 ================= -->
   <script>
+    // ១. កំណត់តភ្ជាប់ SUPABASE CLOUD DATABASE
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
 
@@ -761,6 +739,7 @@
       }
     }
 
+    // TOAST NOTIFICATION FUNCTION (សារជោគជ័យ)
     function showToast(message) {
       const container = document.getElementById('toast-container');
       if (!container) return;
@@ -779,8 +758,10 @@
       }, 3000);
     }
 
+    // ២. GOOGLE DRIVE AUTOMATIC WEBHOOK CONFIG
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
 
+    // ៣. BUREAU DEFINITIONS & MAPPINGS
     const BUREAUS = {
       bureau_1: {
         id: 'bureau_1',
@@ -1526,6 +1507,7 @@
       `).join('');
     }
 
+    // IMPORT EXCEL / CSV FUNCTION (តាមទម្រង់ Excel ស្តង់ដាររបស់អ្នក)
     function handleImportExcel(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1539,6 +1521,7 @@
           const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
           let importedCount = 0;
+          // រំលងជួរទី១ (ក្បាលតារាង Header) ហើយចាប់ផ្តើមអានពីជួរទី២
           for (let i = 1; i < json.length; i++) {
             const row = json[i];
             if (row && row.length >= 2 && row[1]) {
@@ -1915,33 +1898,6 @@
       }
     }
 
-    // CHANGE PASSWORD FUNCTION (NEW)
-    function handleChangePassword(e) {
-      e.preventDefault();
-      const oldP = normalizeKhmerDigits(document.getElementById('old-password').value);
-      const newP = normalizeKhmerDigits(document.getElementById('new-password').value);
-
-      if (!currentUser) return;
-      if (normalizeKhmerDigits(currentUser.password) !== oldP) {
-        alert('⚠️ ពាក្យសម្ងាត់ចាស់មិនត្រឹមត្រូវ!');
-        return;
-      }
-
-      currentUser.password = newP;
-      setSessionUser(currentUser);
-
-      // Update in usersData
-      const idx = usersData.findIndex(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
-      if (idx !== -1) {
-        usersData[idx].password = newP;
-        setLocal(STORAGE_KEYS.USERS, usersData);
-      }
-
-      showToast('បានផ្លាស់ប្ដូរ Password ជោគជ័យ!');
-      logActivity('ប្ដូរ Password', 'User @' + currentUser.username);
-      e.target.reset();
-    }
-
     function renderCountriesTable() {
       const tbody = document.getElementById('countries-table-body');
       if (!tbody) return;
@@ -2143,26 +2099,10 @@
       }).join('');
     }
 
-    // LOGS TABLE WITH SEARCH FILTER (NEW)
     function renderLogsTable() {
       const tbody = document.getElementById('logs-table-body');
       if (!tbody) return;
-      const searchBox = document.getElementById('log-search-input');
-      const q = searchBox ? searchBox.value.toLowerCase() : '';
-
-      const filtered = auditLogs.filter(l => 
-        !q || 
-        (l.action && l.action.toLowerCase().indexOf(q) !== -1) || 
-        (l.user && l.user.toLowerCase().indexOf(q) !== -1) ||
-        (l.target && l.target.toLowerCase().indexOf(q) !== -1)
-      );
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">មិនមានកំណត់ត្រា Logs ស្របតាមការស្វែងរកឡើយ</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(l => `
+      tbody.innerHTML = auditLogs.map(l => `
         <tr class="hover:bg-slate-50 transition">
           <td class="p-3 text-slate-400 font-mono text-[10px]">${l.time}</td>
           <td class="p-3 font-bold text-slate-700">${l.user}</td>
