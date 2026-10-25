@@ -53,13 +53,13 @@
   <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
 
   <!-- ================= TOP HEADER BAR ================= -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
+  <header id="app-header" class="hidden bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
       
       <!-- Institutional Logo & Titles -->
       <div class="flex items-center space-x-3 min-w-0">
         <div class="h-12 w-12 sm:h-13 sm:w-13 min-w-[48px] rounded-2xl border border-emerald-600/20 p-1 flex items-center justify-center bg-emerald-50/40 shadow-xs overflow-hidden shrink-0">
-          <img src="Logo MOH_Ok_Background.png" onerror="this.src='photo_2026-10-16_22-06-11.jpg'" alt="MoH Logo" class="h-full w-full object-contain">
+          <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
         </div>
         <div class="truncate">
           <div class="flex items-center gap-1.5 flex-wrap">
@@ -124,7 +124,7 @@
   </header>
 
   <!-- ================= MAIN CONTAINER ================= -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
+  <main id="app-main" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
 
     <!-- HERO GREEN BANNER -->
     <div class="bg-gradient-to-r from-[#143e2e] via-[#1b503b] to-[#267355] rounded-3xl p-5 sm:p-7 text-white shadow-md relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-5 border border-emerald-600/30">
@@ -185,26 +185,6 @@
         </div>
         <h3 class="text-xs sm:text-sm font-bold text-emerald-800 mt-3 truncate" id="stat-bureau-badge">ការិយាល័យទី១</h3>
         <span class="inline-block mt-1 text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md font-semibold">Active Workspace</span>
-      </div>
-    </div>
-
-    <!-- VISUAL ANALYTICS BAR CHART -->
-    <div class="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-        <div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <span>📊</span> ក្រាហ្វិកស្ថិតិទិន្នន័យ (Visual Analytics Overview)
-          </h3>
-          <p class="text-xs text-slate-500 mt-0.5">ស្ថិតិសិក្ខាកាមតាមប្រទេស និងឯកសារការិយាល័យ</p>
-        </div>
-        <div class="flex items-center gap-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1 rounded-xl">
-          <button onclick="renderAnalyticsChart('training')" id="btn-chart-train" class="px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs">សិក្ខាកាមតាមប្រទេស</button>
-          <button onclick="renderAnalyticsChart('docs')" id="btn-chart-docs" class="px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900">ឯកសារតាមការិយាល័យ</button>
-        </div>
-      </div>
-      <div class="pt-5 pb-2">
-        <div id="analytics-bars-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 items-end h-48 border-b border-slate-200 px-2 pb-2"></div>
-        <div id="analytics-labels-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 pt-2 px-2 text-[10px] text-center text-slate-500 font-medium"></div>
       </div>
     </div>
 
@@ -306,6 +286,7 @@
               <p class="text-[11px] text-slate-400">ទិន្នន័យសិក្ខាកាម វគ្គសិក្សា កាលបរិច្ឆេទ និងប្រទេស</p>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
+              <!-- IMPORT EXCEL BUTTON -->
               <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
               <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
                 📥 Import Excel
@@ -316,7 +297,7 @@
               <button onclick="exportTrainingCSV()" class="perm-download-el px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
                 CSV
               </button>
-              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
                 👁️ Print / PDF
               </button>
             </div>
@@ -414,7 +395,7 @@
   </main>
 
   <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
-  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 z-40 flex items-center justify-around text-xs shadow-lg">
+  <nav id="app-mobile-nav" class="hidden lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 z-40 flex items-center justify-around text-xs shadow-lg">
     <button onclick="switchBureauTab('docs')" class="flex flex-col items-center gap-1 text-slate-600 hover:text-emerald-700">
       <span class="text-base">📚</span>
       <span class="text-[10px] font-semibold">បណ្ណាល័យ</span>
@@ -439,11 +420,11 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- LOGIN MODAL -->
+  <!-- LOGIN MODAL (មានសុវត្ថិភាពខ្ពស់ គ្មាន Quick Login) -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-20 h-20 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
-        <img src="Logo MOH_Ok_Background.png" onerror="this.src='photo_2026-10-16_22-06-11.jpg'" alt="MoH Logo" class="w-full h-full object-contain">
+        <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain">
       </div>
       <div>
         <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V2</h3>
@@ -452,17 +433,17 @@
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label>
-          <input type="text" id="login-username" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="ឧ. user1">
+          <input type="text" id="login-username" required autocomplete="username" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="បញ្ចូលឈ្មោះគណនី...">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
           <div class="relative">
-            <input type="password" id="login-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••">
+            <input type="password" id="login-password" required autocomplete="current-password" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••">
             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm">👁️</button>
           </div>
         </div>
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
-        <button type="submit" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl text-xs font-bold shadow-md transition">ចូលប្រព័ន្ធ (Sign In)</button>
+        <button type="submit" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
     </div>
   </div>
@@ -484,26 +465,7 @@
         <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📖 User Manual</button>
       </div>
 
-      <!-- SETTINGS TAB (Settings & Change Password & Create User) -->
       <div id="syscontent-settings" class="space-y-4 flex-1 overflow-y-auto pr-1">
-        <!-- CHANGE PASSWORD SECTION -->
-        <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
-          <h4 class="text-xs font-bold text-emerald-900 mb-2.5">🔐 ប្ដូរពាក្យសម្ងាត់ផ្ទាល់ខ្លួន (Change Password)</h4>
-          <form onsubmit="handleChangePassword(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-end">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ចាស់</label>
-              <input type="password" id="old-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ថ្មី</label>
-              <input type="password" id="new-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <button type="submit" class="w-full py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 shadow-xs transition">💾 ផ្លាស់ប្ដូរ Password</button>
-            </div>
-          </form>
-        </div>
-
         <div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
           <h4 class="text-xs font-bold text-slate-800 mb-2.5">➕ បង្កើតគណនីមន្ត្រីថ្មី (ភ្ជាប់ Permissions ភ្លាមៗ)</h4>
           <form onsubmit="handleCreateUser(event)" class="space-y-3">
@@ -638,14 +600,10 @@
         </div>
       </div>
 
-      <!-- LOGGING TAB WITH SEARCH BOX -->
-      <div id="syscontent-logging" class="space-y-3 flex-1 overflow-y-auto pr-1 hidden">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs pb-1">
-          <div class="flex items-center gap-2 w-full sm:w-auto">
-            <span>🔍</span>
-            <input type="text" id="log-search-input" oninput="renderLogsTable()" placeholder="ស្វែងរកតាមសកម្មភាព ឬឈ្មោះមន្ត្រី..." class="form-input-focus border border-slate-200 rounded-xl px-3 py-1.5 text-xs w-full sm:w-72 bg-slate-50">
-          </div>
-          <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold self-end sm:self-auto">ជម្រះ Logs ចាស់ៗ</button>
+      <div id="syscontent-logging" class="space-y-2.5 flex-1 overflow-y-auto pr-1 hidden">
+        <div class="flex justify-between items-center text-xs pb-1">
+          <span class="text-slate-500 font-medium">កំណត់ត្រាសកម្មភាពមន្ត្រីក្នុងប្រព័ន្ធ</span>
+          <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold">ជម្រះ Logs ចាស់ៗ</button>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
           <table class="w-full text-left">
@@ -692,7 +650,7 @@
         <div class="flex justify-between items-start border-b pb-4">
           <div class="flex items-center gap-3">
             <div class="h-16 w-16 min-w-[64px] rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center bg-white shadow-xs overflow-hidden">
-              <img src="Logo MOH_Ok_Background.png" onerror="this.src='photo_2026-10-16_22-06-11.jpg'" alt="MoH Logo" class="h-full w-full object-contain">
+              <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
             </div>
             <div class="leading-tight">
               <h4 class="font-bold text-xs sm:text-sm text-slate-900">ក្រសួងសុខាភិបាល</h4>
@@ -759,6 +717,7 @@
 
   <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2 ================= -->
   <script>
+    // ១. កំណត់តភ្ជាប់ SUPABASE CLOUD DATABASE
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
 
@@ -771,6 +730,16 @@
       }
     }
 
+    async function safeDbExec(promise) {
+      if (!db || !promise) return;
+      try {
+        await promise;
+      } catch (err) {
+        console.warn("Supabase operation note:", err);
+      }
+    }
+
+    // TOAST NOTIFICATION FUNCTION (សារជោគជ័យ)
     function showToast(message) {
       const container = document.getElementById('toast-container');
       if (!container) return;
@@ -789,8 +758,10 @@
       }, 3000);
     }
 
+    // ២. GOOGLE DRIVE AUTOMATIC WEBHOOK CONFIG
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
 
+    // ៣. BUREAU DEFINITIONS & MAPPINGS
     const BUREAUS = {
       bureau_1: {
         id: 'bureau_1',
@@ -850,6 +821,21 @@
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា/វិញ្ញាបនបត្រ', bureau: 'bureau_3', permissions: { admin: false, read: true, upload: true, download: true } }
     ];
 
+    function mergeWithCoreUsers(customList) {
+      const merged = defaultUsers.map(u => ({ ...u, permissions: { ...u.permissions } }));
+      if (Array.isArray(customList)) {
+        customList.forEach(cu => {
+          if (!cu || !cu.username) return;
+          const uname = String(cu.username).trim().toLowerCase();
+          const isCore = merged.some(m => m.username.toLowerCase() === uname);
+          if (!isCore && cu.password) {
+            merged.push(cu);
+          }
+        });
+      }
+      return merged;
+    }
+
     const defaultCountries = [
       { code: 'KH', kh: 'កម្ពុជា', en: 'Cambodia' },
       { code: 'JP', kh: 'ជប៉ុន', en: 'Japan' },
@@ -866,9 +852,23 @@
     ];
 
     let countriesData = getLocal(STORAGE_KEYS.COUNTRIES, defaultCountries);
-    let usersData = getLocal(STORAGE_KEYS.USERS, defaultUsers);
+    let usersData = mergeWithCoreUsers(getLocal(STORAGE_KEYS.USERS, defaultUsers));
     let auditLogs = getLocal(STORAGE_KEYS.LOGS, []);
-    let currentUser = getLocal(STORAGE_KEYS.SESSION, null);
+    
+    function getSessionUser() {
+      try {
+        const v = sessionStorage.getItem(STORAGE_KEYS.SESSION);
+        return v ? JSON.parse(v) : null;
+      } catch (e) { return null; }
+    }
+    function setSessionUser(u) {
+      try {
+        if (u) sessionStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(u));
+        else sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+      } catch (e) {}
+    }
+
+    let currentUser = getSessionUser();
     let activeBureauKey = getLocal(STORAGE_KEYS.ACTIVE_BUREAU, 'bureau_1');
     let activeTab = 'docs';
 
@@ -908,7 +908,7 @@
       ]).then(results => {
         const [rDocs, rTrain, rDisp, rCount, rUsers] = results;
 
-        if (rDocs.status === 'fulfilled' && rDocs.value.data && rDocs.value.data.length > 0) {
+        if (rDocs.status === 'fulfilled' && rDocs.value && rDocs.value.data && rDocs.value.data.length > 0) {
           docsData = rDocs.value.data.map(d => ({
             id: d.id,
             bureau: d.bureau,
@@ -924,63 +924,75 @@
           setLocal(STORAGE_KEYS.DOCS, docsData);
         }
 
-        if (rTrain.status === 'fulfilled' && rTrain.value.data && rTrain.value.data.length > 0) {
+        if (rTrain.status === 'fulfilled' && rTrain.value && rTrain.value.data && rTrain.value.data.length > 0) {
           trainingData = rTrain.value.data;
           setLocal(STORAGE_KEYS.TRAINING, trainingData);
         }
 
-        if (rDisp.status === 'fulfilled' && rDisp.value.data && rDisp.value.data.length > 0) {
+        if (rDisp.status === 'fulfilled' && rDisp.value && rDisp.value.data && rDisp.value.data.length > 0) {
           dispatchData = rDisp.value.data;
           setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
         }
 
-        if (rCount.status === 'fulfilled' && rCount.value.data && rCount.value.data.length > 0) {
+        if (rCount.status === 'fulfilled' && rCount.value && rCount.value.data && rCount.value.data.length > 0) {
           countriesData = rCount.value.data;
           setLocal(STORAGE_KEYS.COUNTRIES, countriesData);
         }
 
-        if (rUsers.status === 'fulfilled' && rUsers.value.data && rUsers.value.data.length > 0) {
-          const merged = [...defaultUsers];
-          rUsers.value.data.forEach(dbU => {
-            const idx = merged.findIndex(x => x.username.toLowerCase() === dbU.username.toLowerCase());
-            if (idx !== -1) merged[idx] = dbU;
-            else merged.push(dbU);
-          });
-          usersData = merged;
+        if (rUsers.status === 'fulfilled' && rUsers.value && rUsers.value.data && rUsers.value.data.length > 0) {
+          usersData = mergeWithCoreUsers(rUsers.value.data);
           setLocal(STORAGE_KEYS.USERS, usersData);
         }
 
-        renderBureauWorkspace();
-        renderAnalyticsChart('training');
-        populateCountryDropdowns();
+        if (currentUser && currentUser.username) {
+          renderBureauWorkspace();
+          populateCountryDropdowns();
+        }
       }).catch(err => {
         console.warn("Background sync note:", err);
       });
     }
 
     function logActivity(action, target) {
-      const now = new Date();
-      const logEntry = {
-        id: Date.now(),
-        time: now.toLocaleDateString('km-KH') + ' ' + now.toLocaleTimeString('en-US'),
-        user: currentUser ? (currentUser.fullname + ' (@' + currentUser.username + ')') : 'System',
-        action: action,
-        target: target
-      };
-      auditLogs.unshift(logEntry);
-      setLocal(STORAGE_KEYS.LOGS, auditLogs);
+      try {
+        const now = new Date();
+        const logEntry = {
+          id: Date.now(),
+          time: now.toLocaleDateString('km-KH') + ' ' + now.toLocaleTimeString('en-US'),
+          user: currentUser ? (currentUser.fullname + ' (@' + currentUser.username + ')') : 'System',
+          action: action,
+          target: target
+        };
+        if (!Array.isArray(auditLogs)) auditLogs = [];
+        auditLogs.unshift(logEntry);
+        setLocal(STORAGE_KEYS.LOGS, auditLogs);
 
-      if (db) {
-        db.from('audit_logs').insert([logEntry]).catch(e => console.warn(e));
+        if (db) {
+          safeDbExec(db.from('audit_logs').insert([logEntry]));
+        }
+      } catch (err) {
+        console.warn("Log error ignored:", err);
       }
     }
 
     function checkAuth() {
-      if (!currentUser) {
-        document.getElementById('modal-login').classList.remove('hidden');
+      const loginModal = document.getElementById('modal-login');
+      const appHeader = document.getElementById('app-header');
+      const appMain = document.getElementById('app-main');
+      const appMobileNav = document.getElementById('app-mobile-nav');
+
+      if (!currentUser || !currentUser.username) {
+        if (loginModal) loginModal.classList.remove('hidden');
+        if (appHeader) appHeader.classList.add('hidden');
+        if (appMain) appMain.classList.add('hidden');
+        if (appMobileNav) appMobileNav.classList.add('hidden');
       } else {
-        document.getElementById('modal-login').classList.add('hidden');
-        document.getElementById('current-user-fullname').innerText = currentUser.fullname;
+        if (loginModal) loginModal.classList.add('hidden');
+        if (appHeader) appHeader.classList.remove('hidden');
+        if (appMain) appMain.classList.remove('hidden');
+        if (appMobileNav) appMobileNav.classList.remove('hidden');
+
+        document.getElementById('current-user-fullname').innerText = currentUser.fullname || currentUser.username;
         
         const isSuperAdmin = (currentUser.permissions && currentUser.permissions.admin === true) || currentUser.bureau === 'all';
         document.getElementById('current-user-role').innerText = isSuperAdmin ? '👑 Admin (នាយកដ្ឋាន)' : ('🏢 ' + (BUREAUS[currentUser.bureau] ? BUREAUS[currentUser.bureau].shortName : 'មន្ត្រី'));
@@ -989,10 +1001,12 @@
         const lockNotice = document.getElementById('bureau-lock-notice');
 
         if (isSuperAdmin) {
+          if (!BUREAUS[activeBureauKey]) activeBureauKey = 'bureau_1';
+          selectBox.value = activeBureauKey;
           selectBox.disabled = false;
           lockNotice.classList.add('hidden');
         } else {
-          activeBureauKey = currentUser.bureau;
+          activeBureauKey = BUREAUS[currentUser.bureau] ? currentUser.bureau : 'bureau_1';
           setLocal(STORAGE_KEYS.ACTIVE_BUREAU, activeBureauKey);
           selectBox.value = activeBureauKey;
           selectBox.disabled = true;
@@ -1001,7 +1015,6 @@
 
         applyUserPermissionsUI(isSuperAdmin);
         renderBureauWorkspace();
-        renderAnalyticsChart('training');
       }
     }
 
@@ -1033,7 +1046,7 @@
     }
 
     function normalizeKhmerDigits(str) {
-      if (!str) return '';
+      if (str === null || str === undefined) return '';
       const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
       let res = String(str);
       for (let i = 0; i < 10; i++) {
@@ -1047,12 +1060,6 @@
       pInput.type = (pInput.type === 'password') ? 'text' : 'password';
     }
 
-    function quickLogin(username, password) {
-      document.getElementById('login-username').value = username;
-      document.getElementById('login-password').value = password;
-      executeLogin(username, password);
-    }
-
     function handleLogin(e) {
       if (e) e.preventDefault();
       const u = normalizeKhmerDigits(document.getElementById('login-username').value).toLowerCase();
@@ -1061,42 +1068,57 @@
     }
 
     function executeLogin(u, p) {
-      let allUsers = [...defaultUsers];
-      if (Array.isArray(usersData)) {
-        usersData.forEach(su => {
-          const idx = allUsers.findIndex(x => x.username.toLowerCase() === su.username.toLowerCase());
-          if (idx !== -1) allUsers[idx] = su;
-          else allUsers.push(su);
-        });
-      }
+      const cleanU = normalizeKhmerDigits(u).toLowerCase();
+      const cleanP = normalizeKhmerDigits(p);
 
-      const user = allUsers.find(x => 
-        x.username.toLowerCase() === u && 
-        normalizeKhmerDigits(x.password) === p
+      let user = defaultUsers.find(x => 
+        String(x.username).toLowerCase() === cleanU && 
+        normalizeKhmerDigits(x.password) === cleanP
       );
 
+      if (!user && Array.isArray(usersData)) {
+        user = usersData.find(x => 
+          x && x.username && x.password !== undefined &&
+          String(x.username).trim().toLowerCase() === cleanU && 
+          normalizeKhmerDigits(x.password) === cleanP
+        );
+      }
+
       if (user) {
-        currentUser = user;
-        setLocal(STORAGE_KEYS.SESSION, currentUser);
-        if (currentUser.bureau !== 'all') {
+        currentUser = {
+          ...user,
+          permissions: user.permissions || {
+            admin: user.bureau === 'all',
+            read: true,
+            upload: true,
+            download: true
+          }
+        };
+        setSessionUser(currentUser);
+        if (currentUser.bureau && currentUser.bureau !== 'all') {
           activeBureauKey = currentUser.bureau;
           setLocal(STORAGE_KEYS.ACTIVE_BUREAU, activeBureauKey);
         }
-        document.getElementById('login-error').classList.add('hidden');
-        showToast('បានចូលប្រព័ន្ធដោយជោគជ័យ!');
-        logActivity('ចូលប្រព័ន្ធ', 'User @' + user.username + ' ចូលកាន់ ' + user.bureau);
+        const errEl = document.getElementById('login-error');
+        if (errEl) errEl.classList.add('hidden');
         checkAuth();
+        showToast('បានចូលប្រព័ន្ធដោយជោគជ័យ!');
+        logActivity('ចូលប្រព័ន្ធ', 'User @' + currentUser.username + ' ចូលកាន់ ' + currentUser.bureau);
       } else {
         const errEl = document.getElementById('login-error');
-        errEl.innerText = 'ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!';
-        errEl.classList.remove('hidden');
+        if (errEl) {
+          errEl.innerText = 'ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!';
+          errEl.classList.remove('hidden');
+        }
       }
     }
 
     function handleLogout() {
       if (confirm('តើអ្នកពិតជាចង់ចាកចេញពីប្រព័ន្ធមែនទេ?')) {
         currentUser = null;
-        localStorage.removeItem(STORAGE_KEYS.SESSION);
+        setSessionUser(null);
+        document.getElementById('login-username').value = '';
+        document.getElementById('login-password').value = '';
         checkAuth();
       }
     }
@@ -1144,69 +1166,6 @@
     function switchBureauTab(tabId) {
       activeTab = tabId;
       renderBureauWorkspace();
-    }
-
-    function renderAnalyticsChart(type) {
-      const bars = document.getElementById('analytics-bars-container');
-      const labels = document.getElementById('analytics-labels-container');
-      if (!bars || !labels) return;
-
-      const btnT = document.getElementById('btn-chart-train');
-      const btnD = document.getElementById('btn-chart-docs');
-
-      if (type === 'training') {
-        btnT.className = 'px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs';
-        btnD.className = 'px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900';
-
-        const counts = {};
-        trainingData.forEach(t => {
-          counts[t.country] = (counts[t.country] || 0) + 1;
-        });
-
-        const sorted = Object.entries(counts).slice(0, 8);
-        const maxVal = Math.max(...sorted.map(s => s[1]), 5);
-
-        bars.innerHTML = sorted.map(([country, count]) => {
-          const heightPercent = Math.max(15, Math.round((count / maxVal) * 100));
-          return `
-            <div class="flex flex-col items-center justify-end h-full group relative">
-              <span class="text-[10px] font-bold text-emerald-800 mb-1 opacity-90 group-hover:scale-110 transition">${count}</span>
-              <div style="height: ${heightPercent}%;" class="w-full max-w-[36px] bg-gradient-to-t from-[#143e2e] to-[#2d6a4f] rounded-t-lg group-hover:brightness-110 transition shadow-xs"></div>
-            </div>
-          `;
-        }).join('');
-
-        labels.innerHTML = sorted.map(([country]) => `
-          <div class="truncate font-semibold" title="${country}">${country}</div>
-        `).join('');
-
-      } else {
-        btnD.className = 'px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs';
-        btnT.className = 'px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900';
-
-        const bCounts = {
-          'ការិយាល័យទី១': docsData.filter(d => d.bureau === 'bureau_1').length,
-          'ការិយាល័យទី២': docsData.filter(d => d.bureau === 'bureau_2').length,
-          'ការិយាល័យទី៣': docsData.filter(d => d.bureau === 'bureau_3').length
-        };
-
-        const sorted = Object.entries(bCounts);
-        const maxVal = Math.max(...sorted.map(s => s[1]), 5);
-
-        bars.innerHTML = sorted.map(([bName, count]) => {
-          const heightPercent = Math.max(15, Math.round((count / maxVal) * 100));
-          return `
-            <div class="flex flex-col items-center justify-end h-full group relative col-span-2">
-              <span class="text-[10px] font-bold text-blue-800 mb-1 opacity-90">${count}</span>
-              <div style="height: ${heightPercent}%;" class="w-full max-w-[50px] bg-gradient-to-t from-blue-700 to-emerald-600 rounded-t-lg shadow-xs transition"></div>
-            </div>
-          `;
-        }).join('');
-
-        labels.innerHTML = sorted.map(([bName]) => `
-          <div class="truncate font-semibold col-span-2">${bName}</div>
-        `).join('');
-      }
     }
 
     function renderSideForm() {
@@ -1373,8 +1332,8 @@
       const isAdmin = (currentUser && currentUser.permissions && currentUser.permissions.admin === true) || (currentUser && currentUser.bureau === 'all');
 
       const filtered = docsData.filter(d => 
-        d.title.toLowerCase().indexOf(search) !== -1 || 
-        d.code.toLowerCase().indexOf(search) !== -1 ||
+        (d.title && d.title.toLowerCase().indexOf(search) !== -1) || 
+        (d.code && d.code.toLowerCase().indexOf(search) !== -1) ||
         (d.category && d.category.toLowerCase().indexOf(search) !== -1)
       );
 
@@ -1548,6 +1507,53 @@
       `).join('');
     }
 
+    // IMPORT EXCEL / CSV FUNCTION (តាមទម្រង់ Excel ស្តង់ដាររបស់អ្នក)
+    function handleImportExcel(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          let importedCount = 0;
+          // រំលងជួរទី១ (ក្បាលតារាង Header) ហើយចាប់ផ្តើមអានពីជួរទី២
+          for (let i = 1; i < json.length; i++) {
+            const row = json[i];
+            if (row && row.length >= 2 && row[1]) {
+              const newT = {
+                id: Date.now() + i,
+                trainee: String(row[1] || '').trim(),
+                unit: String(row[2] || 'នាយកដ្ឋាន/មន្ទីរពេទ្យ').trim(),
+                course: String(row[3] || 'វគ្គបណ្តុះបណ្តាល').trim(),
+                duration: String(row[4] || '1 M').trim(),
+                dates: String(row[5] || '01/01/26-01/02/26').trim(),
+                country: String(row[6] || 'ក្នុងប្រទេស').trim(),
+                sponsor: String(row[7] || 'សាមីខ្លួន').trim(),
+                scope: 'International'
+              };
+              trainingData.unshift(newT);
+              importedCount++;
+            }
+          }
+
+          setLocal(STORAGE_KEYS.TRAINING, trainingData);
+          renderTrainingList();
+          showToast(`បាន Import ចូលជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`);
+          logActivity('Import Excel V2', `បានបញ្ចូលទិន្នន័យចំនួន ${importedCount}`);
+        } catch (err) {
+          console.error(err);
+          alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel! សូមពិនិត្យមើលទម្រង់ហ្វាលរបស់អ្នកឡើងវិញ។');
+        }
+        e.target.value = '';
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
     function handleFileSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1650,7 +1656,7 @@
             renderDocs();
           }
           if (db) {
-            db.from('docs').upsert([{
+            safeDbExec(db.from('docs').upsert([{
               id: newDoc.id,
               bureau: newDoc.bureau,
               code: newDoc.code,
@@ -1661,7 +1667,7 @@
               drive_link: res.webViewLink,
               storage: '☁️ Google Drive',
               created_by: newDoc.createdBy
-            }]).catch(e => console.warn(e));
+            }]));
           }
         }
       }).catch(err => {
@@ -1673,7 +1679,7 @@
     function deleteDoc(id) {
       if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) {
         if (db) {
-          db.from('docs').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('docs').delete().eq('id', id));
         }
         docsData = docsData.filter(d => d.id !== id);
         setLocal(STORAGE_KEYS.DOCS, docsData);
@@ -1739,14 +1745,14 @@
       }
 
       if (db) {
-        db.from('trainings').insert([newT]).catch(e => console.warn(e));
+        safeDbExec(db.from('trainings').insert([newT]));
       }
     }
 
     function deleteTraining(id) {
       if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យសិក្ខាកាមនេះមែនទេ?')) {
         if (db) {
-          db.from('trainings').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('trainings').delete().eq('id', id));
         }
         trainingData = trainingData.filter(t => t.id !== id);
         setLocal(STORAGE_KEYS.TRAINING, trainingData);
@@ -1794,14 +1800,14 @@
       }
 
       if (db) {
-        db.from('dispatches').insert([newDisp]).catch(e => console.warn(e));
+        safeDbExec(db.from('dispatches').insert([newDisp]));
       }
     }
 
     function deleteDispatch(id) {
       if (confirm('តើអ្នកចង់លុបកត់ត្រានេះមែនទេ?')) {
         if (db) {
-          db.from('dispatches').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('dispatches').delete().eq('id', id));
         }
         dispatchData = dispatchData.filter(d => d.id !== id);
         setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
@@ -1813,7 +1819,7 @@
     function deleteExam(id) {
       if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) {
         if (db) {
-          db.from('exams').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('exams').delete().eq('id', id));
         }
         examsData = examsData.filter(e => e.id !== id);
         setLocal(STORAGE_KEYS.EXAMS, examsData);
@@ -1825,7 +1831,7 @@
     function deleteCert(id) {
       if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) {
         if (db) {
-          db.from('certs').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('certs').delete().eq('id', id));
         }
         certsData = certsData.filter(c => c.id !== id);
         setLocal(STORAGE_KEYS.CERTS, certsData);
@@ -1892,32 +1898,6 @@
       }
     }
 
-    // CHANGE PASSWORD FUNCTION
-    function handleChangePassword(e) {
-      e.preventDefault();
-      const oldP = normalizeKhmerDigits(document.getElementById('old-password').value);
-      const newP = normalizeKhmerDigits(document.getElementById('new-password').value);
-
-      if (!currentUser) return;
-      if (normalizeKhmerDigits(currentUser.password) !== oldP) {
-        alert('⚠️ ពាក្យសម្ងាត់ចាស់មិនត្រឹមត្រូវ!');
-        return;
-      }
-
-      currentUser.password = newP;
-      setLocal(STORAGE_KEYS.SESSION, currentUser);
-
-      const idx = usersData.findIndex(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
-      if (idx !== -1) {
-        usersData[idx].password = newP;
-        setLocal(STORAGE_KEYS.USERS, usersData);
-      }
-
-      showToast('បានផ្លាស់ប្ដូរ Password ជោគជ័យ!');
-      logActivity('ប្ដូរ Password', 'User @' + currentUser.username);
-      e.target.reset();
-    }
-
     function renderCountriesTable() {
       const tbody = document.getElementById('countries-table-body');
       if (!tbody) return;
@@ -1946,7 +1926,7 @@
 
       const newCountry = { code, kh, en };
       if (db) {
-        db.from('countries').insert([newCountry]).catch(e => console.warn(e));
+        safeDbExec(db.from('countries').insert([newCountry]));
       }
 
       countriesData.push(newCountry);
@@ -1962,7 +1942,7 @@
       const c = countriesData[idx];
       if (confirm('តើអ្នកពិតជាចង់លុបប្រទេស "' + c.kh + '" មែនទេ?')) {
         if (db) {
-          db.from('countries').delete().eq('code', code).catch(e => console.warn(e));
+          safeDbExec(db.from('countries').delete().eq('code', code));
         }
         countriesData.splice(idx, 1);
         setLocal(STORAGE_KEYS.COUNTRIES, countriesData);
@@ -2034,7 +2014,7 @@
     function handleCreateUser(e) {
       e.preventDefault();
       const username = document.getElementById('new-user-username').value.trim();
-      if (usersData.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+      if (usersData.some(u => u && u.username && u.username.toLowerCase() === username.toLowerCase())) {
         alert('Username នេះមានរួចហើយ!');
         return;
       }
@@ -2056,7 +2036,7 @@
       };
 
       if (db) {
-        db.from('app_users').insert([newUser]).catch(e => console.warn(e));
+        safeDbExec(db.from('app_users').insert([newUser]));
       }
 
       usersData.unshift(newUser);
@@ -2072,10 +2052,12 @@
 
     function deleteUser(id) {
       const u = usersData.find(x => x.id === id);
-      if (u && u.username === 'admin') return alert('មិនអាចលុប Admin ដើមបានឡើយ!');
+      if (u && ['admin', 'user1', 'user2', 'user3'].includes(u.username.toLowerCase())) {
+        return alert('មិនអាចលុបគណនីស្នូលរបស់ប្រព័ន្ធបានឡើយ!');
+      }
       if (confirm('តើអ្នកចង់លុបគណនី @' + u.username + ' មែនទេ?')) {
         if (db) {
-          db.from('app_users').delete().eq('id', id).catch(e => console.warn(e));
+          safeDbExec(db.from('app_users').delete().eq('id', id));
         }
         usersData = usersData.filter(x => x.id !== id);
         setLocal(STORAGE_KEYS.USERS, usersData);
@@ -2090,6 +2072,7 @@
       tbody.innerHTML = usersData.map(u => {
         const p = u.permissions || { admin: false, read: true, upload: true, download: true };
         const bureauLabel = u.bureau === 'all' ? '👑 ទាំងអស់ (Admin)' : (BUREAUS[u.bureau] ? BUREAUS[u.bureau].shortName : u.bureau);
+        const isCore = ['admin', 'user1', 'user2', 'user3'].includes(String(u.username).toLowerCase());
 
         return `
           <tr class="hover:bg-emerald-50/40 transition">
@@ -2109,33 +2092,17 @@
               </div>
             </td>
             <td class="p-3 text-right">
-              ${u.username !== 'admin' ? '<button onclick="deleteUser(' + u.id + ')" class="text-rose-600 hover:underline font-bold">លុប</button>' : '<span class="text-slate-400">Default</span>'}
+              ${!isCore ? '<button onclick="deleteUser(' + u.id + ')" class="text-rose-600 hover:underline font-bold">លុប</button>' : '<span class="text-slate-400">Default</span>'}
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    // LOGS TABLE WITH SEARCH FILTER
     function renderLogsTable() {
       const tbody = document.getElementById('logs-table-body');
       if (!tbody) return;
-      const searchBox = document.getElementById('log-search-input');
-      const q = searchBox ? searchBox.value.toLowerCase() : '';
-
-      const filtered = auditLogs.filter(l => 
-        !q || 
-        (l.action && l.action.toLowerCase().indexOf(q) !== -1) || 
-        (l.user && l.user.toLowerCase().indexOf(q) !== -1) ||
-        (l.target && l.target.toLowerCase().indexOf(q) !== -1)
-      );
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">មិនមានកំណត់ត្រា Logs ស្របតាមការស្វែងរកឡើយ</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(l => `
+      tbody.innerHTML = auditLogs.map(l => `
         <tr class="hover:bg-slate-50 transition">
           <td class="p-3 text-slate-400 font-mono text-[10px]">${l.time}</td>
           <td class="p-3 font-bold text-slate-700">${l.user}</td>
@@ -2148,7 +2115,7 @@
     function clearActivityLogs() {
       if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) {
         if (db) {
-          db.from('audit_logs').delete().neq('id', 0).catch(e => console.warn(e));
+          safeDbExec(db.from('audit_logs').delete().neq('id', 0));
         }
         auditLogs = [];
         setLocal(STORAGE_KEYS.LOGS, auditLogs);
@@ -2164,17 +2131,17 @@
       const orderBy = document.getElementById('filter-training-order') ? document.getElementById('filter-training-order').value : 'name';
 
       let result = trainingData.filter(t => {
-        const matchSearch = !search || t.trainee.toLowerCase().indexOf(search) !== -1 || t.course.toLowerCase().indexOf(search) !== -1;
+        const matchSearch = !search || (t.trainee && t.trainee.toLowerCase().indexOf(search) !== -1) || (t.course && t.course.toLowerCase().indexOf(search) !== -1);
         const matchCountry = (country === 'all' || t.country === country);
         const matchSponsor = (sponsor === 'all' || t.sponsor === sponsor);
         return matchSearch && matchCountry && matchSponsor;
       });
 
       result.sort((a, b) => {
-        if (orderBy === 'country') return a.country.localeCompare(b.country);
-        if (orderBy === 'sponsor') return a.sponsor.localeCompare(b.sponsor);
-        if (orderBy === 'duration') return a.duration.localeCompare(b.duration);
-        return a.trainee.localeCompare(b.trainee);
+        if (orderBy === 'country') return String(a.country || '').localeCompare(String(b.country || ''));
+        if (orderBy === 'sponsor') return String(a.sponsor || '').localeCompare(String(b.sponsor || ''));
+        if (orderBy === 'duration') return String(a.duration || '').localeCompare(String(b.duration || ''));
+        return String(a.trainee || '').localeCompare(String(b.trainee || ''));
       });
 
       return result;
@@ -2192,6 +2159,7 @@
       a.href = url;
       a.download = 'dhrd_docs_' + Date.now() + '.csv';
       a.click();
+      showToast('បាន Export CSV ជោគជ័យ!');
     }
 
     function exportTrainingExcel() {
@@ -2211,6 +2179,7 @@
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "វគ្គបណ្តុះបណ្តាលបន្ត");
       XLSX.writeFile(workbook, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + Date.now() + '.xlsx');
+      showToast('បាន Export Excel ជោគជ័យ!');
     }
 
     function exportTrainingCSV() {
@@ -2225,6 +2194,7 @@
       a.href = url;
       a.download = 'training_report_' + Date.now() + '.csv';
       a.click();
+      showToast('បាន Export CSV ជោគជ័យ!');
     }
 
     function openPrintPreviewModal() {
@@ -2281,7 +2251,6 @@
       }
     }
 
-    // BOOTSTRAP V2
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       populateCountryDropdowns();
