@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;500;600;700&family=Moul&display=swap" rel="stylesheet">
   
-  <!-- SheetJS Library សម្រាប់ Export Excel (.xlsx) -->
+  <!-- SheetJS Library សម្រាប់ Export/Import Excel (.xlsx) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <!-- QR Scanner Tool -->
@@ -48,6 +48,9 @@
   </style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900 pb-16 lg:pb-0">
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
 
   <!-- ================= TOP HEADER BAR ================= -->
   <header id="app-header" class="hidden bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
@@ -185,26 +188,6 @@
       </div>
     </div>
 
-    <!-- VISUAL ANALYTICS BAR CHART -->
-    <div class="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-        <div>
-          <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <span>📊</span> ក្រាហ្វិកស្ថិតិទិន្នន័យ (Visual Analytics Overview)
-          </h3>
-          <p class="text-xs text-slate-500 mt-0.5">ស្ថិតិសិក្ខាកាមតាមប្រទេស និងឯកសារការិយាល័យ</p>
-        </div>
-        <div class="flex items-center gap-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1 rounded-xl">
-          <button onclick="renderAnalyticsChart('training')" id="btn-chart-train" class="px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs">សិក្ខាកាមតាមប្រទេស</button>
-          <button onclick="renderAnalyticsChart('docs')" id="btn-chart-docs" class="px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900">ឯកសារតាមការិយាល័យ</button>
-        </div>
-      </div>
-      <div class="pt-5 pb-2">
-        <div id="analytics-bars-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 items-end h-48 border-b border-slate-200 px-2 pb-2"></div>
-        <div id="analytics-labels-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 pt-2 px-2 text-[10px] text-center text-slate-500 font-medium"></div>
-      </div>
-    </div>
-
     <!-- DYNAMIC NAVIGATION TABS -->
     <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" id="bureau-tabs-nav"></div>
 
@@ -303,13 +286,18 @@
               <p class="text-[11px] text-slate-400">ទិន្នន័យសិក្ខាកាម វគ្គសិក្សា កាលបរិច្ឆេទ និងប្រទេស</p>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
+              <!-- IMPORT EXCEL BUTTON -->
+              <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
+              <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
+                📥 Import Excel
+              </button>
               <button onclick="exportTrainingExcel()" class="perm-download-el px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
                 📊 Excel (.xlsx)
               </button>
               <button onclick="exportTrainingCSV()" class="perm-download-el px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
                 CSV
               </button>
-              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
                 👁️ Print / PDF
               </button>
             </div>
@@ -751,6 +739,25 @@
       }
     }
 
+    // TOAST NOTIFICATION FUNCTION (សារជោគជ័យ)
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = "flex items-center gap-2 bg-emerald-600 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 translate-y-2 opacity-0";
+      toast.innerHTML = `<span>✅</span> <span>${message}</span>`;
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
     // ២. GOOGLE DRIVE AUTOMATIC WEBHOOK CONFIG
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
 
@@ -791,7 +798,6 @@
       }
     };
 
-    // ៤. ឈ្មោះថេរសម្រាប់ CACHE LOCALSTORAGE
     const STORAGE_KEYS = {
       DOCS: 'hrd_moh_docs_cache',
       DISPATCH: 'hrd_moh_disp_cache',
@@ -808,7 +814,6 @@
     function getLocal(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
     function setLocal(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 
-    // គណនីស្នូលដើម
     const defaultUsers = [
       { id: 1, username: 'admin', password: 'admin123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', bureau: 'all', permissions: { admin: true, read: true, upload: true, download: true } },
       { id: 2, username: 'user1', password: '123', fullname: 'មន្ត្រីមុនពេលបម្រើការងារ', bureau: 'bureau_1', permissions: { admin: false, read: true, upload: true, download: true } },
@@ -850,7 +855,6 @@
     let usersData = mergeWithCoreUsers(getLocal(STORAGE_KEYS.USERS, defaultUsers));
     let auditLogs = getLocal(STORAGE_KEYS.LOGS, []);
     
-    // បង្ខំឱ្យផ្ទៀងផ្ទាត់ Login ថ្មីជានិច្ច លើកលែងតែមាន Session បណ្តោះអាសន្ន
     function getSessionUser() {
       try {
         const v = sessionStorage.getItem(STORAGE_KEYS.SESSION);
@@ -893,7 +897,6 @@
 
     let currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, rawFile: null };
 
-    // ៥. NON-BLOCKING ASYNC BACKGROUND SYNC FROM SUPABASE
     function syncFromSupabase() {
       if (!db) return;
       Promise.allSettled([
@@ -943,7 +946,6 @@
 
         if (currentUser && currentUser.username) {
           renderBureauWorkspace();
-          renderAnalyticsChart('training');
           populateCountryDropdowns();
         }
       }).catch(err => {
@@ -951,7 +953,6 @@
       });
     }
 
-    // ៦. LOGS & AUTH CONTROL
     function logActivity(action, target) {
       try {
         const now = new Date();
@@ -1014,7 +1015,6 @@
 
         applyUserPermissionsUI(isSuperAdmin);
         renderBureauWorkspace();
-        renderAnalyticsChart('training');
       }
     }
 
@@ -1102,6 +1102,7 @@
         const errEl = document.getElementById('login-error');
         if (errEl) errEl.classList.add('hidden');
         checkAuth();
+        showToast('បានចូលប្រព័ន្ធដោយជោគជ័យ!');
         logActivity('ចូលប្រព័ន្ធ', 'User @' + currentUser.username + ' ចូលកាន់ ' + currentUser.bureau);
       } else {
         const errEl = document.getElementById('login-error');
@@ -1165,69 +1166,6 @@
     function switchBureauTab(tabId) {
       activeTab = tabId;
       renderBureauWorkspace();
-    }
-
-    function renderAnalyticsChart(type) {
-      const bars = document.getElementById('analytics-bars-container');
-      const labels = document.getElementById('analytics-labels-container');
-      if (!bars || !labels) return;
-
-      const btnT = document.getElementById('btn-chart-train');
-      const btnD = document.getElementById('btn-chart-docs');
-
-      if (type === 'training') {
-        btnT.className = 'px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs';
-        btnD.className = 'px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900';
-
-        const counts = {};
-        trainingData.forEach(t => {
-          if (t && t.country) counts[t.country] = (counts[t.country] || 0) + 1;
-        });
-
-        const sorted = Object.entries(counts).slice(0, 8);
-        const maxVal = Math.max(...sorted.map(s => s[1]), 5);
-
-        bars.innerHTML = sorted.map(([country, count]) => {
-          const heightPercent = Math.max(15, Math.round((count / maxVal) * 100));
-          return `
-            <div class="flex flex-col items-center justify-end h-full group relative">
-              <span class="text-[10px] font-bold text-emerald-800 mb-1 opacity-90 group-hover:scale-110 transition">${count}</span>
-              <div style="height: ${heightPercent}%;" class="w-full max-w-[36px] bg-gradient-to-t from-[#143e2e] to-[#2d6a4f] rounded-t-lg group-hover:brightness-110 transition shadow-xs"></div>
-            </div>
-          `;
-        }).join('');
-
-        labels.innerHTML = sorted.map(([country]) => `
-          <div class="truncate font-semibold" title="${country}">${country}</div>
-        `).join('');
-
-      } else {
-        btnD.className = 'px-3 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-2xs';
-        btnT.className = 'px-3 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900';
-
-        const bCounts = {
-          'ការិយាល័យទី១': docsData.filter(d => d.bureau === 'bureau_1').length,
-          'ការិយាល័យទី២': docsData.filter(d => d.bureau === 'bureau_2').length,
-          'ការិយាល័យទី៣': docsData.filter(d => d.bureau === 'bureau_3').length
-        };
-
-        const sorted = Object.entries(bCounts);
-        const maxVal = Math.max(...sorted.map(s => s[1]), 5);
-
-        bars.innerHTML = sorted.map(([bName, count]) => {
-          const heightPercent = Math.max(15, Math.round((count / maxVal) * 100));
-          return `
-            <div class="flex flex-col items-center justify-end h-full group relative col-span-2">
-              <span class="text-[10px] font-bold text-blue-800 mb-1 opacity-90">${count}</span>
-              <div style="height: ${heightPercent}%;" class="w-full max-w-[50px] bg-gradient-to-t from-blue-700 to-emerald-600 rounded-t-lg shadow-xs transition"></div>
-            </div>
-          `;
-        }).join('');
-
-        labels.innerHTML = sorted.map(([bName]) => `
-          <div class="truncate font-semibold col-span-2">${bName}</div>
-        `).join('');
-      }
     }
 
     function renderSideForm() {
@@ -1569,6 +1507,53 @@
       `).join('');
     }
 
+    // IMPORT EXCEL / CSV FUNCTION (តាមទម្រង់ Excel ស្តង់ដាររបស់អ្នក)
+    function handleImportExcel(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          let importedCount = 0;
+          // រំលងជួរទី១ (ក្បាលតារាង Header) ហើយចាប់ផ្តើមអានពីជួរទី២
+          for (let i = 1; i < json.length; i++) {
+            const row = json[i];
+            if (row && row.length >= 2 && row[1]) {
+              const newT = {
+                id: Date.now() + i,
+                trainee: String(row[1] || '').trim(),
+                unit: String(row[2] || 'នាយកដ្ឋាន/មន្ទីរពេទ្យ').trim(),
+                course: String(row[3] || 'វគ្គបណ្តុះបណ្តាល').trim(),
+                duration: String(row[4] || '1 M').trim(),
+                dates: String(row[5] || '01/01/26-01/02/26').trim(),
+                country: String(row[6] || 'ក្នុងប្រទេស').trim(),
+                sponsor: String(row[7] || 'សាមីខ្លួន').trim(),
+                scope: 'International'
+              };
+              trainingData.unshift(newT);
+              importedCount++;
+            }
+          }
+
+          setLocal(STORAGE_KEYS.TRAINING, trainingData);
+          renderTrainingList();
+          showToast(`បាន Import ចូលជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`);
+          logActivity('Import Excel V2', `បានបញ្ចូលទិន្នន័យចំនួន ${importedCount}`);
+        } catch (err) {
+          console.error(err);
+          alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel! សូមពិនិត្យមើលទម្រង់ហ្វាលរបស់អ្នកឡើងវិញ។');
+        }
+        e.target.value = '';
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
     function handleFileSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1631,7 +1616,7 @@
       docsData.unshift(newDoc);
       setLocal(STORAGE_KEYS.DOCS, docsData);
       renderDocs();
-      renderAnalyticsChart('docs');
+      showToast('បានរក្សាទុក និង Upload ឯកសារជោគជ័យ!');
       logActivity('Upload ឯកសារ V2', newDoc.code);
 
       docCodeInput.value = '';
@@ -1699,7 +1684,7 @@
         docsData = docsData.filter(d => d.id !== id);
         setLocal(STORAGE_KEYS.DOCS, docsData);
         renderDocs();
-        renderAnalyticsChart('docs');
+        showToast('បានលុបឯកសារជោគជ័យ!');
       }
     }
 
@@ -1739,7 +1724,7 @@
       trainingData.unshift(newT);
       setLocal(STORAGE_KEYS.TRAINING, trainingData);
       renderTrainingList();
-      renderAnalyticsChart('training');
+      showToast('បានរក្សាទុកវគ្គបណ្តុះបណ្តាលជោគជ័យ!');
       logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល V2', newT.trainee + ' (' + newT.country + ')');
 
       traineeEl.value = '';
@@ -1772,7 +1757,7 @@
         trainingData = trainingData.filter(t => t.id !== id);
         setLocal(STORAGE_KEYS.TRAINING, trainingData);
         renderTrainingList();
-        renderAnalyticsChart('training');
+        showToast('បានលុបទិន្នន័យជោគជ័យ!');
       }
     }
 
@@ -1798,6 +1783,7 @@
       dispatchData.unshift(newDisp);
       setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
       renderDispatch();
+      showToast('បានកត់ត្រាលិខិតជោគជ័យ!');
       logActivity('កត់ត្រាលិខិត', newDisp.code + ' នៅ ' + newDisp.location);
 
       dispCodeEl.value = '';
@@ -1826,6 +1812,7 @@
         dispatchData = dispatchData.filter(d => d.id !== id);
         setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
         renderDispatch();
+        showToast('បានលុបជោគជ័យ!');
       }
     }
 
@@ -1837,6 +1824,7 @@
         examsData = examsData.filter(e => e.id !== id);
         setLocal(STORAGE_KEYS.EXAMS, examsData);
         renderExams();
+        showToast('បានលុបជោគជ័យ!');
       }
     }
 
@@ -1848,6 +1836,7 @@
         certsData = certsData.filter(c => c.id !== id);
         setLocal(STORAGE_KEYS.CERTS, certsData);
         renderCerts();
+        showToast('បានលុបជោគជ័យ!');
       }
     }
 
@@ -1942,11 +1931,11 @@
 
       countriesData.push(newCountry);
       setLocal(STORAGE_KEYS.COUNTRIES, countriesData);
+      showToast('បានបន្ថែមប្រទេសជោគជ័យ!');
       logActivity('បន្ថែមប្រទេស', 'បានបន្ថែមប្រទេស ' + kh + ' (' + code + ')');
       renderCountriesTable();
       populateCountryDropdowns();
       e.target.reset();
-      alert('✅ បានបញ្ចូលប្រទេស "' + kh + '" ដោយជោគជ័យ!');
     }
 
     function deleteCountry(code, idx) {
@@ -1957,6 +1946,7 @@
         }
         countriesData.splice(idx, 1);
         setLocal(STORAGE_KEYS.COUNTRIES, countriesData);
+        showToast('បានលុបប្រទេសជោគជ័យ!');
         logActivity('លុបប្រទេស', 'បានលុបប្រទេស ' + c.kh);
         renderCountriesTable();
         populateCountryDropdowns();
@@ -2017,6 +2007,7 @@
       a.href = URL.createObjectURL(blob);
       a.download = 'DHRD_SYSTEM_BACKUP_V2_' + Date.now() + '.json';
       a.click();
+      showToast('បាន Export Backup ជោគជ័យ!');
       logActivity('ទាញយក Backup V2', 'បានទាញយកទិន្នន័យប្រព័ន្ធជា JSON');
     }
 
@@ -2050,13 +2041,13 @@
 
       usersData.unshift(newUser);
       setLocal(STORAGE_KEYS.USERS, usersData);
+      showToast('បានបង្កើតគណនីមន្ត្រីជោគជ័យ!');
       logActivity('បង្កើត User ថ្មី', '@' + newUser.username + ' (Admin: ' + isAdminRole + ')');
       renderUsersTable();
       e.target.reset();
       document.getElementById('perm-read').checked = true;
       document.getElementById('perm-upload').checked = true;
       document.getElementById('perm-download').checked = true;
-      alert('✅ បានបង្កើតគណនីមន្ត្រីដោយជោគជ័យ!');
     }
 
     function deleteUser(id) {
@@ -2071,6 +2062,7 @@
         usersData = usersData.filter(x => x.id !== id);
         setLocal(STORAGE_KEYS.USERS, usersData);
         renderUsersTable();
+        showToast('បានលុបគណនីជោគជ័យ!');
       }
     }
 
@@ -2128,6 +2120,7 @@
         auditLogs = [];
         setLocal(STORAGE_KEYS.LOGS, auditLogs);
         renderLogsTable();
+        showToast('បានជម្រះ Logs ជោគជ័យ!');
       }
     }
 
@@ -2166,6 +2159,7 @@
       a.href = url;
       a.download = 'dhrd_docs_' + Date.now() + '.csv';
       a.click();
+      showToast('បាន Export CSV ជោគជ័យ!');
     }
 
     function exportTrainingExcel() {
@@ -2185,6 +2179,7 @@
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "វគ្គបណ្តុះបណ្តាលបន្ត");
       XLSX.writeFile(workbook, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + Date.now() + '.xlsx');
+      showToast('បាន Export Excel ជោគជ័យ!');
     }
 
     function exportTrainingCSV() {
@@ -2199,6 +2194,7 @@
       a.href = url;
       a.download = 'training_report_' + Date.now() + '.csv';
       a.click();
+      showToast('បាន Export CSV ជោគជ័យ!');
     }
 
     function openPrintPreviewModal() {
@@ -2255,7 +2251,6 @@
       }
     }
 
-    // BOOTSTRAP V2
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       populateCountryDropdowns();
