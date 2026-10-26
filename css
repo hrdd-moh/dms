@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2 - DHRD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2.1 - DHRD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -20,8 +20,24 @@
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    
+    /* UI FIX 1: ជួសជុលបញ្ហាដាច់អក្សរខ្មែរក្នុង Inputs */
+    input, textarea, select {
+      line-height: 1.625 !important;
+      padding-top: 0.6rem !important;
+      padding-bottom: 0.6rem !important;
+      overflow: visible !important;
+    }
+
+    /* UI FIX 2: ពង្រឹងសូចនាករផ្តោតតាមស្តង់ដារ WCAG AA */
     .form-input-focus { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
     .form-input-focus:focus { outline: none; border-color: #059669; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+    .form-input-focus:focus-visible {
+      outline: 2px solid #059669;
+      outline-offset: 2px;
+      border-color: transparent;
+    }
+
     @media print {
       body * { visibility: hidden; }
       #printable-preview-content, #printable-preview-content * { visibility: visible; }
@@ -31,11 +47,11 @@
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900 pb-16 lg:pb-0">
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+  <!-- UI FIX 3: ដំឡើង Z-Index របស់ Toast កុំឱ្យលាក់នៅក្រោយ Modal -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[110] flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- ================= TOP HEADER BAR ================= -->
-  <header id="app-header" class="hidden bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
+  <header id="app-header" class="hidden bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
       
       <div class="flex items-center space-x-3 min-w-0">
@@ -47,7 +63,7 @@
             <span class="font-bold text-slate-900 text-sm sm:text-base leading-tight">ក្រសួងសុខាភិបាល</span>
             <span class="text-slate-300 hidden sm:inline">|</span>
             <span class="font-bold text-slate-900 text-xs sm:text-base leading-tight">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</span>
-            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V2</span>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V2.1</span>
           </div>
           <p class="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (DHRD - MoH)</p>
         </div>
@@ -93,7 +109,7 @@
       <div class="space-y-1.5 relative z-10 max-w-2xl">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-200 text-[11px] font-semibold tracking-wide backdrop-blur-xs border border-white/10">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>ប្រព័ន្ធរដ្ឋបាលឌីជីថល DHRD Smart Workplace V2</span>
+          <span>ប្រព័ន្ធរដ្ឋបាលឌីជីថល DHRD Smart Workplace V2.1</span>
         </div>
         <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white font-moul sm:font-sans" id="active-bureau-title">ការិយាល័យជំនាញ</h2>
         <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light" id="active-bureau-desc">ប្រព័ន្ធគ្រប់គ្រងឯកសារ តាមដានលិខិតចេញ-ចូល និងភារកិច្ចជាក់ស្តែង</p>
@@ -156,7 +172,8 @@
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <!-- UI FIX 4: បន្ថែម whitespace-nowrap លើក្បាលតារាង -->
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
                 <tr>
                   <th class="p-3 w-10 text-center"><input type="checkbox" class="rounded text-emerald-600"></th>
                   <th class="p-3">Doc ID</th>
@@ -181,7 +198,7 @@
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
                 <tr>
                   <th class="p-3 w-10 text-center"><input type="checkbox" class="rounded text-emerald-600"></th>
                   <th class="p-3">ប្រភេទ</th>
@@ -206,7 +223,7 @@
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
                 <tr>
                   <th class="p-3 w-10 text-center"><input type="checkbox" class="rounded text-emerald-600"></th>
                   <th class="p-3">ប្រភេទ</th>
@@ -249,10 +266,10 @@
 
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
                 <tr>
                   <th class="p-3 w-10 text-center"><input type="checkbox" class="rounded text-emerald-600"></th>
-                  <th class="p-3">ឈ្មោះ</th>
+                  <th class="p-3 min-w-[150px]">ឈ្មោះ</th>
                   <th class="p-3 min-w-[150px]">អង្គភាព</th>
                   <th class="p-3 min-w-[170px]">វគ្គសិក្សា</th>
                   <th class="p-3 text-center">រយៈពេល</th>
@@ -275,7 +292,7 @@
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
             <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 whitespace-nowrap">
                 <tr>
                   <th class="p-3 w-10 text-center"><input type="checkbox" class="rounded text-emerald-600"></th>
                   <th class="p-3">លេខកូដសញ្ញាបត្រ</th>
@@ -331,14 +348,14 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- LOGIN MODAL (មានសុវត្ថិភាពខ្ពស់ គ្មាន Quick Login) -->
-  <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+  <!-- LOGIN MODAL (UI Fix: បន្ថែម ARIA Attributes) -->
+  <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-20 h-20 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V2.1</h3>
         <p class="text-xs text-emerald-800 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -360,10 +377,10 @@
   </div>
 
   <!-- SYSTEM TOOLS MODAL -->
-  <div id="modal-system-tools" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+  <div id="modal-system-tools" role="dialog" aria-modal="true" aria-labelledby="system-tools-title" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[100] flex items-center justify-center p-3 sm:p-4 hidden">
     <div class="bg-white rounded-3xl max-w-5xl w-full p-5 sm:p-7 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2" id="system-tools-title">⚙️ System Tools Dashboard</h3>
+        <h3 id="system-tools-title" class="text-base font-bold text-slate-900 flex items-center gap-2">⚙️ System Tools Dashboard</h3>
         <button onclick="closeSystemModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none transition">✕</button>
       </div>
 
@@ -551,10 +568,10 @@
   </div>
 
   <!-- PRINT PREVIEW & PDF MODAL -->
-  <div id="modal-print-preview" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="modal-print-preview" role="dialog" aria-modal="true" aria-labelledby="print-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-[100] flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="bg-white rounded-3xl max-w-5xl w-full p-6 shadow-2xl flex flex-col max-h-[95vh]">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2"><span>👁️</span> ផ្ទាំងមើលជាមុន មុននឹង Print ឬទាញយកជា PDF</h3>
+        <h3 id="print-title" class="text-sm font-bold text-slate-900 flex items-center gap-2"><span>👁️</span> ផ្ទាំងមើលជាមុន មុននឹង Print ឬទាញយកជា PDF</h3>
         <div class="flex items-center gap-2">
           <button onclick="executePrintReport()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs">🖨️ បោះពុម្ព / Save ជា PDF</button>
           <button onclick="closePrintPreviewModal()" class="text-slate-400 hover:text-slate-600 text-xl leading-none px-2">✕</button>
@@ -583,7 +600,7 @@
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs border-collapse border border-slate-300">
-            <thead class="bg-slate-100 font-bold">
+            <thead class="bg-slate-100 font-bold whitespace-nowrap">
               <tr>
                 <th class="border border-slate-300 p-2 text-center w-10">ល.រ</th>
                 <th class="border border-slate-300 p-2">ឈ្មោះ</th>
@@ -607,10 +624,10 @@
   </div>
 
   <!-- QR SCANNER MODAL -->
-  <div id="modal-scanner" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+  <div id="modal-scanner" role="dialog" aria-modal="true" aria-labelledby="scanner-title" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[100] flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl space-y-3">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-        <h3 class="text-sm font-bold text-slate-900">📷 ស្កេនផ្ទៀងផ្ទាត់ QR Code</h3>
+        <h3 id="scanner-title" class="text-sm font-bold text-slate-900">📷 ស្កេនផ្ទៀងផ្ទាត់ QR Code</h3>
         <button onclick="toggleScannerModal(false)" class="text-slate-400 hover:text-slate-600 text-lg leading-none">✕</button>
       </div>
       <div id="reader" class="w-full rounded-2xl overflow-hidden border border-slate-200"></div>
@@ -618,7 +635,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2.5 ================= -->
+  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2.1 UI/UX UPGRADED ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -628,7 +645,6 @@
       try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { console.warn("Supabase err:", e); }
     }
 
-    // [សុវត្ថិភាពថ្មី]: ចាប់ Error ពី Supabase កុំឱ្យកូដគាំង ព្រមទាំងលោតសារប្រាប់បើមានបញ្ហា Database
     async function safeDbExec(promise) {
       if (!db || !promise) return null;
       try { 
@@ -645,7 +661,7 @@
       const container = document.getElementById('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
-      toast.className = "flex items-center gap-2 bg-emerald-600 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 translate-y-2 opacity-0";
+      toast.className = "flex items-center gap-2 bg-emerald-600 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto";
       toast.innerHTML = `<span>✅</span> <span>${message}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
@@ -722,15 +738,11 @@
       } catch (err) {}
     }
 
-    // [គន្លឹះថ្មី]: អនុគមន៍ Smart Merge ដោះស្រាយបញ្ហា Overwrite ធ្វើឱ្យបាត់ទិន្នន័យ
     function mergeArrays(localArr, remoteArr) {
         if (!remoteArr || !Array.isArray(remoteArr) || remoteArr.length === 0) return localArr;
         const map = new Map();
-        // ទុកទិន្នន័យ Local ជាគោលសិន ដើម្បីកុំឱ្យទិន្នន័យដែលទើបបញ្ចូលថ្មីបាត់
         localArr.forEach(item => map.set(item.id, item));
-        // ទាញទិន្នន័យពី Cloud មកសង្កត់ពីលើ (តែបើ ID ជាន់គ្នា ទើប Cloud ឈ្នះ)
         remoteArr.forEach(item => map.set(item.id, item));
-        // តម្រៀបតាម ID ថ្មីៗជាងគេនៅខាងលើ
         return Array.from(map.values()).sort((a, b) => b.id - a.id);
     }
 
@@ -770,7 +782,6 @@
           usersData = mergeWithCoreUsers(rUsers.value.data); setLocal(STORAGE_KEYS.USERS, usersData);
         }
 
-        // ធ្វើបច្ចុប្បន្នភាព UI ម្តងទៀតបន្ទាប់ពីទាញពី Cloud រួចរាល់
         if (currentUser && currentUser.username) {
           renderBureauWorkspace(); 
           populateCountryDropdowns();
@@ -1311,8 +1322,21 @@
       }
     }
 
-    // មុខងារបិទម៉ឺនុយពេលចុចកន្លែងផ្សេង
     function toggleToolsMenu() { document.getElementById('tools-dropdown').classList.toggle('hidden'); }
+    
+    // UI FIX 4: មុខងារចុច Escape ដើម្បីបិទ Modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const toolsModal = document.getElementById('modal-system-tools');
+        const printModal = document.getElementById('modal-print-preview');
+        const scannerModal = document.getElementById('modal-scanner');
+        
+        if (toolsModal && !toolsModal.classList.contains('hidden')) closeSystemModal();
+        else if (printModal && !printModal.classList.contains('hidden')) closePrintPreviewModal();
+        else if (scannerModal && !scannerModal.classList.contains('hidden')) toggleScannerModal(false);
+      }
+    });
+
     document.addEventListener('click', (e) => {
       const container = document.getElementById('tools-menu-container');
       const dropdown = document.getElementById('tools-dropdown');
@@ -1456,7 +1480,7 @@
             }
           }
           setLocal(STORAGE_KEYS.TRAINING, trainingData); 
-          if (db && newItems.length > 0) safeDbExec(db.from('trainings').insert(newItems)); // រុញទិន្នន័យ Import ទៅ Cloud
+          if (db && newItems.length > 0) safeDbExec(db.from('trainings').insert(newItems));
           renderTrainingList();
           showToast(`បាន Import ចូលជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`); logActivity('Import Excel V2', `បានបញ្ចូលទិន្នន័យចំនួន ${importedCount}`);
         } catch (err) { alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel! សូមពិនិត្យមើលទម្រង់ហ្វាលរបស់អ្នកឡើងវិញ។'); }
@@ -1509,7 +1533,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V2.5
+    // BOOTSTRAP V2.1
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       syncFromSupabase();
