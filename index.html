@@ -5,41 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2 - DHRD ក្រសួងសុខាភិបាល</title>
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Supabase Cloud Client SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Google Fonts for Khmer -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;500;600;700&family=Moul&display=swap" rel="stylesheet">
-  
-  <!-- SheetJS Library សម្រាប់ Export/Import Excel (.xlsx) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
-  <!-- QR Scanner Tool -->
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
   <style>
     body { font-family: 'Battambang', system-ui, -apple-system, sans-serif; }
     .font-moul { font-family: 'Moul', cursive; }
-    
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    .form-input-focus {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .form-input-focus:focus {
-      outline: none;
-      border-color: #059669;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-    }
-
+    .form-input-focus { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .form-input-focus:focus { outline: none; border-color: #059669; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
     @media print {
       body * { visibility: hidden; }
       #printable-preview-content, #printable-preview-content * { visibility: visible; }
@@ -83,24 +65,12 @@
           </button>
           
           <div id="tools-dropdown" class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200/80 py-1.5 z-50 hidden">
-            <button onclick="openSystemModal('settings')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-              ⚙️ <span>User Management</span>
-            </button>
-            <button onclick="openSystemModal('location')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-              🌍 <span>Location (គ្រប់គ្រងប្រទេស)</span>
-            </button>
-            <button onclick="openSystemModal('files')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-              📁 <span>File System & Backups</span>
-            </button>
-            <button onclick="openSystemModal('security')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-              🛡️ <span>Security Center</span>
-            </button>
-            <button onclick="openSystemModal('logging')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 border-b border-slate-100">
-              📋 <span>Audit Logging</span>
-            </button>
-            <button onclick="openSystemModal('manual')" class="w-full text-left px-4 py-2 text-xs text-emerald-700 font-bold hover:bg-emerald-50 flex items-center gap-2">
-              📖 <span>User Manual</span>
-            </button>
+            <button onclick="openSystemModal('settings')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">⚙️ <span>User Management</span></button>
+            <button onclick="openSystemModal('location')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">🌍 <span>Location (គ្រប់គ្រងប្រទេស)</span></button>
+            <button onclick="openSystemModal('files')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">📁 <span>File System & Backups</span></button>
+            <button onclick="openSystemModal('security')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2">🛡️ <span>Security Center</span></button>
+            <button onclick="openSystemModal('logging')" class="admin-only-item w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 border-b border-slate-100">📋 <span>Audit Logging</span></button>
+            <button onclick="openSystemModal('manual')" class="w-full text-left px-4 py-2 text-xs text-emerald-700 font-bold hover:bg-emerald-50 flex items-center gap-2">📖 <span>User Manual</span></button>
           </div>
         </div>
 
@@ -109,9 +79,7 @@
             <div class="text-xs font-bold text-slate-800" id="current-user-fullname">មន្ត្រី</div>
             <div class="text-[10px] text-emerald-700 font-semibold" id="current-user-role">...</div>
           </div>
-          <button onclick="handleLogout()" title="ចាកចេញ (Logout)" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 font-bold flex items-center justify-center text-xs transition">
-            🚪
-          </button>
+          <button onclick="handleLogout()" title="ចាកចេញ (Logout)" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 font-bold flex items-center justify-center text-xs transition">🚪</button>
         </div>
       </div>
     </div>
@@ -145,37 +113,22 @@
     <!-- METRIC SUMMARY CARDS -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition">
-        <div class="flex items-center justify-between">
-          <p class="text-xs text-slate-500 font-medium">បណ្ណាល័យរួម (៣ ការិយាល័យ)</p>
-          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">📚</div>
-        </div>
+        <div class="flex items-center justify-between"><p class="text-xs text-slate-500 font-medium">បណ្ណាល័យរួម (៣ ការិយាល័យ)</p><div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">📚</div></div>
         <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-2" id="stat-bureau-docs">0</h3>
         <span class="inline-block mt-1 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-semibold">☁️ Cloud Database</span>
       </div>
-
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition">
-        <div class="flex items-center justify-between">
-          <p class="text-xs text-slate-500 font-medium">លិខិតកំពុងរត់ការ</p>
-          <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">⏳</div>
-        </div>
+        <div class="flex items-center justify-between"><p class="text-xs text-slate-500 font-medium">លិខិតកំពុងរត់ការ</p><div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">⏳</div></div>
         <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-2" id="stat-bureau-disp">0</h3>
         <span class="inline-block mt-1 text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md font-semibold">ដំណាក់កាលរដ្ឋបាល</span>
       </div>
-
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition">
-        <div class="flex items-center justify-between">
-          <p class="text-xs text-slate-500 font-medium" id="stat-custom-label">ការងារជំនាញ</p>
-          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold" id="stat-custom-icon">🎯</div>
-        </div>
+        <div class="flex items-center justify-between"><p class="text-xs text-slate-500 font-medium" id="stat-custom-label">ការងារជំនាញ</p><div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold" id="stat-custom-icon">🎯</div></div>
         <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-2" id="stat-custom-val">0</h3>
         <span class="inline-block mt-1 text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md font-semibold">ទិន្នន័យជាក់ស្តែង</span>
       </div>
-
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition">
-        <div class="flex items-center justify-between">
-          <p class="text-xs text-slate-500 font-medium">ការិយាល័យសាមី</p>
-          <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">🏢</div>
-        </div>
+        <div class="flex items-center justify-between"><p class="text-xs text-slate-500 font-medium">ការិយាល័យសាមី</p><div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">🏢</div></div>
         <h3 class="text-xs sm:text-sm font-bold text-emerald-800 mt-3 truncate" id="stat-bureau-badge">ការិយាល័យទី១</h3>
         <span class="inline-block mt-1 text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md font-semibold">Active Workspace</span>
       </div>
@@ -198,9 +151,7 @@
               <input type="text" id="doc-search" oninput="renderDocs()" placeholder="ស្វែងរកឯកសារតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-200 rounded-xl px-3.5 py-2 text-xs w-full max-w-sm bg-slate-50/50">
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="exportCSV('docs')" id="btn-export-docs" class="perm-download-el px-3.5 py-2 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-100 transition shadow-2xs">
-                Export as CSV
-              </button>
+              <button onclick="exportCSV('docs')" id="btn-export-docs" class="perm-download-el px-3.5 py-2 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-100 transition shadow-2xs">Export as CSV</button>
             </div>
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs">
@@ -280,43 +231,19 @@
             </div>
             <div class="flex items-center gap-2 flex-wrap">
               <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
-              <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
-                📥 Import Excel
-              </button>
-              <button onclick="exportTrainingExcel()" class="perm-download-el px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">
-                📊 Excel (.xlsx)
-              </button>
-              <button onclick="exportTrainingCSV()" class="perm-download-el px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
-                CSV
-              </button>
-              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
-                👁️ Print / PDF
-              </button>
+              <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">📥 Import Excel</button>
+              <button onclick="exportTrainingExcel()" class="perm-download-el px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs">📊 Excel (.xlsx)</button>
+              <button onclick="exportTrainingCSV()" class="perm-download-el px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">CSV</button>
+              <button onclick="openPrintPreviewModal()" class="perm-download-el px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">👁️ Print / PDF</button>
             </div>
           </div>
 
           <div class="bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/80 space-y-2.5 text-xs">
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
-              <div>
-                <input type="text" id="filter-training-search" oninput="renderTrainingList()" placeholder="🔍 ស្វែងរកឈ្មោះ/វគ្គ..." class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs">
-              </div>
-              <div>
-                <select id="filter-training-country" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs">
-                  <option value="all">ប្រទេសទាំងអស់</option>
-                </select>
-              </div>
-              <div>
-                <select id="filter-training-sponsor" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs">
-                  <option value="all">អ្នកឧបត្ថម្ភទាំងអស់</option>
-                </select>
-              </div>
-              <div>
-                <select id="filter-training-order" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs">
-                  <option value="name">ឈ្មោះសិក្ខាកាម (A-Z)</option>
-                  <option value="country">ប្រទេស (Location)</option>
-                  <option value="duration">រយៈពេល</option>
-                </select>
-              </div>
+              <div><input type="text" id="filter-training-search" oninput="renderTrainingList()" placeholder="🔍 ស្វែងរកឈ្មោះ/វគ្គ..." class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs"></div>
+              <div><select id="filter-training-country" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs"><option value="all">ប្រទេសទាំងអស់</option></select></div>
+              <div><select id="filter-training-sponsor" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs"><option value="all">អ្នកឧបត្ថម្ភទាំងអស់</option></select></div>
+              <div><select id="filter-training-order" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-white text-xs"><option value="name">ឈ្មោះសិក្ខាកាម (A-Z)</option><option value="country">ប្រទេស (Location)</option><option value="duration">រយៈពេល</option></select></div>
             </div>
           </div>
 
@@ -366,7 +293,7 @@
 
       </div>
 
-      <!-- RIGHT PANEL: STICKY QUICK ENTRY PANEL (4 COLS) -->
+      <!-- RIGHT PANEL: STICKY QUICK ENTRY PANEL -->
       <div class="lg:col-span-4 sticky top-24">
         <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden">
           <div class="bg-[#1b503b] text-white p-4 text-center">
@@ -404,7 +331,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- LOGIN MODAL -->
+  <!-- LOGIN MODAL (មានសុវត្ថិភាពខ្ពស់ គ្មាន Quick Login) -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-20 h-20 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
@@ -454,17 +381,9 @@
         <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
           <h4 class="text-xs font-bold text-emerald-900 mb-2.5">🔐 ប្ដូរពាក្យសម្ងាត់ផ្ទាល់ខ្លួន (Change Personal Password)</h4>
           <form onsubmit="handleChangePassword(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-end">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ចាស់</label>
-              <input type="password" id="old-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ថ្មី</label>
-              <input type="password" id="new-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white">
-            </div>
-            <div>
-              <button type="submit" class="w-full py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 shadow-xs transition">💾 ផ្លាស់ប្ដូរ Password</button>
-            </div>
+            <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ចាស់</label><input type="password" id="old-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"></div>
+            <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ពាក្យសម្ងាត់ថ្មី</label><input type="password" id="new-password" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"></div>
+            <div><button type="submit" class="w-full py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 shadow-xs transition">💾 ផ្លាស់ប្ដូរ Password</button></div>
           </form>
         </div>
 
@@ -699,7 +618,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2.4 ================= -->
+  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V2.5 ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -709,9 +628,17 @@
       try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { console.warn("Supabase err:", e); }
     }
 
+    // [សុវត្ថិភាពថ្មី]: ចាប់ Error ពី Supabase កុំឱ្យកូដគាំង ព្រមទាំងលោតសារប្រាប់បើមានបញ្ហា Database
     async function safeDbExec(promise) {
-      if (!db || !promise) return;
-      try { await promise; } catch (err) { console.warn("Db action:", err); }
+      if (!db || !promise) return null;
+      try { 
+        const res = await promise; 
+        if (res && res.error) {
+            console.error("Cloud DB Error:", res.error);
+            alert("⚠️ ការព្រមានពីប្រព័ន្ធ Cloud:\n" + res.error.message + "\n\nទោះជាយ៉ាងណា ទិន្នន័យរបស់អ្នកត្រូវបានរក្សាទុកដោយសុវត្ថិភាពក្នុងកុំព្យូទ័រ (Local) រួចរាល់។");
+        }
+        return res;
+      } catch (err) { console.warn("Db action err:", err); return null; }
     }
 
     function showToast(message) {
@@ -763,30 +690,17 @@
       return merged;
     }
 
-    const defaultCountries = [
-      { code: 'KH', kh: 'កម្ពុជា', en: 'Cambodia' }, { code: 'JP', kh: 'ជប៉ុន', en: 'Japan' }, { code: 'MY', kh: 'ម៉ាឡេស៊ី', en: 'Malaysia' }, { code: 'ID', kh: 'ឥណ្ឌូនេស៊ី', en: 'Indonesia' }, { code: 'NZ', kh: 'នូវែលសេឡង់', en: 'New Zealand' }, { code: 'CA', kh: 'កាណាដា', en: 'Canada' }, { code: 'US', kh: 'សហរដ្ឋអាមេរិក', en: 'United States' }, { code: 'AU', kh: 'អូស្រ្តាលី', en: 'Australia' }, { code: 'FR', kh: 'បារាំង', en: 'France' }, { code: 'SG', kh: 'សិង្ហបុរី', en: 'Singapore' }, { code: 'TH', kh: 'ថៃ', en: 'Thailand' }, { code: 'VN', kh: 'វៀតណាម', en: 'Vietnam' }
-    ];
+    const defaultCountries = [{ code: 'KH', kh: 'កម្ពុជា', en: 'Cambodia' }, { code: 'JP', kh: 'ជប៉ុន', en: 'Japan' }, { code: 'MY', kh: 'ម៉ាឡេស៊ី', en: 'Malaysia' }, { code: 'ID', kh: 'ឥណ្ឌូនេស៊ី', en: 'Indonesia' }, { code: 'NZ', kh: 'នូវែលសេឡង់', en: 'New Zealand' }, { code: 'CA', kh: 'កាណាដា', en: 'Canada' }, { code: 'US', kh: 'សហរដ្ឋអាមេរិក', en: 'United States' }, { code: 'AU', kh: 'អូស្រ្តាលី', en: 'Australia' }, { code: 'FR', kh: 'បារាំង', en: 'France' }, { code: 'SG', kh: 'សិង្ហបុរី', en: 'Singapore' }, { code: 'TH', kh: 'ថៃ', en: 'Thailand' }, { code: 'VN', kh: 'វៀតណាម', en: 'Vietnam' }];
 
-    // Data Initialization with robust fallbacks
     let countriesData = getLocal(STORAGE_KEYS.COUNTRIES, defaultCountries);
     let usersData = mergeWithCoreUsers(getLocal(STORAGE_KEYS.USERS, defaultUsers));
     let auditLogs = getLocal(STORAGE_KEYS.LOGS, []);
     
-    let docsData = getLocal(STORAGE_KEYS.DOCS, [
-      { id: 1, bureau: 'bureau_1', code: 'DOC-EXAM-01', title: 'វិញ្ញាសាប្រឡងចេញថ្នាក់ជាតិ ឆ្នាំ២០២៦', category: 'វិញ្ញាសា/របាយការណ៍', date: '2026-10-15', fileSize: '3.2 MB', fileName: 'exam_2026.pdf', driveLink: '', storage: '☁️ Google Drive', createdBy: 'user1' }
-    ]);
-    let dispatchData = getLocal(STORAGE_KEYS.DISPATCH, [
-      { id: 1, bureau: 'bureau_1', type: 'ចូល', code: '១០៨ សខ.អធម', title: 'សំណើសុំរៀបចំសម័យប្រឡងចេញថ្នាក់ជាតិ', stage: 'កំពុងពិនិត្យបច្ចេកទេស', location: 'អគ្គនាយកដ្ឋានសុខាភិបាល', date: '2026-10-20', assignee: 'លោក អ៊ុក សុវណ្ណ' }
-    ]);
-    let examsData = getLocal(STORAGE_KEYS.EXAMS, [
-      { id: 1, major: 'វេជ្ជសាស្ត្រទូទៅ (General Medicine)', type: 'ប្រឡងចេញថ្នាក់ជាតិ (National Exit Exam)', session: 'សម័យប្រឡង ២៥ តុលា ២០២៦', candidates: 320, status: 'កំពុងរៀបចំវិញ្ញាសា' }
-    ]);
-    let trainingData = getLocal(STORAGE_KEYS.TRAINING, [
-      { id: 1, trainee: 'លោកវេជ្ជ នង មុន្នីពេជ្យ', unit: 'គណៈអភិបាលខេត្តពោធិសាត', course: 'Diploma in parasitology and entomology(DAP&E)', duration: '6 M', dates: '06/04/26-18/10/26', country: 'ម៉ាឡេស៊ី', sponsor: 'Seameo Tromed', scope: 'International' }
-    ]);
-    let certsData = getLocal(STORAGE_KEYS.CERTS, [
-      { id: 1, num: 'DHRD-DEG-2026-0089', recipient: 'វេជ្ជបណ្ឌិត ឡុង វិបុល', type: 'សញ្ញាបត្រវេជ្ជបណ្ឌិត', date: '2026-10-15', signer: 'ប្រធាននាយកដ្ឋាន' }
-    ]);
+    let docsData = getLocal(STORAGE_KEYS.DOCS, []);
+    let dispatchData = getLocal(STORAGE_KEYS.DISPATCH, []);
+    let examsData = getLocal(STORAGE_KEYS.EXAMS, []);
+    let trainingData = getLocal(STORAGE_KEYS.TRAINING, []);
+    let certsData = getLocal(STORAGE_KEYS.CERTS, []);
 
     let currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, rawFile: null };
 
@@ -808,25 +722,46 @@
       } catch (err) {}
     }
 
+    // [គន្លឹះថ្មី]: អនុគមន៍ Smart Merge ដោះស្រាយបញ្ហា Overwrite ធ្វើឱ្យបាត់ទិន្នន័យ
+    function mergeArrays(localArr, remoteArr) {
+        if (!remoteArr || !Array.isArray(remoteArr) || remoteArr.length === 0) return localArr;
+        const map = new Map();
+        // ទុកទិន្នន័យ Local ជាគោលសិន ដើម្បីកុំឱ្យទិន្នន័យដែលទើបបញ្ចូលថ្មីបាត់
+        localArr.forEach(item => map.set(item.id, item));
+        // ទាញទិន្នន័យពី Cloud មកសង្កត់ពីលើ (តែបើ ID ជាន់គ្នា ទើប Cloud ឈ្នះ)
+        remoteArr.forEach(item => map.set(item.id, item));
+        // តម្រៀបតាម ID ថ្មីៗជាងគេនៅខាងលើ
+        return Array.from(map.values()).sort((a, b) => b.id - a.id);
+    }
+
     function syncFromSupabase() {
       if (!db) return;
       Promise.allSettled([
         db.from('docs').select('*').order('id', { ascending: false }),
         db.from('trainings').select('*').order('id', { ascending: false }),
         db.from('dispatches').select('*').order('id', { ascending: false }),
+        db.from('exams').select('*').order('id', { ascending: false }),
+        db.from('certs').select('*').order('id', { ascending: false }),
         db.from('countries').select('*'),
         db.from('app_users').select('*')
       ]).then(results => {
-        const [rDocs, rTrain, rDisp, rCount, rUsers] = results;
-        if (rDocs.status === 'fulfilled' && rDocs.value && rDocs.value.data && rDocs.value.data.length > 0) {
-          docsData = rDocs.value.data.map(d => ({ id: d.id, bureau: d.bureau, code: d.code, title: d.title, category: d.category, fileSize: d.file_size || '2.0 MB', fileName: d.file_name || 'document.pdf', driveLink: d.drive_link || '', storage: d.storage || '☁️ Google Drive', createdBy: d.created_by || 'user' }));
-          setLocal(STORAGE_KEYS.DOCS, docsData);
+        const [rDocs, rTrain, rDisp, rExams, rCerts, rCount, rUsers] = results;
+
+        if (rDocs.status === 'fulfilled' && rDocs.value && rDocs.value.data) {
+          const remoteDocs = rDocs.value.data.map(d => ({ id: d.id, bureau: d.bureau, code: d.code, title: d.title, category: d.category, fileSize: d.file_size || d.fileSize || '2.0 MB', fileName: d.file_name || d.fileName || 'document.pdf', driveLink: d.drive_link || d.driveLink || '', storage: d.storage || '☁️ Google Drive', createdBy: d.created_by || d.createdBy || 'user' }));
+          docsData = mergeArrays(docsData, remoteDocs); setLocal(STORAGE_KEYS.DOCS, docsData);
         }
-        if (rTrain.status === 'fulfilled' && rTrain.value && rTrain.value.data && rTrain.value.data.length > 0) {
-          trainingData = rTrain.value.data; setLocal(STORAGE_KEYS.TRAINING, trainingData);
+        if (rTrain.status === 'fulfilled' && rTrain.value && rTrain.value.data) {
+          trainingData = mergeArrays(trainingData, rTrain.value.data); setLocal(STORAGE_KEYS.TRAINING, trainingData);
         }
-        if (rDisp.status === 'fulfilled' && rDisp.value && rDisp.value.data && rDisp.value.data.length > 0) {
-          dispatchData = rDisp.value.data; setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
+        if (rDisp.status === 'fulfilled' && rDisp.value && rDisp.value.data) {
+          dispatchData = mergeArrays(dispatchData, rDisp.value.data); setLocal(STORAGE_KEYS.DISPATCH, dispatchData);
+        }
+        if (rExams.status === 'fulfilled' && rExams.value && rExams.value.data) {
+          examsData = mergeArrays(examsData, rExams.value.data); setLocal(STORAGE_KEYS.EXAMS, examsData);
+        }
+        if (rCerts.status === 'fulfilled' && rCerts.value && rCerts.value.data) {
+          certsData = mergeArrays(certsData, rCerts.value.data); setLocal(STORAGE_KEYS.CERTS, certsData);
         }
         if (rCount.status === 'fulfilled' && rCount.value && rCount.value.data && rCount.value.data.length > 0) {
           countriesData = rCount.value.data; setLocal(STORAGE_KEYS.COUNTRIES, countriesData);
@@ -834,10 +769,13 @@
         if (rUsers.status === 'fulfilled' && rUsers.value && rUsers.value.data && rUsers.value.data.length > 0) {
           usersData = mergeWithCoreUsers(rUsers.value.data); setLocal(STORAGE_KEYS.USERS, usersData);
         }
+
+        // ធ្វើបច្ចុប្បន្នភាព UI ម្តងទៀតបន្ទាប់ពីទាញពី Cloud រួចរាល់
         if (currentUser && currentUser.username) {
-          renderBureauWorkspace(); populateCountryDropdowns();
+          renderBureauWorkspace(); 
+          populateCountryDropdowns();
         }
-      }).catch(err => console.warn("Background sync note:", err));
+      }).catch(err => console.warn("Background sync error:", err));
     }
 
     function checkAuth() {
@@ -965,8 +903,6 @@
       if (activeBureauKey === 'bureau_2') renderTrainingList();
       if (activeBureauKey === 'bureau_3') renderCerts();
     }
-
-    // ====== CORE RENDER FUNCTIONS ======
     
     function renderSideForm() {
       const container = document.getElementById('side-form-container');
@@ -1013,6 +949,32 @@
               <div><label class="block text-[10px] font-bold text-slate-700 mb-1">មន្ត្រីកាន់ការ</label><input type="text" id="disp-assignee" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50/50" placeholder="ឈ្មោះមន្ត្រី..."></div>
             </div>
             <button type="submit" id="btn-save-disp" class="w-full py-2.5 bg-[#1b503b] hover:bg-[#143e2e] text-white rounded-xl font-bold shadow-md transition mt-2 flex items-center justify-center gap-1.5"><span>Submit Letter / រក្សាទុក</span></button>
+          </form>
+        `;
+      } else if (activeTab === 'exams') {
+        titleEl.innerHTML = '<span>🎓</span> កត់ត្រាសម័យប្រឡងរហ័ស';
+        descEl.innerText = 'Quick Add Exam Session';
+        container.innerHTML = `
+          <form onsubmit="handleSaveExam(event)" class="space-y-3.5 text-xs">
+            <div><label class="block mb-1 font-bold text-slate-700">ជំនាញ / ឯកទេស</label><input type="text" id="exam-major" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ប្រភេទ</label><input type="text" id="exam-type" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50" placeholder="ប្រឡងចូល / ប្រឡងចេញ"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">សម័យប្រឡង</label><input type="text" id="exam-session" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ចំនួនបេក្ខជនសរុប</label><input type="number" id="exam-candidates" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ស្ថានភាព</label><input type="text" id="exam-status" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50" placeholder="កំពុងរៀបចំវិញ្ញាសា"></div>
+            <button type="submit" class="w-full py-2.5 bg-[#1b503b] text-white rounded-xl font-bold shadow-md">Submit Exam</button>
+          </form>
+        `;
+      } else if (activeTab === 'certs') {
+        titleEl.innerHTML = '<span>📜</span> ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស';
+        descEl.innerText = 'Quick Register Certificate';
+        container.innerHTML = `
+          <form onsubmit="handleSaveCert(event)" class="space-y-3.5 text-xs">
+            <div><label class="block mb-1 font-bold text-slate-700">លេខកូដសញ្ញាបត្រ</label><input type="text" id="cert-num" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ឈ្មោះសាមីខ្លួន</label><input type="text" id="cert-name" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ប្រភេទសញ្ញាបត្រ</label><input type="text" id="cert-type" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">កាលបរិច្ឆេទ</label><input type="date" id="cert-date" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-white"></div>
+            <div><label class="block mb-1 font-bold text-slate-700">ហត្ថលេខា</label><input type="text" id="cert-signer" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50" value="ប្រធាននាយកដ្ឋាន"></div>
+            <button type="submit" class="w-full py-2.5 bg-[#1b503b] text-white rounded-xl font-bold shadow-md">Submit Certificate</button>
           </form>
         `;
       } else {
@@ -1066,6 +1028,11 @@
       }).join('');
     }
 
+    function openDocFile(driveLink, title) {
+      if (driveLink) window.open(driveLink, '_blank');
+      else alert('📄 ឯកសារគំរូ៖ ' + title + '\n(ឯកសារដែល Upload នឹងបើកសាច់ហ្វាលផ្ទាល់លើ Google Drive)');
+    }
+
     function renderDispatch() {
       const tbody = document.getElementById('dispatch-table-body');
       if (!tbody) return;
@@ -1094,7 +1061,6 @@
       const tbody = document.getElementById('exams-table-body');
       if (!tbody) return;
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin';
-      
       const statLabel = document.getElementById('stat-custom-label');
       const statVal = document.getElementById('stat-custom-val');
       const statIcon = document.getElementById('stat-custom-icon');
@@ -1107,7 +1073,7 @@
       tbody.innerHTML = examsData.map(e => `
         <tr class="hover:bg-emerald-50/40 transition">
           <td class="p-3 text-center"><input type="checkbox" class="rounded text-emerald-600"></td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${e.type.indexOf('ចេញ') !== -1 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${e.type}</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${e.type && e.type.indexOf('ចេញ') !== -1 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${e.type}</span></td>
           <td class="p-3 font-bold text-slate-900">${e.major}</td>
           <td class="p-3 text-slate-600 font-medium">${e.session}</td>
           <td class="p-3 text-center font-bold text-slate-800">${e.candidates} នាក់</td>
@@ -1181,7 +1147,6 @@
       const tbody = document.getElementById('certs-table-body');
       if (!tbody) return;
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin';
-      
       const statLabel = document.getElementById('stat-custom-label');
       const statVal = document.getElementById('stat-custom-val');
       const statIcon = document.getElementById('stat-custom-icon');
@@ -1228,16 +1193,9 @@
       if (!currentUploadedFile.base64) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
 
       const newDoc = {
-        id: Date.now(),
-        bureau: activeBureauKey,
-        code: document.getElementById('doc-code').value.trim(),
-        title: document.getElementById('doc-title').value.trim(),
-        category: document.getElementById('doc-category').value,
-        fileSize: currentUploadedFile.size,
-        fileName: currentUploadedFile.name,
-        storage: '☁️ Google Drive',
-        driveLink: '',
-        createdBy: currentUser?.username || 'user'
+        id: Date.now(), bureau: activeBureauKey,
+        code: document.getElementById('doc-code').value.trim(), title: document.getElementById('doc-title').value.trim(), category: document.getElementById('doc-category').value,
+        fileSize: currentUploadedFile.size, fileName: currentUploadedFile.name, storage: '☁️ Google Drive', driveLink: '', createdBy: currentUser?.username || 'user'
       };
 
       docsData.unshift(newDoc); setLocal(STORAGE_KEYS.DOCS, docsData); renderDocs();
@@ -1264,39 +1222,56 @@
           if (item) { item.driveLink = res.webViewLink; setLocal(STORAGE_KEYS.DOCS, docsData); renderDocs(); }
           if (db) safeDbExec(db.from('docs').upsert([{ id: newDoc.id, bureau: newDoc.bureau, code: newDoc.code, title: newDoc.title, category: newDoc.category, file_size: newDoc.fileSize, file_name: newDoc.fileName, drive_link: res.webViewLink, storage: '☁️ Google Drive', created_by: newDoc.createdBy }]));
         }
-      }).catch(err => clearTimeout(timeoutId));
+      }).catch(err => {
+        clearTimeout(timeoutId);
+        console.warn('Background Drive upload fallback:', err);
+      });
     }
 
     function deleteDoc(id) {
       if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) {
         if (db) safeDbExec(db.from('docs').delete().eq('id', id));
-        docsData = docsData.filter(d => d.id !== id); setLocal(STORAGE_KEYS.DOCS, docsData); renderDocs();
-        showToast('បានលុបឯកសារជោគជ័យ!');
+        docsData = docsData.filter(d => d.id !== id); setLocal(STORAGE_KEYS.DOCS, docsData); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!');
       }
+    }
+
+    function formatDateDisplay(dStr) {
+      if (!dStr) return ''; const parts = dStr.split('-');
+      return parts.length === 3 ? (parts[2] + '/' + parts[1] + '/' + parts[0].slice(-2)) : dStr;
     }
 
     function handleSaveTraining(e) {
       e.preventDefault();
       const saveBtn = document.getElementById('btn-save-training');
       const dStart = document.getElementById('train-date-start').value; const dEnd = document.getElementById('train-date-end').value;
-      const formattedDates = formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd);
       const newT = {
-        id: Date.now(),
-        trainee: document.getElementById('train-trainee').value.trim(),
-        unit: document.getElementById('train-unit').value.trim(),
-        course: document.getElementById('train-course').value.trim(),
-        duration: document.getElementById('train-duration').value.trim(),
-        scope: document.getElementById('train-scope-input').value,
-        dates: formattedDates,
-        country: document.getElementById('train-country-select').value,
-        sponsor: document.getElementById('train-sponsor-input').value.trim()
+        id: Date.now(), trainee: document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(), course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value, dates: formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd), country: document.getElementById('train-country-select').value, sponsor: document.getElementById('train-sponsor-input').value.trim()
       };
       trainingData.unshift(newT); setLocal(STORAGE_KEYS.TRAINING, trainingData); renderTrainingList();
-      showToast('បានរក្សាទុកវគ្គបណ្តុះបណ្តាលជោគជ័យ!');
-      logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល V2', newT.trainee + ' (' + newT.country + ')');
+      showToast('បានរក្សាទុកវគ្គបណ្តុះបណ្តាលជោគជ័យ!'); logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល V2', newT.trainee + ' (' + newT.country + ')');
       if (db) safeDbExec(db.from('trainings').insert([newT]));
       e.target.reset();
       saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Record / រក្សាទុក</span>', 2500);
+    }
+    
+    function handleSaveExam(e) {
+      e.preventDefault();
+      const newE = {
+        id: Date.now(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value.trim(), session: document.getElementById('exam-session').value.trim(), candidates: document.getElementById('exam-candidates').value, status: document.getElementById('exam-status').value.trim()
+      };
+      examsData.unshift(newE); setLocal(STORAGE_KEYS.EXAMS, examsData); renderExams();
+      showToast('បានរក្សាទុកសម័យប្រឡងជោគជ័យ!'); logActivity('កត់ត្រាសម័យប្រឡង', newE.major);
+      if (db) safeDbExec(db.from('exams').insert([newE])); e.target.reset();
+    }
+    
+    function handleSaveCert(e) {
+      e.preventDefault();
+      const newC = {
+        id: Date.now(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim()
+      };
+      certsData.unshift(newC); setLocal(STORAGE_KEYS.CERTS, certsData); renderCerts();
+      showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num);
+      if (db) safeDbExec(db.from('certs').insert([newC])); e.target.reset();
     }
 
     function deleteTraining(id) {
@@ -1307,16 +1282,13 @@
     }
 
     function handleSaveDispatch(e) {
-      e.preventDefault();
-      const saveBtn = document.getElementById('btn-save-disp');
+      e.preventDefault(); const saveBtn = document.getElementById('btn-save-disp');
       const newDisp = {
-        id: Date.now(), bureau: activeBureauKey,
-        type: document.getElementById('disp-type').value, code: document.getElementById('disp-code').value.trim(), title: document.getElementById('disp-title').value.trim(), stage: document.getElementById('disp-stage').value, location: document.getElementById('disp-location').value, date: document.getElementById('disp-date').value, assignee: document.getElementById('disp-assignee').value.trim()
+        id: Date.now(), bureau: activeBureauKey, type: document.getElementById('disp-type').value, code: document.getElementById('disp-code').value.trim(), title: document.getElementById('disp-title').value.trim(), stage: document.getElementById('disp-stage').value, location: document.getElementById('disp-location').value, date: document.getElementById('disp-date').value, assignee: document.getElementById('disp-assignee').value.trim()
       };
       dispatchData.unshift(newDisp); setLocal(STORAGE_KEYS.DISPATCH, dispatchData); renderDispatch();
       showToast('បានកត់ត្រាលិខិតជោគជ័យ!'); logActivity('កត់ត្រាលិខិត', newDisp.code + ' នៅ ' + newDisp.location);
-      if (db) safeDbExec(db.from('dispatches').insert([newDisp]));
-      e.target.reset();
+      if (db) safeDbExec(db.from('dispatches').insert([newDisp])); e.target.reset();
       saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Letter / រក្សាទុក</span>', 2500);
     }
 
@@ -1326,7 +1298,6 @@
         dispatchData = dispatchData.filter(d => d.id !== id); setLocal(STORAGE_KEYS.DISPATCH, dispatchData); renderDispatch(); showToast('បានលុបជោគជ័យ!');
       }
     }
-
     function deleteExam(id) {
       if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) {
         if (db) safeDbExec(db.from('exams').delete().eq('id', id));
@@ -1340,59 +1311,8 @@
       }
     }
 
-    function handleImportExcel(e) {
-      const file = e.target.files[0]; if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          const data = new Uint8Array(evt.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const firstSheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[firstSheetName];
-          const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-          let importedCount = 0;
-          for (let i = 1; i < json.length; i++) {
-            const row = json[i];
-            if (row && row.length >= 2 && row[1]) {
-              const newT = { id: Date.now() + i, trainee: String(row[1] || '').trim(), unit: String(row[2] || 'នាយកដ្ឋាន/មន្ទីរពេទ្យ').trim(), course: String(row[3] || 'វគ្គបណ្តុះបណ្តាល').trim(), duration: String(row[4] || '1 M').trim(), dates: String(row[5] || '01/01/26-01/02/26').trim(), country: String(row[6] || 'ក្នុងប្រទេស').trim(), sponsor: String(row[7] || 'សាមីខ្លួន').trim(), scope: 'International' };
-              trainingData.unshift(newT); importedCount++;
-            }
-          }
-          setLocal(STORAGE_KEYS.TRAINING, trainingData); renderTrainingList();
-          showToast(`បាន Import ចូលជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`); logActivity('Import Excel V2', `បានបញ្ចូលទិន្នន័យចំនួន ${importedCount}`);
-        } catch (err) { alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel! សូមពិនិត្យមើលទម្រង់ហ្វាលរបស់អ្នកឡើងវិញ។'); }
-        e.target.value = '';
-      };
-      reader.readAsArrayBuffer(file);
-    }
-    function exportCSV(type) {
-      let csv = "\uFEFFDoc ID,ចំណងជើង,ការិយាល័យ,ប្រភេទ,កាលបរិច្ឆេទ,ទំហំ,កន្លែងផ្ទុក\n";
-      docsData.forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.date}","${d.fileSize}","${d.storage || 'Google Drive'}"\n`; });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'dhrd_docs_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
-    }
-    function exportTrainingExcel() {
-      const filtered = getFilteredTrainingData();
-      const excelRows = filtered.map((t, idx) => ({ "ល.រ": idx + 1, "ឈ្មោះ": t.trainee, "តួនាទី និងអង្គភាព": t.unit, "កម្មវិធី ឬឈ្មោះវគ្គសិក្សា": t.course, "រយៈពេល": t.duration, "កាលបរិច្ឆេទ នៃវគ្គ": t.dates, "ប្រទេស": t.country, "ឧបត្ថម្ភ": t.sponsor }));
-      const worksheet = XLSX.utils.json_to_sheet(excelRows); const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "វគ្គបណ្តុះបណ្តាលបន្ត");
-      XLSX.writeFile(workbook, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + Date.now() + '.xlsx'); showToast('បាន Export Excel ជោគជ័យ!');
-    }
-    function exportTrainingCSV() {
-      const filtered = getFilteredTrainingData();
-      let csv = "\uFEFFល.រ,ឈ្មោះ,តួនាទី និងអង្គភាព,កម្មវិធី ឬឈ្មោះវគ្គសិក្សា,រយៈពេល,កាលបរិច្ឆេទ,ប្រទេស,ឧបត្ថម្ភ\n";
-      filtered.forEach((t, idx) => { csv += `"${idx + 1}","${t.trainee}","${t.unit}","${t.course}","${t.duration}","${t.dates}","${t.country}","${t.sponsor}"\n`; });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'training_report_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
-    }
-
-    // ====== ENTERPRISE USER MANAGEMENT ======
-    function toggleToolsMenu() { 
-      document.getElementById('tools-dropdown').classList.toggle('hidden'); 
-    }
-
-    // កូដបន្ថែមថ្មី៖ សម្រាប់បិទម៉ឺនុយ Tools ស្វ័យប្រវត្តិ ពេលចុចនៅកន្លែងផ្សេង
+    // មុខងារបិទម៉ឺនុយពេលចុចកន្លែងផ្សេង
+    function toggleToolsMenu() { document.getElementById('tools-dropdown').classList.toggle('hidden'); }
     document.addEventListener('click', (e) => {
       const container = document.getElementById('tools-menu-container');
       const dropdown = document.getElementById('tools-dropdown');
@@ -1400,12 +1320,14 @@
         dropdown.classList.add('hidden');
       }
     });
+
     function openSystemModal(tab) {
       tab = tab || 'settings'; document.getElementById('tools-dropdown').classList.add('hidden');
       const isAdmin = currentUser?.permissions?.admin; if (!isAdmin) tab = 'manual';
       document.getElementById('modal-system-tools').classList.remove('hidden'); switchSystemToolTab(tab);
     }
     function closeSystemModal() { document.getElementById('modal-system-tools').classList.add('hidden'); }
+    
     function switchSystemToolTab(tab) {
       const isAdmin = currentUser?.permissions?.admin;
       ['settings', 'location', 'files', 'security', 'logging', 'manual'].forEach(t => {
@@ -1506,13 +1428,63 @@
       tbody.innerHTML = filtered.map(l => `<tr class="hover:bg-slate-50 transition"><td class="p-3 text-slate-400 font-mono text-[10px]">${l.time}</td><td class="p-3 font-bold text-slate-700">${l.user}</td><td class="p-3 font-semibold text-emerald-700">${l.action}</td><td class="p-3 text-slate-600">${l.target}</td></tr>`).join('');
     }
 
-    // ====== MISC TOOLS ======
     function handleAddCountry(e) { e.preventDefault(); const code = document.getElementById('new-country-code').value.trim().toUpperCase(); const kh = document.getElementById('new-country-kh').value.trim(); const en = document.getElementById('new-country-en').value.trim(); if (countriesData.some(c => c.kh === kh || c.code === code)) return alert('ប្រទេសនេះមានរួចហើយ!'); const newCountry = { code, kh, en }; if (db) safeDbExec(db.from('countries').insert([newCountry])); countriesData.push(newCountry); setLocal(STORAGE_KEYS.COUNTRIES, countriesData); showToast('បានបន្ថែមប្រទេសជោគជ័យ!'); logActivity('បន្ថែមប្រទេស', `ប្រទេស ${kh}`); renderCountriesTable(); populateCountryDropdowns(); e.target.reset(); }
     function deleteCountry(code, idx) { const c = countriesData[idx]; if (confirm(`តើអ្នកចង់លុបប្រទេស "${c.kh}" មែនទេ?`)) { if (db) safeDbExec(db.from('countries').delete().eq('code', code)); countriesData.splice(idx, 1); setLocal(STORAGE_KEYS.COUNTRIES, countriesData); showToast('បានលុបប្រទេសជោគជ័យ!'); logActivity('លុបប្រទេស', `ប្រទេស ${c.kh}`); renderCountriesTable(); populateCountryDropdowns(); } }
     function renderCountriesTable() { const tbody = document.getElementById('countries-table-body'); if (!tbody) return; tbody.innerHTML = countriesData.map((c, idx) => `<tr class="hover:bg-emerald-50/40 transition"><td class="p-3 font-mono font-bold text-slate-700">${c.code}</td><td class="p-3 font-bold text-slate-900">${c.kh}</td><td class="p-3 text-slate-600">${c.en}</td><td class="p-3 text-right"><button onclick="deleteCountry('${c.code}', ${idx})" class="text-rose-600 hover:underline font-bold">លុប</button></td></tr>`).join(''); }
     function populateCountryDropdowns() { const formSel = document.getElementById('train-country-select'); const filterSel = document.getElementById('filter-training-country'); const currentVal = formSel?.value; if (formSel) formSel.innerHTML = '<option value="">-- ជ្រើសរើសប្រទេស --</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === currentVal ? 'selected' : ''}>${c.kh} (${c.en})</option>`).join(''); if (filterSel) filterSel.innerHTML = '<option value="all">ប្រទេសទាំងអស់</option>' + countriesData.map(c => `<option value="${c.kh}">${c.kh}</option>`).join(''); }
     function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-4 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-3.5 flex items-center justify-between hover:bg-slate-50 transition"><div><p class="font-bold text-slate-800 text-xs">${d.title} (${d.code})</p><p class="text-[10px] text-slate-500">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><span class="text-[10px] px-2.5 py-1 rounded-lg ${d.driveLink ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'} font-mono font-bold">${d.driveLink ? '☁️ Google Drive' : 'Local File'}</span></div>`).join(''); }
+    
     function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V2_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); logActivity('ទាញយក Backup V2', 'JSON Backup'); }
+    
+    function handleImportExcel(e) {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          let importedCount = 0; let newItems = [];
+          for (let i = 1; i < json.length; i++) {
+            const row = json[i];
+            if (row && row.length >= 2 && row[1]) {
+              const newT = { id: Date.now() + i, trainee: String(row[1] || '').trim(), unit: String(row[2] || 'នាយកដ្ឋាន/មន្ទីរពេទ្យ').trim(), course: String(row[3] || 'វគ្គបណ្តុះបណ្តាល').trim(), duration: String(row[4] || '1 M').trim(), dates: String(row[5] || '01/01/26-01/02/26').trim(), country: String(row[6] || 'ក្នុងប្រទេស').trim(), sponsor: String(row[7] || 'សាមីខ្លួន').trim(), scope: 'International' };
+              newItems.push(newT); trainingData.unshift(newT); importedCount++;
+            }
+          }
+          setLocal(STORAGE_KEYS.TRAINING, trainingData); 
+          if (db && newItems.length > 0) safeDbExec(db.from('trainings').insert(newItems)); // រុញទិន្នន័យ Import ទៅ Cloud
+          renderTrainingList();
+          showToast(`បាន Import ចូលជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`); logActivity('Import Excel V2', `បានបញ្ចូលទិន្នន័យចំនួន ${importedCount}`);
+        } catch (err) { alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel! សូមពិនិត្យមើលទម្រង់ហ្វាលរបស់អ្នកឡើងវិញ។'); }
+        e.target.value = '';
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function exportCSV(type) {
+      let csv = "\uFEFFDoc ID,ចំណងជើង,ការិយាល័យ,ប្រភេទ,កាលបរិច្ឆេទ,ទំហំ,កន្លែងផ្ទុក\n";
+      docsData.forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.date}","${d.fileSize}","${d.storage || 'Google Drive'}"\n`; });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'dhrd_docs_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
+    }
+    function exportTrainingExcel() {
+      const filtered = getFilteredTrainingData();
+      const excelRows = filtered.map((t, idx) => ({ "ល.រ": idx + 1, "ឈ្មោះ": t.trainee, "តួនាទី និងអង្គភាព": t.unit, "កម្មវិធី ឬឈ្មោះវគ្គសិក្សា": t.course, "រយៈពេល": t.duration, "កាលបរិច្ឆេទ នៃវគ្គ": t.dates, "ប្រទេស": t.country, "ឧបត្ថម្ភ": t.sponsor }));
+      const worksheet = XLSX.utils.json_to_sheet(excelRows); const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "វគ្គបណ្តុះបណ្តាលបន្ត");
+      XLSX.writeFile(workbook, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + Date.now() + '.xlsx'); showToast('បាន Export Excel ជោគជ័យ!');
+    }
+    function exportTrainingCSV() {
+      const filtered = getFilteredTrainingData();
+      let csv = "\uFEFFល.រ,ឈ្មោះ,តួនាទី និងអង្គភាព,កម្មវិធី ឬឈ្មោះវគ្គសិក្សា,រយៈពេល,កាលបរិច្ឆេទ,ប្រទេស,ឧបត្ថម្ភ\n";
+      filtered.forEach((t, idx) => { csv += `"${idx + 1}","${t.trainee}","${t.unit}","${t.course}","${t.duration}","${t.dates}","${t.country}","${t.sponsor}"\n`; });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'training_report_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
+    }
     function openPrintPreviewModal() {
       const filtered = getFilteredTrainingData(); const tbody = document.getElementById('preview-table-body');
       tbody.innerHTML = filtered.map((t, idx) => `<tr><td class="border border-slate-300 p-2 text-center font-bold">${idx + 1}</td><td class="border border-slate-300 p-2 font-bold">${t.trainee}</td><td class="border border-slate-300 p-2">${t.unit}</td><td class="border border-slate-300 p-2">${t.course}</td><td class="border border-slate-300 p-2 text-center">${t.duration}</td><td class="border border-slate-300 p-2 text-center font-mono">${t.dates}</td><td class="border border-slate-300 p-2 text-center font-semibold">${t.country}</td><td class="border border-slate-300 p-2">${t.sponsor}</td></tr>`).join('');
@@ -1537,7 +1509,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V2.4
+    // BOOTSTRAP V2.5
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
       syncFromSupabase();
