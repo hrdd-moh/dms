@@ -1388,7 +1388,18 @@
     }
 
     // ====== ENTERPRISE USER MANAGEMENT ======
-    function toggleToolsMenu() { document.getElementById('tools-dropdown').classList.toggle('hidden'); }
+    function toggleToolsMenu() { 
+      document.getElementById('tools-dropdown').classList.toggle('hidden'); 
+    }
+
+    // កូដបន្ថែមថ្មី៖ សម្រាប់បិទម៉ឺនុយ Tools ស្វ័យប្រវត្តិ ពេលចុចនៅកន្លែងផ្សេង
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('tools-menu-container');
+      const dropdown = document.getElementById('tools-dropdown');
+      if (container && !container.contains(e.target) && dropdown) {
+        dropdown.classList.add('hidden');
+      }
+    });
     function openSystemModal(tab) {
       tab = tab || 'settings'; document.getElementById('tools-dropdown').classList.add('hidden');
       const isAdmin = currentUser?.permissions?.admin; if (!isAdmin) tab = 'manual';
