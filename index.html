@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V4.2 - DHRD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V4.3 - DHRD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -54,7 +54,7 @@
             <span class="font-bold text-slate-900 text-sm sm:text-base leading-tight">ក្រសួងសុខាភិបាល</span>
             <span class="text-slate-300 hidden sm:inline">|</span>
             <span class="font-bold text-slate-900 text-sm sm:text-lg leading-tight">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</span>
-            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V4.2 Cloud</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V4.3 Cloud</span>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (DHRD - MoH)</p>
         </div>
@@ -307,7 +307,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V4.2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V4.3</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -316,12 +316,12 @@
           <div class="relative"><input type="password" id="login-password" required autocomplete="current-password" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••"><button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm form-input-focus">👁️</button></div>
         </div>
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
-        <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
+        <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
     </div>
   </div>
 
-  <!-- SYSTEM TOOLS MODAL (FULL RESTORATION) -->
+  <!-- SYSTEM TOOLS MODAL -->
   <div id="modal-system-tools" role="dialog" aria-modal="true" aria-labelledby="system-tools-title" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 hidden">
     <div class="bg-white rounded-3xl max-w-5xl w-full p-5 sm:p-7 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -349,7 +349,7 @@
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
-            <h4 class="text-sm font-bold text-slate-800">➕ បង្កើតគណនីមន្ត្រីថ្មី</h4><span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded-lg">Admin Only</span>
+            <h4 class="text-sm font-bold text-slate-800">➕ បង្កើតគណនីមន្ត្រីថ្មី (Sync ចូល Cloud ភ្លាមៗ)</h4><span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg">Cloud Enabled</span>
           </div>
           <form onsubmit="handleCreateUser(event)" class="space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -455,8 +455,8 @@
 
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V4.2 (User Manual)</h4>
-          <p><strong>១. ការធ្វើសមកាលកម្មឆ្លងកុំព្យូទ័រ (Cloud Sync)៖</strong> រាល់ទិន្នន័យដែលបញ្ចូលរួច នឹងត្រូវបញ្ជូនទៅ Supabase Cloud ភ្លាមៗ និងទាញមកបង្ហាញលើកុំព្យូទ័រផ្សេងទៀតដោយស្វ័យប្រវត្តិរៀងរាល់ ១៥ វិនាទីម្តង ឬអាចចុចប៊ូតុង <b>🔄 Sync</b> នៅផ្នែកខាងលើ។</p>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V4.3 (User Manual)</h4>
+          <p><strong>១. ការធ្វើសមកាលកម្មគណនី និងទិន្នន័យឆ្លងកុំព្យូទ័រ (Cloud Sync)៖</strong> រាល់ការបង្កើត User ថ្មី ការផ្អាកគណនី (Suspend) និងការបញ្ចូលទិន្នន័យ នឹងត្រូវបញ្ជូនទៅ Supabase Cloud ភ្លាមៗ និងអាចយកទៅ Login នៅលើកុំព្យូទ័រផ្សេងទៀតបានភ្លាមៗ។</p>
           <p><strong>២. ការបង្ហោះឯកសារ៖</strong> ឯកសារត្រូវមានទំហំ ≤ 8MB។ ឯកសារក្នុងបណ្ណាល័យរួមអាចមើលឃើញដោយការិយាល័យទាំង ៣ ដូចគ្នា។</p>
           <p><strong>៣. លិខិតចេញ-ចូល៖</strong> ត្រូវបានបែងចែកដាច់ដោយឡែកតាមការិយាល័យនីមួយៗ (លើកលែងតែ Admin ដែលអាចត្រួតពិនិត្យមើលទាំងអស់បាន)។</p>
         </div>
@@ -522,7 +522,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V4.2 ================= -->
+  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V4.3 ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -554,29 +554,87 @@
       { code: 'TH', kh: 'ថៃ', en: 'Thailand' }, { code: 'VN', kh: 'វៀតណាម', en: 'Vietnam' }
     ];
 
-    // គាំទ្រទាំងលេខសម្ងាត់ admin123 និង 123 ព្រមទាំងមានគ្រប់ User ទាំង ៤
     const defaultUsers = [
-      { id: 1, username: 'admin', password: 'admin123', altPass: '123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', role: 'SuperAdmin', status: 'Active', bureau: 'all', permissions: { admin: true, read: true, create: true, edit: true, delete: true, upload: true, download: true, export: true, approve: true } },
-      { id: 2, username: 'user1', password: '123', fullname: 'មន្ត្រីមុនពេលបម្រើការងារ', role: 'Editor', status: 'Active', bureau: 'bureau_1', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false } },
-      { id: 3, username: 'user2', password: '123', fullname: 'មន្ត្រីបណ្តុះបណ្តាលបន្ត', role: 'Editor', status: 'Active', bureau: 'bureau_2', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false } },
-      { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false } }
+      { id: 1, username: 'admin', password: 'admin123', altPass: '123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', role: 'SuperAdmin', status: 'Active', bureau: 'all', permissions: { admin: true, read: true, create: true, edit: true, delete: true, upload: true, download: true, export: true, approve: true, _role: 'SuperAdmin', _status: 'Active' } },
+      { id: 2, username: 'user1', password: '123', fullname: 'មន្ត្រីមុនពេលបម្រើការងារ', role: 'Editor', status: 'Active', bureau: 'bureau_1', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active' } },
+      { id: 3, username: 'user2', password: '123', fullname: 'មន្ត្រីបណ្តុះបណ្តាលបន្ត', role: 'Editor', status: 'Active', bureau: 'bureau_2', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active' } },
+      { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active' } }
     ];
 
-    function mergeWithCoreUsers(customList) {
-      const merged = defaultUsers.map(u => ({ ...u, permissions: { ...u.permissions } }));
-      if (Array.isArray(customList)) {
-        customList.forEach(cu => {
-          if (!cu || !cu.username) return;
-          const uname = String(cu.username).trim().toLowerCase();
-          const existingIdx = merged.findIndex(m => m.username.toLowerCase() === uname);
-          if (existingIdx === -1 && cu.password) {
-            merged.push({ ...cu, status: cu.status || 'Active', role: cu.role || 'Editor' });
-          } else if (existingIdx !== -1 && uname !== 'admin' && cu.password) {
-            merged[existingIdx] = { ...merged[existingIdx], ...cu };
+    // 🌟 អនុគមន៍បម្លែងទិន្នន័យ User ឱ្យត្រូវជាមួយជួរឈរទាំង ៦ របស់តារាង app_users ក្នុង Supabase (គ្មានជួរឈរ status/role ដាច់ដោយឡែកទេ)
+    function formatUserForSupabase(u) {
+      const roleVal = u.role || u.permissions?._role || (u.bureau === 'all' ? 'SuperAdmin' : 'Editor');
+      const statusVal = u.status || u.permissions?._status || 'Active';
+      const permsObj = {
+        ...(u.permissions || { read: true, upload: true, download: true }),
+        _role: roleVal,
+        _status: statusVal
+      };
+      return {
+        id: u.id,
+        fullname: u.fullname,
+        username: u.username,
+        password: u.password,
+        bureau: u.bureau,
+        permissions: permsObj
+      };
+    }
+
+    function normalizeUserFromRecord(u) {
+      if (!u) return null;
+      const p = u.permissions || {};
+      const roleVal = u.role || p._role || (u.bureau === 'all' ? 'SuperAdmin' : 'Editor');
+      const statusVal = u.status || p._status || 'Active';
+      return {
+        ...u,
+        role: roleVal,
+        status: statusVal,
+        permissions: {
+          admin: Boolean(p.admin || u.bureau === 'all' || roleVal === 'SuperAdmin'),
+          read: p.read !== false,
+          create: Boolean(p.create ?? true),
+          edit: Boolean(p.edit ?? true),
+          delete: Boolean(p.delete ?? false),
+          upload: p.upload !== false,
+          download: p.download !== false,
+          export: Boolean(p.export ?? false),
+          approve: Boolean(p.approve ?? false),
+          _role: roleVal,
+          _status: statusVal
+        }
+      };
+    }
+
+    function mergeUserLists(localList, remoteList) {
+      const map = new Map();
+      defaultUsers.forEach(u => map.set(u.username.toLowerCase(), normalizeUserFromRecord(u)));
+      if (Array.isArray(localList)) {
+        localList.forEach(u => {
+          if (u && u.username && u.password) {
+            const k = String(u.username).trim().toLowerCase();
+            if (k === 'admin') {
+              const defAdmin = map.get('admin');
+              map.set('admin', normalizeUserFromRecord({ ...defAdmin, ...u, altPass: '123' }));
+            } else {
+              map.set(k, normalizeUserFromRecord(u));
+            }
           }
         });
       }
-      return merged;
+      if (Array.isArray(remoteList)) {
+        remoteList.forEach(u => {
+          if (u && u.username && u.password) {
+            const k = String(u.username).trim().toLowerCase();
+            if (k === 'admin') {
+              const defAdmin = map.get('admin');
+              map.set('admin', normalizeUserFromRecord({ ...defAdmin, ...u, altPass: '123' }));
+            } else {
+              map.set(k, normalizeUserFromRecord(u));
+            }
+          }
+        });
+      }
+      return Array.from(map.values());
     }
 
     let docsData = [], dispatchData = [], examsData = [], trainingData = [], certsData = [];
@@ -601,7 +659,6 @@
       setTimeout(() => { toast.classList.add('translate-y-2', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
     }
 
-    // មុខងារប្រតិបត្តិ Supabase ដោយចាប់យកកំហុស (Error Catching) យ៉ាងច្បាស់លាស់
     async function safeDbExec(promise, actionDesc = '') {
       if (!db || !promise) return null;
       try { 
@@ -640,7 +697,12 @@
         if (c.length > 0) countriesData = c;
         
         const u = await localDB.users.toArray();
-        if (u.length > 0) usersData = mergeWithCoreUsers(u);
+        let legacyUsers = [];
+        try {
+          const leg = localStorage.getItem('hrd_moh_users_cache');
+          if (leg) legacyUsers = JSON.parse(leg);
+        } catch(e){}
+        usersData = mergeUserLists(legacyUsers, u);
       } catch (e) { console.warn("IndexedDB init note:", e); }
       
       try { 
@@ -651,11 +713,9 @@
       checkAuth();
       await syncFromSupabase(false);
       
-      // Auto-sync រៀងរាល់ ១៥ វិនាទី ដើម្បីទាញទិន្នន័យឆ្លងកុំព្យូទ័រ
       setInterval(() => syncFromSupabase(false), 15000); 
     }
 
-    // ធ្វើសមកាលកម្មទិន្នន័យឱ្យដូចគ្នាបេះបិទជាមួយ Cloud (True Mirror Sync)
     async function syncToLocalDB(tableName, remoteData) {
       if (!Array.isArray(remoteData)) return;
       try {
@@ -727,11 +787,31 @@
           await localDB.countries.clear();
           await localDB.countries.bulkPut(countriesData);
         }
-        if (rUsers.status === 'fulfilled' && rUsers.value && !rUsers.value.error && Array.isArray(rUsers.value.data) && rUsers.value.data.length > 0) {
-          usersData = mergeWithCoreUsers(rUsers.value.data);
+
+        // 🌟 សមកាលកម្មតារាង app_users ទាំងទៅនិងមក (Two-way Sync សម្រាប់គណនីដែលជាប់គាំងក្នុងម៉ាស៊ីនដូចជា @sam)
+        if (rUsers.status === 'fulfilled' && rUsers.value && !rUsers.value.error && Array.isArray(rUsers.value.data)) {
+          const cloudUsers = rUsers.value.data;
+          const cloudUsernames = new Set(cloudUsers.map(cu => String(cu.username || '').trim().toLowerCase()));
+          
+          // រកមើលគណនីក្នុងម៉ាស៊ីនណាដែលមិនទាន់មានលើ Cloud (ឧ. @sam ដែលបង្កើតកាលពី V4.2) រួចរុញឡើង Cloud ស្វ័យប្រវត្តិ
+          const unsyncedLocal = usersData.filter(lu => 
+            lu && lu.username && 
+            !['admin', 'user1', 'user2', 'user3'].includes(lu.username.toLowerCase()) && 
+            !cloudUsernames.has(lu.username.toLowerCase())
+          );
+          if (unsyncedLocal.length > 0) {
+            const payloadToPush = unsyncedLocal.map(formatUserForSupabase);
+            await db.from('app_users').upsert(payloadToPush);
+          }
+
+          usersData = mergeUserLists(usersData, cloudUsers);
           await localDB.users.clear();
           await localDB.users.bulkPut(usersData);
+          if (!document.getElementById('modal-system-tools').classList.contains('hidden')) {
+            renderUsersTable();
+          }
         }
+
         if (rLogs.status === 'fulfilled' && rLogs.value && !rLogs.value.error && Array.isArray(rLogs.value.data) && rLogs.value.data.length > 0) {
           auditLogs = rLogs.value.data;
         }
@@ -741,7 +821,7 @@
           populateCountryDropdowns();
         }
         if(syncStatus) syncStatus.innerText = "Cloud DB System (Auto-Synced ✔)";
-        if(isManual) showToast("បានទាញយកទិន្នន័យថ្មីៗពី Cloud ជោគជ័យ!");
+        if(isManual) showToast("បានធ្វើសមកាលកម្មទិន្នន័យ និងគណនី User ជាមួយ Cloud ជោគជ័យ!");
       } catch (err) {
         if(syncStatus) syncStatus.innerText = "ការតភ្ជាប់មានបញ្ហា (Offline Mode)";
       } finally {
@@ -798,20 +878,38 @@
     function togglePasswordVisibility() { const pInput = document.getElementById('login-password'); pInput.type = (pInput.type === 'password') ? 'text' : 'password'; }
     function normalizeKhmerDigits(str) { if (!str) return ''; const khmerDigits = ['០','១','២','៣','៤','៥','៦','៧','៨','៩']; let res = String(str); for (let i=0; i<10; i++) res = res.split(khmerDigits[i]).join(String(i)); return res.trim(); }
 
-    function handleLogin(e) {
+    // 🌟 ទាញបញ្ជីឈ្មោះ User ថ្មីៗពី Supabase ភ្លាមៗនៅពេលចុច Sign In លើកុំព្យូទ័រផ្សេង
+    async function handleLogin(e) {
       if (e) e.preventDefault();
+      const submitBtn = document.getElementById('btn-login-submit');
       const u = normalizeKhmerDigits(document.getElementById('login-username').value).toLowerCase(); 
       const p = normalizeKhmerDigits(document.getElementById('login-password').value);
       
+      if (submitBtn) submitBtn.innerText = 'កំពុងផ្ទៀងផ្ទាត់គណនីពី Cloud...';
+
+      if (db) {
+        try {
+          const { data, error } = await db.from('app_users').select('*');
+          if (!error && Array.isArray(data)) {
+            usersData = mergeUserLists(usersData, data);
+            await localDB.users.clear();
+            await localDB.users.bulkPut(usersData);
+          }
+        } catch (err) { console.warn("Cloud login fetch fallback:", err); }
+      }
+
+      if (submitBtn) submitBtn.innerText = 'ចូលប្រព័ន្ធ (Sign In)';
+
       let user = usersData.find(x => x && x.username && String(x.username).trim().toLowerCase() === u && (normalizeKhmerDigits(x.password) === p || (x.altPass && x.altPass === p)));
       if (user) {
-        if (user.status === 'Suspended') {
+        const currentStatus = user.status || user.permissions?._status || 'Active';
+        if (currentStatus === 'Suspended') {
           const errEl = document.getElementById('login-error');
           errEl.innerText = '🔴 គណនីនេះត្រូវបានផ្អាកការប្រើប្រាស់ (Suspended)!';
           errEl.classList.remove('hidden');
           return;
         }
-        currentUser = { ...user, permissions: user.permissions || { admin: user.bureau === 'all', read: true, upload: true, download: true } };
+        currentUser = normalizeUserFromRecord(user);
         setSessionUser(currentUser);
         if (currentUser.bureau && currentUser.bureau !== 'all') activeBureauKey = currentUser.bureau;
         document.getElementById('login-error').classList.add('hidden');
@@ -830,7 +928,6 @@
     function changeActiveBureau(k) { activeBureauKey = k; localStorage.setItem('hrd_moh_active_bureau_cache', k); activeTab = 'docs'; renderBureauWorkspace(); }
     function switchBureauTab(tId) { activeTab = tId; renderBureauWorkspace(); }
 
-    // គូរតែតារាង និងតួលេខ (មិនគូរ Form ខាងស្តាំឡើងវិញទេ ដើម្បីកុំឱ្យដាច់អក្សរពេលកំពុងវាយអំឡុងពេល Auto-Sync)
     function renderTablesAndStatsOnly() {
       renderDocs();
       renderDispatch();
@@ -930,7 +1027,6 @@
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
       const search = (document.getElementById('doc-search')?.value || '').toLowerCase();
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
-      // បណ្ណាល័យរួម៖ ការិយាល័យទាំង ៣ មើលឃើញទាំងអស់គ្នា
       const filtered = docsData.filter(d => (d.title && d.title.toLowerCase().includes(search)) || (d.code && d.code.toLowerCase().includes(search)) || (d.category && d.category.toLowerCase().includes(search)));
       const statDocs = document.getElementById('stat-bureau-docs'); if(statDocs) statDocs.innerText = filtered.length;
 
@@ -1082,7 +1178,7 @@
       `).join('');
     }
 
-    // ====== ACTIONS (WITH EXACT SUPABASE COLUMN MAPPING) ======
+    // ====== ACTIONS ======
     function handleFileSelected(e) {
       const file = e.target.files[0]; if (!file) return;
       if (file.size > MAX_FILE_SIZE) { alert('⚠️ ឯកសារនេះមានទំហំធំលើស 8MB!'); e.target.value = ''; return; }
@@ -1113,12 +1209,10 @@
         createdBy: currentUser?.username || 'user' 
       };
       
-      // ១. រក្សាទុកក្នុង Local IndexedDB និងបង្ហាញលើអេក្រង់ភ្លាមៗ
       docsData.unshift(newDoc); 
       await localDB.docs.put(newDoc); 
       renderDocs(); 
       
-      // ២. រុញចូល Supabase ភ្លាមៗដោយប្រើឈ្មោះជួរឈរត្រឹមត្រូវ (snake_case) ដើម្បីឱ្យកុំព្យូទ័រផ្សេងឃើញភ្លាម!
       const supabasePayload = {
         id: newDoc.id,
         bureau: newDoc.bureau,
@@ -1138,7 +1232,6 @@
       document.getElementById('doc-code').value = ''; document.getElementById('doc-title').value = ''; document.getElementById('doc-file-input').value = ''; document.getElementById('file-label').innerHTML = 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'; currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, rawFile: null };
       saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>', 2500);
 
-      // ៣. បញ្ជូនសាច់ហ្វាលទៅ Google Drive ពីក្រោយខ្នង រួច Update Link តាមក្រោយ
       fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: fileSnapshot.name, mimeType: fileSnapshot.type, base64: fileSnapshot.base64 }) })
       .then(r => r.json()).then(async res => {
         if (res.status === 'success' && res.webViewLink) {
@@ -1189,7 +1282,7 @@
     async function handleSaveCert(e) { e.preventDefault(); const newC = { id: Date.now(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim() }; certsData.unshift(newC); await localDB.certs.put(newC); renderCerts(); if (db) await safeDbExec(db.from('certs').insert([newC]), 'Save Cert'); showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num); e.target.reset(); }
     async function deleteCert(id) { if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) { if (db) await safeDbExec(db.from('certs').delete().eq('id', id), 'Delete Cert'); await localDB.certs.delete(id); certsData = certsData.filter(c => c.id !== id); renderCerts(); showToast('បានលុបជោគជ័យ!'); } }
 
-    // ====== SYSTEM TOOLS & USER MANAGEMENT ======
+    // ====== SYSTEM TOOLS & USER MANAGEMENT (SCHEMA-COMPATIBLE) ======
     function toggleToolsMenu() { document.getElementById('tools-dropdown').classList.toggle('hidden'); }
     document.addEventListener('click', (e) => {
       const container = document.getElementById('tools-menu-container'); const dropdown = document.getElementById('tools-dropdown');
@@ -1225,7 +1318,7 @@
       if (idx !== -1) { 
         usersData[idx].password = newP; 
         await localDB.users.put(usersData[idx]);
-        if (db) await safeDbExec(db.from('app_users').upsert([usersData[idx]]), 'Change Password');
+        if (db) await safeDbExec(db.from('app_users').upsert([formatUserForSupabase(usersData[idx])]), 'Change Password');
       }
       showToast('បានផ្លាស់ប្ដូរ Password ជោគជ័យ!'); logActivity('ប្ដូរ Password', 'User @' + currentUser.username); e.target.reset();
     }
@@ -1236,23 +1329,82 @@
       if (isSuper) document.getElementById('new-user-bureau').value = 'all';
     }
 
+    // 🌟 បង្កើត User ថ្មី ដោយបញ្ជូនតែជួរឈរទាំង ៦ ដែលមានក្នុង Supabase (បង្កប់ _role និង _status ក្នុង permissions)
     async function handleCreateUser(e) {
       e.preventDefault(); const uname = document.getElementById('new-user-username').value.trim();
       if (usersData.some(u => u.username.toLowerCase() === uname.toLowerCase())) return alert('Username នេះមានរួចហើយ!');
-      const newUser = { id: Date.now(), fullname: document.getElementById('new-user-fullname').value.trim(), username: uname, password: document.getElementById('new-user-password').value.trim(), role: document.getElementById('new-user-role').value, bureau: document.getElementById('new-user-bureau').value, status: document.getElementById('new-user-status').value, permissions: { admin: document.getElementById('perm-admin').checked, read: document.getElementById('perm-read').checked, create: document.getElementById('perm-create').checked, edit: document.getElementById('perm-edit').checked, delete: document.getElementById('perm-delete').checked, upload: document.getElementById('perm-upload').checked, download: document.getElementById('perm-download').checked, export: document.getElementById('perm-export').checked, approve: document.getElementById('perm-approve').checked } };
-      usersData.unshift(newUser); await localDB.users.put(newUser);
-      if (db) await safeDbExec(db.from('app_users').insert([newUser]), 'Create User');
-      showToast('បានបង្កើតគណនីមន្ត្រីជោគជ័យ!'); logActivity('បង្កើត User ថ្មី', `@${newUser.username}`); renderUsersTable(); e.target.reset(); handleRolePreset('Editor');
+      
+      const roleVal = document.getElementById('new-user-role').value;
+      const statusVal = document.getElementById('new-user-status').value;
+      const newUser = normalizeUserFromRecord({
+        id: Date.now(),
+        fullname: document.getElementById('new-user-fullname').value.trim(),
+        username: uname,
+        password: document.getElementById('new-user-password').value.trim(),
+        role: roleVal,
+        bureau: document.getElementById('new-user-bureau').value,
+        status: statusVal,
+        permissions: {
+          admin: document.getElementById('perm-admin').checked,
+          read: document.getElementById('perm-read').checked,
+          create: document.getElementById('perm-create').checked,
+          edit: document.getElementById('perm-edit').checked,
+          delete: document.getElementById('perm-delete').checked,
+          upload: document.getElementById('perm-upload').checked,
+          download: document.getElementById('perm-download').checked,
+          export: document.getElementById('perm-export').checked,
+          approve: document.getElementById('perm-approve').checked,
+          _role: roleVal,
+          _status: statusVal
+        }
+      });
+
+      usersData.unshift(newUser);
+      await localDB.users.put(newUser);
+      if (db) {
+        const res = await safeDbExec(db.from('app_users').upsert([formatUserForSupabase(newUser)]), 'Create User');
+        if (res && !res.error) {
+          showToast(`បានបង្កើតគណនី @${newUser.username} និងរក្សាទុកក្នុង Cloud ជោគជ័យ!`);
+        }
+      } else {
+        showToast(`បានបង្កើតគណនី @${newUser.username} ជោគជ័យ!`);
+      }
+      logActivity('បង្កើត User ថ្មី', `@${newUser.username} (${newUser.role})`);
+      renderUsersTable();
+      e.target.reset();
+      handleRolePreset('Editor');
     }
 
-    async function toggleUserStatus(id) { const idx = usersData.findIndex(x => x.id === id); if (idx === -1) return; const u = usersData[idx]; if (['admin'].includes(u.username.toLowerCase())) return alert('មិនអាចផ្អាកគណនី Super Admin បានទេ!'); u.status = u.status === 'Active' ? 'Suspended' : 'Active'; await localDB.users.put(u); if (db) await safeDbExec(db.from('app_users').update({ status: u.status }).eq('id', id), 'Update User Status'); renderUsersTable(); showToast(`គណនី @${u.username} ត្រូវបានប្តូរទៅជា ${u.status}!`); }
+    // 🌟 ប្តូរស្ថានភាពគណនី (Suspend/Activate) ដោយធ្វើបច្ចុប្បន្នភាពក្នុងជួរឈរ permissions ជំនួសឱ្យជួរឈរ status ដែលគ្មានក្នុង Supabase
+    async function toggleUserStatus(id) {
+      const idx = usersData.findIndex(x => x.id === id); if (idx === -1) return;
+      const u = usersData[idx];
+      if (['admin'].includes(u.username.toLowerCase())) return alert('មិនអាចផ្អាកគណនី Super Admin បានទេ!');
+      
+      const newStatus = u.status === 'Active' ? 'Suspended' : 'Active';
+      u.status = newStatus;
+      u.permissions = { ...(u.permissions || {}), _status: newStatus, _role: u.role || 'Editor' };
+      
+      await localDB.users.put(u);
+      if (db) {
+        await safeDbExec(db.from('app_users').upsert([formatUserForSupabase(u)]), 'Update User Status');
+      }
+      renderUsersTable();
+      showToast(`គណនី @${u.username} ត្រូវបានប្តូរទៅជា ${u.status} លើ Cloud រួចរាល់!`);
+      logActivity(`ប្តូរ Status: ${u.status}`, `@${u.username}`);
+    }
+
     async function deleteUser(id) { const u = usersData.find(x => x.id === id); if (u && ['admin', 'user1', 'user2', 'user3'].includes(u.username.toLowerCase())) return alert('មិនអាចលុបគណនីស្នូលរបស់ប្រព័ន្ធបានឡើយ!'); if (confirm(`តើអ្នកចង់លុបគណនី @${u.username} មែនទេ?`)) { if (db) await safeDbExec(db.from('app_users').delete().eq('id', id), 'Delete User'); await localDB.users.delete(id); usersData = usersData.filter(x => x.id !== id); renderUsersTable(); showToast('បានលុបគណនីជោគជ័យ!'); } }
 
     function renderUsersTable() {
       const tbody = document.getElementById('users-table-body'); if (!tbody) return;
       tbody.innerHTML = usersData.map(u => {
-        const bLabel = u.bureau === 'all' ? '👑 All' : (BUREAUS[u.bureau]?.shortName || u.bureau); const isCore = ['admin'].includes(String(u.username).toLowerCase()); const statusBadge = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Pending</span>');
-        return `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5"><div class="font-bold text-slate-800 text-sm">${u.fullname}</div><div class="text-xs text-slate-500 font-semibold">${u.role || 'User'}</div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${u.username}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${bLabel}</span></td><td class="p-3.5 text-xs">${statusBadge}</td><td class="p-3.5 text-right">${!isCore ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${u.status==='Active'?'ផ្អាក (Suspend)':'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>` : '<span class="text-slate-400 text-xs">Master Account</span>'}</td></tr>`;
+        const roleDisplay = u.role || u.permissions?._role || 'Editor';
+        const statusDisplay = u.status || u.permissions?._status || 'Active';
+        const bLabel = u.bureau === 'all' ? '👑 All' : (BUREAUS[u.bureau]?.shortName || u.bureau);
+        const isCore = ['admin'].includes(String(u.username).toLowerCase());
+        const statusBadge = statusDisplay === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (statusDisplay === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">Pending</span>');
+        return `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5"><div class="font-bold text-slate-800 text-sm">${u.fullname}</div><div class="text-xs text-slate-500 font-semibold">${roleDisplay}</div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${u.username}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${bLabel}</span></td><td class="p-3.5 text-xs">${statusBadge}</td><td class="p-3.5 text-right">${!isCore ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${statusDisplay==='Active'?'ផ្អាក (Suspend)':'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>` : '<span class="text-slate-400 text-xs">Master Account</span>'}</td></tr>`;
       }).join('');
     }
 
@@ -1333,7 +1485,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V4.2
+    // BOOTSTRAP V4.3
     window.addEventListener('DOMContentLoaded', () => {
       initLocalDB();
     });
