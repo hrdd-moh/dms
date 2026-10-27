@@ -1,11 +1,11 @@
-# DHRD — Department of Human Resource Development
+# HRDD — Department of Human Resource Development
 
 ប្រព័ន្ធគ្រប់គ្រងឯកសារ និងធនធានមនុស្ស  
 **Ministry of Health (MoH)**
 
 ## 1. Overview
 
-DHRD is a web-based management system designed to support the Department of Human Resource Development in organizing documents, administrative dispatches, examinations, training programs, certificates, user permissions, and system activities.
+HRDD is a web-based management system designed to support the Department of Human Resource Development in organizing documents, administrative dispatches, examinations, training programs, certificates, user permissions, and system activities.
 
 The system is intended to support multiple offices (Bureaus) and centralized data management.
 
