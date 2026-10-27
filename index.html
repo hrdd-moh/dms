@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V4.5 - DHRD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2.5 - DHRD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -74,9 +74,9 @@
             <span class="font-bold text-slate-900 text-sm sm:text-base leading-tight">ក្រសួងសុខាភិបាល</span>
             <span class="text-slate-300 hidden sm:inline">|</span>
             <span class="font-bold text-slate-900 text-sm sm:text-lg leading-tight">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</span>
-            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V4.5</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V2.5</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (DHRD - MoH)</p>
+          <p class="text-xs sm:text-sm text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (HRDD - MoH)</p>
         </div>
       </div>
 
@@ -131,7 +131,7 @@
         <select id="active-bureau-select" onchange="changeActiveBureau(this.value)" class="w-full bg-white text-emerald-900 text-sm font-bold border border-white rounded-xl p-3 outline-none focus:ring-4 focus:ring-emerald-300 cursor-pointer form-input-focus shadow-sm">
           <option value="bureau_1">១. ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ</option>
           <option value="bureau_2">២. ការិយាល័យបណ្តុះបណ្តាលបន្ត</option>
-          <option value="bureau_3">៣. ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ</option>
+          <option value="bureau_3">៣. ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ</option>
         </select>
         <p id="bureau-lock-notice" class="text-xs text-amber-200 font-bold drop-shadow-md hidden">🔒 អ្នកត្រូវបានចាក់សោរឱ្យប្រើតែការិយាល័យរបស់អ្នក</p>
       </div>
@@ -395,7 +395,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V4.5</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.2.5</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -543,7 +543,7 @@
 
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V4.5 (User Manual)</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.2.5 (User Manual)</h4>
           <p><strong>១. ការបើកមើល និង Print ឯកសារ៖</strong> ចុចប៊ូតុង <b>👁️ មើល / Print</b> នៅលើតារាងបណ្ណាល័យ ដើម្បីបើកមើលឯកសារ PDF/រូបភាព និងបោះពុម្ពភ្លាមៗនៅក្នុងប្រព័ន្ធ។</p>
           <p><strong>២. ការទាញពង្រីកជួរឈរតារាង៖</strong> ដាក់ព្រួញ Mouse នៅគែមខាងស្តាំនៃក្បាលតារាងណាមួយ រួចចុចអូសទាញដើម្បីពង្រីក ឬបង្រួមទំហំជួរឈរតាមប្រវែងអក្សរ។</p>
           <p><strong>៣. តម្រងស្វែងរក (Multi-Filters)៖</strong> អាចច្រោះរកឯកសារតាមប្រភេទ ការិយាល័យ និងតម្រៀបតាមលំដាប់បានយ៉ាងរហ័ស។</p>
@@ -610,7 +610,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V4.5 ================= -->
+  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V.2.5 ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -1029,7 +1029,7 @@
     const BUREAUS = {
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', shortName: 'ការិយាល័យទី១', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'exams', label: '🎓 ការប្រឡងចូល និងចេញ' }] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', shortName: 'ការិយាល័យទី២', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'training', label: '🌐 បណ្តុះបណ្តាលបន្ត' }] },
-      bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', shortName: 'ការិយាល័យទី៣', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'certs', label: '📜 ចុះបញ្ជីសញ្ញាបត្រ' }] }
+      bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ', shortName: 'ការិយាល័យទី៣', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'certs', label: '📜 ចុះបញ្ជីសញ្ញាបត្រ' }] }
     };
 
     function setSessionUser(u) { try { if (u) localStorage.setItem('hrd_moh_session_cache', JSON.stringify(u)); else localStorage.removeItem('hrd_moh_session_cache'); } catch (e) {} }
@@ -1803,7 +1803,7 @@
     function renderCountriesTable() { const tbody = document.getElementById('countries-table-body'); if (!tbody) return; tbody.innerHTML = countriesData.map((c, idx) => `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5 font-mono font-bold text-slate-700 text-sm">${c.code}</td><td class="p-3.5 font-bold text-slate-900 text-sm">${c.kh}</td><td class="p-3.5 text-slate-700 text-sm">${c.en}</td><td class="p-3.5 text-right"><button onclick="deleteCountry('${c.code}', ${idx})" class="text-rose-600 hover:underline font-bold text-sm form-input-focus">លុប</button></td></tr>`).join(''); }
     function populateCountryDropdowns() { const formSel = document.getElementById('train-country-select'); const filterSel = document.getElementById('filter-training-country'); const currentVal = formSel?.value; if (formSel) formSel.innerHTML = '<option value="">-- ជ្រើសរើសប្រទេស --</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === currentVal ? 'selected' : ''}>${c.kh} (${c.en})</option>`).join(''); if (filterSel) { const curF = filterSel.value; filterSel.innerHTML = '<option value="all">ប្រទេសទាំងអស់</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === curF ? 'selected' : ''}>${c.kh}</option>`).join(''); } }
     function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><button onclick="openDocViewerById(${d.id})" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100">👁️ មើល / Print</button></div>`).join(''); }
-    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V4.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
+    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V.2.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
     async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__')); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
 
     // ====== IMPORT / EXPORT / PRINT / QR ======
@@ -1869,7 +1869,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V4.5
+    // BOOTSTRAP V.2.5
     window.addEventListener('DOMContentLoaded', () => {
       initLocalDB();
     });
