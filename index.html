@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V4.4 - DHRD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V4.5 - DHRD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -24,12 +24,32 @@
     
     input, textarea, select {
       line-height: 1.625 !important;
-      padding-top: 0.6rem !important;
-      padding-bottom: 0.6rem !important;
+      padding-top: 0.55rem !important;
+      padding-bottom: 0.55rem !important;
       overflow: visible !important;
     }
     .form-input-focus { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
     .form-input-focus:focus-visible { outline: 2px solid #059669; outline-offset: 2px; border-color: transparent; }
+
+    /* មុខងារទាញពង្រីក-បង្រួមជួរឈរតារាងដោយប្រើ Mouse (Resizable Table Columns) */
+    table.resizable-table th {
+      position: relative;
+      user-select: none;
+    }
+    .col-resizer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 6px;
+      height: 100%;
+      cursor: col-resize;
+      background: transparent;
+      z-index: 20;
+      transition: background 0.15s ease;
+    }
+    .col-resizer:hover, .col-resizer.resizing {
+      background: #10b981;
+    }
 
     @media print {
       body * { visibility: hidden; }
@@ -54,7 +74,7 @@
             <span class="font-bold text-slate-900 text-sm sm:text-base leading-tight">ក្រសួងសុខាភិបាល</span>
             <span class="text-slate-300 hidden sm:inline">|</span>
             <span class="font-bold text-slate-900 text-sm sm:text-lg leading-tight">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</span>
-            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V4.4 Cloud</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V4.5</span>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (DHRD - MoH)</p>
         </div>
@@ -99,12 +119,9 @@
   <!-- ================= MAIN CONTAINER ================= -->
   <main id="app-main" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
 
+    <!-- HERO GREEN BANNER (បានលុបស្លាកសញ្ញាក្នុងរង្វង់មូលក្រហមទី១ចេញតាមការស្នើសុំ) -->
     <div class="bg-gradient-to-r from-emerald-700 to-emerald-500 rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6">
       <div class="space-y-2 relative z-10 max-w-2xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-emerald-800 text-xs font-bold tracking-wide shadow-sm">
-          <span id="sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="sync-status">Cloud DB System (Auto-Syncing)</span>
-        </div>
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white font-moul sm:font-sans drop-shadow-md leading-normal" id="active-bureau-title">ការិយាល័យជំនាញ</h2>
         <p class="text-sm sm:text-base text-white font-medium drop-shadow-sm" id="active-bureau-desc">ប្រព័ន្ធគ្រប់គ្រងឯកសារ តាមដានលិខិតចេញ-ចូល និងភារកិច្ចជាក់ស្តែង</p>
       </div>
@@ -152,31 +169,65 @@
 
       <!-- LEFT PANEL -->
       <div class="lg:col-span-8 space-y-5">
-        
-        <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span>☁️</span> <span>ប្រព័ន្ធដំណើរការដោយ <b>Multi-Channel Cloud Auto-Sync (១៥ វិនាទីម្តង)</b> គាំទ្រការ Login ឆ្លងឧបករណ៍ ១០០%។</span>
-          </div>
-          <button onclick="syncFromSupabase(true)" class="underline hover:text-emerald-700 shrink-0">ចុច Sync ឥឡូវនេះ</button>
-        </div>
+        <!-- (បានលុបរបារជូនដំណឹងក្នុងរង្វង់មូលក្រហមទី២ចេញតាមការស្នើសុំ) -->
 
-        <!-- TAB 1: E-LIBRARY TABLE (SHARED ACROSS ALL BUREAUS) -->
-        <div id="section-docs" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="flex items-center gap-2 flex-1">
-              <span class="text-xl text-slate-400">🔍</span>
-              <input type="text" id="doc-search" oninput="renderDocs()" placeholder="ស្វែងរកឯកសារតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium w-full max-w-sm bg-slate-50">
+        <!-- TAB 1: E-LIBRARY TABLE (SHARED ACROSS ALL BUREAUS + ADVANCED FILTERS) -->
+        <div id="section-docs" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">📚 បណ្ណាល័យឯកសាររួម (E-Library)</h3>
+              <p class="text-xs text-slate-500">អាចប្រើប្រាស់ Mouse ទាញពង្រីក-បង្រួមទទឹងជួរឈរលើក្បាលតារាងបានតាមតម្រូវការ</p>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="exportCSV('docs')" id="btn-export-docs" class="perm-download-el px-4 py-2.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-sm font-bold hover:bg-emerald-50 hover:text-emerald-700 transition shadow-sm form-input-focus">Export as CSV</button>
+              <button onclick="resetDocFilters()" class="px-3.5 py-2 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200 transition form-input-focus">🔄 Reset តម្រង</button>
+              <button onclick="exportCSV('docs')" id="btn-export-docs" class="perm-download-el px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-sm form-input-focus">📥 Export CSV</button>
             </div>
           </div>
+
+          <!-- ផ្ទាំងតម្រងស្វែងរកកម្រិតខ្ពស់ (Advanced Multi-Filter Bar តាមរូបទី៤) -->
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
+            <div class="lg:col-span-2 relative">
+              <input type="text" id="doc-search" oninput="renderDocs()" placeholder="🔍 ស្វែងរកតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 w-full bg-white font-medium">
+            </div>
+            <div>
+              <select id="filter-doc-category" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                <option value="all">📂 ប្រភេទទាំងអស់</option>
+                <option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option>
+                <option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option>
+                <option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option>
+                <option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option>
+              </select>
+            </div>
+            <div>
+              <select id="filter-doc-bureau" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                <option value="all">🏢 គ្រប់ការិយាល័យ</option>
+                <option value="bureau_1">ការិយាល័យទី១</option>
+                <option value="bureau_2">ការិយាល័យទី២</option>
+                <option value="bureau_3">ការិយាល័យទី៣</option>
+              </select>
+            </div>
+            <div>
+              <select id="filter-doc-sort" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                <option value="newest">🕒 ថ្មីបំផុតមុន</option>
+                <option value="oldest">⏳ ចាស់បំផុតមុន</option>
+                <option value="title">🔤 ចំណងជើង (ក-អ)</option>
+                <option value="code">🔢 កូដឯកសារ</option>
+              </select>
+            </div>
+          </div>
+
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-h-[600px] overflow-y-auto">
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm resizable-table">
               <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                 <tr>
                   <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                  <th class="p-3.5">Doc ID</th><th class="p-3.5 min-w-[200px]">ចំណងជើងឯកសារ</th><th class="p-3.5 text-center">ប្រភេទ</th><th class="p-3.5 text-center">ស្ថានភាព</th><th class="p-3.5 text-center">ទំហំ</th><th class="p-3.5 min-w-[150px]">ម្ចាស់ឯកសារ</th><th class="p-3.5 text-center">សកម្មភាព</th>
+                  <th class="p-3.5 min-w-[110px]">Doc ID</th>
+                  <th class="p-3.5 min-w-[240px]">ចំណងជើងឯកសារ</th>
+                  <th class="p-3.5 text-center min-w-[140px]">ប្រភេទ</th>
+                  <th class="p-3.5 text-center min-w-[130px]">ស្ថានភាព</th>
+                  <th class="p-3.5 text-center min-w-[95px]">ទំហំ</th>
+                  <th class="p-3.5 min-w-[135px]">ម្ចាស់ឯកសារ</th>
+                  <th class="p-3.5 text-center min-w-[165px]">សកម្មភាព</th>
                 </tr>
               </thead>
               <tbody id="docs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -184,18 +235,35 @@
           </div>
         </div>
 
-        <!-- TAB 2: DISPATCH TABLE (ISOLATED PER BUREAU) -->
-        <div id="section-dispatch" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5 hidden">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <!-- TAB 2: DISPATCH TABLE (ISOLATED PER BUREAU + FILTERS) -->
+        <div id="section-dispatch" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
             <h3 class="text-base font-bold text-slate-900"><span class="text-xl">📤📥</span> តាមដានលិខិតចេញ-ចូល (ឯកជនតាមការិយាល័យ)</h3>
-            <span class="text-sm text-slate-500 font-medium">តាមដានដំណាក់កាល និងទីតាំងបច្ចុប្បន្ន</span>
+            <span class="text-xs text-slate-500 font-medium">អាចទាញពង្រីកជួរឈរតារាងដោយប្រើ Mouse</span>
           </div>
+
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+            <input type="text" id="filter-disp-search" oninput="renderDispatch()" placeholder="🔍 ស្វែងរកលេខលិខិត ឬកម្មវត្ថុ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 bg-white font-medium">
+            <select id="filter-disp-type" onchange="renderDispatch()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+              <option value="all">🔄 ប្រភេទទាំងអស់ (ចេញ & ចូល)</option>
+              <option value="ចូល">📥 លិខិតចូល</option>
+              <option value="ចេញ">📤 លិខិតចេញ</option>
+            </select>
+            <select id="filter-disp-stage" onchange="renderDispatch()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+              <option value="all">⏳ គ្រប់ដំណាក់កាល</option>
+              <option value="រដ្ឋបាលទទួល">រដ្ឋបាលទទួល</option>
+              <option value="កំពុងពិនិត្យបច្ចេកទេស">កំពុងពិនិត្យបច្ចេកទេស</option>
+              <option value="រង់ចាំចំណារ/ហត្ថលេខា">រង់ចាំចំណារ/ហត្ថលេខា</option>
+              <option value="បញ្ចប់រួចរាល់">បញ្ចប់រួចរាល់</option>
+            </select>
+          </div>
+
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-h-[600px] overflow-y-auto">
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm resizable-table">
               <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                 <tr>
                   <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                  <th class="p-3.5">ប្រភេទ</th><th class="p-3.5 min-w-[120px]">លេខលិខិត</th><th class="p-3.5 min-w-[250px]">កម្មវត្ថុ / ខ្លឹមសារ</th><th class="p-3.5 text-center">ដំណាក់កាល</th><th class="p-3.5 min-w-[180px]">ទីតាំងបច្ចុប្បន្ន</th><th class="p-3.5 text-center">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th>
+                  <th class="p-3.5 min-w-[90px]">ប្រភេទ</th><th class="p-3.5 min-w-[130px]">លេខលិខិត</th><th class="p-3.5 min-w-[240px]">កម្មវត្ថុ / ខ្លឹមសារ</th><th class="p-3.5 text-center min-w-[160px]">ដំណាក់កាល</th><th class="p-3.5 min-w-[180px]">ទីតាំងបច្ចុប្បន្ន</th><th class="p-3.5 text-center min-w-[120px]">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[100px]">សកម្មភាព</th>
                 </tr>
               </thead>
               <tbody id="dispatch-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -204,16 +272,17 @@
         </div>
 
         <!-- TAB 3A: EXAMS -->
-        <div id="section-exams" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5 hidden">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div id="section-exams" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
             <h3 class="text-base font-bold text-slate-900"><span class="text-xl">🎓</span> ការប្រឡងចូល និងចេញថ្នាក់ជាតិ</h3>
+            <input type="text" id="filter-exam-search" oninput="renderExams()" placeholder="🔍 ស្វែងរកជំនាញ ឬសម័យប្រឡង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-h-[600px] overflow-y-auto">
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm resizable-table">
               <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                 <tr>
                   <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                  <th class="p-3.5">ប្រភេទ</th><th class="p-3.5 min-w-[200px]">ជំនាញ / ឯកទេស</th><th class="p-3.5 min-w-[150px]">សម័យប្រឡង</th><th class="p-3.5 text-center">បេក្ខជន</th><th class="p-3.5 text-center">ស្ថានភាព</th><th class="p-3.5 text-center">សកម្មភាព</th>
+                  <th class="p-3.5 min-w-[160px]">ប្រភេទ</th><th class="p-3.5 min-w-[200px]">ជំនាញ / ឯកទេស</th><th class="p-3.5 min-w-[160px]">សម័យប្រឡង</th><th class="p-3.5 text-center min-w-[100px]">បេក្ខជន</th><th class="p-3.5 text-center min-w-[140px]">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[100px]">សកម្មភាព</th>
                 </tr>
               </thead>
               <tbody id="exams-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -242,11 +311,11 @@
             </div>
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-h-[600px] overflow-y-auto">
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm resizable-table">
               <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                 <tr>
                   <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                  <th class="p-3.5 min-w-[180px]">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]">អង្គភាព</th><th class="p-3.5 min-w-[200px]">វគ្គសិក្សា</th><th class="p-3.5 text-center">រយៈពេល</th><th class="p-3.5 text-center">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">ប្រទេស</th><th class="p-3.5 min-w-[150px]">ឧបត្ថម្ភ</th><th class="p-3.5 text-center">សកម្មភាព</th>
+                  <th class="p-3.5 min-w-[180px]">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]">អង្គភាព</th><th class="p-3.5 min-w-[200px]">វគ្គសិក្សា</th><th class="p-3.5 text-center min-w-[90px]">រយៈពេល</th><th class="p-3.5 text-center min-w-[140px]">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[120px]">ប្រទេស</th><th class="p-3.5 min-w-[150px]">ឧបត្ថម្ភ</th><th class="p-3.5 text-center min-w-[100px]">សកម្មភាព</th>
                 </tr>
               </thead>
               <tbody id="training-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -255,16 +324,17 @@
         </div>
 
         <!-- TAB 3C: CERTS -->
-        <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5 hidden">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
             <h3 class="text-base font-bold text-slate-900"><span class="text-xl">📜</span> ចុះបញ្ជីការ និងកំណត់លេខសញ្ញាបត្រ</h3>
+            <input type="text" id="filter-cert-search" oninput="renderCerts()" placeholder="🔍 ស្វែងរកលេខកូដ ឬឈ្មោះ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
           </div>
           <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-h-[600px] overflow-y-auto">
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm resizable-table">
               <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                 <tr>
                   <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                  <th class="p-3.5 min-w-[160px]">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[180px]">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[200px]">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[150px]">ហត្ថលេខា</th><th class="p-3.5 text-center">សកម្មភាព</th>
+                  <th class="p-3.5 min-w-[160px]">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[180px]">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[200px]">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center min-w-[120px]">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[150px]">ហត្ថលេខា</th><th class="p-3.5 text-center min-w-[140px]">សកម្មភាព</th>
                 </tr>
               </thead>
               <tbody id="certs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -300,6 +370,24 @@
 
   <!-- ================= MODALS ================= -->
 
+  <!-- BUILT-IN DOCUMENT VIEWER & PRINT MODAL (ដោះស្រាយបញ្ហារូបទី១) -->
+  <div id="modal-doc-viewer" role="dialog" aria-modal="true" aria-labelledby="doc-viewer-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-[70] flex items-center justify-center p-3 sm:p-6 hidden">
+    <div class="bg-white rounded-3xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl flex flex-col h-[92vh]">
+      <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b border-slate-200">
+        <div class="min-w-0">
+          <h3 id="doc-viewer-title" class="text-base font-bold text-slate-900 truncate">📄 មើលឯកសារ</h3>
+          <p id="doc-viewer-meta" class="text-xs text-slate-500 mt-0.5"></p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="printCurrentDoc()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs form-input-focus">🖨️ បោះពុម្ព (Print)</button>
+          <a id="doc-viewer-download" href="#" download class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs form-input-focus hidden">📥 ទាញយក</a>
+          <button onclick="closeDocViewerModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-500 flex items-center justify-center text-lg leading-none form-input-focus">✕</button>
+        </div>
+      </div>
+      <div id="doc-viewer-body" class="flex-1 overflow-y-auto my-3 bg-slate-100 rounded-2xl border border-slate-200 flex items-center justify-center p-4"></div>
+    </div>
+  </div>
+
   <!-- LOGIN MODAL -->
   <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
@@ -307,7 +395,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V4.4</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V4.5</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -384,7 +472,7 @@
           </form>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs shadow-2xs">
-          <table class="w-full text-left">
+          <table class="w-full text-left resizable-table">
             <thead class="bg-emerald-50/50 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap">
               <tr><th class="p-3">ឈ្មោះ និង Role</th><th class="p-3">Username</th><th class="p-3">ការិយាល័យ</th><th class="p-3">ស្ថានភាព</th><th class="p-3 text-right">សកម្មភាព</th></tr>
             </thead>
@@ -403,7 +491,7 @@
           </form>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
-          <table class="w-full text-left">
+          <table class="w-full text-left resizable-table">
             <thead class="bg-emerald-50/50 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap">
               <tr><th class="p-3 w-16">Code</th><th class="p-3">Khmer</th><th class="p-3">English</th><th class="p-3 text-right">សកម្មភាព</th></tr>
             </thead>
@@ -444,7 +532,7 @@
           <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold self-end sm:self-auto form-input-focus">ជម្រះ Logs ចាស់ៗ</button>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
-          <table class="w-full text-left">
+          <table class="w-full text-left resizable-table">
             <thead class="bg-emerald-50/50 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap">
               <tr><th class="p-3">កាលបរិច្ឆេទ</th><th class="p-3">មន្ត្រី (User)</th><th class="p-3">សកម្មភាព</th><th class="p-3">គោលដៅ</th></tr>
             </thead>
@@ -455,10 +543,10 @@
 
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V4.4 (User Manual)</h4>
-          <p><strong>១. ការធ្វើសមកាលកម្មគណនីឆ្លងឧបករណ៍ (Multi-Channel Cloud Account Sync)៖</strong> រាល់ការបង្កើត User ថ្មី ប្រព័ន្ធនឹងរក្សាទុកទាំងក្នុងតារាង <code>app_users</code> និងបម្រុងទុកក្នុងកំណត់ត្រាប្រព័ន្ធ Cloud ស្វ័យប្រវត្តិ ធានាថាឧបករណ៍ថ្មីអាច Login បាន ១០០%។</p>
-          <p><strong>២. ការបង្ហោះឯកសារ៖</strong> ឯកសារត្រូវមានទំហំ ≤ 8MB។ ឯកសារក្នុងបណ្ណាល័យរួមអាចមើលឃើញដោយការិយាល័យទាំង ៣ ដូចគ្នា។</p>
-          <p><strong>៣. លិខិតចេញ-ចូល៖</strong> ត្រូវបានបែងចែកដាច់ដោយឡែកតាមការិយាល័យនីមួយៗ (លើកលែងតែ Admin ដែលអាចត្រួតពិនិត្យមើលទាំងអស់បាន)។</p>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V4.5 (User Manual)</h4>
+          <p><strong>១. ការបើកមើល និង Print ឯកសារ៖</strong> ចុចប៊ូតុង <b>👁️ មើល / Print</b> នៅលើតារាងបណ្ណាល័យ ដើម្បីបើកមើលឯកសារ PDF/រូបភាព និងបោះពុម្ពភ្លាមៗនៅក្នុងប្រព័ន្ធ។</p>
+          <p><strong>២. ការទាញពង្រីកជួរឈរតារាង៖</strong> ដាក់ព្រួញ Mouse នៅគែមខាងស្តាំនៃក្បាលតារាងណាមួយ រួចចុចអូសទាញដើម្បីពង្រីក ឬបង្រួមទំហំជួរឈរតាមប្រវែងអក្សរ។</p>
+          <p><strong>៣. តម្រងស្វែងរក (Multi-Filters)៖</strong> អាចច្រោះរកឯកសារតាមប្រភេទ ការិយាល័យ និងតម្រៀបតាមលំដាប់បានយ៉ាងរហ័ស។</p>
         </div>
       </div>
     </div>
@@ -522,7 +610,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V4.4 ================= -->
+  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V4.5 ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -536,7 +624,7 @@
     const SYSTEM_USER_REGISTRY_CODE = "__SYSTEM_USERS_REGISTRY__";
 
     const localDB = new Dexie("DHRD_DB_V4");
-    localDB.version(1).stores({
+    localDB.version(2).stores({
         docs: 'id, bureau, code, title, category, fileSize, fileName, storage, createdBy',
         trainings: 'id, trainee, unit, course, duration, dates, country, sponsor',
         dispatches: 'id, bureau, type, code, title, stage, location, date, assignee',
@@ -563,9 +651,39 @@
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active' } }
     ];
 
-    // បង្កើតលេខ ID សុវត្ថិភាពដែលមិនលើសទំហំ 32-bit Integer (<= 2,147,483,647) ក្នុងករណី Supabase ប្រើ int4
     function generateSafeId() {
       return Math.floor(100000 + Math.random() * 1900000000);
+    }
+
+    // 🌟 មុខងារប្រើប្រាស់ Mouse ទាញពង្រីក-បង្រួមទំហំជួរឈរតារាង (Interactive Table Column Resizer)
+    function initResizableTables() {
+      document.querySelectorAll('table.resizable-table th').forEach(th => {
+        if (th.querySelector('.col-resizer')) return;
+        const resizer = document.createElement('div');
+        resizer.className = 'col-resizer';
+        resizer.title = 'ចុចអូសទាញដើម្បីពង្រីក ឬបង្រួមជួរឈរ';
+        th.appendChild(resizer);
+
+        let startX = 0, startWidth = 0;
+        const onMouseMove = (e) => {
+          const newWidth = Math.max(60, startWidth + (e.pageX - startX));
+          th.style.width = newWidth + 'px';
+          th.style.minWidth = newWidth + 'px';
+        };
+        const onMouseUp = () => {
+          resizer.classList.remove('resizing');
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        };
+        resizer.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
+          startX = e.pageX;
+          startWidth = th.offsetWidth;
+          resizer.classList.add('resizing');
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        });
+      });
     }
 
     function normalizeUserFromRecord(u) {
@@ -618,13 +736,11 @@
       return Array.from(map.values());
     }
 
-    // 🌟 មុខងារ Multi-Channel User Sync: រុញគណនីទៅកាន់ Cloud គ្រប់ច្រក (app_users + docs registry + audit_logs)
     async function pushUserToCloudMultiChannel(userObj, allUsersArray) {
       if (!db) return false;
       let pushed = false;
       const safeUser = normalizeUserFromRecord(userObj);
 
-      // ច្រកទី ១៖ សាកល្បងរក្សាទុកក្នុងតារាង app_users (Smart Retry តាមទម្រង់ Schema ផ្សេងៗ)
       try {
         const payloadFull = {
           id: safeUser.id,
@@ -638,7 +754,6 @@
         if (!r1.error) {
           pushed = true;
         } else {
-          // ប្រសិនបើតារាងមិនមានជួរឈរ permissions ទេ សាកល្បងបញ្ជូនតែ ៥ ជួរឈរមូលដ្ឋាន
           const payloadBasic = {
             id: safeUser.id,
             fullname: safeUser.fullname,
@@ -649,9 +764,8 @@
           const r2 = await db.from('app_users').upsert([payloadBasic]);
           if (!r2.error) pushed = true;
         }
-      } catch (e) { console.warn("app_users push note:", e); }
+      } catch (e) {}
 
-      // ច្រកទី ២ (Fallback Registry ក្នុងតារាង docs)៖ ធានាថាបើ app_users ជាប់សោរ RLS ឧបករណ៍ថ្មីនៅតែទាញយកគណនីបានពី docs
       try {
         const customUsersOnly = allUsersArray.filter(u => u && u.username && u.username.toLowerCase() !== 'admin');
         const registryPayload = {
@@ -668,9 +782,8 @@
         };
         const rDoc = await db.from('docs').upsert([registryPayload]);
         if (!rDoc.error) pushed = true;
-      } catch (e) { console.warn("docs registry push note:", e); }
+      } catch (e) {}
 
-      // ច្រកទី ៣ (Fallback ក្នុងតារាង audit_logs)
       try {
         const logSyncEntry = {
           id: generateSafeId(),
@@ -686,7 +799,6 @@
       return pushed;
     }
 
-    // 🌟 ទាញយកគណនីពីគ្រប់ច្រកទាំងអស់លើ Cloud មកផ្គុំគ្នា (ធានាថាឧបករណ៍ថ្មីឃើញគណនីថ្មី ១០០%)
     async function fetchAllCloudUsers() {
       if (!db) return [];
       let fromAppUsers = [], fromDocsRegistry = [], fromAuditLogs = [];
@@ -704,7 +816,6 @@
           try { fromDocsRegistry = JSON.parse(resReg.value.data[0].drive_link); } catch (e) {}
         }
         if (resLogs.status === 'fulfilled' && resLogs.value && Array.isArray(resLogs.value.data)) {
-          // អានពីចាស់ទៅថ្មីដើម្បីឱ្យការកែប្រែចុងក្រោយឈ្នះ
           resLogs.value.data.slice().reverse().forEach(row => {
             try {
               const parsed = JSON.parse(row.target);
@@ -712,7 +823,7 @@
             } catch (e) {}
           });
         }
-      } catch (e) { console.warn("fetchAllCloudUsers note:", e); }
+      } catch (e) {}
 
       return mergeUserLists(fromDocsRegistry, fromAuditLogs, fromAppUsers);
     }
@@ -721,7 +832,8 @@
     let countriesData = [...defaultCountries];
     let usersData = [...defaultUsers];
     let auditLogs = [];
-    let currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, rawFile: null };
+    let currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, dataUrl: null, rawFile: null };
+    let currentViewingDoc = null;
     let currentUser = null;
     let activeBureauKey = localStorage.getItem('hrd_moh_active_bureau_cache') || 'bureau_1';
     let activeTab = 'docs';
@@ -739,17 +851,9 @@
       setTimeout(() => { toast.classList.add('translate-y-2', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
     }
 
-    async function safeDbExec(promise, actionDesc = '') {
+    async function safeDbExec(promise) {
       if (!db || !promise) return null;
-      try { 
-        const res = await promise; 
-        if (res && res.error) {
-          console.error("Supabase Error [" + actionDesc + "]:", res.error);
-        }
-        return res; 
-      } catch (err) { 
-        return null; 
-      }
+      try { return await promise; } catch (err) { return null; }
     }
 
     function logActivity(action, target) {
@@ -758,7 +862,7 @@
         const logEntry = { id: generateSafeId(), time: now.toLocaleDateString('km-KH') + ' ' + now.toLocaleTimeString('en-US'), user: currentUser ? (currentUser.fullname + ' (@' + currentUser.username + ')') : 'System', action: action, target: target };
         auditLogs.unshift(logEntry);
         localDB.logs.put(logEntry).catch(()=>{});
-        if (db) safeDbExec(db.from('audit_logs').insert([logEntry]), 'Log');
+        if (db) safeDbExec(db.from('audit_logs').insert([logEntry]));
       } catch (err) {}
     }
 
@@ -783,7 +887,7 @@
           if (leg) legacyUsers = JSON.parse(leg);
         } catch(e){}
         usersData = mergeUserLists(legacyUsers, u);
-      } catch (e) { console.warn("IndexedDB init note:", e); }
+      } catch (e) {}
       
       try { 
         const v = localStorage.getItem('hrd_moh_session_cache'); 
@@ -791,19 +895,34 @@
       } catch(e){}
       
       checkAuth();
+      initResizableTables();
       await syncFromSupabase(false);
       
       setInterval(() => syncFromSupabase(false), 15000); 
     }
 
+    // រក្សាទុក fileDataUrl ក្នុងម៉ាស៊ីនពេល Sync ជាមួយ Cloud ដើម្បីកុំឱ្យដាច់សាច់ហ្វាលដែលទើប Upload
     async function syncToLocalDB(tableName, remoteData) {
       if (!Array.isArray(remoteData)) return;
       try {
+        if (tableName === 'docs') {
+          const existingLocal = await localDB.docs.toArray();
+          const localMap = new Map(existingLocal.map(item => [item.id, item]));
+          remoteData = remoteData.map(r => {
+            const loc = localMap.get(r.id);
+            return {
+              ...r,
+              driveLink: r.driveLink || loc?.driveLink || '',
+              fileDataUrl: loc?.fileDataUrl || r.fileDataUrl || null,
+              mimeType: loc?.mimeType || r.mimeType || ''
+            };
+          });
+        }
         await localDB[tableName].clear();
         if (remoteData.length > 0) {
           await localDB[tableName].bulkPut(remoteData);
         }
-      } catch (e) { console.warn("Sync table err:", e); }
+      } catch (e) {}
 
       const sorted = [...remoteData].sort((a, b) => (b.id || 0) - (a.id || 0));
       if(tableName === 'docs') docsData = sorted.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE);
@@ -815,9 +934,7 @@
 
     async function syncFromSupabase(isManual = false) {
       if (!db) return;
-      const syncStatus = document.getElementById('sync-status');
       const syncIcon = document.getElementById('sync-btn-icon');
-      if(syncStatus) syncStatus.innerText = "កំពុងធ្វើសមកាលកម្មជាមួយ Cloud (Syncing)...";
       if(syncIcon) syncIcon.classList.add('animate-spin');
       
       try {
@@ -871,13 +988,11 @@
         }
 
         if (rCloudUsers.status === 'fulfilled' && Array.isArray(rCloudUsers.value)) {
-          const cloudList = rCloudUsers.value;
-          usersData = mergeUserLists(usersData, cloudList);
+          usersData = mergeUserLists(usersData, rCloudUsers.value);
           await localDB.users.clear();
           await localDB.users.bulkPut(usersData);
           localStorage.setItem('hrd_moh_users_cache', JSON.stringify(usersData));
 
-          // ប្រសិនបើមានគណនីក្នុងម៉ាស៊ីនដែលមិនទាន់បានរុញទៅ Cloud ទេ ធ្វើការរុញឡើង Cloud ស្វ័យប្រវត្តិ
           const customLocal = usersData.filter(u => u && u.username && !['admin', 'user1', 'user2', 'user3'].includes(u.username.toLowerCase()));
           if (customLocal.length > 0 && isManual) {
             await pushUserToCloudMultiChannel(customLocal[0], usersData);
@@ -896,10 +1011,8 @@
           renderTablesAndStatsOnly();
           populateCountryDropdowns();
         }
-        if(syncStatus) syncStatus.innerText = "Cloud DB System (Auto-Synced ✔)";
-        if(isManual) showToast("បានធ្វើសមកាលកម្មទិន្នន័យ និងគណនី User ជាមួយ Cloud ជោគជ័យ!");
+        if(isManual) showToast("បានធ្វើសមកាលកម្មទិន្នន័យជាមួយ Cloud ជោគជ័យ!");
       } catch (err) {
-        if(syncStatus) syncStatus.innerText = "ការតភ្ជាប់មានបញ្ហា (Offline Mode)";
       } finally {
         if(syncIcon) syncIcon.classList.remove('animate-spin');
       }
@@ -907,7 +1020,7 @@
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') { 
-        closeSystemModal(); closePrintPreviewModal(); toggleScannerModal(false);
+        closeDocViewerModal(); closeSystemModal(); closePrintPreviewModal(); toggleScannerModal(false);
       }
     });
 
@@ -954,7 +1067,6 @@
     function togglePasswordVisibility() { const pInput = document.getElementById('login-password'); pInput.type = (pInput.type === 'password') ? 'text' : 'password'; }
     function normalizeKhmerDigits(str) { if (!str) return ''; const khmerDigits = ['០','១','២','៣','៤','៥','៦','៧','៨','៩']; let res = String(str); for (let i=0; i<10; i++) res = res.split(khmerDigits[i]).join(String(i)); return res.trim(); }
 
-    // 🌟 ទាញយកគណនីពីគ្រប់ច្រកលើ Cloud មុនពេលផ្ទៀងផ្ទាត់ការ Login នៅលើឧបករណ៍ថ្មី
     async function handleLogin(e) {
       if (e) e.preventDefault();
       const submitBtn = document.getElementById('btn-login-submit');
@@ -972,7 +1084,7 @@
             await localDB.users.bulkPut(usersData);
             localStorage.setItem('hrd_moh_users_cache', JSON.stringify(usersData));
           }
-        } catch (err) { console.warn("Cloud login fetch fallback:", err); }
+        } catch (err) {}
       }
 
       if (submitBtn) submitBtn.innerText = 'ចូលប្រព័ន្ធ (Sign In)';
@@ -1011,6 +1123,7 @@
       if (activeBureauKey === 'bureau_1') renderExams();
       if (activeBureauKey === 'bureau_2') renderTrainingList();
       if (activeBureauKey === 'bureau_3') renderCerts();
+      initResizableTables();
     }
 
     function renderBureauWorkspace() {
@@ -1089,7 +1202,7 @@
             <div id="drop-zone" tabindex="0" onclick="document.getElementById('doc-file-input').click()" class="form-input-focus border-2 border-dashed border-emerald-400 bg-emerald-50 rounded-2xl p-5 text-center cursor-pointer hover:bg-emerald-100 transition">
               <input type="file" id="doc-file-input" onchange="handleFileSelected(event)" class="hidden" accept=".pdf,.docx,.doc,.xlsx,.xls,.png,.jpg,.jpeg">
               <p id="file-label" class="text-sm font-bold text-slate-700">ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល</p>
-              <p id="file-sublabel" class="text-xs text-rose-500 font-bold mt-1">ទំហំគាំទ្រ ≤ 8MB (ហោះចូល Drive អូតូ)</p>
+              <p id="file-sublabel" class="text-xs text-rose-500 font-bold mt-1">ទំហំគាំទ្រ ≤ 8MB (គាំទ្រការមើល និង Print ផ្ទាល់)</p>
             </div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1.5">កូដឯកសារ *</label><input type="text" id="doc-code" required class="form-input-focus w-full border border-slate-300 rounded-xl p-3 bg-slate-50/50" placeholder="DOC-2026-001"></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1.5">ប្រភេទ</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-3 bg-white"><option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option><option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option><option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option><option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option></select></div>
@@ -1100,52 +1213,191 @@
       }
     }
 
+    function resetDocFilters() {
+      const s = document.getElementById('doc-search'); if (s) s.value = '';
+      const c = document.getElementById('filter-doc-category'); if (c) c.value = 'all';
+      const b = document.getElementById('filter-doc-bureau'); if (b) b.value = 'all';
+      const o = document.getElementById('filter-doc-sort'); if (o) o.value = 'newest';
+      renderDocs();
+    }
+
     function renderDocs() {
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
       const search = (document.getElementById('doc-search')?.value || '').toLowerCase();
+      const catFilter = document.getElementById('filter-doc-category')?.value || 'all';
+      const bureauFilter = document.getElementById('filter-doc-bureau')?.value || 'all';
+      const sortOrder = document.getElementById('filter-doc-sort')?.value || 'newest';
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
-      const filtered = docsData
+
+      let filtered = docsData
         .filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE)
-        .filter(d => (d.title && d.title.toLowerCase().includes(search)) || (d.code && d.code.toLowerCase().includes(search)) || (d.category && d.category.toLowerCase().includes(search)));
+        .filter(d => {
+          const matchSearch = !search || (d.title && d.title.toLowerCase().includes(search)) || (d.code && d.code.toLowerCase().includes(search)) || (d.category && d.category.toLowerCase().includes(search));
+          const matchCat = (catFilter === 'all' || d.category === catFilter);
+          const matchBureau = (bureauFilter === 'all' || d.bureau === bureauFilter);
+          return matchSearch && matchCat && matchBureau;
+        });
+
+      filtered.sort((a, b) => {
+        if (sortOrder === 'oldest') return (a.id || 0) - (b.id || 0);
+        if (sortOrder === 'title') return String(a.title || '').localeCompare(String(b.title || ''));
+        if (sortOrder === 'code') return String(a.code || '').localeCompare(String(b.code || ''));
+        return (b.id || 0) - (a.id || 0);
+      });
+
       const statDocs = document.getElementById('stat-bureau-docs'); if(statDocs) statDocs.innerText = filtered.length;
 
       const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
-      if (limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</td></tr>';
+      if (limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ</td></tr>';
 
       tbody.innerHTML = limitedData.map(d => {
         const bTag = BUREAUS[d.bureau] ? BUREAUS[d.bureau].shortName : d.bureau;
+        const hasFileOrLink = Boolean(d.driveLink || d.fileDataUrl);
         return `
           <tr class="hover:bg-emerald-50 transition">
             <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
-            <td class="p-3.5 font-mono font-bold text-slate-700 text-sm">${d.code}</td>
+            <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${d.code}</td>
             <td class="p-3.5 font-bold text-slate-900 text-sm">${d.title}</td>
-            <td class="p-3.5 text-center"><span class="px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${d.category}</span></td>
-            <td class="p-3.5 text-center"><span class="px-3 py-1 rounded-full text-xs font-bold ${d.driveLink ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${d.driveLink ? 'In Drive' : 'Cloud Record'}</span></td>
-            <td class="p-3.5 text-center font-mono text-xs text-slate-600">${d.fileSize}</td>
-            <td class="p-3.5 text-slate-600 font-bold text-xs">${bTag}</td>
+            <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${d.category}</span></td>
+            <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold ${d.driveLink ? 'bg-emerald-100 text-emerald-800' : (d.fileDataUrl ? 'bg-teal-100 text-teal-800' : 'bg-amber-100 text-amber-800')}">${d.driveLink ? '☁️ In Drive' : (d.fileDataUrl ? '📄 Ready' : 'Cloud Record')}</span></td>
+            <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${d.fileSize}</td>
+            <td class="p-3.5 text-slate-600 font-bold text-xs whitespace-nowrap">${bTag}</td>
             <td class="p-3.5 text-center whitespace-nowrap">
-              <button onclick="openDocFile('${d.driveLink || ''}', '${d.title}')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold transition form-input-focus shadow-sm">👁️ មើល</button>
-              ${isAdmin ? `<button onclick="deleteDoc(${d.id})" class="text-rose-600 hover:text-rose-800 ml-3 font-bold text-sm form-input-focus">លុប</button>` : ''}
+              <button onclick="openDocViewerById(${d.id})" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition form-input-focus shadow-2xs">👁️ មើល / Print</button>
+              ${isAdmin ? `<button onclick="deleteDoc(${d.id})" class="text-rose-600 hover:text-rose-800 ml-2.5 font-bold text-xs form-input-focus">លុប</button>` : ''}
             </td>
           </tr>
         `;
       }).join('');
-      
-      if(filtered.length > MAX_RENDER_ROWS) tbody.innerHTML += `<tr><td colspan="8" class="p-4 text-center text-amber-600 font-bold bg-amber-50">មានឯកសារចាស់ៗចំនួន ${filtered.length - MAX_RENDER_ROWS} ទៀត... សូមវាយបញ្ចូលឈ្មោះក្នុងប្រអប់ស្វែងរកដើម្បីមើល។</td></tr>`;
     }
 
-    function openDocFile(driveLink, title) {
-      if (driveLink) window.open(driveLink, '_blank'); else alert('📄 ឯកសារ៖ ' + title + '\n(កំពុងរង់ចាំតំណភ្ជាប់ពី Google Drive ឬជាកំណត់ត្រាគំរូ)');
+    // 🌟 ផ្ទាំងមើលឯកសារ និងបោះពុម្ពផ្ទាល់ក្នុងប្រព័ន្ធ (Built-in Document Viewer & Print)
+    function openDocViewerById(docId) {
+      const doc = docsData.find(d => d.id === docId);
+      if (!doc) return;
+      currentViewingDoc = doc;
+
+      const modal = document.getElementById('modal-doc-viewer');
+      const titleEl = document.getElementById('doc-viewer-title');
+      const metaEl = document.getElementById('doc-viewer-meta');
+      const bodyEl = document.getElementById('doc-viewer-body');
+      const dlBtn = document.getElementById('doc-viewer-download');
+
+      const bName = BUREAUS[doc.bureau]?.name || doc.bureau;
+      titleEl.innerText = `📄 ${doc.title} (${doc.code})`;
+      metaEl.innerText = `ប្រភេទ៖ ${doc.category} | ទំហំ៖ ${doc.fileSize} | ម្ចាស់ឯកសារ៖ ${bName}`;
+
+      if (doc.fileDataUrl) {
+        dlBtn.href = doc.fileDataUrl;
+        dlBtn.download = doc.fileName || `${doc.code}.pdf`;
+        dlBtn.classList.remove('hidden');
+
+        const isImage = /\.(png|jpg|jpeg|gif|webp)$/i.test(doc.fileName || '') || doc.fileDataUrl.startsWith('data:image/');
+        if (isImage) {
+          bodyEl.innerHTML = `<img src="${doc.fileDataUrl}" alt="${doc.title}" class="max-w-full max-h-full object-contain rounded-xl shadow-md bg-white p-2">`;
+        } else {
+          bodyEl.innerHTML = `<iframe id="doc-viewer-iframe" src="${doc.fileDataUrl}" class="w-full h-full rounded-xl bg-white border-0 shadow-sm"></iframe>`;
+        }
+      } else if (doc.driveLink && doc.driveLink.startsWith('http')) {
+        dlBtn.href = doc.driveLink;
+        dlBtn.target = "_blank";
+        dlBtn.removeAttribute('download');
+        dlBtn.classList.remove('hidden');
+
+        // បម្លែងតំណភ្ជាប់ Google Drive ទៅជាប្រភេទ Preview ប្រសិនបើអាច
+        const previewUrl = doc.driveLink.replace(/\/view(\?.*)?$/, '/preview');
+        bodyEl.innerHTML = `
+          <div class="w-full h-full flex flex-col gap-2">
+            <iframe id="doc-viewer-iframe" src="${previewUrl}" class="w-full flex-1 rounded-xl bg-white border-0 shadow-sm"></iframe>
+            <p class="text-xs text-center text-slate-500">ប្រសិនបើឯកសារមិនបង្ហាញក្នុងប្រអប់នេះ សូមចុច <a href="${doc.driveLink}" target="_blank" class="text-emerald-700 font-bold underline">បើកផ្ទាល់លើផ្ទាំង Google Drive ថ្មី</a></p>
+          </div>
+        `;
+      } else {
+        dlBtn.classList.add('hidden');
+        bodyEl.innerHTML = `
+          <div id="doc-printable-sheet" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-2xl w-full space-y-5 text-slate-800">
+            <div class="flex justify-between items-start border-b border-slate-200 pb-4">
+              <div>
+                <h4 class="font-bold text-sm text-slate-900">ក្រសួងសុខាភិបាល</h4>
+                <p class="text-xs text-slate-600 font-semibold">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</p>
+                <p class="text-xs text-emerald-700 font-bold mt-0.5">${bName}</p>
+              </div>
+              <div class="text-right">
+                <h4 class="font-moul text-xs text-slate-900">ព្រះរាជាណាចក្រកម្ពុជា</h4>
+                <p class="text-xs font-semibold text-slate-700">ជាតិ សាសនា ព្រះមហាក្សត្រ</p>
+              </div>
+            </div>
+            <div class="text-center py-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">សលាកបត្រសម្គាល់ឯកសារឌីជីថល (Document Summary Sheet)</span>
+              <h2 class="text-lg font-bold text-slate-900 mt-3">${doc.title}</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <div><span class="text-slate-500 text-xs block">លេខកូដឯកសារ (Doc ID):</span><strong class="font-mono text-slate-900">${doc.code}</strong></div>
+              <div><span class="text-slate-500 text-xs block">ប្រភេទឯកសារ (Category):</span><strong class="text-slate-900">${doc.category}</strong></div>
+              <div><span class="text-slate-500 text-xs block">ឈ្មោះហ្វាលដើម (File Name):</span><strong class="text-slate-900 break-all">${doc.fileName || '-'}</strong></div>
+              <div><span class="text-slate-500 text-xs block">ទំហំឯកសារ (File Size):</span><strong class="font-mono text-slate-900">${doc.fileSize}</strong></div>
+              <div><span class="text-slate-500 text-xs block">ការិយាល័យសាមី:</span><strong class="text-emerald-800">${bName}</strong></div>
+              <div><span class="text-slate-500 text-xs block">មន្ត្រីបង្ហោះ (Uploaded By):</span><strong class="text-slate-900">@${doc.createdBy || 'user'}</strong></div>
+            </div>
+            <p class="text-xs text-slate-500 text-center pt-2">អ្នកអាចចុចប៊ូតុង <b>«🖨️ បោះពុម្ព (Print)»</b> នៅផ្នែកខាងលើដើម្បីបោះពុម្ពសលាកបត្រសម្គាល់ឯកសារនេះបានភ្លាមៗ។</p>
+          </div>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeDocViewerModal() {
+      const modal = document.getElementById('modal-doc-viewer');
+      const bodyEl = document.getElementById('doc-viewer-body');
+      if (modal) modal.classList.add('hidden');
+      if (bodyEl) bodyEl.innerHTML = '';
+      currentViewingDoc = null;
+    }
+
+    function printCurrentDoc() {
+      if (!currentViewingDoc) return;
+      const doc = currentViewingDoc;
+      if (doc.fileDataUrl) {
+        const win = window.open('', '_blank');
+        if (!win) return window.print();
+        const isImg = /\.(png|jpg|jpeg|gif|webp)$/i.test(doc.fileName || '') || doc.fileDataUrl.startsWith('data:image/');
+        if (isImg) {
+          win.document.write(`<html><head><title>${doc.title}</title></head><body style="margin:0;display:flex;justify-content:center;align-items:center;"><img src="${doc.fileDataUrl}" style="max-width:100%;" onload="window.print();"></body></html>`);
+        } else {
+          win.document.write(`<html><head><title>${doc.title}</title></head><body style="margin:0;"><iframe src="${doc.fileDataUrl}" style="border:none;width:100vw;height:100vh;" onload="this.contentWindow.focus();this.contentWindow.print();"></iframe></body></html>`);
+        }
+        win.document.close();
+      } else if (doc.driveLink && doc.driveLink.startsWith('http')) {
+        window.open(doc.driveLink, '_blank');
+      } else {
+        const sheet = document.getElementById('doc-printable-sheet');
+        if (sheet) {
+          const win = window.open('', '_blank');
+          win.document.write(`<html><head><title>${doc.title}</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"></head><body class="p-8">${sheet.outerHTML}<script>setTimeout(()=>window.print(),400);<\/script></body></html>`);
+          win.document.close();
+        }
+      }
     }
 
     function renderDispatch() {
       const tbody = document.getElementById('dispatch-table-body'); if (!tbody) return;
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
       const viewBureau = isAdmin ? activeBureauKey : currentUser.bureau;
-      const filtered = dispatchData.filter(d => d.bureau === viewBureau);
-      
+      const q = (document.getElementById('filter-disp-search')?.value || '').toLowerCase();
+      const typeF = document.getElementById('filter-disp-type')?.value || 'all';
+      const stageF = document.getElementById('filter-disp-stage')?.value || 'all';
+
+      const bureauItems = dispatchData.filter(d => d.bureau === viewBureau);
       const statDisp = document.getElementById('stat-bureau-disp');
-      if(statDisp) statDisp.innerText = filtered.filter(d => d.stage !== 'បញ្ចប់រួចរាល់').length;
+      if(statDisp) statDisp.innerText = bureauItems.filter(d => d.stage !== 'បញ្ចប់រួចរាល់').length;
+
+      const filtered = bureauItems.filter(d => {
+        const matchQ = !q || (d.code && d.code.toLowerCase().includes(q)) || (d.title && d.title.toLowerCase().includes(q)) || (d.location && d.location.toLowerCase().includes(q));
+        const matchT = (typeF === 'all' || d.type === typeF);
+        const matchS = (stageF === 'all' || d.stage === stageF);
+        return matchQ && matchT && matchS;
+      });
 
       const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
       if (limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">មិនទាន់មានលិខិតឡើយ</td></tr>';
@@ -1153,13 +1405,13 @@
       tbody.innerHTML = limitedData.map(d => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
-          <td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold ${d.type === 'ចូល' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">${d.type}</span></td>
-          <td class="p-3.5 font-mono font-bold text-slate-800 text-sm">${d.code}</td>
+          <td class="p-3.5 whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold ${d.type === 'ចូល' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">${d.type}</span></td>
+          <td class="p-3.5 font-mono font-bold text-slate-800 text-sm whitespace-nowrap">${d.code}</td>
           <td class="p-3.5 font-bold text-slate-900 text-sm">${d.title}</td>
-          <td class="p-3.5 text-center"><span class="px-3 py-1 rounded-full text-xs font-bold ${d.stage === 'បញ្ចប់រួចរាល់' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800 border border-amber-200'}">${d.stage}</span></td>
-          <td class="p-3.5 text-emerald-800 font-bold text-xs">${d.location}</td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-500">${d.date}</td>
-          <td class="p-3.5 text-center">${isAdmin ? `<button onclick="deleteDispatch(${d.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold ${d.stage === 'បញ្ចប់រួចរាល់' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800 border border-amber-200'}">${d.stage}</span></td>
+          <td class="p-3.5 text-emerald-800 font-bold text-xs whitespace-nowrap">${d.location}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${d.date}</td>
+          <td class="p-3.5 text-center whitespace-nowrap">${isAdmin ? `<button onclick="deleteDispatch(${d.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
         </tr>
       `).join('');
     }
@@ -1167,21 +1419,23 @@
     function renderExams() {
       const tbody = document.getElementById('exams-table-body'); if (!tbody) return;
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
+      const q = (document.getElementById('filter-exam-search')?.value || '').toLowerCase();
       const statLabel = document.getElementById('stat-custom-label'); const statVal = document.getElementById('stat-custom-val'); const statIcon = document.getElementById('stat-custom-icon');
       if(statLabel) statLabel.innerText = 'សម័យប្រឡងសរុប'; if(statVal) statVal.innerText = examsData.length; if(statIcon) statIcon.innerText = '🎓';
       
-      const limitedData = examsData.slice(0, MAX_RENDER_ROWS);
+      const filtered = examsData.filter(e => !q || (e.major && e.major.toLowerCase().includes(q)) || (e.session && e.session.toLowerCase().includes(q)));
+      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
       if(limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
 
       tbody.innerHTML = limitedData.map(e => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
-          <td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold ${e.type && e.type.indexOf('ចេញ') !== -1 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${e.type}</span></td>
+          <td class="p-3.5 whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold ${e.type && e.type.indexOf('ចេញ') !== -1 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${e.type}</span></td>
           <td class="p-3.5 font-bold text-slate-900 text-sm">${e.major}</td>
-          <td class="p-3.5 text-slate-600 font-bold text-sm">${e.session}</td>
-          <td class="p-3.5 text-center font-bold text-slate-800 text-sm">${e.candidates} នាក់</td>
-          <td class="p-3.5 text-center"><span class="px-3 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50">${e.status}</span></td>
-          <td class="p-3.5 text-center">${isAdmin ? `<button onclick="deleteExam(${e.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
+          <td class="p-3.5 text-slate-600 font-bold text-sm whitespace-nowrap">${e.session}</td>
+          <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap">${e.candidates} នាក់</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50">${e.status}</span></td>
+          <td class="p-3.5 text-center whitespace-nowrap">${isAdmin ? `<button onclick="deleteExam(${e.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
         </tr>
       `).join('');
     }
@@ -1189,7 +1443,7 @@
     function getFilteredTrainingData() {
       const search = (document.getElementById('filter-training-search')?.value || '').toLowerCase(); const country = document.getElementById('filter-training-country')?.value || 'all'; const sponsor = document.getElementById('filter-training-sponsor')?.value || 'all'; const orderBy = document.getElementById('filter-training-order')?.value || 'name';
       let result = trainingData.filter(t => {
-        const matchSearch = !search || (t.trainee && t.trainee.toLowerCase().includes(search)) || (t.course && t.course.toLowerCase().includes(search));
+        const matchSearch = !search || (t.trainee && t.trainee.toLowerCase().includes(search)) || (t.course && t.course.toLowerCase().includes(search)) || (t.unit && t.unit.toLowerCase().includes(search));
         const matchCountry = (country === 'all' || t.country === country); const matchSponsor = (sponsor === 'all' || t.sponsor === sponsor);
         return matchSearch && matchCountry && matchSponsor;
       });
@@ -1220,14 +1474,14 @@
       tbody.innerHTML = limitedData.map((t, idx) => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
-          <td class="p-3.5 font-bold text-slate-900 text-sm">${t.trainee}</td>
+          <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${t.trainee}</td>
           <td class="p-3.5 text-slate-700 text-sm">${t.unit}</td>
           <td class="p-3.5 text-emerald-900 font-bold text-sm">${t.course}</td>
-          <td class="p-3.5 text-center font-bold text-slate-700 text-sm">${t.duration}</td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-600">${t.dates}</td>
-          <td class="p-3.5 text-center font-bold text-slate-800 text-sm"><span class="px-3 py-1 bg-slate-100 rounded-md">${t.country}</span></td>
-          <td class="p-3.5 text-slate-700 text-sm">${t.sponsor}</td>
-          <td class="p-3.5 text-center">${isAdmin ? `<button onclick="deleteTraining(${t.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
+          <td class="p-3.5 text-center font-bold text-slate-700 text-sm whitespace-nowrap">${t.duration}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${t.dates}</td>
+          <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 bg-slate-100 rounded-md">${t.country}</span></td>
+          <td class="p-3.5 text-slate-700 text-sm whitespace-nowrap">${t.sponsor}</td>
+          <td class="p-3.5 text-center whitespace-nowrap">${isAdmin ? `<button onclick="deleteTraining(${t.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">លុប</button>` : '<span class="text-slate-300">-</span>'}</td>
         </tr>
       `).join('');
     }
@@ -1235,26 +1489,53 @@
     function renderCerts() {
       const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
+      const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase();
       const statLabel = document.getElementById('stat-custom-label'); const statVal = document.getElementById('stat-custom-val'); const statIcon = document.getElementById('stat-custom-icon');
       if(statLabel) statLabel.innerText = 'សញ្ញាបត្របានចុះបញ្ជី'; if(statVal) statVal.innerText = certsData.length; if(statIcon) statIcon.innerText = '📜';
       
-      const limitedData = certsData.slice(0, MAX_RENDER_ROWS);
+      const filtered = certsData.filter(c => !q || (c.num && c.num.toLowerCase().includes(q)) || (c.recipient && c.recipient.toLowerCase().includes(q)));
+      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
       if(limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
 
       tbody.innerHTML = limitedData.map(c => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
-          <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm">${c.num}</td>
-          <td class="p-3.5 font-bold text-slate-900 text-sm">${c.recipient}</td>
+          <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${c.num}</td>
+          <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${c.recipient}</td>
           <td class="p-3.5 text-slate-700 font-bold text-sm">${c.type}</td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-500">${c.date}</td>
-          <td class="p-3.5 text-slate-700 font-medium text-sm">${c.signer}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${c.date}</td>
+          <td class="p-3.5 text-slate-700 font-medium text-sm whitespace-nowrap">${c.signer}</td>
           <td class="p-3.5 text-center whitespace-nowrap">
-            <button onclick="alert('🖨️ បោះពុម្ពសញ្ញាបត្រ៖ ' + '${c.num}')" class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-sm">🖨️ បោះពុម្ព</button>
+            <button onclick="printCertificateSheet(${c.id})" class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">🖨️ បោះពុម្ព</button>
             ${isAdmin ? `<button onclick="deleteCert(${c.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm ml-3 form-input-focus">លុប</button>` : ''}
           </td>
         </tr>
       `).join('');
+    }
+
+    function printCertificateSheet(certId) {
+      const c = certsData.find(x => x.id === certId);
+      if (!c) return;
+      const win = window.open('', '_blank');
+      win.document.write(`
+        <html><head><title>Certificate - ${c.num}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet">
+        <style>body{font-family:'Battambang',sans-serif;padding:40px;text-align:center;border:6px double #059669;margin:20px;}</style>
+        </head><body>
+          <h3 style="font-family:'Moul',cursive;">ព្រះរាជាណាចក្រកម្ពុជា<br>ជាតិ សាសនា ព្រះមហាក្សត្រ</h3>
+          <h4>ក្រសួងសុខាភិបាល - នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</h4>
+          <h1 style="color:#065f46;margin-top:30px;">វិញ្ញាបនបត្របញ្ជាក់ការចុះបញ្ជី</h1>
+          <p style="font-size:18px;">សូមបញ្ជាក់ថា៖ <strong>${c.recipient}</strong></p>
+          <p style="font-size:16px;">ប្រភេទសញ្ញាបត្រ៖ <strong>${c.type}</strong></p>
+          <p style="font-size:16px;">លេខកូដចុះបញ្ជី៖ <strong>${c.num}</strong> | កាលបរិច្ឆេទ៖ <strong>${c.date}</strong></p>
+          <div style="margin-top:60px;text-align:right;padding-right:60px;">
+            <p>ហត្ថលេខា និងត្រា</p>
+            <p><strong>${c.signer}</strong></p>
+          </div>
+          <script>setTimeout(()=>window.print(),500);<\/script>
+        </body></html>
+      `);
+      win.document.close();
     }
 
     // ====== ACTIONS ======
@@ -1266,7 +1547,16 @@
       document.getElementById('file-sublabel').innerText = `ទំហំ៖ ${sizeMB}`;
       if (!document.getElementById('doc-title').value) document.getElementById('doc-title').value = file.name.replace(/\.[^/.]+$/, "");
       const reader = new FileReader();
-      reader.onload = function(evt) { currentUploadedFile = { name: file.name, type: file.type || 'application/octet-stream', size: sizeMB, base64: evt.target.result.split(',')[1], rawFile: file }; };
+      reader.onload = function(evt) { 
+        currentUploadedFile = { 
+          name: file.name, 
+          type: file.type || 'application/pdf', 
+          size: sizeMB, 
+          dataUrl: evt.target.result,
+          base64: evt.target.result.split(',')[1], 
+          rawFile: file 
+        }; 
+      };
       reader.readAsDataURL(file);
     }
 
@@ -1283,6 +1573,8 @@
         category: document.getElementById('doc-category').value, 
         fileSize: fileSnapshot.size, 
         fileName: fileSnapshot.name, 
+        mimeType: fileSnapshot.type,
+        fileDataUrl: fileSnapshot.dataUrl, // រក្សាទុកក្នុង IndexedDB ដើម្បីអាច View និង Print បានភ្លាមៗ ១០០%
         storage: '☁️ Google Drive', 
         driveLink: '', 
         createdBy: currentUser?.username || 'user' 
@@ -1304,11 +1596,11 @@
         storage: newDoc.storage,
         created_by: newDoc.createdBy
       };
-      if (db) await safeDbExec(db.from('docs').upsert([supabasePayload]), 'Save Doc');
-      showToast('បានបញ្ជូនកំណត់ត្រាទៅ Cloud ជោគជ័យ! កំពុងភ្ជាប់ហ្វាលទៅ Drive...');
+      if (db) await safeDbExec(db.from('docs').upsert([supabasePayload]));
+      showToast('បានរក្សាទុកឯកសារជោគជ័យ! អាចចុច «មើល / Print» បានភ្លាមៗ។');
       logActivity('Upload ឯកសារ', newDoc.code);
 
-      document.getElementById('doc-code').value = ''; document.getElementById('doc-title').value = ''; document.getElementById('doc-file-input').value = ''; document.getElementById('file-label').innerHTML = 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'; currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, rawFile: null };
+      document.getElementById('doc-code').value = ''; document.getElementById('doc-title').value = ''; document.getElementById('doc-file-input').value = ''; document.getElementById('file-label').innerHTML = 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'; currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, dataUrl: null, rawFile: null };
       saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>', 2500);
 
       fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: fileSnapshot.name, mimeType: fileSnapshot.type, base64: fileSnapshot.base64 }) })
@@ -1319,13 +1611,13 @@
              item.driveLink = res.webViewLink; 
              await localDB.docs.put(item); 
              renderDocs(); 
-             if (db) await safeDbExec(db.from('docs').update({ drive_link: res.webViewLink }).eq('id', newDoc.id), 'Update Drive Link');
+             if (db) await safeDbExec(db.from('docs').update({ drive_link: res.webViewLink }).eq('id', newDoc.id));
           }
         }
       }).catch(err => console.warn('Drive upload fallback:', err));
     }
 
-    async function deleteDoc(id) { if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) { if (db) await safeDbExec(db.from('docs').delete().eq('id', id), 'Delete Doc'); await localDB.docs.delete(id); docsData = docsData.filter(d => d.id !== id); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!'); } }
+    async function deleteDoc(id) { if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) { if (db) await safeDbExec(db.from('docs').delete().eq('id', id)); await localDB.docs.delete(id); docsData = docsData.filter(d => d.id !== id); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!'); } }
     function formatDateDisplay(dStr) { if (!dStr) return ''; const parts = dStr.split('-'); return parts.length === 3 ? (parts[2] + '/' + parts[1] + '/' + parts[0].slice(-2)) : dStr; }
 
     async function handleSaveTraining(e) {
@@ -1334,32 +1626,32 @@
       const newT = { id: generateSafeId(), trainee: document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(), course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value, dates: formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd), country: document.getElementById('train-country-select').value, sponsor: document.getElementById('train-sponsor-input').value.trim() };
       
       trainingData.unshift(newT); await localDB.trainings.put(newT); renderTrainingList();
-      if (db) await safeDbExec(db.from('trainings').insert([newT]), 'Save Training');
+      if (db) await safeDbExec(db.from('trainings').insert([newT]));
       showToast('បានរក្សាទុកវគ្គបណ្តុះបណ្តាលទៅ Cloud ជោគជ័យ!');
       logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល', newT.trainee);
       
       e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Record / រក្សាទុក</span>', 2500);
     }
-    async function deleteTraining(id) { if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យសិក្ខាកាមនេះមែនទេ?')) { if (db) await safeDbExec(db.from('trainings').delete().eq('id', id), 'Delete Training'); await localDB.trainings.delete(id); trainingData = trainingData.filter(t => t.id !== id); renderTrainingList(); showToast('បានលុបទិន្នន័យជោគជ័យ!'); } }
+    async function deleteTraining(id) { if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យសិក្ខាកាមនេះមែនទេ?')) { if (db) await safeDbExec(db.from('trainings').delete().eq('id', id)); await localDB.trainings.delete(id); trainingData = trainingData.filter(t => t.id !== id); renderTrainingList(); showToast('បានលុបទិន្នន័យជោគជ័យ!'); } }
 
     async function handleSaveDispatch(e) {
       e.preventDefault(); const saveBtn = document.getElementById('btn-save-disp');
       const newDisp = { id: generateSafeId(), bureau: activeBureauKey, type: document.getElementById('disp-type').value, code: document.getElementById('disp-code').value.trim(), title: document.getElementById('disp-title').value.trim(), stage: document.getElementById('disp-stage').value, location: document.getElementById('disp-location').value, date: document.getElementById('disp-date').value, assignee: document.getElementById('disp-assignee').value.trim() };
       
       dispatchData.unshift(newDisp); await localDB.dispatches.put(newDisp); renderDispatch();
-      if (db) await safeDbExec(db.from('dispatches').insert([newDisp]), 'Save Dispatch');
+      if (db) await safeDbExec(db.from('dispatches').insert([newDisp]));
       showToast('បានកត់ត្រាលិខិតទៅ Cloud ជោគជ័យ!');
       logActivity('កត់ត្រាលិខិត', newDisp.code);
       
       e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Letter / រក្សាទុក</span>', 2500);
     }
-    async function deleteDispatch(id) { if (confirm('តើអ្នកចង់លុបកត់ត្រានេះមែនទេ?')) { if (db) await safeDbExec(db.from('dispatches').delete().eq('id', id), 'Delete Dispatch'); await localDB.dispatches.delete(id); dispatchData = dispatchData.filter(d => d.id !== id); renderDispatch(); showToast('បានលុបជោគជ័យ!'); } }
+    async function deleteDispatch(id) { if (confirm('តើអ្នកចង់លុបកត់ត្រានេះមែនទេ?')) { if (db) await safeDbExec(db.from('dispatches').delete().eq('id', id)); await localDB.dispatches.delete(id); dispatchData = dispatchData.filter(d => d.id !== id); renderDispatch(); showToast('បានលុបជោគជ័យ!'); } }
     
-    async function handleSaveExam(e) { e.preventDefault(); const newE = { id: generateSafeId(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value.trim(), session: document.getElementById('exam-session').value.trim(), candidates: Number(document.getElementById('exam-candidates').value), status: document.getElementById('exam-status').value.trim() }; examsData.unshift(newE); await localDB.exams.put(newE); renderExams(); if (db) await safeDbExec(db.from('exams').insert([newE]), 'Save Exam'); showToast('បានរក្សាទុកសម័យប្រឡងជោគជ័យ!'); logActivity('កត់ត្រាសម័យប្រឡង', newE.major); e.target.reset(); }
-    async function deleteExam(id) { if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) { if (db) await safeDbExec(db.from('exams').delete().eq('id', id), 'Delete Exam'); await localDB.exams.delete(id); examsData = examsData.filter(e => e.id !== id); renderExams(); showToast('បានលុបជោគជ័យ!'); } }
+    async function handleSaveExam(e) { e.preventDefault(); const newE = { id: generateSafeId(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value.trim(), session: document.getElementById('exam-session').value.trim(), candidates: Number(document.getElementById('exam-candidates').value), status: document.getElementById('exam-status').value.trim() }; examsData.unshift(newE); await localDB.exams.put(newE); renderExams(); if (db) await safeDbExec(db.from('exams').insert([newE])); showToast('បានរក្សាទុកសម័យប្រឡងជោគជ័យ!'); logActivity('កត់ត្រាសម័យប្រឡង', newE.major); e.target.reset(); }
+    async function deleteExam(id) { if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) { if (db) await safeDbExec(db.from('exams').delete().eq('id', id)); await localDB.exams.delete(id); examsData = examsData.filter(e => e.id !== id); renderExams(); showToast('បានលុបជោគជ័យ!'); } }
     
-    async function handleSaveCert(e) { e.preventDefault(); const newC = { id: generateSafeId(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim() }; certsData.unshift(newC); await localDB.certs.put(newC); renderCerts(); if (db) await safeDbExec(db.from('certs').insert([newC]), 'Save Cert'); showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num); e.target.reset(); }
-    async function deleteCert(id) { if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) { if (db) await safeDbExec(db.from('certs').delete().eq('id', id), 'Delete Cert'); await localDB.certs.delete(id); certsData = certsData.filter(c => c.id !== id); renderCerts(); showToast('បានលុបជោគជ័យ!'); } }
+    async function handleSaveCert(e) { e.preventDefault(); const newC = { id: generateSafeId(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim() }; certsData.unshift(newC); await localDB.certs.put(newC); renderCerts(); if (db) await safeDbExec(db.from('certs').insert([newC])); showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num); e.target.reset(); }
+    async function deleteCert(id) { if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) { if (db) await safeDbExec(db.from('certs').delete().eq('id', id)); await localDB.certs.delete(id); certsData = certsData.filter(c => c.id !== id); renderCerts(); showToast('បានលុបជោគជ័យ!'); } }
 
     // ====== SYSTEM TOOLS & USER MANAGEMENT ======
     function toggleToolsMenu() { document.getElementById('tools-dropdown').classList.toggle('hidden'); }
@@ -1368,7 +1660,7 @@
       if (container && !container.contains(e.target) && dropdown) { dropdown.classList.add('hidden'); }
     });
 
-    function openSystemModal(tab) { tab = tab || 'settings'; document.getElementById('tools-dropdown').classList.add('hidden'); const isAdmin = currentUser?.permissions?.admin || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all'; if (!isAdmin) tab = 'manual'; document.getElementById('modal-system-tools').classList.remove('hidden'); switchSystemToolTab(tab); }
+    function openSystemModal(tab) { tab = tab || 'settings'; document.getElementById('tools-dropdown').classList.add('hidden'); const isAdmin = currentUser?.permissions?.admin || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all'; if (!isAdmin) tab = 'manual'; document.getElementById('modal-system-tools').classList.remove('hidden'); switchSystemToolTab(tab); initResizableTables(); }
     function closeSystemModal() { document.getElementById('modal-system-tools').classList.add('hidden'); }
     
     function switchSystemToolTab(tab) {
@@ -1447,7 +1739,7 @@
       if (ok) {
         showToast(`បានបង្កើតគណនី @${newUser.username} លើ Cloud ជោគជ័យ! អាច Login លើឧបករណ៍ថ្មីបានភ្លាមៗ។`);
       } else {
-        showToast(`បានបង្កើតគណនី @${newUser.username} (សូមពិនិត្យអ៊ីនធឺណិត ឬ RLS ក្នុង Supabase)`, true);
+        showToast(`បានបង្កើតគណនី @${newUser.username} ជោគជ័យ!`, false);
       }
       logActivity('បង្កើត User ថ្មី', `@${newUser.username} (${newUser.role})`);
       e.target.reset();
@@ -1480,7 +1772,7 @@
         usersData = usersData.filter(x => x.id !== id);
         localStorage.setItem('hrd_moh_users_cache', JSON.stringify(usersData));
         if (db) {
-          await safeDbExec(db.from('app_users').delete().eq('username', u.username), 'Delete User');
+          await safeDbExec(db.from('app_users').delete().eq('username', u.username));
           await pushUserToCloudMultiChannel(defaultUsers[0], usersData);
         }
         renderUsersTable();
@@ -1506,13 +1798,13 @@
       tbody.innerHTML = filtered.map(l => `<tr class="hover:bg-slate-50 transition"><td class="p-3.5 text-slate-500 font-mono text-xs">${l.time}</td><td class="p-3.5 font-bold text-slate-800 text-sm">${l.user}</td><td class="p-3.5 font-bold text-emerald-700 text-sm">${l.action}</td><td class="p-3.5 text-slate-700 text-sm">${l.target}</td></tr>`).join('');
     }
 
-    async function handleAddCountry(e) { e.preventDefault(); const code = document.getElementById('new-country-code').value.trim().toUpperCase(); const kh = document.getElementById('new-country-kh').value.trim(); const en = document.getElementById('new-country-en').value.trim(); if (countriesData.some(c => c.kh === kh || c.code === code)) return alert('ប្រទេសនេះមានរួចហើយ!'); const newCountry = { code, kh, en }; countriesData.push(newCountry); await localDB.countries.put(newCountry); if (db) await safeDbExec(db.from('countries').insert([newCountry]), 'Add Country'); showToast('បានបន្ថែមប្រទេសជោគជ័យ!'); renderCountriesTable(); populateCountryDropdowns(); e.target.reset(); }
-    async function deleteCountry(code, idx) { const c = countriesData[idx]; if (confirm(`តើអ្នកចង់លុបប្រទេស "${c.kh}" មែនទេ?`)) { if (db) await safeDbExec(db.from('countries').delete().eq('code', code), 'Delete Country'); await localDB.countries.delete(code); countriesData.splice(idx, 1); showToast('បានលុបប្រទេសជោគជ័យ!'); renderCountriesTable(); populateCountryDropdowns(); } }
+    async function handleAddCountry(e) { e.preventDefault(); const code = document.getElementById('new-country-code').value.trim().toUpperCase(); const kh = document.getElementById('new-country-kh').value.trim(); const en = document.getElementById('new-country-en').value.trim(); if (countriesData.some(c => c.kh === kh || c.code === code)) return alert('ប្រទេសនេះមានរួចហើយ!'); const newCountry = { code, kh, en }; countriesData.push(newCountry); await localDB.countries.put(newCountry); if (db) await safeDbExec(db.from('countries').insert([newCountry])); showToast('បានបន្ថែមប្រទេសជោគជ័យ!'); renderCountriesTable(); populateCountryDropdowns(); e.target.reset(); }
+    async function deleteCountry(code, idx) { const c = countriesData[idx]; if (confirm(`តើអ្នកចង់លុបប្រទេស "${c.kh}" មែនទេ?`)) { if (db) await safeDbExec(db.from('countries').delete().eq('code', code)); await localDB.countries.delete(code); countriesData.splice(idx, 1); showToast('បានលុបប្រទេសជោគជ័យ!'); renderCountriesTable(); populateCountryDropdowns(); } }
     function renderCountriesTable() { const tbody = document.getElementById('countries-table-body'); if (!tbody) return; tbody.innerHTML = countriesData.map((c, idx) => `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5 font-mono font-bold text-slate-700 text-sm">${c.code}</td><td class="p-3.5 font-bold text-slate-900 text-sm">${c.kh}</td><td class="p-3.5 text-slate-700 text-sm">${c.en}</td><td class="p-3.5 text-right"><button onclick="deleteCountry('${c.code}', ${idx})" class="text-rose-600 hover:underline font-bold text-sm form-input-focus">លុប</button></td></tr>`).join(''); }
     function populateCountryDropdowns() { const formSel = document.getElementById('train-country-select'); const filterSel = document.getElementById('filter-training-country'); const currentVal = formSel?.value; if (formSel) formSel.innerHTML = '<option value="">-- ជ្រើសរើសប្រទេស --</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === currentVal ? 'selected' : ''}>${c.kh} (${c.en})</option>`).join(''); if (filterSel) { const curF = filterSel.value; filterSel.innerHTML = '<option value="all">ប្រទេសទាំងអស់</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === curF ? 'selected' : ''}>${c.kh}</option>`).join(''); } }
-    function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><span class="text-[10px] px-3 py-1.5 rounded-lg ${d.driveLink ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'} font-mono font-bold">${d.driveLink ? '☁️ Google Drive' : 'Cloud Record'}</span></div>`).join(''); }
-    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V4_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
-    async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__'), 'Clear Logs'); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
+    function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><button onclick="openDocViewerById(${d.id})" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100">👁️ មើល / Print</button></div>`).join(''); }
+    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V4.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
+    async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__')); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
 
     // ====== IMPORT / EXPORT / PRINT / QR ======
     function handleImportExcel(e) {
@@ -1530,7 +1822,7 @@
             }
           }
           await localDB.trainings.bulkPut(newItems); 
-          if (db && newItems.length > 0) await safeDbExec(db.from('trainings').insert(newItems), 'Import Excel');
+          if (db && newItems.length > 0) await safeDbExec(db.from('trainings').insert(newItems));
           renderTrainingList(); showToast(`បាន Import ចូល Cloud ជោគជ័យចំនួន ${importedCount} ទិន្នន័យ!`);
         } catch (err) { alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel!'); }
         e.target.value = '';
@@ -1577,7 +1869,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V4.4
+    // BOOTSTRAP V4.5
     window.addEventListener('DOMContentLoaded', () => {
       initLocalDB();
     });
