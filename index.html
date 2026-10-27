@@ -1561,12 +1561,47 @@
     }
 
     async function handleSaveDoc(e) {
-      e.preventDefault(); const saveBtn = document.getElementById('btn-save-doc');
-      if (!currentUploadedFile.base64) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
-      
+      e.preventDefault();
+      const saveBtn = document.getElementById('btn-save-doc');
+      if (!currentUploadedFile.rawFile && !currentUploadedFile.base64) {
+        return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span>⏳ កំពុងបង្ហោះហ្វាលទៅ Cloud Storage...</span>';
+
       const fileSnapshot = { ...currentUploadedFile };
+      const docId = generateSafeId();
+      let cloudFileUrl = '';
+
+      // ១. បង្ហោះសាច់ហ្វាលផ្ទាល់ទៅកាន់ Supabase Storage Bucket ('documents')
+      if (db && fileSnapshot.rawFile) {
+        try {
+          const ext = (fileSnapshot.name.split('.').pop() || 'pdf').toLowerCase();
+          const safeStoragePath = `bureau_docs/${docId}_${Date.now()}.${ext}`;
+          const { data: upData, error: upErr } = await db.storage
+            .from('documents')
+            .upload(safeStoragePath, fileSnapshot.rawFile, {
+              cacheControl: '3600',
+              upsert: true,
+              contentType: fileSnapshot.type || 'application/pdf'
+            });
+
+          if (!upErr && upData) {
+            const { data: pubUrl } = db.storage.from('documents').getPublicUrl(safeStoragePath);
+            if (pubUrl && pubUrl.publicUrl) {
+              cloudFileUrl = pubUrl.publicUrl;
+            }
+          } else if (upErr) {
+            console.warn("Supabase Storage upload note:", upErr.message);
+          }
+        } catch (err) {
+          console.warn("Storage exception:", err);
+        }
+      }
+
       const newDoc = { 
-        id: generateSafeId(), 
+        id: docId, 
         bureau: activeBureauKey, 
         code: document.getElementById('doc-code').value.trim(), 
         title: document.getElementById('doc-title').value.trim(), 
@@ -1574,16 +1609,18 @@
         fileSize: fileSnapshot.size, 
         fileName: fileSnapshot.name, 
         mimeType: fileSnapshot.type,
-        fileDataUrl: fileSnapshot.dataUrl, // រក្សាទុកក្នុង IndexedDB ដើម្បីអាច View និង Print បានភ្លាមៗ ១០០%
-        storage: '☁️ Google Drive', 
-        driveLink: '', 
+        fileDataUrl: fileSnapshot.dataUrl,
+        storage: cloudFileUrl ? '☁️ Cloud Storage' : '☁️ Google Drive', 
+        driveLink: cloudFileUrl, 
         createdBy: currentUser?.username || 'user' 
       };
       
+      // ២. រក្សាទុកក្នុង Local IndexedDB និងបង្ហាញលើអេក្រង់
       docsData.unshift(newDoc); 
       await localDB.docs.put(newDoc); 
       renderDocs(); 
       
+      // ៣. រក្សាទុកព័ត៌មាន និងតំណភ្ជាប់ហ្វាល (cloudFileUrl) ចូលក្នុងតារាង docs របស់ Supabase
       const supabasePayload = {
         id: newDoc.id,
         bureau: newDoc.bureau,
@@ -1592,29 +1629,39 @@
         category: newDoc.category,
         file_size: newDoc.fileSize,
         file_name: newDoc.fileName,
-        drive_link: '',
+        drive_link: cloudFileUrl,
         storage: newDoc.storage,
         created_by: newDoc.createdBy
       };
       if (db) await safeDbExec(db.from('docs').upsert([supabasePayload]));
-      showToast('បានរក្សាទុកឯកសារជោគជ័យ! អាចចុច «មើល / Print» បានភ្លាមៗ។');
+      
+      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ! គ្រប់កុំព្យូទ័រអាចមើល និង Print បានភ្លាមៗ។' : 'បានរក្សាទុកកំណត់ត្រា! កំពុងភ្ជាប់ទៅ Google Drive...');
       logActivity('Upload ឯកសារ', newDoc.code);
 
-      document.getElementById('doc-code').value = ''; document.getElementById('doc-title').value = ''; document.getElementById('doc-file-input').value = ''; document.getElementById('file-label').innerHTML = 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'; currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, dataUrl: null, rawFile: null };
-      saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>', 2500);
+      document.getElementById('doc-code').value = ''; 
+      document.getElementById('doc-title').value = ''; 
+      document.getElementById('doc-file-input').value = ''; 
+      document.getElementById('file-label').innerHTML = 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'; 
+      currentUploadedFile = { name: '', type: 'PDF', size: '', base64: null, dataUrl: null, rawFile: null };
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; 
+      setTimeout(() => saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>', 2500);
 
-      fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: fileSnapshot.name, mimeType: fileSnapshot.type, base64: fileSnapshot.base64 }) })
-      .then(r => r.json()).then(async res => {
-        if (res.status === 'success' && res.webViewLink) {
-          const item = docsData.find(d => d.id === newDoc.id); 
-          if (item) { 
-             item.driveLink = res.webViewLink; 
-             await localDB.docs.put(item); 
-             renderDocs(); 
-             if (db) await safeDbExec(db.from('docs').update({ drive_link: res.webViewLink }).eq('id', newDoc.id));
+      // ៤. បើ Supabase Storage មិនទាន់បានបង្កើត Bucket ទេ វានឹងប្រើ Google Drive Webhook ជាប្រព័ន្ធបម្រុងដោយស្វ័យប្រវត្តិ
+      if (!cloudFileUrl && fileSnapshot.base64) {
+        fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: fileSnapshot.name, mimeType: fileSnapshot.type, base64: fileSnapshot.base64 }) })
+        .then(r => r.json()).then(async res => {
+          if (res.status === 'success' && res.webViewLink) {
+            const item = docsData.find(d => d.id === newDoc.id); 
+            if (item) { 
+               item.driveLink = res.webViewLink; 
+               await localDB.docs.put(item); 
+               renderDocs(); 
+               if (db) await safeDbExec(db.from('docs').update({ drive_link: res.webViewLink }).eq('id', newDoc.id));
+            }
           }
-        }
-      }).catch(err => console.warn('Drive upload fallback:', err));
+        }).catch(err => console.warn('Drive upload fallback:', err));
+      }
     }
 
     async function deleteDoc(id) { if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) { if (db) await safeDbExec(db.from('docs').delete().eq('id', id)); await localDB.docs.delete(id); docsData = docsData.filter(d => d.id !== id); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!'); } }
