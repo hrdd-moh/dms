@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2.5 - DHRD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.2.5 - HRDD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -74,7 +74,7 @@
             <span class="font-bold text-slate-900 text-sm sm:text-base leading-tight">ក្រសួងសុខាភិបាល</span>
             <span class="text-slate-300 hidden sm:inline">|</span>
             <span class="font-bold text-slate-900 text-sm sm:text-lg leading-tight">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</span>
-            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V2.5</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">V.2.5</span>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 font-medium truncate mt-0.5">Department of Human Resource Development (HRDD - MoH)</p>
         </div>
@@ -119,7 +119,7 @@
   <!-- ================= MAIN CONTAINER ================= -->
   <main id="app-main" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 w-full flex-1 space-y-6">
 
-    <!-- HERO GREEN BANNER (បានលុបស្លាកសញ្ញាក្នុងរង្វង់មូលក្រហមទី១ចេញតាមការស្នើសុំ) -->
+    <!-- HERO GREEN BANNER -->
     <div class="bg-gradient-to-r from-emerald-700 to-emerald-500 rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6">
       <div class="space-y-2 relative z-10 max-w-2xl">
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white font-moul sm:font-sans drop-shadow-md leading-normal" id="active-bureau-title">ការិយាល័យជំនាញ</h2>
@@ -131,7 +131,7 @@
         <select id="active-bureau-select" onchange="changeActiveBureau(this.value)" class="w-full bg-white text-emerald-900 text-sm font-bold border border-white rounded-xl p-3 outline-none focus:ring-4 focus:ring-emerald-300 cursor-pointer form-input-focus shadow-sm">
           <option value="bureau_1">១. ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ</option>
           <option value="bureau_2">២. ការិយាល័យបណ្តុះបណ្តាលបន្ត</option>
-          <option value="bureau_3">៣. ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ</option>
+          <option value="bureau_3">៣. ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ</option>
         </select>
         <p id="bureau-lock-notice" class="text-xs text-amber-200 font-bold drop-shadow-md hidden">🔒 អ្នកត្រូវបានចាក់សោរឱ្យប្រើតែការិយាល័យរបស់អ្នក</p>
       </div>
@@ -169,7 +169,6 @@
 
       <!-- LEFT PANEL -->
       <div class="lg:col-span-8 space-y-5">
-        <!-- (បានលុបរបារជូនដំណឹងក្នុងរង្វង់មូលក្រហមទី២ចេញតាមការស្នើសុំ) -->
 
         <!-- TAB 1: E-LIBRARY TABLE (SHARED ACROSS ALL BUREAUS + ADVANCED FILTERS) -->
         <div id="section-docs" class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
@@ -184,7 +183,7 @@
             </div>
           </div>
 
-          <!-- ផ្ទាំងតម្រងស្វែងរកកម្រិតខ្ពស់ (Advanced Multi-Filter Bar តាមរូបទី៤) -->
+          <!-- ផ្ទាំងតម្រងស្វែងរកកម្រិតខ្ពស់ (Advanced Multi-Filter Bar) -->
           <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
             <div class="lg:col-span-2 relative">
               <input type="text" id="doc-search" oninput="renderDocs()" placeholder="🔍 ស្វែងរកតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 w-full bg-white font-medium">
@@ -359,6 +358,14 @@
 
   </main>
 
+  <!-- ================= COPYRIGHT FOOTER (ដូចគំរូប្រព័ន្ធ MHRM) ================= -->
+  <footer id="app-footer" class="hidden border-t border-slate-200/80 bg-white/80 backdrop-blur-xs py-4 px-4 sm:px-6 lg:px-8 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 font-medium">
+      <p>© 2026. V.2.5 <span class="font-bold text-slate-700">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+      <p class="text-[11px] text-slate-400">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
+    </div>
+  </footer>
+
   <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
   <nav id="app-mobile-nav" class="hidden lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 z-40 flex items-center justify-around text-xs shadow-lg">
     <button onclick="switchBureauTab('docs')" class="flex flex-col items-center gap-1 text-slate-600 hover:text-emerald-600"><span class="text-xl">📚</span><span class="text-[10px] font-semibold">បណ្ណាល័យ</span></button>
@@ -370,7 +377,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- BUILT-IN DOCUMENT VIEWER & PRINT MODAL (ដោះស្រាយបញ្ហារូបទី១) -->
+  <!-- BUILT-IN DOCUMENT VIEWER & PRINT MODAL -->
   <div id="modal-doc-viewer" role="dialog" aria-modal="true" aria-labelledby="doc-viewer-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-[70] flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="bg-white rounded-3xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl flex flex-col h-[92vh]">
       <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b border-slate-200">
@@ -406,6 +413,9 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
+      <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-400 font-medium">
+        © 2026. V.2.5 Khun Ratanak (HRDD - MoH) All rights reserved.
+      </div>
     </div>
   </div>
 
@@ -506,7 +516,7 @@
           <button onclick="backupEntireSystem()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus">📥 Export JSON</button>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
-          <div class="p-3.5 bg-emerald-50/50 font-bold text-emerald-900 border-b border-emerald-100">📂 បញ្ជីឯកសារដែលបានផ្ទុកក្នុងប្រព័ន្ធ និង Google Drive</div>
+          <div class="p-3.5 bg-emerald-50/50 font-bold text-emerald-900 border-b border-emerald-100">📂 បញ្ជីឯកសារដែលបានផ្ទុកក្នុងប្រព័ន្ធ និង Cloud Storage</div>
           <div id="files-system-list" class="divide-y divide-slate-100 max-h-72 overflow-y-auto bg-white"></div>
         </div>
       </div>
@@ -655,7 +665,6 @@
       return Math.floor(100000 + Math.random() * 1900000000);
     }
 
-    // 🌟 មុខងារប្រើប្រាស់ Mouse ទាញពង្រីក-បង្រួមទំហំជួរឈរតារាង (Interactive Table Column Resizer)
     function initResizableTables() {
       document.querySelectorAll('table.resizable-table th').forEach(th => {
         if (th.querySelector('.col-resizer')) return;
@@ -901,7 +910,6 @@
       setInterval(() => syncFromSupabase(false), 15000); 
     }
 
-    // រក្សាទុក fileDataUrl ក្នុងម៉ាស៊ីនពេល Sync ជាមួយ Cloud ដើម្បីកុំឱ្យដាច់សាច់ហ្វាលដែលទើប Upload
     async function syncToLocalDB(tableName, remoteData) {
       if (!Array.isArray(remoteData)) return;
       try {
@@ -963,7 +971,7 @@
               fileSize: d.file_size || d.fileSize || '1.0 MB',
               fileName: d.file_name || d.fileName || 'document.pdf',
               driveLink: d.drive_link || d.driveLink || '',
-              storage: d.storage || '☁️ Google Drive',
+              storage: d.storage || '☁️ Cloud Storage',
               createdBy: d.created_by || d.createdBy || 'user'
             }));
           await syncToLocalDB('docs', remoteDocs);
@@ -1029,17 +1037,31 @@
     const BUREAUS = {
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', shortName: 'ការិយាល័យទី១', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'exams', label: '🎓 ការប្រឡងចូល និងចេញ' }] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', shortName: 'ការិយាល័យទី២', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'training', label: '🌐 បណ្តុះបណ្តាលបន្ត' }] },
-      bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ', shortName: 'ការិយាល័យទី៣', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'certs', label: '📜 ចុះបញ្ជីសញ្ញាបត្រ' }] }
+      bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', shortName: 'ការិយាល័យទី៣', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', tabs: [{ id: 'docs', label: '📚 បណ្ណាល័យរួម' }, { id: 'dispatch', label: '🔄 ឯកសារចេញ-ចូល' }, { id: 'certs', label: '📜 ចុះបញ្ជីសញ្ញាបត្រ' }] }
     };
 
     function setSessionUser(u) { try { if (u) localStorage.setItem('hrd_moh_session_cache', JSON.stringify(u)); else localStorage.removeItem('hrd_moh_session_cache'); } catch (e) {} }
 
     function checkAuth() {
-      const loginModal = document.getElementById('modal-login'); const appHeader = document.getElementById('app-header'); const appMain = document.getElementById('app-main'); const appMobileNav = document.getElementById('app-mobile-nav');
+      const loginModal = document.getElementById('modal-login'); 
+      const appHeader = document.getElementById('app-header'); 
+      const appMain = document.getElementById('app-main'); 
+      const appFooter = document.getElementById('app-footer');
+      const appMobileNav = document.getElementById('app-mobile-nav');
+      
       if (!currentUser || !currentUser.username) {
-        if (loginModal) loginModal.classList.remove('hidden'); if (appHeader) appHeader.classList.add('hidden'); if (appMain) appMain.classList.add('hidden'); if (appMobileNav) appMobileNav.classList.add('hidden');
+        if (loginModal) loginModal.classList.remove('hidden'); 
+        if (appHeader) appHeader.classList.add('hidden'); 
+        if (appMain) appMain.classList.add('hidden'); 
+        if (appFooter) appFooter.classList.add('hidden');
+        if (appMobileNav) appMobileNav.classList.add('hidden');
       } else {
-        if (loginModal) loginModal.classList.add('hidden'); if (appHeader) appHeader.classList.remove('hidden'); if (appMain) appMain.classList.remove('hidden'); if (appMobileNav) appMobileNav.classList.remove('hidden');
+        if (loginModal) loginModal.classList.add('hidden'); 
+        if (appHeader) appHeader.classList.remove('hidden'); 
+        if (appMain) appMain.classList.remove('hidden'); 
+        if (appFooter) appFooter.classList.remove('hidden');
+        if (appMobileNav) appMobileNav.classList.remove('hidden');
+        
         document.getElementById('current-user-fullname').innerText = currentUser.fullname || currentUser.username;
         const isAdmin = currentUser.permissions?.admin === true || currentUser.role === 'SuperAdmin' || currentUser.bureau === 'all';
         document.getElementById('current-user-role').innerText = isAdmin ? '👑 Admin' : `🏢 ${BUREAUS[currentUser.bureau]?.shortName || 'មន្ត្រី'}`;
@@ -1196,7 +1218,7 @@
           </form>
         `;
       } else {
-        titleEl.innerHTML = '<span class="text-2xl">📚</span> បង្ហោះឯកសាររហ័ស (Drive)'; descEl.innerText = 'Upload Document (Auto Google Drive)';
+        titleEl.innerHTML = '<span class="text-2xl">📚</span> បង្ហោះឯកសាររហ័ស (Cloud)'; descEl.innerText = 'Upload Document (Supabase Storage & Drive)';
         container.innerHTML = `
           <form id="form-quick-doc" onsubmit="handleSaveDoc(event)" class="space-y-4 text-sm font-medium">
             <div id="drop-zone" tabindex="0" onclick="document.getElementById('doc-file-input').click()" class="form-input-focus border-2 border-dashed border-emerald-400 bg-emerald-50 rounded-2xl p-5 text-center cursor-pointer hover:bg-emerald-100 transition">
@@ -1252,7 +1274,6 @@
 
       tbody.innerHTML = limitedData.map(d => {
         const bTag = BUREAUS[d.bureau] ? BUREAUS[d.bureau].shortName : d.bureau;
-        const hasFileOrLink = Boolean(d.driveLink || d.fileDataUrl);
         return `
           <tr class="hover:bg-emerald-50 transition">
             <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
@@ -1271,7 +1292,6 @@
       }).join('');
     }
 
-    // 🌟 ផ្ទាំងមើលឯកសារ និងបោះពុម្ពផ្ទាល់ក្នុងប្រព័ន្ធ (Built-in Document Viewer & Print)
     function openDocViewerById(docId) {
       const doc = docsData.find(d => d.id === docId);
       if (!doc) return;
@@ -1304,14 +1324,19 @@
         dlBtn.removeAttribute('download');
         dlBtn.classList.remove('hidden');
 
-        // បម្លែងតំណភ្ជាប់ Google Drive ទៅជាប្រភេទ Preview ប្រសិនបើអាច
-        const previewUrl = doc.driveLink.replace(/\/view(\?.*)?$/, '/preview');
-        bodyEl.innerHTML = `
-          <div class="w-full h-full flex flex-col gap-2">
-            <iframe id="doc-viewer-iframe" src="${previewUrl}" class="w-full flex-1 rounded-xl bg-white border-0 shadow-sm"></iframe>
-            <p class="text-xs text-center text-slate-500">ប្រសិនបើឯកសារមិនបង្ហាញក្នុងប្រអប់នេះ សូមចុច <a href="${doc.driveLink}" target="_blank" class="text-emerald-700 font-bold underline">បើកផ្ទាល់លើផ្ទាំង Google Drive ថ្មី</a></p>
-          </div>
-        `;
+        const isDirectImage = /\.(png|jpg|jpeg|gif|webp)(\?.*)?$/i.test(doc.driveLink);
+        const previewUrl = doc.driveLink.includes('drive.google.com') ? doc.driveLink.replace(/\/view(\?.*)?$/, '/preview') : doc.driveLink;
+        
+        if (isDirectImage) {
+          bodyEl.innerHTML = `<img src="${doc.driveLink}" alt="${doc.title}" class="max-w-full max-h-full object-contain rounded-xl shadow-md bg-white p-2">`;
+        } else {
+          bodyEl.innerHTML = `
+            <div class="w-full h-full flex flex-col gap-2">
+              <iframe id="doc-viewer-iframe" src="${previewUrl}" class="w-full flex-1 rounded-xl bg-white border-0 shadow-sm"></iframe>
+              <p class="text-xs text-center text-slate-500">ប្រសិនបើឯកសារមិនបង្ហាញក្នុងប្រអប់នេះ សូមចុច <a href="${doc.driveLink}" target="_blank" class="text-emerald-700 font-bold underline">បើកផ្ទាល់លើផ្ទាំងថ្មី</a></p>
+            </div>
+          `;
+        }
       } else {
         dlBtn.classList.add('hidden');
         bodyEl.innerHTML = `
@@ -1538,7 +1563,7 @@
       win.document.close();
     }
 
-    // ====== ACTIONS ======
+    // ====== ACTIONS (WITH SUPABASE STORAGE BUCKET FOR 100+ FILES) ======
     function handleFileSelected(e) {
       const file = e.target.files[0]; if (!file) return;
       if (file.size > MAX_FILE_SIZE) { alert('⚠️ ឯកសារនេះមានទំហំធំលើស 8MB!'); e.target.value = ''; return; }
@@ -1574,7 +1599,7 @@
       const docId = generateSafeId();
       let cloudFileUrl = '';
 
-      // ១. បង្ហោះសាច់ហ្វាលផ្ទាល់ទៅកាន់ Supabase Storage Bucket ('documents')
+      // ១. បង្ហោះសាច់ហ្វាលផ្ទាល់ទៅកាន់ Supabase Storage Bucket ('documents') សម្រាប់ផ្ទុក 100+ ហ្វាល
       if (db && fileSnapshot.rawFile) {
         try {
           const ext = (fileSnapshot.name.split('.').pop() || 'pdf').toLowerCase();
@@ -1592,11 +1617,9 @@
             if (pubUrl && pubUrl.publicUrl) {
               cloudFileUrl = pubUrl.publicUrl;
             }
-          } else if (upErr) {
-            console.warn("Supabase Storage upload note:", upErr.message);
           }
         } catch (err) {
-          console.warn("Storage exception:", err);
+          console.warn("Storage upload note:", err);
         }
       }
 
@@ -1620,7 +1643,7 @@
       await localDB.docs.put(newDoc); 
       renderDocs(); 
       
-      // ៣. រក្សាទុកព័ត៌មាន និងតំណភ្ជាប់ហ្វាល (cloudFileUrl) ចូលក្នុងតារាង docs របស់ Supabase
+      // ៣. រក្សាទុកព័ត៌មាន និងតំណភ្ជាប់ហ្វាលចូលក្នុងតារាង docs របស់ Supabase
       const supabasePayload = {
         id: newDoc.id,
         bureau: newDoc.bureau,
@@ -1635,7 +1658,7 @@
       };
       if (db) await safeDbExec(db.from('docs').upsert([supabasePayload]));
       
-      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ! គ្រប់កុំព្យូទ័រអាចមើល និង Print បានភ្លាមៗ។' : 'បានរក្សាទុកកំណត់ត្រា! កំពុងភ្ជាប់ទៅ Google Drive...');
+      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ! គ្រប់កុំព្យូទ័រអាចមើល និង Print បានភ្លាមៗ។' : 'បានរក្សាទុកឯកសារជោគជ័យ! អាចចុច «មើល / Print» បានភ្លាមៗ។');
       logActivity('Upload ឯកសារ', newDoc.code);
 
       document.getElementById('doc-code').value = ''; 
@@ -1647,7 +1670,7 @@
       saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; 
       setTimeout(() => saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>', 2500);
 
-      // ៤. បើ Supabase Storage មិនទាន់បានបង្កើត Bucket ទេ វានឹងប្រើ Google Drive Webhook ជាប្រព័ន្ធបម្រុងដោយស្វ័យប្រវត្តិ
+      // ៤. ប្រើប្រាស់ Google Drive Webhook ជាប្រព័ន្ធបម្រុង ប្រសិនបើមិនទាន់បានបង្កើត Bucket 'documents'
       if (!cloudFileUrl && fileSnapshot.base64) {
         fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: fileSnapshot.name, mimeType: fileSnapshot.type, base64: fileSnapshot.base64 }) })
         .then(r => r.json()).then(async res => {
@@ -1850,7 +1873,7 @@
     function renderCountriesTable() { const tbody = document.getElementById('countries-table-body'); if (!tbody) return; tbody.innerHTML = countriesData.map((c, idx) => `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5 font-mono font-bold text-slate-700 text-sm">${c.code}</td><td class="p-3.5 font-bold text-slate-900 text-sm">${c.kh}</td><td class="p-3.5 text-slate-700 text-sm">${c.en}</td><td class="p-3.5 text-right"><button onclick="deleteCountry('${c.code}', ${idx})" class="text-rose-600 hover:underline font-bold text-sm form-input-focus">លុប</button></td></tr>`).join(''); }
     function populateCountryDropdowns() { const formSel = document.getElementById('train-country-select'); const filterSel = document.getElementById('filter-training-country'); const currentVal = formSel?.value; if (formSel) formSel.innerHTML = '<option value="">-- ជ្រើសរើសប្រទេស --</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === currentVal ? 'selected' : ''}>${c.kh} (${c.en})</option>`).join(''); if (filterSel) { const curF = filterSel.value; filterSel.innerHTML = '<option value="all">ប្រទេសទាំងអស់</option>' + countriesData.map(c => `<option value="${c.kh}" ${c.kh === curF ? 'selected' : ''}>${c.kh}</option>`).join(''); } }
     function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><button onclick="openDocViewerById(${d.id})" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100">👁️ មើល / Print</button></div>`).join(''); }
-    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V.2.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
+    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V2.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
     async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__')); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
 
     // ====== IMPORT / EXPORT / PRINT / QR ======
@@ -1879,7 +1902,7 @@
 
     function exportCSV(type) {
       let csv = "\uFEFFDoc ID,ចំណងជើង,ការិយាល័យ,ប្រភេទ,ទំហំ,កន្លែងផ្ទុក\n";
-      docsData.forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.fileSize}","${d.storage || 'Google Drive'}"\n`; });
+      docsData.forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.fileSize}","${d.storage || 'Cloud Storage'}"\n`; });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'dhrd_docs_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
     }
     function exportTrainingExcel() {
