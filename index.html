@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V6.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V2.5 - HRDD ក្រសួងសុខាភិបាល</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,43 +14,8 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-  <style>
-    body { font-family: 'Battambang', system-ui, -apple-system, sans-serif; }
-    .font-moul { font-family: 'Moul', cursive; }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    
-    input, textarea, select {
-      line-height: 1.625 !important;
-      padding-top: 0.55rem !important;
-      padding-bottom: 0.55rem !important;
-      overflow: visible !important;
-    }
-    .form-input-focus { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-    .form-input-focus:focus-visible { outline: 2px solid #059669; outline-offset: 2px; border-color: transparent; }
-
-    table.resizable-table th { position: relative; user-select: none; }
-    .col-resizer {
-      position: absolute; top: 0; right: 0; width: 6px; height: 100%;
-      cursor: col-resize; background: transparent; z-index: 20;
-    }
-    .col-resizer:hover { background: #10b981; }
-
-    #app-sidebar { transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-    #app-sidebar.collapsed { width: 5.25rem; }
-    #app-sidebar.collapsed .sidebar-text,
-    #app-sidebar.collapsed .sidebar-section-label,
-    #app-sidebar.collapsed #sidebar-bureau-box { display: none !important; }
-    #app-sidebar.collapsed .sidebar-nav-btn { justify-content: center; padding-left: 0.5rem; padding-right: 0.5rem; }
-
-    @media print {
-      body * { visibility: hidden; }
-      #printable-preview-content, #printable-preview-content * { visibility: visible; }
-      #printable-preview-content { position: absolute; left: 0; top: 0; width: 100%; border: none; }
-    }
-  </style>
+  <!-- ភ្ជាប់ទៅកាន់ Folder css -->
+  <link rel="stylesheet" href="./css/custom.css">
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased h-screen overflow-hidden flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
 
@@ -70,49 +35,53 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V6.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.2.5</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5">ក្រសួងសុខាភិបាល</p>
             </div>
           </div>
-          <button onclick="document.getElementById('app-sidebar').classList.toggle('collapsed')" class="w-7 h-7 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-emerald-700 flex items-center justify-center text-sm font-bold transition shrink-0">
-            <span>«</span>
+          <button onclick="window.app.toggleSidebarCollapse()" title="បង្រួម/ពង្រីករបារម៉ឺនុយ" class="w-7 h-7 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-emerald-700 flex items-center justify-center text-sm font-bold transition shrink-0">
+            <span id="sidebar-collapse-icon">«</span>
           </button>
         </div>
 
         <div id="sidebar-bureau-box" class="p-3.5 border-b border-slate-100 bg-emerald-50/40 space-y-1.5">
           <label class="block text-[11px] text-emerald-900 font-bold">🏛️ ការិយាល័យប្រតិបត្តិការ៖</label>
-          <select id="active-bureau-select" onchange="changeActiveBureau(this.value)" class="w-full bg-white text-emerald-950 text-xs font-bold border border-emerald-300 rounded-xl p-2 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-2xs">
-            <option value="all">👑 ការិយាល័យទាំង ៣ (All Bureaus)</option>
-            <option value="bureau_1">១. មុនពេលបម្រើការងារ</option>
-            <option value="bureau_2">២. បណ្តុះបណ្តាលបន្ត</option>
-            <option value="bureau_3">៣. ចុះបញ្ជិកា និងសញ្ញាបត្រ</option>
+          <select id="active-bureau-select" onchange="window.app.changeActiveBureau(this.value)" class="w-full bg-white text-emerald-950 text-xs font-bold border border-emerald-300 rounded-xl p-2 outline-none cursor-pointer shadow-2xs">
+            <option value="bureau_1">១. ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ</option>
+            <option value="bureau_2">២. ការិយាល័យបណ្តុះបណ្តាលបន្ត</option>
+            <option value="bureau_3">៣. ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ</option>
           </select>
+          <p id="bureau-lock-notice" class="text-[10px] text-amber-700 font-semibold hidden">🔒 ចាក់សោរតាមការិយាល័យសាមី</p>
         </div>
 
         <div class="p-3 space-y-1">
           <p class="sidebar-section-label px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">ម៉ឺនុយការងារស្នូល</p>
           <div id="bureau-tabs-nav" class="space-y-1"></div>
-          <button onclick="openSystemModal('manual')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">
-            <span class="text-lg shrink-0">📖</span>
-            <span class="sidebar-text truncate">សៀវភៅណែនាំ (Manual)</span>
+          <button onclick="window.app.toggleScannerModal(true)" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">
+            <span class="text-lg shrink-0">📷</span>
+            <span class="sidebar-text truncate">ស្កេនផ្ទៀងផ្ទាត់ QR Code</span>
           </button>
         </div>
 
         <div class="p-3 pt-1 space-y-1 border-t border-slate-100 mt-2">
-          <p class="sidebar-section-label px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">ការកំណត់ និងប្រព័ន្ធ</p>
-          <button onclick="openSystemModal('settings')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">👥</span><span class="sidebar-text truncate">គ្រប់គ្រងមន្ត្រី (Users)</span></button>
-          <button onclick="openSystemModal('files')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">📁</span><span class="sidebar-text truncate">Backup & Restore JSON</span></button>
+          <p class="sidebar-section-label px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">ការកំណត់ និងប្រព័ន្ធ (Tools)</p>
+          <button onclick="window.app.openSystemModal('settings')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">⚙️</span><span class="sidebar-text truncate">User Management</span></button>
+          <button onclick="window.app.openSystemModal('location')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">🌍</span><span class="sidebar-text truncate">Location (គ្រប់គ្រងប្រទេស)</span></button>
+          <button onclick="window.app.openSystemModal('files')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">📁</span><span class="sidebar-text truncate">File System & Backups</span></button>
+          <button onclick="window.app.openSystemModal('security')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">🛡️</span><span class="sidebar-text truncate">Security Center</span></button>
+          <button onclick="window.app.openSystemModal('logging')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">Audit Logging</span></button>
+          <button onclick="window.app.openSystemModal('manual')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition"><span class="text-base shrink-0">📖</span><span class="sidebar-text truncate">User Manual</span></button>
         </div>
       </div>
 
       <div class="p-3 border-t border-slate-200/80 bg-slate-50/60 space-y-2 shrink-0">
-        <button onclick="handleLogout()" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold transition">
-          <span class="text-base shrink-0">🚪</span>
-          <span class="sidebar-text truncate">ចាកចេញពីប្រព័ន្ធ (Logout)</span>
+        <button onclick="window.app.openProfileModal()" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition">
+          <span class="text-base shrink-0">👤</span>
+          <span class="sidebar-text truncate">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.6.0 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.2.5 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -124,23 +93,29 @@
           <div class="truncate">
             <div class="flex items-center gap-2">
               <h1 class="text-sm sm:text-base font-bold text-slate-900 truncate" id="active-bureau-title">ការិយាល័យជំនាញ</h1>
-              <span class="hidden md:inline-block text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold px-2.5 py-0.5 rounded-full" id="stat-bureau-badge">ការិយាល័យទាំង ៣</span>
+              <span class="hidden md:inline-block text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold px-2.5 py-0.5 rounded-full" id="stat-bureau-badge">ការិយាល័យទី១</span>
             </div>
             <p class="text-[11px] text-slate-400 truncate hidden sm:block" id="active-bureau-desc">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស នៃក្រសួងសុខាភិបាល</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
-          <button onclick="syncFromSupabase(true)" class="h-9 px-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold flex items-center gap-1.5 transition">
+          <button onclick="window.app.syncFromSupabase(true)" title="ធ្វើសមកាលកម្មទិន្នន័យ" class="h-9 px-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold flex items-center gap-1.5 transition">
             <span id="sync-btn-icon" class="text-sm">🔄</span> <span class="hidden sm:inline">Sync</span>
           </button>
-          <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
-            <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">ម</div>
+          
+          <button onclick="window.app.toggleScannerModal(true)" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-sm">
+            📷
+          </button>
+
+          <button onclick="window.app.openProfileModal()" class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 border border-slate-200/80 transition">
+            <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center overflow-hidden" id="header-avatar-box"><span id="header-avatar-initials">ម</span></div>
             <div class="text-left hidden md:block leading-tight">
-              <div class="text-xs font-bold text-slate-800" id="current-user-fullname">មន្ត្រី</div>
-              <div class="text-[10px] text-emerald-700 font-semibold" id="current-user-role">Admin</div>
+              <div class="text-xs font-bold text-slate-800 max-w-[110px] truncate" id="current-user-fullname">មន្ត្រី</div>
+              <div class="text-[10px] text-emerald-700 font-semibold" id="current-user-role">...</div>
             </div>
-          </div>
+          </button>
+          <button onclick="window.app.handleLogout()" title="ចាកចេញ" class="w-9 h-9 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-sm font-bold">🚪</button>
         </div>
       </header>
 
@@ -148,287 +123,279 @@
       <main id="app-main" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 flex flex-col">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
-            <div><p class="text-xs text-slate-500 font-bold">បណ្ណាល័យរួម</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-docs">0</h3></div>
+            <div><p class="text-xs text-slate-500 font-bold">បណ្ណាល័យរួម (៣ ការិយាល័យ)</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-docs">0</h3><span class="inline-block mt-1 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-bold">☁️ Shared Cloud Library</span></div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl">📚</div>
           </div>
           <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
-            <div><p class="text-xs text-slate-500 font-bold">លិខិតកំពុងរត់ការ</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-disp">0</h3></div>
+            <div><p class="text-xs text-slate-500 font-bold">លិខិតកំពុងរត់ការ</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-disp">0</h3><span class="inline-block mt-1 text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md font-bold">ដំណាក់កាលរដ្ឋបាល</span></div>
             <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl">⏳</div>
           </div>
           <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
-            <div><p class="text-xs text-slate-500 font-bold">ការងារជំនាញ</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-custom-val">0</h3></div>
-            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl">🎯</div>
+            <div><p class="text-xs text-slate-500 font-bold" id="stat-custom-label">ការងារជំនាញ</p><h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-custom-val">0</h3><span class="inline-block mt-1 text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md font-bold">ទិន្នន័យជាក់ស្តែង</span></div>
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl" id="stat-custom-icon">🎯</div>
           </div>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start flex-1">
           <div class="xl:col-span-8 space-y-5">
+            <!-- TAB 1: E-LIBRARY -->
             <div id="section-docs" class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <h3 class="text-base font-bold text-slate-900">📚 បណ្ណាល័យឯកសាររួម (E-Library)</h3>
-                <input type="text" id="doc-search" oninput="renderDocs()" placeholder="🔍 ស្វែងរកតាមកូដ ឬចំណងជើង..." class="border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-64">
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">📚 បណ្ណាល័យឯកសាររួម (E-Library)</h3>
+                  <p class="text-xs text-slate-500">អាចប្រើប្រាស់ Mouse ទាញពង្រីក-បង្រួមទទឹងជួរឈរបាន</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="window.app.resetDocFilters()" class="px-3 py-1.5 bg-slate-100 rounded-xl text-xs font-bold">🔄 Reset</button>
+                  <button onclick="window.app.exportCSV('docs')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-xl text-xs font-bold">📥 Export CSV</button>
+                </div>
               </div>
-              <div class="border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3">Doc ID</th><th class="p-3">ចំណងជើងឯកសារ</th><th class="p-3 text-center">ប្រភេទ</th><th class="p-3 text-center">ស្ថានភាព</th><th class="p-3 text-center">សកម្មភាព</th></tr></thead><tbody id="docs-table-body" class="divide-y divide-slate-100"></tbody></table></div>
+              <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                <input type="text" id="doc-search" oninput="window.app.renderDocs()" placeholder="🔍 ស្វែងរកឯកសារ..." class="border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                <select id="filter-doc-category" onchange="window.app.renderDocs()" class="border border-slate-300 rounded-xl px-2 py-2 bg-white font-medium">
+                  <option value="all">📂 ប្រភេទទាំងអស់</option>
+                  <option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option>
+                  <option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option>
+                  <option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option>
+                  <option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option>
+                </select>
+                <select id="filter-doc-bureau" onchange="window.app.renderDocs()" class="border border-slate-300 rounded-xl px-2 py-2 bg-white font-medium">
+                  <option value="all">🏢 គ្រប់ការិយាល័យ</option>
+                  <option value="bureau_1">ការិយាល័យទី១</option>
+                  <option value="bureau_2">ការិយាល័យទី២</option>
+                  <option value="bureau_3">ការិយាល័យទី៣</option>
+                </select>
+              </div>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto max-h-[500px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b whitespace-nowrap sticky top-0">
+                    <tr><th class="p-3">Doc ID</th><th class="p-3">ចំណងជើង</th><th class="p-3 text-center">ប្រភេទ</th><th class="p-3 text-center">ស្ថានភាព</th><th class="p-3 text-center">ទំហំ</th><th class="p-3 text-center">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="docs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
             </div>
 
+            <!-- TAB 2: DISPATCH -->
             <div id="section-dispatch" class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4 hidden">
-              <h3 class="text-base font-bold text-slate-900">📤📥 តាមដានលិខិតចេញ-ចូល</h3>
-              <div class="border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3">ប្រភេទ</th><th class="p-3">លេខលិខិត</th><th class="p-3">កម្មវត្ថុ</th><th class="p-3 text-center">ដំណាក់កាល</th><th class="p-3">ទីតាំង</th></tr></thead><tbody id="dispatch-table-body" class="divide-y divide-slate-100"></tbody></table></div>
+              <h3 class="text-base font-bold text-slate-900">📤📥 តាមដានលិខិតចេញ-ចូល (ឯកជនតាមការិយាល័យ)</h3>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto max-h-[500px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b whitespace-nowrap sticky top-0">
+                    <tr><th class="p-3">ប្រភេទ</th><th class="p-3">លេខលិខិត</th><th class="p-3">កម្មវត្ថុ</th><th class="p-3 text-center">ដំណាក់កាល</th><th class="p-3">ទីតាំង</th><th class="p-3 text-center">កាលបរិច្ឆេទ</th><th class="p-3 text-center">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="dispatch-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
             </div>
 
+            <!-- TAB 3A: EXAMS -->
             <div id="section-exams" class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4 hidden">
               <h3 class="text-base font-bold text-slate-900">🎓 ការប្រឡងចូល និងចេញថ្នាក់ជាតិ</h3>
-              <div class="border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3">ប្រភេទ</th><th class="p-3">ជំនាញ</th><th class="p-3">សម័យប្រឡង</th><th class="p-3 text-center">បេក្ខជន</th></tr></thead><tbody id="exams-table-body" class="divide-y divide-slate-100"></tbody></table></div>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto max-h-[500px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b whitespace-nowrap sticky top-0">
+                    <tr><th class="p-3">ប្រភេទ</th><th class="p-3">ជំនាញ</th><th class="p-3">សម័យប្រឡង</th><th class="p-3 text-center">បេក្ខជន</th><th class="p-3 text-center">ស្ថានភាព</th><th class="p-3 text-center">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="exams-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
             </div>
 
+            <!-- TAB 3B: TRAINING -->
             <div id="section-training" class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4 hidden">
-              <h3 class="text-base font-bold text-slate-900">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3>
-              <div class="border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3">ឈ្មោះ</th><th class="p-3">អង្គភាព</th><th class="p-3">វគ្គសិក្សា</th><th class="p-3 text-center">រយៈពេល</th><th class="p-3 text-center">ប្រទេស</th></tr></thead><tbody id="training-table-body" class="divide-y divide-slate-100"></tbody></table></div>
+              <div class="flex justify-between items-center pb-2 border-b">
+                <h3 class="text-base font-bold text-slate-900">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3>
+                <div class="flex gap-2">
+                  <input type="file" id="import-excel-file" onchange="window.app.handleImportExcel(event)" class="hidden" accept=".xlsx,.xls,.csv">
+                  <button onclick="document.getElementById('import-excel-file').click()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-xl text-xs font-bold">📥 Import Excel</button>
+                  <button onclick="window.app.exportTrainingExcel()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-xl text-xs font-bold">📊 Excel</button>
+                  <button onclick="window.app.openPrintPreviewModal()" class="px-3 py-1.5 bg-teal-600 text-white rounded-xl text-xs font-bold">👁️ Print</button>
+                </div>
+              </div>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto max-h-[500px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b whitespace-nowrap sticky top-0">
+                    <tr><th class="p-3">ឈ្មោះ</th><th class="p-3">អង្គភាព</th><th class="p-3">វគ្គសិក្សា</th><th class="p-3 text-center">រយៈពេល</th><th class="p-3 text-center">កាលបរិច្ឆេទ</th><th class="p-3 text-center">ប្រទេស</th><th class="p-3">ឧបត្ថម្ភ</th><th class="p-3 text-center">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="training-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
             </div>
 
+            <!-- TAB 3C: CERTS -->
             <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4 hidden">
               <h3 class="text-base font-bold text-slate-900">📜 ចុះបញ្ជីការ និងកំណត់លេខសញ្ញាបត្រ</h3>
-              <div class="border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3">លេខកូដ</th><th class="p-3">ឈ្មោះសាមីខ្លួន</th><th class="p-3">ប្រភេទសញ្ញាបត្រ</th><th class="p-3 text-center">កាលបរិច្ឆេទ</th></tr></thead><tbody id="certs-table-body" class="divide-y divide-slate-100"></tbody></table></div>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto max-h-[500px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b whitespace-nowrap sticky top-0">
+                    <tr><th class="p-3">លេខកូដសញ្ញាបត្រ</th><th class="p-3">ឈ្មោះសាមីខ្លួន</th><th class="p-3">ប្រភេទសញ្ញាបត្រ</th><th class="p-3 text-center">កាលបរិច្ឆេទ</th><th class="p-3">ហត្ថលេខា</th><th class="p-3 text-center">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="certs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
             </div>
           </div>
 
+          <!-- RIGHT PANEL: QUICK ENTRY -->
           <div class="xl:col-span-4 sticky top-2">
             <div class="bg-white rounded-3xl border border-slate-200 shadow-2xs overflow-hidden">
               <div class="bg-emerald-600 text-white p-4 text-center">
-                <h3 class="font-bold text-sm sm:text-base">✍️ ផ្ទាំងបញ្ចូលទិន្នន័យរហ័ស</h3>
+                <h3 class="font-bold text-sm sm:text-base flex items-center justify-center gap-2" id="side-panel-header-title"><span class="text-xl">✍️</span> ផ្ទាំងបញ្ចូលទិន្នន័យរហ័ស</h3>
+                <p class="text-[11px] text-emerald-100 font-medium mt-0.5" id="side-panel-header-desc">Quick Entry Panel</p>
               </div>
-              <div class="p-5" id="side-form-container">
-                <form onsubmit="saveDocQuick(event)" class="space-y-3 text-xs font-medium">
-                  <div><label class="block font-bold mb-1">កូដឯកសារ *</label><input type="text" id="q-code" required class="w-full border border-slate-300 rounded-xl p-2.5" placeholder="DOC-2026-001"></div>
-                  <div><label class="block font-bold mb-1">ប្រភេទ</label><select id="q-cat" class="w-full border border-slate-300 rounded-xl p-2.5"><option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option><option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option></select></div>
-                  <div><label class="block font-bold mb-1">ចំណងជើង *</label><input type="text" id="q-title" required class="w-full border border-slate-300 rounded-xl p-2.5"></div>
-                  <button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold">រក្សាទុក</button>
-                </form>
-              </div>
+              <div class="p-5" id="side-form-container"></div>
             </div>
           </div>
         </div>
+
+        <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
+            <p>© 2026. V.2.5 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p class="text-[10px] text-slate-400">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
+          </div>
+        </footer>
       </main>
     </div>
   </div>
 
   <!-- LOGIN MODAL -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-8 shadow-2xl space-y-4 text-center">
       <div class="w-24 h-24 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white overflow-hidden">
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V6.0</h3>
+        <h3 class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.2.5</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
-      <form onsubmit="handleLoginDirect(event)" class="space-y-3.5 text-left">
-        <div><label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label><input type="text" id="login-username" required class="w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="admin ឬ user1"></div>
-        <div><label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label><input type="password" id="login-password" required class="w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="••••••••"></div>
-        <p id="login-error" class="text-xs text-rose-600 font-medium hidden"></p>
-        <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition">ចូលប្រព័ន្ធ (Sign In)</button>
+      <form onsubmit="window.app.handleLogin(event)" class="space-y-3.5 text-left">
+        <div><label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label><input type="text" id="login-username" required autocomplete="username" class="w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="admin ឬ user1"></div>
+        <div><label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
+          <div class="relative"><input type="password" id="login-password" required autocomplete="current-password" class="w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••"><button type="button" onclick="const i=document.getElementById('login-password'); i.type=i.type==='password'?'text':'password';" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400">👁️</button></div>
+        </div>
+        <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
+        <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400">© 2026. V.2.5 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+    </div>
+  </div>
+
+  <!-- DOCUMENT VIEWER MODAL -->
+  <div id="modal-doc-viewer" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-[70] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-5xl w-full p-6 shadow-2xl flex flex-col h-[90vh]">
+      <div class="flex justify-between items-center pb-3 border-b">
+        <div><h3 class="font-bold text-base" id="doc-viewer-title">📄 មើលឯកសារ</h3><p class="text-xs text-slate-500" id="doc-viewer-meta"></p></div>
+        <div class="flex gap-2">
+          <button onclick="window.app.printCurrentDoc()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">🖨️ Print</button>
+          <a id="doc-viewer-download" href="#" download class="px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold hidden">📥 ទាញយក</a>
+          <button onclick="document.getElementById('modal-doc-viewer').classList.add('hidden')" class="text-slate-400 text-lg px-2">✕</button>
+        </div>
+      </div>
+      <div id="doc-viewer-body" class="flex-1 overflow-y-auto my-3 bg-slate-100 rounded-2xl flex items-center justify-center p-4"></div>
+    </div>
+  </div>
+
+  <!-- USER PROFILE MODAL -->
+  <div id="modal-user-profile" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[65] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-center border-b pb-3"><h3 class="font-bold text-sm">👤 ព័ត៌មានគណនីមន្ត្រី</h3><button onclick="document.getElementById('modal-user-profile').classList.add('hidden')" class="text-slate-400">✕</button></div>
+      <div class="grid grid-cols-3 gap-4 items-center">
+        <div class="flex flex-col items-center text-center p-3 bg-slate-50 rounded-2xl">
+          <div class="w-20 h-20 rounded-full border-2 border-emerald-500 bg-emerald-600 text-white text-2xl font-extrabold flex items-center justify-center overflow-hidden" id="profile-modal-avatar-box"><span id="profile-modal-avatar">ម</span></div>
+          <h4 class="font-bold text-slate-900 text-xs mt-2" id="profile-modal-fullname">មន្ត្រី</h4>
+          <p class="text-[11px] text-emerald-700 font-bold" id="profile-modal-role">Editor</p>
+        </div>
+        <div class="col-span-2 space-y-3 text-xs">
+          <div><span class="text-slate-400">Username:</span> <strong id="profile-modal-username" class="font-mono">@user</strong></div>
+          <div><span class="text-slate-400">ការិយាល័យសាមី:</span> <strong id="profile-modal-bureau" class="text-emerald-800">ការិយាល័យទី១</strong></div>
+          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-2">
+            <h5 class="font-bold text-emerald-900">🔐 ប្ដូរពាក្យសម្ងាត់</h5>
+            <input type="password" id="profile-old-pwd" placeholder="ពាក្យសម្ងាត់ចាស់..." class="w-full border rounded-lg p-2 text-xs bg-white">
+            <input type="password" id="profile-new-pwd" placeholder="ពាក្យសម្ងាត់ថ្មី..." class="w-full border rounded-lg p-2 text-xs bg-white">
+            <button onclick="window.app.changePasswordFromProfile()" class="w-full py-2 bg-emerald-600 text-white rounded-lg font-bold">💾 រក្សាទុក</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- SYSTEM TOOLS MODAL -->
   <div id="modal-system-tools" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
-      <div class="flex justify-between items-center border-b pb-3"><h3 class="text-base font-bold" id="sys-title">System Tools</h3><button onclick="document.getElementById('modal-system-tools').classList.add('hidden')" class="text-slate-400">✕</button></div>
-      <div id="sys-body" class="space-y-3 text-xs"></div>
+    <div class="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center border-b pb-3"><h3 class="font-bold text-base" id="system-tools-title">⚙️ System Tools Dashboard</h3><button onclick="document.getElementById('modal-system-tools').classList.add('hidden')" class="text-slate-400 text-lg">✕</button></div>
+      <div class="flex gap-2 border-b pb-2 text-xs overflow-x-auto">
+        <button onclick="window.app.switchSystemToolTab('settings')" id="systab-settings" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">⚙️ User Management</button>
+        <button onclick="window.app.switchSystemToolTab('location')" id="systab-location" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">🌍 Location</button>
+        <button onclick="window.app.switchSystemToolTab('files')" id="systab-files" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📁 File System & Backups</button>
+        <button onclick="window.app.switchSystemToolTab('security')" id="systab-security" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">🛡️ Security</button>
+        <button onclick="window.app.switchSystemToolTab('logging')" id="systab-logging" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📋 Audit Logging</button>
+        <button onclick="window.app.switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📖 User Manual</button>
+      </div>
+      <div id="syscontent-settings" class="flex-1 overflow-y-auto space-y-4 text-xs">
+        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+          <h4 class="font-bold text-emerald-900 mb-2">➕ បង្កើតគណនីមន្ត្រីថ្មី</h4>
+          <form onsubmit="window.app.handleCreateUser(event)" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <input type="text" id="new-user-fullname" required placeholder="ឈ្មោះពេញ..." class="border rounded-xl p-2 bg-white">
+            <input type="text" id="new-user-username" required placeholder="Username..." class="border rounded-xl p-2 bg-white">
+            <input type="text" id="new-user-password" required placeholder="Password..." class="border rounded-xl p-2 bg-white">
+            <select id="new-user-bureau" class="border rounded-xl p-2 bg-white"><option value="bureau_1">ការិយាល័យទី១</option><option value="bureau_2">ការិយាល័យទី២</option><option value="bureau_3">ការិយាល័យទី៣</option><option value="all">👑 គ្រប់ការិយាល័យ</option></select>
+            <button type="submit" class="col-span-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold">+ បង្កើតគណនីមន្ត្រី</button>
+          </form>
+        </div>
+        <div class="border rounded-2xl overflow-hidden"><table class="w-full text-left"><thead class="bg-emerald-50 font-bold"><tr><th class="p-3">ឈ្មោះ</th><th class="p-3">Username</th><th class="p-3">ការិយាល័យ</th><th class="p-3 text-right">សកម្មភាព</th></tr></thead><tbody id="users-table-body" class="divide-y"></tbody></table></div>
+      </div>
+      <div id="syscontent-location" class="flex-1 overflow-y-auto space-y-3 text-xs hidden">
+        <form onsubmit="window.app.handleAddCountry(event)" class="grid grid-cols-4 gap-2">
+          <input type="text" id="new-country-code" required placeholder="Code (ឧ. KH)" class="border rounded-xl p-2">
+          <input type="text" id="new-country-kh" required placeholder="ឈ្មោះភាសាខ្មែរ" class="border rounded-xl p-2">
+          <input type="text" id="new-country-en" required placeholder="English Name" class="border rounded-xl p-2">
+          <button type="submit" class="bg-emerald-600 text-white rounded-xl font-bold">+ បន្ថែមប្រទេស</button>
+        </form>
+        <div class="border rounded-2xl overflow-hidden"><table class="w-full text-left"><thead class="bg-emerald-50 font-bold"><tr><th class="p-3">Code</th><th class="p-3">Khmer</th><th class="p-3">English</th><th class="p-3 text-right">សកម្មភាព</th></tr></thead><tbody id="countries-table-body" class="divide-y"></tbody></table></div>
+      </div>
+      <div id="syscontent-files" class="flex-1 overflow-y-auto space-y-4 text-xs hidden">
+        <div class="p-4 bg-blue-50 border border-blue-200 rounded-2xl flex justify-between items-center">
+          <div><h4 class="font-bold text-blue-900">💾 ទាញយកទិន្នន័យប្រព័ន្ធ (JSON Backup)</h4><p class="text-blue-700">រក្សាទុកទិន្នន័យទាំងអស់ទុកជាបម្រុង</p></div>
+          <button onclick="window.app.backupEntireSystem()" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold">📥 Export JSON</button>
+        </div>
+        <div class="border rounded-2xl overflow-hidden"><div class="p-3 bg-emerald-50 font-bold">📂 បញ្ជីឯកសារក្នុងប្រព័ន្ធ</div><div id="files-system-list" class="divide-y max-h-48 overflow-y-auto"></div></div>
+      </div>
+      <div id="syscontent-security" class="flex-1 overflow-y-auto text-xs hidden p-4 bg-emerald-50 rounded-2xl border">
+        <h4 class="font-bold text-emerald-900 mb-2">🛡️ គោលការណ៍សុវត្ថិភាពប្រព័ន្ធ (RBAC)</h4>
+        <p>ប្រព័ន្ធប្រើប្រាស់ Supabase Auth រួមជាមួយ RLS (Row Level Security) ការពារសុវត្ថិភាពទិន្នន័យតាមការិយាល័យនីមួយៗយ៉ាងតឹងរឹង។</p>
+      </div>
+      <div id="syscontent-logging" class="flex-1 overflow-y-auto text-xs hidden space-y-2">
+        <div class="flex justify-between"><input type="text" id="log-search-input" oninput="window.app.renderLogsTable()" placeholder="ស្វែងរក Logs..." class="border rounded-xl px-3 py-1.5 w-64"><button onclick="window.app.clearActivityLogs()" class="text-rose-600 font-bold">ជម្រះ Logs</button></div>
+        <div class="border rounded-2xl overflow-hidden"><table class="w-full text-left"><thead class="bg-emerald-50 font-bold"><tr><th class="p-3">កាលបរិច្ឆេទ</th><th class="p-3">មន្ត្រី</th><th class="p-3">សកម្មភាព</th><th class="p-3">គោលដៅ</th></tr></thead><tbody id="logs-table-body" class="divide-y"></tbody></table></div>
+      </div>
+      <div id="syscontent-manual" class="flex-1 overflow-y-auto text-xs hidden p-4 bg-slate-50 rounded-2xl border space-y-2">
+        <h4 class="font-bold text-slate-900">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់ V.2.5</h4>
+        <p>១. ការបើកមើល និង Print ឯកសារ៖ ចុចប៊ូតុង <b>👁️ មើល / Print</b> នៅលើតារាង។</p>
+        <p>២. ការទាញពង្រីកជួរឈរ៖ ដាក់ព្រួញ Mouse នៅគែមខាងស្តាំនៃក្បាលតារាង រួចអូសទាញ។</p>
+      </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT ENGINE -->
-  <script>
-    const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
+  <!-- PRINT PREVIEW MODAL -->
+  <div id="modal-print-preview" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl flex flex-col max-h-[90vh]">
+      <div class="flex justify-between items-center pb-3 border-b"><h3 class="font-bold text-sm">👁️ Print Preview</h3><button onclick="document.getElementById('modal-print-preview').classList.add('hidden')" class="text-slate-400">✕</button></div>
+      <div id="printable-preview-content" class="flex-1 overflow-y-auto p-6 bg-white space-y-3 text-xs"></div>
+      <div class="pt-3 border-t text-right"><button onclick="window.print()" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold">🖨️ បោះពុម្ព</button></div>
+    </div>
+  </div>
 
-    let db = null;
-    if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) {} }
+  <!-- QR SCANNER MODAL -->
+  <div id="modal-scanner" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl space-y-3 text-center">
+      <div class="flex justify-between items-center border-b pb-2"><h3 class="font-bold text-sm">📷 ស្កេន QR Code</h3><button onclick="window.app.toggleScannerModal(false)" class="text-slate-400">✕</button></div>
+      <div id="reader" class="w-full rounded-2xl overflow-hidden border"></div>
+      <div id="scan-result" class="text-xs p-3 bg-slate-50 rounded-xl">សូមដាក់កាមេរ៉ាឱ្យចំ QR Code</div>
+    </div>
+  </div>
 
-    let docsData = [], dispatchData = [], examsData = [], trainingData = [], certsData = [];
-    let currentUser = null;
-    let activeBureauKey = 'all';
-    let activeTab = 'docs';
-
-    const BUREAUS = {
-      all: { id: 'all', name: 'ការិយាល័យទាំង ៣ (All Bureaus)', shortName: 'ការិយាល័យទាំង ៣', desc: 'ត្រួតពិនិត្យទិន្នន័យរួមនៃការិយាល័យទាំង ៣', tabs: [{ id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម' }, { id: 'dispatch', icon: '🔄', label: 'លិខិតចេញ-ចូល' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡង' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាល' }, { id: 'certs', icon: '📜', label: 'សញ្ញាបត្រ' }] },
-      bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', shortName: 'ការិយាល័យទី១', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិត និងប្រឡង', tabs: [{ id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម' }, { id: 'dispatch', icon: '🔄', label: 'លិខិតចេញ-ចូល' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡង' }] },
-      bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', shortName: 'ការិយាល័យទី២', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិត និងបណ្តុះបណ្តាលបន្ត', tabs: [{ id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម' }, { id: 'dispatch', icon: '🔄', label: 'លិខិតចេញ-ចូល' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាល' }] },
-      bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', shortName: 'ការិយាល័យទី៣', desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិត និងសញ្ញាបត្រ', tabs: [{ id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម' }, { id: 'dispatch', icon: '🔄', label: 'លិខិតចេញ-ចូល' }, { id: 'certs', icon: '📜', label: 'សញ្ញាបត្រ' }] }
-    };
-
-    const defaultUsers = [
-      { username: 'admin', password: '123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', role: 'SuperAdmin', bureau: 'all' },
-      { username: 'user1', password: '123', fullname: 'មន្ត្រីការិយាល័យទី១', role: 'Editor', bureau: 'bureau_1' },
-      { username: 'user2', password: '123', fullname: 'មន្ត្រីការិយាល័យទី២', role: 'Editor', bureau: 'bureau_2' },
-      { username: 'user3', password: '123', fullname: 'មន្ត្រីការិយាល័យទី៣', role: 'Editor', bureau: 'bureau_3' }
-    ];
-
-    function showToast(msg) {
-      const cont = document.getElementById('toast-container');
-      if (!cont) return;
-      const el = document.createElement('div');
-      el.className = `bg-emerald-600 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl`;
-      el.innerHTML = `✅ ${msg}`;
-      cont.appendChild(el);
-      setTimeout(() => el.remove(), 3000);
-    }
-
-    async function handleLoginDirect(e) {
-      e.preventDefault();
-      const u = document.getElementById('login-username').value.trim().toLowerCase();
-      const p = document.getElementById('login-password').value.trim();
-      const found = defaultUsers.find(x => x.username === u && x.password === p);
-      if (found) {
-        currentUser = found;
-        localStorage.setItem('hrd_moh_session', JSON.stringify(currentUser));
-        document.getElementById('modal-login').classList.add('hidden');
-        document.getElementById('app-shell').classList.remove('hidden');
-        document.getElementById('current-user-fullname').innerText = currentUser.fullname;
-        document.getElementById('current-user-role').innerText = currentUser.role;
-        renderWorkspace();
-        showToast('ចូលប្រព័ន្ធជោគជ័យ!');
-        syncFromSupabase(false);
-      } else {
-        const err = document.getElementById('login-error');
-        err.innerText = 'ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ! (ប្រើ admin / 123)';
-        err.classList.remove('hidden');
-      }
-    }
-
-    function handleLogout() {
-      localStorage.removeItem('hrd_moh_session');
-      location.reload();
-    }
-
-    async function syncFromSupabase(isManual = false) {
-      if (!db) return;
-      try {
-        const [rDocs, rDisp] = await Promise.all([
-          db.from('docs').select('*').order('id', { ascending: false }).limit(200),
-          db.from('dispatches').select('*').order('id', { ascending: false }).limit(200)
-        ]);
-        if (rDocs.data) docsData = rDocs.data;
-        if (rDisp.data) dispatchData = rDisp.data;
-        renderWorkspace();
-        if (isManual) showToast('សមកាលកម្មទិន្នន័យពី Cloud ជោគជ័យ!');
-      } catch (e) {}
-    }
-
-    function changeActiveBureau(k) {
-      activeBureauKey = k;
-      activeTab = 'docs';
-      renderWorkspace();
-    }
-
-    function switchBureauTab(t) {
-      activeTab = t;
-      renderWorkspace();
-    }
-
-    function renderWorkspace() {
-      const b = BUREAUS[activeBureauKey] || BUREAUS.all;
-      document.getElementById('active-bureau-title').innerText = b.name;
-      document.getElementById('active-bureau-desc').innerText = b.desc;
-      document.getElementById('stat-bureau-badge').innerText = b.shortName;
-
-      document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.map(t => `
-        <button onclick="switchBureauTab('${t.id}')" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${t.id === activeTab ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50'}">
-          <span class="text-lg">${t.icon}</span><span>${t.label}</span>
-        </button>
-      `).join('');
-
-      ['docs', 'dispatch', 'exams', 'training', 'certs'].forEach(s => document.getElementById('section-' + s)?.classList.add('hidden'));
-      document.getElementById('section-' + activeTab)?.classList.remove('hidden');
-
-      renderDocs();
-      renderDispatch();
-    }
-
-    function renderDocs() {
-      const tbody = document.getElementById('docs-table-body');
-      if (!tbody) return;
-      const q = (document.getElementById('doc-search')?.value || '').toLowerCase();
-      const filtered = docsData.filter(d => !q || (d.title && d.title.toLowerCase().includes(q)) || (d.code && d.code.toLowerCase().includes(q)));
-      document.getElementById('stat-bureau-docs').innerText = filtered.length;
-
-      tbody.innerHTML = filtered.map(d => `
-        <tr class="hover:bg-emerald-50/60 transition">
-          <td class="p-3 font-mono font-bold text-xs">${d.code}</td>
-          <td class="p-3 font-bold text-slate-900">${d.title}</td>
-          <td class="p-3 text-center"><span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-50 text-blue-700">${d.category || 'ឯកសារ'}</span></td>
-          <td class="p-3 text-center"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Cloud</span></td>
-          <td class="p-3 text-center">
-            ${d.drive_link ? `<a href="${d.drive_link}" target="_blank" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold">👁️ មើល</a>` : '-'}
-          </td>
-        </tr>
-      `).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</td></tr>';
-    }
-
-    function renderDispatch() {
-      const tbody = document.getElementById('dispatch-table-body');
-      if (!tbody) return;
-      const filtered = dispatchData;
-      document.getElementById('stat-bureau-disp').innerText = filtered.length;
-      tbody.innerHTML = filtered.map(d => `
-        <tr class="hover:bg-emerald-50/60 transition">
-          <td class="p-3"><span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800">${d.type}</span></td>
-          <td class="p-3 font-mono font-bold text-xs">${d.code}</td>
-          <td class="p-3 font-bold text-slate-900">${d.title}</td>
-          <td class="p-3 text-center"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800">${d.stage || 'រដ្ឋបាល'}</span></td>
-          <td class="p-3 text-xs font-bold text-emerald-800">${d.location || 'ការិយាល័យ'}</td>
-        </tr>
-      `).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">មិនទាន់មានលិខិតឡើយ</td></tr>';
-    }
-
-    async function saveDocQuick(e) {
-      e.preventDefault();
-      const code = document.getElementById('q-code').value.trim();
-      const category = document.getElementById('q-cat').value;
-      const title = document.getElementById('q-title').value.trim();
-      const newDoc = { id: Date.now(), bureau: 'bureau_1', code, category, title, file_size: '1.0 MB' };
-      docsData.unshift(newDoc);
-      renderDocs();
-      if (db) await db.from('docs').insert([newDoc]);
-      showToast('បានរក្សាទុកឯកសារជោគជ័យ!');
-      e.target.reset();
-    }
-
-    function openSystemModal(tab) {
-      const body = document.getElementById('sys-body');
-      const title = document.getElementById('sys-title');
-      if (tab === 'files') {
-        title.innerText = '📁 File System & Backups';
-        body.innerHTML = `<button onclick="exportJson()" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold">📥 Export System JSON</button>`;
-      } else {
-        title.innerText = '⚙️ User Management';
-        body.innerHTML = `<p>បញ្ជីមន្ត្រីប្រើប្រាស់ប្រព័ន្ធ៖ admin, user1, user2, user3 (Password: 123)</p>`;
-      }
-      document.getElementById('modal-system-tools').classList.remove('hidden');
-    }
-
-    function exportJson() {
-      const data = { documents: docsData, dispatches: dispatchData };
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-      a.download = `DHRD_BACKUP_${Date.now()}.json`;
-      a.click();
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const session = localStorage.getItem('hrd_moh_session');
-      if (session) {
-        currentUser = JSON.parse(session);
-        document.getElementById('modal-login').classList.add('hidden');
-        document.getElementById('app-shell').classList.remove('hidden');
-        document.getElementById('current-user-fullname').innerText = currentUser.fullname;
-        document.getElementById('current-user-role').innerText = currentUser.role;
-        renderWorkspace();
-        syncFromSupabase(false);
-      }
-    });
-  </script>
+  <!-- ភ្ជាប់ទៅកាន់ហ្វាលមេ js/app.js -->
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
