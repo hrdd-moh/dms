@@ -106,7 +106,7 @@
           </button>
         </div>
 
-        <!-- ប្រអប់ជ្រើសរើសការិយាល័យក្នុង Sidebar (មានថែម "ការិយាល័យទាំង ៣" សម្រាប់ Admin) -->
+        <!-- ប្រអប់ជ្រើសរើសការិយាល័យក្នុង Sidebar -->
         <div id="sidebar-bureau-box" class="p-3.5 border-b border-slate-100 bg-emerald-50/40 space-y-1.5">
           <label class="block text-[11px] text-emerald-900 font-bold" data-i18n="active_bureau_label">🏛️ ការិយាល័យប្រតិបត្តិការ៖</label>
           <select id="active-bureau-select" onchange="changeActiveBureau(this.value)" class="w-full bg-white text-emerald-950 text-xs font-bold border border-emerald-300 rounded-xl p-2 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer form-input-focus shadow-2xs">
@@ -144,6 +144,10 @@
           <button onclick="openSystemModal('files')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition form-input-focus">
             <span class="text-base shrink-0">📁</span>
             <span class="sidebar-text truncate" data-i18n="nav_files">ប្រព័ន្ធហ្វាល & Backups</span>
+          </button>
+          <button onclick="openSystemModal('recycle')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-rose-50 hover:text-rose-700 transition form-input-focus">
+            <span class="text-base shrink-0">🗑️</span>
+            <span class="sidebar-text truncate" data-i18n="nav_recycle">ធុងសំរាម (Recycle Bin)</span>
           </button>
           <button onclick="openSystemModal('logging')" class="admin-only-item sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition form-input-focus">
             <span class="text-base shrink-0">📋</span>
@@ -188,34 +192,32 @@
           </div>
         </div>
 
-        <!-- ផ្នែកខាងស្តាំនៃ Top Bar: Sync + KH/EN Switcher + Notification Bell + User Profile -->
+        <!-- ផ្នែកខាងស្តាំនៃ Top Bar: Sync Icon Only + KH/EN Switcher (No GB/KH Flag) + Notification Bell + User Profile -->
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          <!-- ប៊ូតុង Sync -->
-          <button onclick="syncFromSupabase(true)" title="Sync Cloud Data" class="h-9 px-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold flex items-center gap-1.5 transition form-input-focus">
+          <!-- ប៊ូតុង Sync (បិទពាក្យ Sync ទុកតែ Icon 🔄) -->
+          <button onclick="syncFromSupabase(true)" title="ធ្វើសមកាលកម្មទិន្នន័យ (Sync Cloud Data)" class="w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition form-input-focus shadow-2xs">
             <span id="sync-btn-icon" class="text-sm">🔄</span>
-            <span class="hidden sm:inline">Sync</span>
           </button>
 
-          <!-- ប៊ូតុងប្តូរភាសា KH ⇄ EN (តាមសំណើក្នុងរង្វង់ក្រហមរូបទី១) -->
-          <button onclick="toggleAppLanguage()" id="lang-switch-btn" title="ចុចប្តូរភាសា (Switch Language KH / EN)" class="h-9 px-3 rounded-full bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200/80 flex items-center justify-center gap-1.5 text-xs font-extrabold text-slate-700 hover:text-emerald-800 transition form-input-focus cursor-pointer shadow-2xs">
-            <span id="lang-flag-icon" class="text-sm">🇰🇭</span>
+          <!-- ប៊ូតុងប្តូរភាសា (ដកអក្សរ/ទង់ជាតិ GB/KH ទុកតែអក្សរ EN / KH សុទ្ធ) -->
+          <button onclick="toggleAppLanguage()" id="lang-switch-btn" title="ចុចប្តូរភាសា (Switch Language KH / EN)" class="h-9 px-3.5 rounded-full bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200/80 flex items-center justify-center text-xs font-extrabold text-slate-700 hover:text-emerald-800 transition form-input-focus cursor-pointer shadow-2xs">
             <span id="lang-code-label">KH</span>
           </button>
 
-          <!-- រូបកណ្តឹងជូនដំណឹង (🔔 Notification Bell Dropdown) -->
+          <!-- រូបកណ្តឹងជូនដំណឹង (🔔 Notification Bell Dropdown + Overdue Alerts) -->
           <div class="relative" id="notif-menu-container">
-            <button onclick="toggleNotifDropdown()" title="Notifications" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/80 flex items-center justify-center text-slate-700 relative transition form-input-focus">
+            <button onclick="toggleNotifDropdown()" title="Notifications & Overdue Alerts" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/80 flex items-center justify-center text-slate-700 relative transition form-input-focus">
               <span class="text-base">🔔</span>
               <span id="notif-badge-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500 border-2 border-white absolute top-0.5 right-0.5"></span>
             </button>
 
-            <div id="notif-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-50 hidden">
+            <div id="notif-dropdown" class="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-50 hidden">
               <div class="px-4 py-2 border-b border-slate-100 flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-800" data-i18n="notif_title">🔔 សកម្មភាពថ្មីៗក្នុងប្រព័ន្ធ</span>
-                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">Live</span>
+                <span class="text-xs font-bold text-slate-800" data-i18n="notif_title">🔔 សកម្មភាពថ្មីៗ និងការជូនដំណឹង</span>
+                <span id="notif-overdue-pill" class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">Live</span>
               </div>
-              <div id="notif-dropdown-list" class="max-h-64 overflow-y-auto divide-y divide-slate-100 text-xs"></div>
+              <div id="notif-dropdown-list" class="max-h-72 overflow-y-auto divide-y divide-slate-100 text-xs"></div>
             </div>
           </div>
 
@@ -281,7 +283,10 @@
           <div onclick="switchBureauTab('dispatch')" class="cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-amber-300 transition flex items-center justify-between">
             <div>
               <p class="text-xs text-slate-500 font-bold" data-i18n="card_disp_title">លិខិតកំពុងរត់ការ (ការិយាល័យសាមី)</p>
-              <h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-disp">0</h3>
+              <div class="flex items-baseline gap-2 mt-1">
+                <h3 class="text-2xl font-extrabold text-slate-800" id="stat-bureau-disp">0</h3>
+                <span id="stat-overdue-badge" class="hidden text-[10px] bg-rose-100 text-rose-700 font-extrabold px-2 py-0.5 rounded-full animate-pulse">⚠️ 0 យឺតយ៉ាវ</span>
+              </div>
               <span class="inline-block mt-1 text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md font-bold" data-i18n="card_disp_sub">ដំណាក់កាលរដ្ឋបាល</span>
             </div>
             <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shrink-0">⏳</div>
@@ -319,10 +324,10 @@
               <!-- Advanced Multi-Filter Bar -->
               <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
                 <div class="lg:col-span-2 relative">
-                  <input type="text" id="doc-search" oninput="renderDocs()" data-i18n-placeholder="ph_doc_search" placeholder="🔍 ស្វែងរកតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 w-full bg-white font-medium">
+                  <input type="text" id="doc-search" oninput="resetPageAndRender('docs')" data-i18n-placeholder="ph_doc_search" placeholder="🔍 ស្វែងរកតាមកូដ ឬចំណងជើង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 w-full bg-white font-medium">
                 </div>
                 <div>
-                  <select id="filter-doc-category" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                  <select id="filter-doc-category" onchange="resetPageAndRender('docs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
                     <option value="all" data-i18n="opt_all_cats">📂 ប្រភេទទាំងអស់</option>
                     <option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option>
                     <option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option>
@@ -331,7 +336,7 @@
                   </select>
                 </div>
                 <div>
-                  <select id="filter-doc-bureau" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                  <select id="filter-doc-bureau" onchange="resetPageAndRender('docs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
                     <option value="all" data-i18n="opt_all_bureaus">🏢 គ្រប់ការិយាល័យ</option>
                     <option value="bureau_1">ការិយាល័យទី១</option>
                     <option value="bureau_2">ការិយាល័យទី២</option>
@@ -339,7 +344,7 @@
                   </select>
                 </div>
                 <div>
-                  <select id="filter-doc-sort" onchange="renderDocs()" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                  <select id="filter-doc-sort" onchange="resetPageAndRender('docs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
                     <option value="newest" data-i18n="opt_sort_newest">🕒 ថ្មីបំផុតមុន</option>
                     <option value="oldest" data-i18n="opt_sort_oldest">⏳ ចាស់បំផុតមុន</option>
                     <option value="title" data-i18n="opt_sort_title">🔤 ចំណងជើង (ក-អ)</option>
@@ -365,24 +370,25 @@
                   <tbody id="docs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="pagination-docs" class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-slate-600"></div>
             </div>
-
-            <!-- TAB 2: DISPATCH TABLE -->
+<!-- TAB 2: DISPATCH TABLE -->
             <div id="section-dispatch" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
                 <h3 class="text-base font-bold text-slate-900" data-i18n="sec_disp_title"><span class="text-xl">📤📥</span> តាមដានលិខិតចេញ-ចូល</h3>
                 <span class="text-xs text-slate-500 font-medium" id="disp-scope-badge">តាមដានដំណាក់កាល និងទីតាំងបច្ចុប្បន្ន</span>
               </div>
 
-              <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-                <input type="text" id="filter-disp-search" oninput="renderDispatch()" data-i18n-placeholder="ph_disp_search" placeholder="🔍 ស្វែងរកលេខលិខិត ឬកម្មវត្ថុ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 bg-white font-medium">
-                <select id="filter-disp-type" onchange="renderDispatch()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+              <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
+                <input type="text" id="filter-disp-search" oninput="resetPageAndRender('dispatch')" data-i18n-placeholder="ph_disp_search" placeholder="🔍 ស្វែងរកលេខលិខិត ឬកម្មវត្ថុ..." class="sm:col-span-2 form-input-focus border border-slate-300 rounded-xl px-3.5 py-2 bg-white font-medium">
+                <select id="filter-disp-type" onchange="resetPageAndRender('dispatch')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
                   <option value="all">🔄 ប្រភេទទាំងអស់ (ចេញ & ចូល)</option>
                   <option value="ចូល">📥 លិខិតចូល (Incoming)</option>
                   <option value="ចេញ">📤 លិខិតចេញ (Outgoing)</option>
                 </select>
-                <select id="filter-disp-stage" onchange="renderDispatch()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
+                <select id="filter-disp-stage" onchange="resetPageAndRender('dispatch')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-2 bg-white font-medium">
                   <option value="all">⏳ គ្រប់ដំណាក់កាល</option>
+                  <option value="overdue">⚠️ លិខិតយឺតយ៉ាវ (Overdue > 7 ថ្ងៃ)</option>
                   <option value="រដ្ឋបាលទទួល">រដ្ឋបាលទទួល</option>
                   <option value="កំពុងពិនិត្យបច្ចេកទេស">កំពុងពិនិត្យបច្ចេកទេស</option>
                   <option value="រង់ចាំចំណារ/ហត្ថលេខា">រង់ចាំចំណារ/ហត្ថលេខា</option>
@@ -395,19 +401,20 @@
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                     <tr>
                       <th class="p-3.5 w-12 text-center"><input type="checkbox" class="rounded text-emerald-600 h-4 w-4"></th>
-                      <th class="p-3.5 min-w-[90px]" data-i18n="th_category">ប្រភេទ</th><th class="p-3.5 min-w-[130px]" data-i18n="th_ref_code">លេខលិខិត</th><th class="p-3.5 min-w-[240px]" data-i18n="th_subject">កម្មវត្ថុ / ខ្លឹមសារ</th><th class="p-3.5 text-center min-w-[160px]" data-i18n="th_stage">ដំណាក់កាល</th><th class="p-3.5 min-w-[180px]" data-i18n="th_location">ទីតាំងបច្ចុប្បន្ន</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th>
+                      <th class="p-3.5 min-w-[90px]" data-i18n="th_category">ប្រភេទ</th><th class="p-3.5 min-w-[130px]" data-i18n="th_ref_code">លេខលិខិត</th><th class="p-3.5 min-w-[240px]" data-i18n="th_subject">កម្មវត្ថុ / ខ្លឹមសារ</th><th class="p-3.5 text-center min-w-[160px]" data-i18n="th_stage">ដំណាក់កាល</th><th class="p-3.5 min-w-[180px]" data-i18n="th_location">ទីតាំងបច្ចុប្បន្ន</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[170px]" data-i18n="th_actions">សកម្មភាព</th>
                     </tr>
                   </thead>
                   <tbody id="dispatch-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="pagination-dispatch" class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-slate-600"></div>
             </div>
 
             <!-- TAB 3A: EXAMS -->
             <div id="section-exams" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
                 <h3 class="text-base font-bold text-slate-900" data-i18n="sec_exams_title"><span class="text-xl">🎓</span> ការប្រឡងចូល និងចេញថ្នាក់ជាតិ</h3>
-                <input type="text" id="filter-exam-search" oninput="renderExams()" placeholder="🔍 ស្វែងរកជំនាញ ឬសម័យប្រឡង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
+                <input type="text" id="filter-exam-search" oninput="resetPageAndRender('exams')" placeholder="🔍 ស្វែងរកជំនាញ ឬសម័យប្រឡង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
               </div>
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
@@ -420,6 +427,7 @@
                   <tbody id="exams-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="pagination-exams" class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-slate-600"></div>
             </div>
 
             <!-- TAB 3B: TRAINING -->
@@ -436,10 +444,10 @@
               </div>
               <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-sm">
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                  <div><input type="text" id="filter-training-search" oninput="renderTrainingList()" placeholder="🔍 ស្វែងរកឈ្មោះ/វគ្គ..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"></div>
-                  <div><select id="filter-training-country" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">ប្រទេសទាំងអស់</option></select></div>
-                  <div><select id="filter-training-sponsor" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">អ្នកឧបត្ថម្ភទាំងអស់</option></select></div>
-                  <div><select id="filter-training-order" onchange="renderTrainingList()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="name">ឈ្មោះសិក្ខាកាម (A-Z)</option><option value="country">ប្រទេស (Location)</option><option value="duration">រយៈពេល</option></select></div>
+                  <div><input type="text" id="filter-training-search" oninput="resetPageAndRender('training')" placeholder="🔍 ស្វែងរកឈ្មោះ/វគ្គ..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"></div>
+                  <div><select id="filter-training-country" onchange="resetPageAndRender('training')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">ប្រទេសទាំងអស់</option></select></div>
+                  <div><select id="filter-training-sponsor" onchange="resetPageAndRender('training')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">អ្នកឧបត្ថម្ភទាំងអស់</option></select></div>
+                  <div><select id="filter-training-order" onchange="resetPageAndRender('training')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="name">ឈ្មោះសិក្ខាកាម (A-Z)</option><option value="country">ប្រទេស (Location)</option><option value="duration">រយៈពេល</option></select></div>
                 </div>
               </div>
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
@@ -453,13 +461,14 @@
                   <tbody id="training-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="pagination-training" class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-slate-600"></div>
             </div>
 
             <!-- TAB 3C: CERTS -->
             <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
                 <h3 class="text-base font-bold text-slate-900" data-i18n="sec_certs_title"><span class="text-xl">📜</span> ចុះបញ្ជីការ និងកំណត់លេខសញ្ញាបត្រ</h3>
-                <input type="text" id="filter-cert-search" oninput="renderCerts()" placeholder="🔍 ស្វែងរកលេខកូដ ឬឈ្មោះ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
+                <input type="text" id="filter-cert-search" oninput="resetPageAndRender('certs')" placeholder="🔍 ស្វែងរកលេខកូដ ឬឈ្មោះ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
               </div>
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
@@ -472,6 +481,7 @@
                   <tbody id="certs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="pagination-certs" class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-slate-600"></div>
             </div>
 
           </div>
@@ -489,7 +499,7 @@
 
         </div>
 
-        <!-- COPYRIGHT FOOTER (ទំហំអក្សរតូចស្តើងស្អាត 10px) -->
+        <!-- COPYRIGHT FOOTER -->
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
             <p>© 2026. V.2.5 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
@@ -512,7 +522,56 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- USER PROFILE MODAL (មានមុខងារ Upload រូបថតផ្ទាល់ខ្លួនតាមរូបភាពទី២) -->
+  <!-- DISPATCH STAGE UPDATE & HISTORY TIMELINE MODAL -->
+  <div id="modal-stage-history" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[68] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><span>🕒</span> <span id="stage-modal-title">ប្រវត្តិដំណាក់កាល និងធ្វើបច្ចុប្បន្នភាពលិខិត</span></h3>
+          <p class="text-xs text-emerald-700 font-semibold mt-0.5" id="stage-modal-subtitle"></p>
+        </div>
+        <button onclick="closeStageHistoryModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none">✕</button>
+      </div>
+
+      <form onsubmit="handleUpdateDispatchStage(event)" class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 space-y-3 text-xs">
+        <input type="hidden" id="stage-edit-disp-id">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">ដំណាក់កាលថ្មី (New Stage) *</label>
+            <select id="stage-edit-stage" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white font-bold text-slate-800">
+              <option value="រដ្ឋបាលទទួល">រដ្ឋបាលទទួល</option>
+              <option value="កំពុងពិនិត្យបច្ចេកទេស">កំពុងពិនិត្យបច្ចេកទេស</option>
+              <option value="រង់ចាំចំណារ/ហត្ថលេខា">រង់ចាំចំណារ/ហត្ថលេខា</option>
+              <option value="បញ្ចប់រួចរាល់">បញ្ចប់រួចរាល់</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">ទីតាំងបច្ចុប្បន្ន (Current Location) *</label>
+            <select id="stage-edit-location" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white font-bold text-slate-800">
+              <option value="ការិយាល័យសាមី">ការិយាល័យសាមី</option>
+              <option value="ប្រធាននាយកដ្ឋាន (DHRD)">ប្រធាននាយកដ្ឋាន (DHRD)</option>
+              <option value="អគ្គនាយកដ្ឋានសុខាភិបាល">អគ្គនាយកដ្ឋានសុខាភិបាល</option>
+              <option value="ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី">ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី</option>
+              <option value="ទីស្តីការគណៈរដ្ឋមន្ត្រី">ទីស្តីការគណៈរដ្ឋមន្ត្រី</option>
+              <option value="ក្រសួងមុខងារសាធារណៈ">ក្រសួងមុខងារសាធារណៈ</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">កំណត់ចំណាំបន្ថែម (Note / Comment)</label>
+          <input type="text" id="stage-edit-note" placeholder="បញ្ចូលចំណារ ឬមូលហេតុនៃការផ្លាស់ប្តូរ..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white">
+        </div>
+        <button type="submit" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-xs transition">💾 រក្សាទុកការផ្លាស់ប្តូរដំណាក់កាល</button>
+      </form>
+
+      <div class="flex-1 overflow-y-auto space-y-2 pr-1">
+        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">📜 ប្រវត្តិដំណើរការលិខិត (Stage History Timeline)</h4>
+        <div id="stage-history-timeline" class="space-y-2.5 border-l-2 border-emerald-500 ml-2 pl-4 py-1 text-xs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER PROFILE MODAL -->
   <div id="modal-user-profile" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[65] flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -520,7 +579,6 @@
         <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none">✕</button>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-        <!-- ប្រអប់រូបថតមន្ត្រី និងប៊ូតុង Upload រូបថតដោយខ្លួនឯង -->
         <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-2xl border border-slate-200/80">
           <div class="relative group cursor-pointer" onclick="document.getElementById('avatar-upload-input').click()" title="ចុចដើម្បីបង្ហោះរូបថតថ្មី">
             <div class="w-24 h-24 rounded-full border-4 border-emerald-500 bg-emerald-600 text-white text-3xl font-extrabold flex items-center justify-center shadow-md overflow-hidden" id="profile-modal-avatar-box">
@@ -602,7 +660,7 @@
     </div>
   </div>
 
-  <!-- SYSTEM TOOLS MODAL -->
+  <!-- SYSTEM TOOLS MODAL (WITH JSON RESTORE & RECYCLE BIN) -->
   <div id="modal-system-tools" role="dialog" aria-modal="true" aria-labelledby="system-tools-title" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 hidden">
     <div class="bg-white rounded-3xl max-w-5xl w-full p-5 sm:p-7 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -613,7 +671,8 @@
       <div class="flex items-center gap-2 border-b border-slate-100 pb-2 overflow-x-auto scrollbar-none text-xs" id="system-tools-nav-bar">
         <button onclick="switchSystemToolTab('settings')" id="systab-settings" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus">⚙️ User Management</button>
         <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🌍 Location</button>
-        <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📁 File System</button>
+        <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📁 Backup & Restore</button>
+        <button onclick="switchSystemToolTab('recycle')" id="systab-recycle" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🗑️ Recycle Bin</button>
         <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🛡️ Security Center</button>
         <button onclick="switchSystemToolTab('logging')" id="systab-logging" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📋 Audit Logging</button>
         <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📖 User Manual</button>
@@ -693,10 +752,24 @@
         </div>
       </div>
 
+      <!-- BACKUP & JSON RESTORE -->
       <div id="syscontent-files" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden">
-        <div class="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 flex items-center justify-between gap-4">
-          <div><h4 class="text-xs font-bold text-blue-900">💾 ទាញយកទិន្នន័យប្រព័ន្ធទាំងមូល</h4><p class="text-[11px] text-blue-700 mt-0.5">ទាញយកឯកសារបណ្ណាល័យ លិខិត និងវគ្គបណ្តុះបណ្តាលជា JSON</p></div>
-          <button onclick="backupEntireSystem()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus">📥 Export JSON</button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div>
+              <h4 class="text-xs font-bold text-blue-900">💾 ទាញយកទិន្នន័យប្រព័ន្ធ (Export JSON)</h4>
+              <p class="text-[11px] text-blue-700 mt-0.5">Backup ឯកសារ លិខិត វគ្គបណ្តុះបណ្តាល និងធុងសំរាមជា JSON</p>
+            </div>
+            <button onclick="backupEntireSystem()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus shrink-0">📥 Export JSON</button>
+          </div>
+          <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div>
+              <h4 class="text-xs font-bold text-emerald-900">♻️ ស្តារទិន្នន័យពី Backup (JSON Restore)</h4>
+              <p class="text-[11px] text-emerald-700 mt-0.5">បញ្ចូលហ្វាល JSON Backup មកក្នុងប្រព័ន្ធ និង Cloud វិញ</p>
+            </div>
+            <input type="file" id="json-restore-input" onchange="handleRestoreJSON(event)" class="hidden" accept=".json">
+            <button onclick="document.getElementById('json-restore-input').click()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus shrink-0">📤 Restore JSON</button>
+          </div>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
           <div class="p-3.5 bg-emerald-50/50 font-bold text-emerald-900 border-b border-emerald-100">📂 បញ្ជីឯកសារដែលបានផ្ទុកក្នុងប្រព័ន្ធ និង Cloud Storage</div>
@@ -704,11 +777,35 @@
         </div>
       </div>
 
+      <!-- RECYCLE BIN (SOFT DELETE RECOVERY) -->
+      <div id="syscontent-recycle" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden">
+        <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h4 class="text-xs font-bold text-rose-900">🗑️ ធុងសំរាម (Recycle Bin - Soft Delete Recovery)</h4>
+            <p class="text-[11px] text-rose-700 mt-0.5">រាល់ទិន្នន័យដែលបានលុបត្រូវបានរក្សាទុកនៅទីនេះ។ អ្នកអាចស្តារមកវិញ (Restore) ឬលុបចោលជាអចិន្ត្រៃយ៍ (Permanent Delete)។</p>
+          </div>
+          <button onclick="emptyRecycleBin()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus">🔥 សម្អាតធុងសំរាមទាំងអស់</button>
+        </div>
+        <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+          <table class="w-full text-left resizable-table">
+            <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 whitespace-nowrap">
+              <tr>
+                <th class="p-3">ប្រភេទទិន្នន័យ</th>
+                <th class="p-3">កូដ / ចំណងជើងសម្គាល់</th>
+                <th class="p-3">លុបដោយ / កាលបរិច្ឆេទ</th>
+                <th class="p-3 text-right">សកម្មភាព</th>
+              </tr>
+            </thead>
+            <tbody id="recycle-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+          </table>
+        </div>
+      </div>
+
       <div id="syscontent-security" class="space-y-3 flex-1 overflow-y-auto pr-1 hidden text-xs">
         <div class="p-5 bg-emerald-50/80 border border-emerald-200 rounded-2xl space-y-2">
           <h4 class="font-bold text-emerald-900">🛡️ គោលការណ៍សុវត្ថិភាពទិន្នន័យ (Role-Based Access Control)</h4>
           <ul class="list-disc list-inside space-y-1.5 text-slate-700 leading-relaxed">
-            <li><strong>Super Admin:</strong> មានសិទ្ធិពេញលេញគ្រប់យ៉ាង គ្រប់គ្រង Users, កំណត់ Roles និង Backup ទិន្នន័យ។</li>
+            <li><strong>Super Admin:</strong> មានសិទ្ធិពេញលេញគ្រប់យ៉ាង គ្រប់គ្រង Users, កំណត់ Roles, Backup/Restore និង Recycle Bin។</li>
             <li><strong>Admin:</strong> មានសិទ្ធិគ្រប់គ្រងការិយាល័យទាំង ៣ ប៉ុន្តែមិនអាចលុប/ផ្អាកគណនី Super Admin បានទេ។</li>
             <li><strong>Editor:</strong> មានសិទ្ធិវាយបញ្ចូល, Upload, និង Edit ទិន្នន័យក្នុងប្រព័ន្ធ។</li>
             <li><strong>Viewer:</strong> អាចត្រឹមតែ Read និង Download របាយការណ៍ មិនអាចកែប្រែអ្វីបានទេ។</li>
@@ -736,10 +833,10 @@
 
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.2.5 (Enterprise Sidebar Edition)</h4>
-          <p><strong>១. ការប្តូរភាសា (KH ⇄ EN)៖</strong> ចុចលើប៊ូតុង <b>🇰🇭 KH / 🇬🇧 EN</b> នៅផ្នែកខាងលើស្តាំដើម្បីប្តូរភាសានៃប្រព័ន្ធទាំងមូល។</p>
-          <p><strong>២. ការបង្ហោះរូបថតផ្ទាល់ខ្លួន៖</strong> ចុចលើឈ្មោះគណនី ឬប៊ូតុង <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> រួចចុច <b>📷 ប្តូររូបថត</b> ដើម្បីដាក់រូបថតមន្ត្រីម្នាក់ៗ។</p>
-          <p><strong>៣. ទិដ្ឋភាពការិយាល័យទាំង ៣ (All Bureaus)៖</strong> Admin អាចជ្រើសរើស <b>👑 ការិយាល័យទាំង ៣</b> នៅលើ Sidebar ដើម្បីមើលលិខិតចេញ-ចូល និងការងារជំនាញទាំងអស់រួមគ្នា។</p>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.2.5 (Enterprise Edition)</h4>
+          <p><strong>១. ការប្តូរភាសា (KH ⇄ EN)៖</strong> ចុចលើប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំដើម្បីប្តូរភាសានៃប្រព័ន្ធទាំងមូល។</p>
+          <p><strong>២. ការតាមដានលិខិតយឺតយ៉ាវ (Overdue Alerts) & Stage History៖</strong> លិខិតដែលមិនទាន់បញ្ចប់លើសពី ៧ ថ្ងៃនឹងលោតសញ្ញាព្រមានពណ៌ក្រហម។ ចុចប៊ូតុង <b>🕒 ដំណាក់កាល</b> ដើម្បីកែប្រែដំណាក់កាល និងមើលប្រវត្តិលិខិត។</p>
+          <p><strong>៣. ធុងសំរាម (Recycle Bin) & JSON Restore៖</strong> ទិន្នន័យដែលលុបនឹងចូលទៅក្នុង Recycle Bin ជាមុន (Soft Delete) ហើយ Admin អាចចុច Restore មកវិញ ឬប្រើមុខងារ JSON Restore ក្នុងផ្ទាំង Backup & Restore។</p>
         </div>
       </div>
     </div>
@@ -802,8 +899,7 @@
       <div id="scan-result" class="text-xs p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-center font-medium">សូមដាក់កាមេរ៉ាឱ្យចំ QR Code</div>
     </div>
   </div>
-
-  <!-- ================= JAVASCRIPT MASTER CORE ENGINE V5.1 ================= -->
+            <!-- ================= JAVASCRIPT MASTER CORE ENGINE V5.2 ================= -->
   <script>
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
@@ -812,11 +908,13 @@
     if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { console.warn("Supabase err:", e); } }
 
     const MAX_FILE_SIZE = 8 * 1024 * 1024;
-    const MAX_RENDER_ROWS = 100;
     const SYSTEM_USER_REGISTRY_ID = 999999999;
     const SYSTEM_USER_REGISTRY_CODE = "__SYSTEM_USERS_REGISTRY__";
+    const SYSTEM_META_REGISTRY_ID = 999999998;
+    const SYSTEM_META_REGISTRY_CODE = "__SYSTEM_META_REGISTRY__";
+    const OVERDUE_DAYS_THRESHOLD = 7;
 
-    // 🌟 វចនានុក្រមបកប្រែភាសា (KH ⇄ EN Dictionary)
+    // វចនានុក្រមបកប្រែភាសា (KH ⇄ EN Dictionary)
     let appLang = localStorage.getItem('hrd_moh_lang_cache') || 'km';
     const I18N_DICT = {
       km: {
@@ -833,14 +931,15 @@
         nav_users: 'គ្រប់គ្រងមន្ត្រី (Users)',
         nav_location: 'គ្រប់គ្រងប្រទេស (Location)',
         nav_files: 'ប្រព័ន្ធហ្វាល & Backups',
+        nav_recycle: 'ធុងសំរាម (Recycle Bin)',
         nav_logs: 'កំណត់ត្រាសកម្មភាព (Logs)',
         nav_manual: 'សៀវភៅណែនាំ (Manual)',
         nav_my_profile: 'ព័ត៌មានគណនីផ្ទាល់ខ្លួន',
-        notif_title: '🔔 សកម្មភាពថ្មីៗក្នុងប្រព័ន្ធ',
+        notif_title: '🔔 សកម្មភាពថ្មីៗ និងការជូនដំណឹង',
         menu_profile_btn: 'ព័ត៌មានគណនី & រូបថត',
         menu_logout_btn: 'ចាកចេញពីប្រព័ន្ធ (Logout)',
         card_lib_title: 'បណ្ណាល័យរួម (៣ ការិយាល័យ)',
-        card_disp_title: 'លិខិតកំពុងរត់ការ',
+        card_disp_title: 'លិខិតកំពុងរត់ការ (ការិយាល័យសាមី)',
         card_disp_sub: 'ដំណាក់កាលរដ្ឋបាល',
         card_spec_sub: 'ទិន្នន័យជាក់ស្តែង',
         sec_docs_title: '📚 បណ្ណាល័យឯកសាររួម (E-Library)',
@@ -894,7 +993,8 @@
         btn_save_pwd: '💾 រក្សាទុកពាក្យសម្ងាត់ថ្មី',
         btn_view_print: '👁️ មើល / Print',
         btn_delete: 'លុប',
-        btn_print: '🖨️ បោះពុម្ព'
+        btn_print: '🖨️ បោះពុម្ព',
+        btn_stage_hist: '🕒 ដំណាក់កាល'
       },
       en: {
         ministry_name: 'Ministry of Health',
@@ -910,10 +1010,11 @@
         nav_users: 'User Management',
         nav_location: 'Country & Locations',
         nav_files: 'File System & Backups',
+        nav_recycle: 'Recycle Bin',
         nav_logs: 'Audit Activity Logs',
         nav_manual: 'User Manual',
         nav_my_profile: 'My Account Profile',
-        notif_title: '🔔 Recent System Activities',
+        notif_title: '🔔 Recent Activities & Alerts',
         menu_profile_btn: 'My Profile & Photo',
         menu_logout_btn: 'Sign Out (Logout)',
         card_lib_title: 'Shared E-Library (All 3 Bureaus)',
@@ -971,7 +1072,8 @@
         btn_save_pwd: '💾 Save New Password',
         btn_view_print: '👁️ View / Print',
         btn_delete: 'Delete',
-        btn_print: '🖨️ Print'
+        btn_print: '🖨️ Print',
+        btn_stage_hist: '🕒 Stage'
       }
     };
 
@@ -988,9 +1090,7 @@
     }
 
     function applyTranslations() {
-      const flagEl = document.getElementById('lang-flag-icon');
       const codeEl = document.getElementById('lang-code-label');
-      if (flagEl) flagEl.innerText = appLang === 'en' ? '🇬🇧' : '🇰🇭';
       if (codeEl) codeEl.innerText = appLang === 'en' ? 'EN' : 'KH';
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1035,6 +1135,131 @@
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
     ];
 
+    // ====== PAGINATION, SOFT DELETE & STAGE HISTORY STATE ======
+    let pageState = { docs: 1, dispatch: 1, exams: 1, training: 1, certs: 1 };
+    let pageSizeState = { docs: 15, dispatch: 15, exams: 15, training: 15, certs: 15 };
+    let recycleBinData = [];
+    let stageHistoryMap = {};
+
+    function loadSystemMetaLocal() {
+      try {
+        const rb = localStorage.getItem('hrd_moh_recycle_bin_v25');
+        if (rb) recycleBinData = JSON.parse(rb) || [];
+        const sh = localStorage.getItem('hrd_moh_stage_history_v25');
+        if (sh) stageHistoryMap = JSON.parse(sh) || {};
+      } catch (e) {}
+    }
+
+    function saveSystemMetaLocal() {
+      try {
+        localStorage.setItem('hrd_moh_recycle_bin_v25', JSON.stringify(recycleBinData));
+        localStorage.setItem('hrd_moh_stage_history_v25', JSON.stringify(stageHistoryMap));
+      } catch (e) {}
+    }
+
+    async function pushSystemMetaToCloud() {
+      saveSystemMetaLocal();
+      if (!db) return;
+      try {
+        const metaPayload = {
+          id: SYSTEM_META_REGISTRY_ID,
+          bureau: 'all',
+          code: SYSTEM_META_REGISTRY_CODE,
+          title: 'SYSTEM_META_SYNC_DATA',
+          category: 'SYSTEM_INTERNAL',
+          file_size: '0 KB',
+          file_name: 'meta.json',
+          drive_link: JSON.stringify({ recycleBin: recycleBinData.slice(0, 120), stageHistory: stageHistoryMap }),
+          storage: 'SYSTEM_HIDDEN',
+          created_by: 'system'
+        };
+        await db.from('docs').upsert([metaPayload]);
+      } catch (e) {}
+    }
+
+    function isRecordDeleted(type, id) {
+      return recycleBinData.some(item => item.type === type && String(item.itemId) === String(id));
+    }
+
+    function resetPageAndRender(tab) {
+      pageState[tab] = 1;
+      if (tab === 'docs') renderDocs();
+      if (tab === 'dispatch') renderDispatch();
+      if (tab === 'exams') renderExams();
+      if (tab === 'training') renderTrainingList();
+      if (tab === 'certs') renderCerts();
+    }
+
+    function changeTablePage(tab, newPage) {
+      pageState[tab] = Math.max(1, newPage);
+      if (tab === 'docs') renderDocs();
+      if (tab === 'dispatch') renderDispatch();
+      if (tab === 'exams') renderExams();
+      if (tab === 'training') renderTrainingList();
+      if (tab === 'certs') renderCerts();
+    }
+
+    function changeTablePageSize(tab, newSize) {
+      pageSizeState[tab] = Number(newSize) || 15;
+      pageState[tab] = 1;
+      if (tab === 'docs') renderDocs();
+      if (tab === 'dispatch') renderDispatch();
+      if (tab === 'exams') renderExams();
+      if (tab === 'training') renderTrainingList();
+      if (tab === 'certs') renderCerts();
+    }
+
+    function renderPaginationBar(tab, totalItems) {
+      const el = document.getElementById('pagination-' + tab);
+      if (!el) return;
+      const pageSize = pageSizeState[tab] || 15;
+      const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+      if (pageState[tab] > totalPages) pageState[tab] = totalPages;
+      const cur = pageState[tab];
+      const startIdx = totalItems === 0 ? 0 : (cur - 1) * pageSize + 1;
+      const endIdx = Math.min(totalItems, cur * pageSize);
+
+      let pageBtns = '';
+      const maxButtons = 5;
+      let startP = Math.max(1, cur - 2);
+      let endP = Math.min(totalPages, startP + maxButtons - 1);
+      if (endP - startP < maxButtons - 1) startP = Math.max(1, endP - maxButtons + 1);
+
+      for (let p = startP; p <= endP; p++) {
+        pageBtns += `<button onclick="changeTablePage('${tab}', ${p})" class="w-7 h-7 rounded-lg font-bold text-xs transition ${p === cur ? 'bg-emerald-600 text-white shadow-2xs' : 'bg-slate-100 hover:bg-emerald-50 text-slate-700'}">${p}</button>`;
+      }
+
+      el.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-slate-500">${appLang === 'en' ? `Showing ${startIdx}-${endIdx} of ${totalItems}` : `បង្ហាញ ${startIdx}-${endIdx} នៃទិន្នន័យសរុប ${totalItems}`}</span>
+          <select onchange="changeTablePageSize('${tab}', this.value)" class="border border-slate-200 rounded-lg px-2 py-0.5 bg-white text-xs font-bold text-slate-700">
+            <option value="10" ${pageSize === 10 ? 'selected' : ''}>10 / ទំព័រ</option>
+            <option value="15" ${pageSize === 15 ? 'selected' : ''}>15 / ទំព័រ</option>
+            <option value="30" ${pageSize === 30 ? 'selected' : ''}>30 / ទំព័រ</option>
+            <option value="50" ${pageSize === 50 ? 'selected' : ''}>50 / ទំព័រ</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="changeTablePage('${tab}', ${cur - 1})" ${cur <= 1 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 disabled:opacity-40 font-bold text-xs">« មុន</button>
+          ${pageBtns}
+          <button onclick="changeTablePage('${tab}', ${cur + 1})" ${cur >= totalPages ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 disabled:opacity-40 font-bold text-xs">បន្ទាប់ »</button>
+        </div>
+      `;
+    }
+
+    // ====== OVERDUE ALERT ENGINE (> 7 DAYS) ======
+    function getDispatchDaysElapsed(d) {
+      if (!d || !d.date || d.stage === 'បញ្ចប់រួចរាល់') return 0;
+      const dt = new Date(d.date);
+      if (isNaN(dt.getTime())) return 0;
+      const diffMs = Date.now() - dt.getTime();
+      return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    }
+
+    function isDispatchOverdue(d) {
+      return getDispatchDaysElapsed(d) > OVERDUE_DAYS_THRESHOLD;
+    }
+
     function generateSafeId() {
       return Math.floor(100000 + Math.random() * 1900000000);
     }
@@ -1060,19 +1285,49 @@
 
     function renderNotifDropdownList() {
       const listEl = document.getElementById('notif-dropdown-list');
+      const pillEl = document.getElementById('notif-overdue-pill');
       if (!listEl) return;
-      const recent = auditLogs.filter(l => l.user !== '__USER_SYNC__').slice(0, 8);
-      if (recent.length === 0) {
-        listEl.innerHTML = '<div class="p-4 text-center text-slate-400">មិនទាន់មានសារជូនដំណឹងថ្មីឡើយ</div>';
-        return;
+
+      const activeDispatches = dispatchData.filter(d => !isRecordDeleted('dispatches', d.id));
+      const overdueItems = activeDispatches.filter(d => isDispatchOverdue(d));
+      if (pillEl) {
+        if (overdueItems.length > 0) {
+          pillEl.className = 'text-[10px] text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full font-bold';
+          pillEl.innerText = `⚠️ ${overdueItems.length} យឺតយ៉ាវ`;
+        } else {
+          pillEl.className = 'text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold';
+          pillEl.innerText = 'Live';
+        }
       }
-      listEl.innerHTML = recent.map(l => `
+
+      const overdueHtml = overdueItems.slice(0, 5).map(d => {
+        const days = getDispatchDaysElapsed(d);
+        return `
+          <div onclick="switchBureauTab('dispatch'); toggleNotifDropdown();" class="px-4 py-2.5 bg-rose-50/70 hover:bg-rose-100/80 cursor-pointer transition">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-rose-700">⚠️ លិខិតយឺតយ៉ាវ (${days} ថ្ងៃ)</span>
+              <span class="font-mono text-[10px] font-bold text-rose-800">${d.code}</span>
+            </div>
+            <div class="text-slate-700 truncate font-medium">${d.title}</div>
+            <div class="text-[10px] text-rose-600 mt-0.5">ទីតាំង៖ ${d.location} • ${d.stage}</div>
+          </div>
+        `;
+      }).join('');
+
+      const recent = auditLogs.filter(l => l.user !== '__USER_SYNC__').slice(0, 8);
+      const logsHtml = recent.map(l => `
         <div class="px-4 py-2.5 hover:bg-slate-50 transition">
           <div class="font-bold text-emerald-700">${l.action}</div>
           <div class="text-slate-700 truncate">${l.target || ''}</div>
           <div class="text-[10px] text-slate-400 mt-0.5">${l.user} • ${l.time}</div>
         </div>
       `).join('');
+
+      if (!overdueHtml && !logsHtml) {
+        listEl.innerHTML = '<div class="p-4 text-center text-slate-400">មិនទាន់មានសារជូនដំណឹងថ្មីឡើយ</div>';
+        return;
+      }
+      listEl.innerHTML = overdueHtml + logsHtml;
     }
 
     function toggleProfileDropdown() {
@@ -1082,7 +1337,6 @@
       if (dd) dd.classList.toggle('hidden');
     }
 
-    // 🌟 មុខងារបង្ហាញរូបថត Avatar របស់ User ទាំងលើ Header និងក្នុង Profile Modal
     function renderUserAvatarUI() {
       if (!currentUser) return;
       const fn = currentUser.fullname || currentUser.username || 'ម';
@@ -1127,7 +1381,6 @@
       document.getElementById('modal-user-profile')?.classList.add('hidden');
     }
 
-    // 🌟 មុខងារ Upload និងបង្រួមរូបថតផ្ទាល់ខ្លួនរបស់ User ម្នាក់ៗដោយស្វ័យប្រវត្តិ (Auto-Compress 160x160px)
     function handleAvatarUpload(e) {
       const file = e.target.files[0];
       if (!file || !currentUser) return;
@@ -1401,9 +1654,10 @@
     }
 
     async function initLocalDB() {
+      loadSystemMetaLocal();
       try {
         const rawDocs = await localDB.docs.orderBy('id').reverse().toArray();
-        docsData = rawDocs.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE);
+        docsData = rawDocs.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE && d.code !== SYSTEM_META_REGISTRY_CODE);
         trainingData = await localDB.trainings.orderBy('id').reverse().toArray();
         dispatchData = await localDB.dispatches.orderBy('id').reverse().toArray();
         examsData = await localDB.exams.orderBy('id').reverse().toArray();
@@ -1459,7 +1713,7 @@
       } catch (e) {}
 
       const sorted = [...remoteData].sort((a, b) => (b.id || 0) - (a.id || 0));
-      if(tableName === 'docs') docsData = sorted.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE);
+      if(tableName === 'docs') docsData = sorted.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE && d.code !== SYSTEM_META_REGISTRY_CODE);
       if(tableName === 'trainings') trainingData = sorted;
       if(tableName === 'dispatches') dispatchData = sorted;
       if(tableName === 'exams') examsData = sorted;
@@ -1486,8 +1740,22 @@
         const [rDocs, rTrain, rDisp, rExams, rCerts, rCount, rCloudUsers, rLogs] = results;
 
         if (rDocs.status === 'fulfilled' && rDocs.value && !rDocs.value.error && Array.isArray(rDocs.value.data)) {
+          const metaRow = rDocs.value.data.find(d => d.code === SYSTEM_META_REGISTRY_CODE);
+          if (metaRow && metaRow.drive_link) {
+            try {
+              const parsedMeta = JSON.parse(metaRow.drive_link);
+              if (Array.isArray(parsedMeta.recycleBin) && parsedMeta.recycleBin.length >= recycleBinData.length) {
+                recycleBinData = parsedMeta.recycleBin;
+              }
+              if (parsedMeta.stageHistory && typeof parsedMeta.stageHistory === 'object') {
+                stageHistoryMap = { ...parsedMeta.stageHistory, ...stageHistoryMap };
+              }
+              saveSystemMetaLocal();
+            } catch (e) {}
+          }
+
           const remoteDocs = rDocs.value.data
-            .filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE)
+            .filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE && d.code !== SYSTEM_META_REGISTRY_CODE)
             .map(d => ({
               id: d.id,
               bureau: d.bureau || 'bureau_1',
@@ -1538,6 +1806,7 @@
 
           if (!document.getElementById('modal-system-tools').classList.contains('hidden')) {
             renderUsersTable();
+            renderRecycleBinTable();
           }
         }
 
@@ -1558,13 +1827,12 @@
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') { 
-        closeProfileModal(); closeDocViewerModal(); closeSystemModal(); closePrintPreviewModal(); toggleScannerModal(false);
+        closeStageHistoryModal(); closeProfileModal(); closeDocViewerModal(); closeSystemModal(); closePrintPreviewModal(); toggleScannerModal(false);
       }
     });
 
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
 
-    // 🌟 បន្ថែមការិយាល័យ 'all' (ការិយាល័យទាំង ៣) សម្រាប់ Admin និង SuperAdmin តាមរូបភាពទី៣
     const BUREAUS = {
       all: {
         id: 'all',
@@ -1881,6 +2149,7 @@
       const c = document.getElementById('filter-doc-category'); if (c) c.value = 'all';
       const b = document.getElementById('filter-doc-bureau'); if (b) b.value = 'all';
       const o = document.getElementById('filter-doc-sort'); if (o) o.value = 'newest';
+      pageState.docs = 1;
       renderDocs();
     }
 
@@ -1893,7 +2162,7 @@
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.role === 'Admin' || currentUser?.bureau === 'all';
 
       let filtered = docsData
-        .filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE)
+        .filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE && d.code !== SYSTEM_META_REGISTRY_CODE && !isRecordDeleted('docs', d.id))
         .filter(d => {
           const matchSearch = !search || (d.title && d.title.toLowerCase().includes(search)) || (d.code && d.code.toLowerCase().includes(search)) || (d.category && d.category.toLowerCase().includes(search));
           const matchCat = (catFilter === 'all' || d.category === catFilter);
@@ -1909,11 +2178,18 @@
       });
 
       const statDocs = document.getElementById('stat-bureau-docs'); if(statDocs) statDocs.innerText = filtered.length;
+      renderPaginationBar('docs', filtered.length);
 
-      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
-      if (limitedData.length === 0) return tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">${appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ'}</td></tr>`;
+      const pageSize = pageSizeState.docs || 15;
+      const start = (pageState.docs - 1) * pageSize;
+      const pagedData = filtered.slice(start, start + pageSize);
 
-      tbody.innerHTML = limitedData.map(d => {
+      if (pagedData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">${appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ'}</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = pagedData.map(d => {
         const bObj = BUREAUS[d.bureau];
         const bTag = bObj ? (appLang === 'en' ? bObj.shortNameEn : bObj.shortName) : d.bureau;
         return `
@@ -2055,10 +2331,22 @@
       const typeF = document.getElementById('filter-disp-type')?.value || 'all';
       const stageF = document.getElementById('filter-disp-stage')?.value || 'all';
 
-      // បើ Admin ជ្រើសរើសយក 'all' (ការិយាល័យទាំង ៣) បង្ហាញលិខិតចេញ-ចូលរបស់គ្រប់ការិយាល័យទាំង ៣ រួមគ្នា
-      const bureauItems = (isAdmin && viewBureau === 'all') ? dispatchData : dispatchData.filter(d => d.bureau === viewBureau);
+      const activeItems = dispatchData.filter(d => !isRecordDeleted('dispatches', d.id));
+      const bureauItems = (isAdmin && viewBureau === 'all') ? activeItems : activeItems.filter(d => d.bureau === viewBureau);
+      
       const statDisp = document.getElementById('stat-bureau-disp');
       if(statDisp) statDisp.innerText = bureauItems.filter(d => d.stage !== 'បញ្ចប់រួចរាល់').length;
+
+      const overdueCount = bureauItems.filter(d => isDispatchOverdue(d)).length;
+      const overdueBadge = document.getElementById('stat-overdue-badge');
+      if (overdueBadge) {
+        if (overdueCount > 0) {
+          overdueBadge.classList.remove('hidden');
+          overdueBadge.innerText = appLang === 'en' ? `⚠️ ${overdueCount} Overdue` : `⚠️ ${overdueCount} យឺតយ៉ាវ`;
+        } else {
+          overdueBadge.classList.add('hidden');
+        }
+      }
 
       const scopeBadge = document.getElementById('disp-scope-badge');
       if (scopeBadge) {
@@ -2070,28 +2358,122 @@
       const filtered = bureauItems.filter(d => {
         const matchQ = !q || (d.code && d.code.toLowerCase().includes(q)) || (d.title && d.title.toLowerCase().includes(q)) || (d.location && d.location.toLowerCase().includes(q));
         const matchT = (typeF === 'all' || d.type === typeF);
-        const matchS = (stageF === 'all' || d.stage === stageF);
+        const matchS = (stageF === 'all') || (stageF === 'overdue' ? isDispatchOverdue(d) : d.stage === stageF);
         return matchQ && matchT && matchS;
       });
 
-      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
-      if (limitedData.length === 0) return tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">${appLang === 'en' ? 'No dispatch letters found' : 'មិនទាន់មានលិខិតឡើយ'}</td></tr>`;
+      renderPaginationBar('dispatch', filtered.length);
+      const pageSize = pageSizeState.dispatch || 15;
+      const start = (pageState.dispatch - 1) * pageSize;
+      const pagedData = filtered.slice(start, start + pageSize);
 
-      tbody.innerHTML = limitedData.map(d => {
+      if (pagedData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">${appLang === 'en' ? 'No dispatch letters found' : 'មិនទាន់មានលិខិតឡើយ'}</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = pagedData.map(d => {
         const bTag = (isAdmin && viewBureau === 'all' && BUREAUS[d.bureau]) ? `<span class="block text-[10px] text-slate-400">${BUREAUS[d.bureau].shortName}</span>` : '';
+        const overdue = isDispatchOverdue(d);
+        const daysElapsed = getDispatchDaysElapsed(d);
+        const overdueTag = overdue ? `<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-200">⚠️ យឺតយ៉ាវ ${daysElapsed} ថ្ងៃ</span>` : '';
+        const histCount = (stageHistoryMap[d.id] || []).length;
+
         return `
-          <tr class="hover:bg-emerald-50 transition">
+          <tr class="${overdue ? 'bg-rose-50/40 hover:bg-rose-50' : 'hover:bg-emerald-50'} transition">
             <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
             <td class="p-3.5 whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold ${d.type === 'ចូល' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">${d.type}</span></td>
             <td class="p-3.5 font-mono font-bold text-slate-800 text-sm whitespace-nowrap">${d.code}${bTag}</td>
-            <td class="p-3.5 font-bold text-slate-900 text-sm">${d.title}</td>
-            <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold ${d.stage === 'បញ្ចប់រួចរាល់' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800 border border-amber-200'}">${d.stage}</span></td>
+            <td class="p-3.5 font-bold text-slate-900 text-sm">${d.title}${overdueTag}</td>
+            <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold ${d.stage === 'បញ្ចប់រួចរាល់' ? 'bg-emerald-100 text-emerald-800' : (overdue ? 'bg-rose-100 text-rose-800 border border-rose-300' : 'bg-amber-50 text-amber-800 border border-amber-200')}">${d.stage}</span></td>
             <td class="p-3.5 text-emerald-800 font-bold text-xs whitespace-nowrap">${d.location}</td>
             <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${d.date}</td>
-            <td class="p-3.5 text-center whitespace-nowrap">${isAdmin ? `<button onclick="deleteDispatch(${d.id})" class="text-rose-600 hover:text-rose-800 font-bold text-sm form-input-focus">${tStr('btn_delete')}</button>` : '<span class="text-slate-300">-</span>'}</td>
+            <td class="p-3.5 text-center whitespace-nowrap">
+              <button onclick="openStageHistoryModal(${d.id})" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition form-input-focus">${tStr('btn_stage_hist')} ${histCount > 0 ? `(${histCount})` : ''}</button>
+              ${isAdmin ? `<button onclick="deleteDispatch(${d.id})" class="text-rose-600 hover:text-rose-800 font-bold text-xs ml-2 form-input-focus">${tStr('btn_delete')}</button>` : ''}
+            </td>
           </tr>
         `;
       }).join('');
+    }
+
+    // ====== DISPATCH STAGE HISTORY & UPDATE MODAL FUNCTIONS ======
+    function openStageHistoryModal(dispId) {
+      const d = dispatchData.find(x => x.id === dispId);
+      if (!d) return;
+      document.getElementById('stage-edit-disp-id').value = d.id;
+      document.getElementById('stage-modal-subtitle').innerText = `លេខលិខិត៖ ${d.code} — ${d.title}`;
+      document.getElementById('stage-edit-stage').value = d.stage || 'រដ្ឋបាលទទួល';
+      document.getElementById('stage-edit-location').value = d.location || 'ការិយាល័យសាមី';
+      document.getElementById('stage-edit-note').value = '';
+
+      renderStageTimelineList(d);
+      document.getElementById('modal-stage-history').classList.remove('hidden');
+    }
+
+    function closeStageHistoryModal() {
+      document.getElementById('modal-stage-history')?.classList.add('hidden');
+    }
+
+    function renderStageTimelineList(d) {
+      const container = document.getElementById('stage-history-timeline');
+      if (!container) return;
+      let list = stageHistoryMap[d.id] || [];
+      if (list.length === 0) {
+        list = [{
+          time: d.date || 'កាលបរិច្ឆេទចុះបញ្ជីដំបូង',
+          stage: d.stage,
+          location: d.location,
+          user: d.assignee || 'មន្ត្រីកាន់ការ',
+          note: 'ចុះបញ្ជីលិខិតដំបូង'
+        }];
+      }
+      container.innerHTML = list.map((item, idx) => `
+        <div class="relative bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div class="w-2.5 h-2.5 rounded-full ${idx === 0 ? 'bg-emerald-600' : 'bg-slate-400'} absolute -left-[21px] top-4 border-2 border-white"></div>
+          <div class="flex flex-wrap items-center justify-between gap-1">
+            <span class="font-bold text-emerald-900">${item.stage}</span>
+            <span class="font-mono text-[10px] text-slate-400">${item.time}</span>
+          </div>
+          <div class="text-slate-700 font-semibold mt-0.5">📍 ទីតាំង៖ ${item.location}</div>
+          ${item.note ? `<div class="text-slate-600 mt-1 italic">"${item.note}"</div>` : ''}
+          <div class="text-[10px] text-slate-400 mt-1">👤 កត់ត្រាដោយ៖ ${item.user}</div>
+        </div>
+      `).join('');
+    }
+
+    async function handleUpdateDispatchStage(e) {
+      e.preventDefault();
+      const dispId = Number(document.getElementById('stage-edit-disp-id').value);
+      const newStage = document.getElementById('stage-edit-stage').value;
+      const newLoc = document.getElementById('stage-edit-location').value;
+      const note = document.getElementById('stage-edit-note').value.trim();
+
+      const idx = dispatchData.findIndex(x => x.id === dispId);
+      if (idx === -1) return;
+      const d = dispatchData[idx];
+
+      d.stage = newStage;
+      d.location = newLoc;
+      await localDB.dispatches.put(d);
+      if (db) await safeDbExec(db.from('dispatches').upsert([d]));
+
+      const now = new Date();
+      const entry = {
+        time: now.toLocaleDateString('km-KH') + ' ' + now.toLocaleTimeString('en-US'),
+        stage: newStage,
+        location: newLoc,
+        user: currentUser ? `${currentUser.fullname} (@${currentUser.username})` : 'User',
+        note: note || 'បានធ្វើបច្ចុប្បន្នភាពដំណាក់កាល'
+      };
+      if (!Array.isArray(stageHistoryMap[dispId])) stageHistoryMap[dispId] = [];
+      stageHistoryMap[dispId].unshift(entry);
+      await pushSystemMetaToCloud();
+
+      renderStageTimelineList(d);
+      renderDispatch();
+      logActivity('ប្តូរដំណាក់កាលលិខិត', `${d.code} ➔ ${newStage} (${newLoc})`);
+      showToast('បានធ្វើបច្ចុប្បន្នភាពដំណាក់កាល និងរក្សាទុកប្រវត្តិជោគជ័យ!');
     }
 
     function renderExams() {
@@ -2099,17 +2481,26 @@
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.role === 'Admin' || currentUser?.bureau === 'all';
       const q = (document.getElementById('filter-exam-search')?.value || '').toLowerCase();
       const statLabel = document.getElementById('stat-custom-label'); const statVal = document.getElementById('stat-custom-val'); const statIcon = document.getElementById('stat-custom-icon');
+      
+      const activeExams = examsData.filter(e => !isRecordDeleted('exams', e.id));
       if (activeBureauKey === 'bureau_1') {
         if(statLabel) statLabel.innerText = appLang === 'en' ? 'National Exam Sessions' : 'សម័យប្រឡងសរុប';
-        if(statVal) statVal.innerText = examsData.length;
+        if(statVal) statVal.innerText = activeExams.length;
         if(statIcon) statIcon.innerText = '🎓';
       }
       
-      const filtered = examsData.filter(e => !q || (e.major && e.major.toLowerCase().includes(q)) || (e.session && e.session.toLowerCase().includes(q)));
-      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
-      if(limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
+      const filtered = activeExams.filter(e => !q || (e.major && e.major.toLowerCase().includes(q)) || (e.session && e.session.toLowerCase().includes(q)));
+      renderPaginationBar('exams', filtered.length);
+      const pageSize = pageSizeState.exams || 15;
+      const start = (pageState.exams - 1) * pageSize;
+      const pagedData = filtered.slice(start, start + pageSize);
 
-      tbody.innerHTML = limitedData.map(e => `
+      if(pagedData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = pagedData.map(e => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
           <td class="p-3.5 whitespace-nowrap"><span class="inline-block whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold ${e.type && e.type.indexOf('ចេញ') !== -1 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${e.type}</span></td>
@@ -2124,11 +2515,13 @@
 
     function getFilteredTrainingData() {
       const search = (document.getElementById('filter-training-search')?.value || '').toLowerCase(); const country = document.getElementById('filter-training-country')?.value || 'all'; const sponsor = document.getElementById('filter-training-sponsor')?.value || 'all'; const orderBy = document.getElementById('filter-training-order')?.value || 'name';
-      let result = trainingData.filter(t => {
-        const matchSearch = !search || (t.trainee && t.trainee.toLowerCase().includes(search)) || (t.course && t.course.toLowerCase().includes(search)) || (t.unit && t.unit.toLowerCase().includes(search));
-        const matchCountry = (country === 'all' || t.country === country); const matchSponsor = (sponsor === 'all' || t.sponsor === sponsor);
-        return matchSearch && matchCountry && matchSponsor;
-      });
+      let result = trainingData
+        .filter(t => !isRecordDeleted('trainings', t.id))
+        .filter(t => {
+          const matchSearch = !search || (t.trainee && t.trainee.toLowerCase().includes(search)) || (t.course && t.course.toLowerCase().includes(search)) || (t.unit && t.unit.toLowerCase().includes(search));
+          const matchCountry = (country === 'all' || t.country === country); const matchSponsor = (sponsor === 'all' || t.sponsor === sponsor);
+          return matchSearch && matchCountry && matchSponsor;
+        });
       result.sort((a, b) => {
         if (orderBy === 'country') return String(a.country || '').localeCompare(String(b.country || ''));
         if (orderBy === 'duration') return String(a.duration || '').localeCompare(String(b.duration || ''));
@@ -2143,21 +2536,30 @@
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.role === 'Admin' || currentUser?.bureau === 'all';
       const sponsorSel = document.getElementById('filter-training-sponsor');
       if (sponsorSel) {
-        const curSponsor = sponsorSel.value; const sponsors = [...new Set(trainingData.map(t => t.sponsor).filter(Boolean))];
+        const curSponsor = sponsorSel.value; const sponsors = [...new Set(trainingData.filter(t => !isRecordDeleted('trainings', t.id)).map(t => t.sponsor).filter(Boolean))];
         sponsorSel.innerHTML = `<option value="all">${appLang === 'en' ? 'All Sponsors' : 'អ្នកឧបត្ថម្ភទាំងអស់'}</option>` + sponsors.map(s => `<option value="${s}" ${s === curSponsor ? 'selected' : ''}>${s}</option>`).join('');
       }
       const allFiltered = getFilteredTrainingData();
-      const limitedData = allFiltered.slice(0, MAX_RENDER_ROWS);
+      renderPaginationBar('training', allFiltered.length);
+
+      const pageSize = pageSizeState.training || 15;
+      const start = (pageState.training - 1) * pageSize;
+      const pagedData = allFiltered.slice(start, start + pageSize);
+
       const statLabel = document.getElementById('stat-custom-label'); const statVal = document.getElementById('stat-custom-val'); const statIcon = document.getElementById('stat-custom-icon');
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') {
+        const totalSpec = examsData.filter(e => !isRecordDeleted('exams', e.id)).length + allFiltered.length + certsData.filter(c => !isRecordDeleted('certs', c.id)).length;
         if(statLabel) statLabel.innerText = appLang === 'en' ? (activeBureauKey === 'all' ? 'Total Specialty Records' : 'Training Courses') : (activeBureauKey === 'all' ? 'ការងារជំនាញសរុប (៣ ការិយាល័យ)' : 'វគ្គបណ្តុះបណ្តាល');
-        if(statVal) statVal.innerText = activeBureauKey === 'all' ? (examsData.length + trainingData.length + certsData.length) : allFiltered.length;
+        if(statVal) statVal.innerText = activeBureauKey === 'all' ? totalSpec : allFiltered.length;
         if(statIcon) statIcon.innerText = activeBureauKey === 'all' ? '👑' : '🌐';
       }
 
-      if (limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="9" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យស្របតាមលក្ខខណ្ឌឡើយ</td></tr>';
+      if (pagedData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យស្របតាមលក្ខខណ្ឌឡើយ</td></tr>';
+        return;
+      }
 
-      tbody.innerHTML = limitedData.map((t, idx) => `
+      tbody.innerHTML = pagedData.map((t) => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
           <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${t.trainee}</td>
@@ -2177,17 +2579,26 @@
       const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.role === 'Admin' || currentUser?.bureau === 'all';
       const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase();
       const statLabel = document.getElementById('stat-custom-label'); const statVal = document.getElementById('stat-custom-val'); const statIcon = document.getElementById('stat-custom-icon');
+      
+      const activeCerts = certsData.filter(c => !isRecordDeleted('certs', c.id));
       if (activeBureauKey === 'bureau_3') {
         if(statLabel) statLabel.innerText = appLang === 'en' ? 'Registered Certificates' : 'សញ្ញាបត្របានចុះបញ្ជី';
-        if(statVal) statVal.innerText = certsData.length;
+        if(statVal) statVal.innerText = activeCerts.length;
         if(statIcon) statIcon.innerText = '📜';
       }
       
-      const filtered = certsData.filter(c => !q || (c.num && c.num.toLowerCase().includes(q)) || (c.recipient && c.recipient.toLowerCase().includes(q)));
-      const limitedData = filtered.slice(0, MAX_RENDER_ROWS);
-      if(limitedData.length === 0) return tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
+      const filtered = activeCerts.filter(c => !q || (c.num && c.num.toLowerCase().includes(q)) || (c.recipient && c.recipient.toLowerCase().includes(q)));
+      renderPaginationBar('certs', filtered.length);
+      const pageSize = pageSizeState.certs || 15;
+      const start = (pageState.certs - 1) * pageSize;
+      const pagedData = filtered.slice(start, start + pageSize);
 
-      tbody.innerHTML = limitedData.map(c => `
+      if(pagedData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">មិនមានទិន្នន័យឡើយ</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = pagedData.map(c => `
         <tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 text-center"><input type="checkbox" class="rounded text-emerald-600 w-4 h-4 form-input-focus"></td>
           <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${c.num}</td>
@@ -2226,6 +2637,115 @@
         </body></html>
       `);
       win.document.close();
+    }
+
+    // ====== SOFT DELETE & RECYCLE BIN ENGINE ======
+    async function moveToRecycleBin(type, label, recordObj) {
+      if (!recordObj) return;
+      const entry = {
+        binId: generateSafeId(),
+        type: type,
+        label: label,
+        itemId: recordObj.id,
+        deletedAt: new Date().toLocaleDateString('km-KH') + ' ' + new Date().toLocaleTimeString('en-US'),
+        deletedBy: currentUser ? `@${currentUser.username}` : 'admin',
+        payload: recordObj
+      };
+      recycleBinData.unshift(entry);
+      await pushSystemMetaToCloud();
+    }
+
+    async function restoreFromRecycleBin(binId) {
+      const idx = recycleBinData.findIndex(x => x.binId === binId);
+      if (idx === -1) return;
+      const item = recycleBinData[idx];
+      const rec = item.payload;
+
+      if (item.type === 'docs') {
+        if (!docsData.some(d => d.id === rec.id)) docsData.unshift(rec);
+        await localDB.docs.put(rec);
+        if (db) await safeDbExec(db.from('docs').upsert([{ id: rec.id, bureau: rec.bureau, code: rec.code, title: rec.title, category: rec.category, file_size: rec.fileSize, file_name: rec.fileName, drive_link: rec.driveLink || '', storage: rec.storage || '☁️ Cloud Storage', created_by: rec.createdBy || 'user' }]));
+      } else if (item.type === 'dispatches') {
+        if (!dispatchData.some(d => d.id === rec.id)) dispatchData.unshift(rec);
+        await localDB.dispatches.put(rec);
+        if (db) await safeDbExec(db.from('dispatches').upsert([rec]));
+      } else if (item.type === 'trainings') {
+        if (!trainingData.some(t => t.id === rec.id)) trainingData.unshift(rec);
+        await localDB.trainings.put(rec);
+        if (db) await safeDbExec(db.from('trainings').upsert([rec]));
+      } else if (item.type === 'exams') {
+        if (!examsData.some(e => e.id === rec.id)) examsData.unshift(rec);
+        await localDB.exams.put(rec);
+        if (db) await safeDbExec(db.from('exams').upsert([rec]));
+      } else if (item.type === 'certs') {
+        if (!certsData.some(c => c.id === rec.id)) certsData.unshift(rec);
+        await localDB.certs.put(rec);
+        if (db) await safeDbExec(db.from('certs').upsert([rec]));
+      }
+
+      recycleBinData.splice(idx, 1);
+      await pushSystemMetaToCloud();
+      renderRecycleBinTable();
+      renderTablesAndStatsOnly();
+      logActivity('Restore ពីធុងសំរាម', item.label);
+      showToast('បានស្តារទិន្នន័យ (Restore) មកវិញជោគជ័យ!');
+    }
+
+    async function permanentDeleteFromBin(binId) {
+      const idx = recycleBinData.findIndex(x => x.binId === binId);
+      if (idx === -1) return;
+      const item = recycleBinData[idx];
+      if (!confirm(`តើអ្នកពិតជាចង់លុប "${item.label}" ចេញពីប្រព័ន្ធជាអចិន្ត្រៃយ៍មែនទេ?`)) return;
+
+      if (db) await safeDbExec(db.from(item.type).delete().eq('id', item.itemId));
+      if (localDB[item.type]) await localDB[item.type].delete(item.itemId);
+
+      if (item.type === 'docs') docsData = docsData.filter(d => d.id !== item.itemId);
+      if (item.type === 'dispatches') dispatchData = dispatchData.filter(d => d.id !== item.itemId);
+      if (item.type === 'trainings') trainingData = trainingData.filter(t => t.id !== item.itemId);
+      if (item.type === 'exams') examsData = examsData.filter(e => e.id !== item.itemId);
+      if (item.type === 'certs') certsData = certsData.filter(c => c.id !== item.itemId);
+
+      recycleBinData.splice(idx, 1);
+      await pushSystemMetaToCloud();
+      renderRecycleBinTable();
+      renderTablesAndStatsOnly();
+      showToast('បានលុបទិន្នន័យជាអចិន្ត្រៃយ៍រួចរាល់!');
+    }
+
+    async function emptyRecycleBin() {
+      if (recycleBinData.length === 0) return showToast('ធុងសំរាមទទេរួចហើយ!', true);
+      if (!confirm('តើអ្នកពិតជាចង់សម្អាតធុងសំរាមទាំងអស់ជាអចិន្ត្រៃយ៍មែនទេ?')) return;
+      for (const item of recycleBinData) {
+        if (db) await safeDbExec(db.from(item.type).delete().eq('id', item.itemId));
+        if (localDB[item.type]) await localDB[item.type].delete(item.itemId);
+      }
+      recycleBinData = [];
+      await pushSystemMetaToCloud();
+      renderRecycleBinTable();
+      renderTablesAndStatsOnly();
+      showToast('បានសម្អាតធុងសំរាមទាំងអស់ជោគជ័យ!');
+    }
+
+    function renderRecycleBinTable() {
+      const tbody = document.getElementById('recycle-table-body');
+      if (!tbody) return;
+      if (recycleBinData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-slate-400">ធុងសំរាមទទេ (មិនមានទិន្នន័យត្រូវបានលុបឡើយ)</td></tr>';
+        return;
+      }
+      const typeLabels = { docs: '📚 បណ្ណាល័យ', dispatches: '🔄 លិខិតចេញ-ចូល', trainings: '🌐 បណ្តុះបណ្តាល', exams: '🎓 ការប្រឡង', certs: '📜 សញ្ញាបត្រ' };
+      tbody.innerHTML = recycleBinData.map(item => `
+        <tr class="hover:bg-rose-50/40 transition">
+          <td class="p-3 font-bold text-slate-700">${typeLabels[item.type] || item.type}</td>
+          <td class="p-3 font-bold text-slate-900">${item.label}</td>
+          <td class="p-3 text-slate-500 font-mono">${item.deletedBy} • ${item.deletedAt}</td>
+          <td class="p-3 text-right whitespace-nowrap">
+            <button onclick="restoreFromRecycleBin(${item.binId})" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs mr-2">♻️ Restore</button>
+            <button onclick="permanentDeleteFromBin(${item.binId})" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-bold text-xs">🗑️ លុបអចិន្ត្រៃយ៍</button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     // ====== ACTIONS ======
@@ -2321,7 +2841,7 @@
       };
       if (db) await safeDbExec(db.from('docs').upsert([supabasePayload]));
       
-      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ! គ្រប់កុំព្យូទ័រអាចមើល និង Print បានភ្លាមៗ។' : 'បានរក្សាទុកឯកសារជោគជ័យ! អាចចុច «មើល / Print» បានភ្លាមៗ។');
+      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ!' : 'បានរក្សាទុកឯកសារជោគជ័យ!');
       logActivity('Upload ឯកសារ', newDoc.code);
 
       document.getElementById('doc-code').value = ''; 
@@ -2349,7 +2869,17 @@
       }
     }
 
-    async function deleteDoc(id) { if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) { if (db) await safeDbExec(db.from('docs').delete().eq('id', id)); await localDB.docs.delete(id); docsData = docsData.filter(d => d.id !== id); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!'); } }
+    async function deleteDoc(id) {
+      const target = docsData.find(d => d.id === id);
+      if (!target) return;
+      if (confirm('តើអ្នកចង់បញ្ជូនឯកសារនេះទៅក្នុងធុងសំរាម (Recycle Bin) មែនទេ?')) {
+        await moveToRecycleBin('docs', `${target.code} - ${target.title}`, target);
+        renderDocs();
+        logActivity('លុបឯកសារ (Soft Delete)', target.code);
+        showToast('បានបញ្ជូនឯកសារទៅក្នុងធុងសំរាម (Recycle Bin)!');
+      }
+    }
+
     function formatDateDisplay(dStr) { if (!dStr) return ''; const parts = dStr.split('-'); return parts.length === 3 ? (parts[2] + '/' + parts[1] + '/' + parts[0].slice(-2)) : dStr; }
 
     async function handleSaveTraining(e) {
@@ -2364,27 +2894,72 @@
       
       e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Record / រក្សាទុក</span>', 2500);
     }
-    async function deleteTraining(id) { if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យសិក្ខាកាមនេះមែនទេ?')) { if (db) await safeDbExec(db.from('trainings').delete().eq('id', id)); await localDB.trainings.delete(id); trainingData = trainingData.filter(t => t.id !== id); renderTrainingList(); showToast('បានលុបទិន្នន័យជោគជ័យ!'); } }
+
+    async function deleteTraining(id) {
+      const target = trainingData.find(t => t.id === id);
+      if (!target) return;
+      if (confirm('តើអ្នកពិតជាចង់បញ្ជូនទិន្នន័យសិក្ខាកាមនេះទៅធុងសំរាមមែនទេ?')) {
+        await moveToRecycleBin('trainings', `${target.trainee} (${target.course})`, target);
+        renderTrainingList();
+        logActivity('លុបវគ្គបណ្តុះបណ្តាល (Soft Delete)', target.trainee);
+        showToast('បានបញ្ជូនទៅក្នុងធុងសំរាម (Recycle Bin)!');
+      }
+    }
 
     async function handleSaveDispatch(e) {
       e.preventDefault(); const saveBtn = document.getElementById('btn-save-disp');
       const chosenBureau = document.getElementById('quick-form-target-bureau')?.value || (activeBureauKey === 'all' ? 'bureau_1' : activeBureauKey);
       const newDisp = { id: generateSafeId(), bureau: chosenBureau, type: document.getElementById('disp-type').value, code: document.getElementById('disp-code').value.trim(), title: document.getElementById('disp-title').value.trim(), stage: document.getElementById('disp-stage').value, location: document.getElementById('disp-location').value, date: document.getElementById('disp-date').value, assignee: document.getElementById('disp-assignee').value.trim() };
       
-      dispatchData.unshift(newDisp); await localDB.dispatches.put(newDisp); renderDispatch();
+      dispatchData.unshift(newDisp); await localDB.dispatches.put(newDisp);
+      stageHistoryMap[newDisp.id] = [{
+        time: new Date().toLocaleDateString('km-KH') + ' ' + new Date().toLocaleTimeString('en-US'),
+        stage: newDisp.stage,
+        location: newDisp.location,
+        user: currentUser ? `${currentUser.fullname} (@${currentUser.username})` : newDisp.assignee,
+        note: 'ចុះបញ្ជីលិខិតដំបូង'
+      }];
+      await pushSystemMetaToCloud();
+      renderDispatch();
       if (db) await safeDbExec(db.from('dispatches').insert([newDisp]));
       showToast('បានកត់ត្រាលិខិតទៅ Cloud ជោគជ័យ!');
       logActivity('កត់ត្រាលិខិត', newDisp.code);
       
       e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Letter / រក្សាទុក</span>', 2500);
     }
-    async function deleteDispatch(id) { if (confirm('តើអ្នកចង់លុបកត់ត្រានេះមែនទេ?')) { if (db) await safeDbExec(db.from('dispatches').delete().eq('id', id)); await localDB.dispatches.delete(id); dispatchData = dispatchData.filter(d => d.id !== id); renderDispatch(); showToast('បានលុបជោគជ័យ!'); } }
+
+    async function deleteDispatch(id) {
+      const target = dispatchData.find(d => d.id === id);
+      if (!target) return;
+      if (confirm('តើអ្នកចង់បញ្ជូនលិខិតនេះទៅក្នុងធុងសំរាមមែនទេ?')) {
+        await moveToRecycleBin('dispatches', `${target.code} - ${target.title}`, target);
+        renderDispatch();
+        logActivity('លុបលិខិត (Soft Delete)', target.code);
+        showToast('បានបញ្ជូនទៅក្នុងធុងសំរាម (Recycle Bin)!');
+      }
+    }
     
     async function handleSaveExam(e) { e.preventDefault(); const newE = { id: generateSafeId(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value.trim(), session: document.getElementById('exam-session').value.trim(), candidates: Number(document.getElementById('exam-candidates').value), status: document.getElementById('exam-status').value.trim() }; examsData.unshift(newE); await localDB.exams.put(newE); renderExams(); if (db) await safeDbExec(db.from('exams').insert([newE])); showToast('បានរក្សាទុកសម័យប្រឡងជោគជ័យ!'); logActivity('កត់ត្រាសម័យប្រឡង', newE.major); e.target.reset(); }
-    async function deleteExam(id) { if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) { if (db) await safeDbExec(db.from('exams').delete().eq('id', id)); await localDB.exams.delete(id); examsData = examsData.filter(e => e.id !== id); renderExams(); showToast('បានលុបជោគជ័យ!'); } }
+    async function deleteExam(id) {
+      const target = examsData.find(e => e.id === id);
+      if (!target) return;
+      if (confirm('តើអ្នកចង់បញ្ជូនសម័យប្រឡងនេះទៅធុងសំរាមមែនទេ?')) {
+        await moveToRecycleBin('exams', `${target.major} (${target.session})`, target);
+        renderExams();
+        showToast('បានបញ្ជូនទៅក្នុងធុងសំរាម (Recycle Bin)!');
+      }
+    }
     
     async function handleSaveCert(e) { e.preventDefault(); const newC = { id: generateSafeId(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim() }; certsData.unshift(newC); await localDB.certs.put(newC); renderCerts(); if (db) await safeDbExec(db.from('certs').insert([newC])); showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num); e.target.reset(); }
-    async function deleteCert(id) { if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) { if (db) await safeDbExec(db.from('certs').delete().eq('id', id)); await localDB.certs.delete(id); certsData = certsData.filter(c => c.id !== id); renderCerts(); showToast('បានលុបជោគជ័យ!'); } }
+    async function deleteCert(id) {
+      const target = certsData.find(c => c.id === id);
+      if (!target) return;
+      if (confirm('តើអ្នកចង់បញ្ជូនសញ្ញាបត្រនេះទៅធុងសំរាមមែនទេ?')) {
+        await moveToRecycleBin('certs', `${target.num} - ${target.recipient}`, target);
+        renderCerts();
+        showToast('បានបញ្ជូនទៅក្នុងធុងសំរាម (Recycle Bin)!');
+      }
+    }
 
     // ====== SYSTEM TOOLS & USER MANAGEMENT ======
     document.addEventListener('click', (e) => {
@@ -2410,7 +2985,7 @@
     
     function switchSystemToolTab(tab) {
       const isAdmin = currentUser?.permissions?.admin || currentUser?.role === 'SuperAdmin' || currentUser?.role === 'Admin' || currentUser?.bureau === 'all';
-      ['settings', 'location', 'files', 'security', 'logging', 'manual'].forEach(t => {
+      ['settings', 'location', 'files', 'recycle', 'security', 'logging', 'manual'].forEach(t => {
         const c = document.getElementById('syscontent-' + t); const b = document.getElementById('systab-' + t);
         if (c) c.classList.add('hidden');
         if (b) { b.classList.remove('bg-emerald-600', 'text-white'); b.classList.add('bg-slate-100', 'text-slate-600'); }
@@ -2422,6 +2997,7 @@
         if (tab === 'settings') renderUsersTable();
         if (tab === 'location') renderCountriesTable();
         if (tab === 'files') renderFilesSystemList();
+        if (tab === 'recycle') renderRecycleBinTable();
         if (tab === 'logging') renderLogsTable();
       }
     }
@@ -2488,7 +3064,7 @@
 
       const ok = await pushUserToCloudMultiChannel(newUser, usersData);
       if (ok) {
-        showToast(`បានបង្កើតគណនី @${newUser.username} លើ Cloud ជោគជ័យ! អាច Login លើឧបករណ៍ថ្មីបានភ្លាមៗ។`);
+        showToast(`បានបង្កើតគណនី @${newUser.username} លើ Cloud ជោគជ័យ!`);
       } else {
         showToast(`បានបង្កើតគណនី @${newUser.username} ជោគជ័យ!`, false);
       }
@@ -2558,8 +3134,119 @@
     async function deleteCountry(code, idx) { const c = countriesData[idx]; if (confirm(`តើអ្នកចង់លុបប្រទេស "${c.kh}" មែនទេ?`)) { if (db) await safeDbExec(db.from('countries').delete().eq('code', code)); await localDB.countries.delete(code); countriesData.splice(idx, 1); showToast('បានលុបប្រទេសជោគជ័យ!'); renderCountriesTable(); populateCountryDropdowns(); } }
     function renderCountriesTable() { const tbody = document.getElementById('countries-table-body'); if (!tbody) return; tbody.innerHTML = countriesData.map((c, idx) => `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5 font-mono font-bold text-slate-700 text-sm">${c.code}</td><td class="p-3.5 font-bold text-slate-900 text-sm">${c.kh}</td><td class="p-3.5 text-slate-700 text-sm">${c.en}</td><td class="p-3.5 text-right"><button onclick="deleteCountry('${c.code}', ${idx})" class="text-rose-600 hover:underline font-bold text-sm form-input-focus">លុប</button></td></tr>`).join(''); }
     function populateCountryDropdowns() { const formSel = document.getElementById('train-country-select'); const filterSel = document.getElementById('filter-training-country'); const currentVal = formSel?.value; if (formSel) formSel.innerHTML = `<option value="">-- ${appLang === 'en' ? 'Select Country' : 'ជ្រើសរើសប្រទេស'} --</option>` + countriesData.map(c => `<option value="${c.kh}" ${c.kh === currentVal ? 'selected' : ''}>${c.kh} (${c.en})</option>`).join(''); if (filterSel) { const curF = filterSel.value; filterSel.innerHTML = `<option value="all">${appLang === 'en' ? 'All Countries' : 'ប្រទេសទាំងអស់'}</option>` + countriesData.map(c => `<option value="${c.kh}" ${c.kh === curF ? 'selected' : ''}>${c.kh}</option>`).join(''); } }
-    function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; if (docsData.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = docsData.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><button onclick="openDocViewerById(${d.id})" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100">👁️ មើល / Print</button></div>`).join(''); }
-    function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V2.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
+    function renderFilesSystemList() { const list = document.getElementById('files-system-list'); if (!list) return; const activeDocs = docsData.filter(d => !isRecordDeleted('docs', d.id)); if (activeDocs.length === 0) return list.innerHTML = '<div class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</div>'; list.innerHTML = activeDocs.map(d => `<div class="p-4 flex items-center justify-between hover:bg-slate-50 transition border-b border-slate-100 last:border-0"><div><p class="font-bold text-slate-800 text-sm">${d.title} (${d.code})</p><p class="text-xs text-slate-500 mt-0.5">ការិយាល័យ៖ ${BUREAUS[d.bureau]?.shortName || d.bureau} | ទំហំ៖ ${d.fileSize}</p></div><button onclick="openDocViewerById(${d.id})" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100">👁️ មើល / Print</button></div>`).join(''); }
+
+    // ====== BACKUP & JSON RESTORE ======
+    function backupEntireSystem() {
+      const fullBackup = {
+        version: '2.5',
+        exportedAt: new Date().toISOString(),
+        users: usersData,
+        countries: countriesData,
+        documents: docsData,
+        dispatches: dispatchData,
+        exams: examsData,
+        trainings: trainingData,
+        certificates: certsData,
+        recycleBin: recycleBinData,
+        stageHistory: stageHistoryMap
+      };
+      const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'DHRD_SYSTEM_BACKUP_V2.5_' + Date.now() + '.json';
+      a.click();
+      showToast('បានទាញយកហ្វាល JSON Backup ជោគជ័យ!');
+    }
+
+    function handleRestoreJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (!parsed || typeof parsed !== 'object') throw new Error('Invalid JSON');
+          if (!confirm('តើអ្នកពិតជាចង់ស្តារទិន្នន័យ (Restore JSON) ចូលក្នុងប្រព័ន្ធ និងធ្វើបច្ចុប្បន្នភាពទៅ Cloud មែនទេ?')) return;
+
+          if (Array.isArray(parsed.users) && parsed.users.length > 0) {
+            usersData = mergeUserLists(usersData, parsed.users);
+            await localDB.users.clear();
+            await localDB.users.bulkPut(usersData);
+            localStorage.setItem('hrd_moh_users_cache', JSON.stringify(usersData));
+            await pushUserToCloudMultiChannel(usersData[0], usersData);
+          }
+          if (Array.isArray(parsed.countries) && parsed.countries.length > 0) {
+            countriesData = parsed.countries;
+            await localDB.countries.clear();
+            await localDB.countries.bulkPut(countriesData);
+            if (db) await safeDbExec(db.from('countries').upsert(countriesData));
+          }
+          if (Array.isArray(parsed.documents)) {
+            docsData = parsed.documents.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE && d.code !== SYSTEM_META_REGISTRY_CODE);
+            await localDB.docs.clear();
+            if (docsData.length > 0) {
+              await localDB.docs.bulkPut(docsData);
+              if (db) {
+                const sbDocs = docsData.map(d => ({
+                  id: d.id, bureau: d.bureau || 'bureau_1', code: d.code || '', title: d.title || '',
+                  category: d.category || 'ឯកសារបទដ្ឋាន', file_size: d.fileSize || '1.0 MB',
+                  file_name: d.fileName || 'doc.pdf', drive_link: d.driveLink || '',
+                  storage: d.storage || '☁️ Cloud Storage', created_by: d.createdBy || 'user'
+                }));
+                await safeDbExec(db.from('docs').upsert(sbDocs));
+              }
+            }
+          }
+          if (Array.isArray(parsed.dispatches)) {
+            dispatchData = parsed.dispatches;
+            await localDB.dispatches.clear();
+            if (dispatchData.length > 0) {
+              await localDB.dispatches.bulkPut(dispatchData);
+              if (db) await safeDbExec(db.from('dispatches').upsert(dispatchData));
+            }
+          }
+          if (Array.isArray(parsed.trainings)) {
+            trainingData = parsed.trainings;
+            await localDB.trainings.clear();
+            if (trainingData.length > 0) {
+              await localDB.trainings.bulkPut(trainingData);
+              if (db) await safeDbExec(db.from('trainings').upsert(trainingData));
+            }
+          }
+          if (Array.isArray(parsed.exams)) {
+            examsData = parsed.exams;
+            await localDB.exams.clear();
+            if (examsData.length > 0) {
+              await localDB.exams.bulkPut(examsData);
+              if (db) await safeDbExec(db.from('exams').upsert(examsData));
+            }
+          }
+          if (Array.isArray(parsed.certificates)) {
+            certsData = parsed.certificates;
+            await localDB.certs.clear();
+            if (certsData.length > 0) {
+              await localDB.certs.bulkPut(certsData);
+              if (db) await safeDbExec(db.from('certs').upsert(certsData));
+            }
+          }
+          if (Array.isArray(parsed.recycleBin)) recycleBinData = parsed.recycleBin;
+          if (parsed.stageHistory && typeof parsed.stageHistory === 'object') stageHistoryMap = parsed.stageHistory;
+          await pushSystemMetaToCloud();
+
+          renderTablesAndStatsOnly();
+          renderFilesSystemList();
+          renderRecycleBinTable();
+          logActivity('Restore JSON Backup', file.name);
+          showToast('បានស្តារទិន្នន័យពីហ្វាល JSON Backup ចូលប្រព័ន្ធជោគជ័យ!');
+        } catch (err) {
+          alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ ឬមានកំហុសទម្រង់ទិន្នន័យ!');
+        }
+        e.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
     async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__')); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
 
     // ====== IMPORT / EXPORT / PRINT / QR ======
@@ -2588,7 +3275,7 @@
 
     function exportCSV(type) {
       let csv = "\uFEFFDoc ID,ចំណងជើង,ការិយាល័យ,ប្រភេទ,ទំហំ,កន្លែងផ្ទុក\n";
-      docsData.forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.fileSize}","${d.storage || 'Cloud Storage'}"\n`; });
+      docsData.filter(d => !isRecordDeleted('docs', d.id)).forEach(d => { csv += `"${d.code}","${d.title}","${BUREAUS[d.bureau]?.name || d.bureau}","${d.category}","${d.fileSize}","${d.storage || 'Cloud Storage'}"\n`; });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = 'dhrd_docs_' + Date.now() + '.csv'; a.click(); showToast('បាន Export CSV ជោគជ័យ!');
     }
     function exportTrainingExcel() {
@@ -2617,7 +3304,7 @@
         if (!html5QrcodeScanner) {
           html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 200 });
           html5QrcodeScanner.render((decodedText) => {
-            const cert = certsData.find(c => c.num === decodedText.trim()); const resEl = document.getElementById('scan-result');
+            const cert = certsData.filter(c => !isRecordDeleted('certs', c.id)).find(c => c.num === decodedText.trim()); const resEl = document.getElementById('scan-result');
             if (cert) { resEl.className = 'text-sm p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold'; resEl.innerHTML = '✅ រកឃើញសញ្ញាបត្រត្រឹមត្រូវ៖<br>' + cert.num + ' - ' + cert.recipient; }
             else { resEl.className = 'text-sm p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 font-bold'; resEl.innerHTML = '⚠️ កូដ៖ ' + decodedText + ' (មិនមានក្នុងបញ្ជីឡើយ)'; }
           });
@@ -2625,7 +3312,7 @@
       } else { modal.classList.add('hidden'); }
     }
 
-    // BOOTSTRAP V5.1
+    // BOOTSTRAP V5.2
     window.addEventListener('DOMContentLoaded', () => {
       initLocalDB();
     });
