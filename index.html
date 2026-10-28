@@ -1931,7 +1931,7 @@ function toggleLang() {
      <td class="p-3.5 text-center whitespace-nowrap space-x-1.5">
         <button onclick="openDocViewerById(${d.id})" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold">👁️ មើល</button>
         <button onclick="editDoc(${d.id})" class="text-blue-600 font-bold text-xs">✏️ កែ</button>
-        ${isAdmin ? '<button onclick="deleteDoc(' + d.id + ')" class="text-rose-600 font-bold text-xs">🗑️ លុប</button>' : ''}
+        ${isAdmin ? '<button onclick="deleteDoc(' + d.id + ')" class="text-rose-600 font-bold text-xs">🗑️ លុប</button> : ''}
       </td>
    </tr>
     `;
