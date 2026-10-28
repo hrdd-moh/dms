@@ -1933,8 +1933,9 @@ function toggleLang() {
         <button onclick="editDoc(${d.id})" class="text-blue-600 font-bold text-xs">✏️ កែ</button>
         ${isAdmin ? `<button onclick="deleteDoc(${d.id})" class="text-rose-600 font-bold text-xs">🗑️ លុប</button>` : ''}
       </td>
-    </tr>
-  `).join('');
+   </tr>
+    `;
+  }).join('');
 }
 
 function editDoc(id) {
