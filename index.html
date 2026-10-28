@@ -704,6 +704,8 @@
         <div class="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 flex items-center justify-between gap-4">
           <div><h4 class="text-xs font-bold text-blue-900">💾 ទាញយកទិន្នន័យប្រព័ន្ធទាំងមូល</h4><p class="text-[11px] text-blue-700 mt-0.5">ទាញយកឯកសារបណ្ណាល័យ លិខិត និងវគ្គបណ្តុះបណ្តាលជា JSON</p></div>
           <button onclick="backupEntireSystem()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs form-input-focus">📥 Export JSON</button>
+        <input type="file" id="restore-json-input" onchange="restoreSystemFromJson(event)" class="hidden" accept=".json">
+<button onclick="document.getElementById('restore-json-input').click()" class="px-4 py-2 bg-amber-600 text-white rounded-xl font-bold ml-2">📤 Restore JSON</button>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
           <div class="p-3.5 bg-emerald-50/50 font-bold text-emerald-900 border-b border-emerald-100">📂 បញ្ជីឯកសារដែលបានផ្ទុកក្នុងប្រព័ន្ធ និង Cloud Storage</div>
@@ -723,24 +725,19 @@
         </div>
       </div>
 
-      <div id="syscontent-logging" class="space-y-3 flex-1 overflow-y-auto pr-1 hidden">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs pb-1">
-          <div class="flex items-center gap-2 w-full sm:w-auto">
-            <span class="text-lg">🔍</span>
-            <input type="text" id="log-search-input" oninput="renderLogsTable()" placeholder="ស្វែងរកតាមសកម្មភាព ឬឈ្មោះមន្ត្រី..." class="form-input-focus border border-slate-200 rounded-xl px-3 py-1.5 text-xs w-full sm:w-72 bg-slate-50">
-          </div>
-          <button onclick="clearActivityLogs()" class="text-rose-600 hover:underline font-bold self-end sm:self-auto form-input-focus">ជម្រះ Logs ចាស់ៗ</button>
-        </div>
-        <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
-          <table class="w-full text-left resizable-table">
-            <thead class="bg-emerald-50/50 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap">
-              <tr><th class="p-3">កាលបរិច្ឆេទ</th><th class="p-3">មន្ត្រី (User)</th><th class="p-3">សកម្មភាព</th><th class="p-3">គោលដៅ</th></tr>
-            </thead>
-            <tbody id="logs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
-          </table>
-        </div>
-      </div>
+      <div id="syscontent-trash" class="flex-1 overflow-y-auto text-xs hidden space-y-3">
+  <div class="p-3 bg-rose-50 text-rose-800 rounded-xl font-bold">🗑️ ទិន្នន័យដែលបានលុប (អាចស្តារមកវិញបាន)</div>
+  <div class="border rounded-2xl overflow-hidden">
+    <table class="w-full text-left">
+      <thead class="bg-slate-100 font-bold">
+        <tr><th class="p-3">តារាង</th><th class="p-3">កូដ/ឈ្មោះ</th><th class="p-3">លុបដោយ</th><th class="p-3">កាលបរិច្ឆេទលុប</th><th class="p-3 text-right">សកម្មភាព</th></tr>
+      </thead>
+      <tbody id="trash-table-body" class="divide-y"></tbody>
+    </table>
+  </div>
+</div>
 
+      
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
           <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.2.5 (Enterprise Sidebar Edition)</h4>
@@ -1015,16 +1012,16 @@
     }
 
     const localDB = new Dexie("DHRD_DB_V4");
-    localDB.version(2).stores({
-        docs: 'id, bureau, code, title, category, fileSize, fileName, storage, createdBy',
-        trainings: 'id, trainee, unit, course, duration, dates, country, sponsor',
-        dispatches: 'id, bureau, type, code, title, stage, location, date, assignee',
-        exams: 'id, major, type, session, candidates, status',
-        certs: 'id, num, recipient, type, date, signer',
-        countries: 'code, kh, en',
-        users: 'id, username',
-        logs: 'id, time, user, action'
-    });
+    localDB.version(3).stores({
+  docs: 'id, bureau, code, title, category, fileSize, fileName, storage, createdBy, deleted_at, deleted_by',
+  trainings: 'id, trainee, unit, course, duration, dates, country, sponsor, deleted_at, deleted_by',
+  dispatches: 'id, bureau, type, code, title, stage, location, date, assignee, deleted_at, deleted_by',
+  exams: 'id, major, type, session, candidates, status, deleted_at, deleted_by',
+  certs: 'id, num, recipient, type, date, signer, deleted_at, deleted_by',
+  countries: 'code, kh, en',
+  users: 'id, username',
+  logs: 'id, time, user, action'
+});
 
     const defaultCountries = [
       { code: 'KH', kh: 'កម្ពុជា', en: 'Cambodia' }, { code: 'JP', kh: 'ជប៉ុន', en: 'Japan' },
@@ -1378,6 +1375,17 @@
     let currentUser = null;
     let activeBureauKey = localStorage.getItem('hrd_moh_active_bureau_cache') || 'bureau_1';
     let activeTab = 'docs';
+    let editingRecordId = null;
+let pageState = { docs: 1, dispatch: 1, exams: 1, training: 1, certs: 1 };
+const PAGE_SIZE = 15;
+let currentLang = localStorage.getItem('hrd_lang') || 'KH';
+
+function toggleLang() {
+  currentLang = currentLang === 'KH' ? 'EN' : 'KH';
+  localStorage.setItem('hrd_lang', currentLang);
+  const btn = document.getElementById('lang-toggle-btn');
+  if (btn) btn.innerText = currentLang === 'KH' ? 'EN' : 'KH'; // បង្ហាញតែ EN ឬ KH គ្មានអក្សរ GB
+}
 
     function showToast(message, isWarning = false) {
       const container = document.getElementById('toast-container');
@@ -1892,6 +1900,52 @@
     }
 
     function renderDocs() {
+      function renderDocs() {
+  const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
+  const search = (document.getElementById('doc-search')?.value || '').toLowerCase();
+  const catFilter = document.getElementById('filter-doc-category')?.value || 'all';
+  const bureauFilter = document.getElementById('filter-doc-bureau')?.value || 'all';
+  const isAdmin = currentUser?.permissions?.admin === true || currentUser?.role === 'SuperAdmin' || currentUser?.bureau === 'all';
+
+  let filtered = docsData.filter(d => !d.deleted_at && d.code !== '__SYSTEM_USERS_REGISTRY__').filter(d => {
+    const matchSearch = !search || (d.title && d.title.toLowerCase().includes(search)) || (d.code && d.code.toLowerCase().includes(search));
+    const matchCat = (catFilter === 'all' || d.category === catFilter);
+    const matchBureau = (bureauFilter === 'all' || d.bureau === bureauFilter);
+    return matchSearch && matchCat && matchBureau;
+  });
+
+  document.getElementById('stat-bureau-docs').innerText = filtered.length;
+  renderPaginationBar('docs-pagination', filtered.length, 'docs', renderDocs);
+  
+  const start = (pageState.docs - 1) * PAGE_SIZE;
+  const limited = filtered.slice(start, start + PAGE_SIZE);
+  if (limited.length === 0) return tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">មិនមានឯកសារឡើយ</td></tr>';
+
+  tbody.innerHTML = limited.map(d => `
+    <tr class="hover:bg-emerald-50 transition">
+      <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${d.code}</td>
+      <td class="p-3.5 font-bold text-slate-900 text-sm">${d.title}</td>
+      <td class="p-3.5 text-center whitespace-nowrap"><span class="px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700">${d.category}</span></td>
+      <td class="p-3.5 text-center whitespace-nowrap"><span class="px-3 py-1 rounded-full text-xs font-bold ${d.driveLink ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${d.driveLink ? '☁️ In Drive' : 'Cloud Record'}</span></td>
+      <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${d.fileSize || '1.0 MB'}</td>
+      <td class="p-3.5 text-center whitespace-nowrap space-x-1.5">
+        <button onclick="openDocViewerById(${d.id})" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold">👁️ មើល</button>
+        <button onclick="editDoc(${d.id})" class="text-blue-600 font-bold text-xs">✏️ កែ</button>
+        ${isAdmin ? `<button onclick="deleteDoc(${d.id})" class="text-rose-600 font-bold text-xs">🗑️ លុប</button>` : ''}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editDoc(id) {
+  const d = docsData.find(x => x.id === id); if (!d) return;
+  editingRecordId = id;
+  document.getElementById('doc-code').value = d.code;
+  document.getElementById('doc-category').value = d.category;
+  document.getElementById('doc-title').value = d.title;
+  const btn = document.getElementById('btn-save-doc');
+  if (btn) btn.innerHTML = '<span>💾 រក្សាទុកការកែប្រែ (Update)</span>';
+}
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
       const search = (document.getElementById('doc-search')?.value || '').toLowerCase();
       const catFilter = document.getElementById('filter-doc-category')?.value || 'all';
@@ -2356,43 +2410,7 @@
       }
     }
 
-    async function deleteDoc(id) { if (confirm('តើអ្នកចង់លុបឯកសារនេះមែនទេ?')) { if (db) await safeDbExec(db.from('docs').delete().eq('id', id)); await localDB.docs.delete(id); docsData = docsData.filter(d => d.id !== id); renderDocs(); showToast('បានលុបឯកសារជោគជ័យ!'); } }
-    function formatDateDisplay(dStr) { if (!dStr) return ''; const parts = dStr.split('-'); return parts.length === 3 ? (parts[2] + '/' + parts[1] + '/' + parts[0].slice(-2)) : dStr; }
-
-    async function handleSaveTraining(e) {
-      e.preventDefault(); const saveBtn = document.getElementById('btn-save-training');
-      const dStart = document.getElementById('train-date-start').value; const dEnd = document.getElementById('train-date-end').value;
-      const newT = { id: generateSafeId(), trainee: document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(), course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value, dates: formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd), country: document.getElementById('train-country-select').value, sponsor: document.getElementById('train-sponsor-input').value.trim() };
-      
-      trainingData.unshift(newT); await localDB.trainings.put(newT); renderTrainingList();
-      if (db) await safeDbExec(db.from('trainings').insert([newT]));
-      showToast('បានរក្សាទុកវគ្គបណ្តុះបណ្តាលទៅ Cloud ជោគជ័យ!');
-      logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល', newT.trainee);
-      
-      e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Record / រក្សាទុក</span>', 2500);
-    }
-    async function deleteTraining(id) { if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យសិក្ខាកាមនេះមែនទេ?')) { if (db) await safeDbExec(db.from('trainings').delete().eq('id', id)); await localDB.trainings.delete(id); trainingData = trainingData.filter(t => t.id !== id); renderTrainingList(); showToast('បានលុបទិន្នន័យជោគជ័យ!'); } }
-
-    async function handleSaveDispatch(e) {
-      e.preventDefault(); const saveBtn = document.getElementById('btn-save-disp');
-      const chosenBureau = document.getElementById('quick-form-target-bureau')?.value || (activeBureauKey === 'all' ? 'bureau_1' : activeBureauKey);
-      const newDisp = { id: generateSafeId(), bureau: chosenBureau, type: document.getElementById('disp-type').value, code: document.getElementById('disp-code').value.trim(), title: document.getElementById('disp-title').value.trim(), stage: document.getElementById('disp-stage').value, location: document.getElementById('disp-location').value, date: document.getElementById('disp-date').value, assignee: document.getElementById('disp-assignee').value.trim() };
-      
-      dispatchData.unshift(newDisp); await localDB.dispatches.put(newDisp); renderDispatch();
-      if (db) await safeDbExec(db.from('dispatches').insert([newDisp]));
-      showToast('បានកត់ត្រាលិខិតទៅ Cloud ជោគជ័យ!');
-      logActivity('កត់ត្រាលិខិត', newDisp.code);
-      
-      e.target.reset(); saveBtn.innerHTML = '<span>✅ រួចរាល់! (Saved)</span>'; setTimeout(() => saveBtn.innerHTML = '<span>Submit Letter / រក្សាទុក</span>', 2500);
-    }
-    async function deleteDispatch(id) { if (confirm('តើអ្នកចង់លុបកត់ត្រានេះមែនទេ?')) { if (db) await safeDbExec(db.from('dispatches').delete().eq('id', id)); await localDB.dispatches.delete(id); dispatchData = dispatchData.filter(d => d.id !== id); renderDispatch(); showToast('បានលុបជោគជ័យ!'); } }
-    
-    async function handleSaveExam(e) { e.preventDefault(); const newE = { id: generateSafeId(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value.trim(), session: document.getElementById('exam-session').value.trim(), candidates: Number(document.getElementById('exam-candidates').value), status: document.getElementById('exam-status').value.trim() }; examsData.unshift(newE); await localDB.exams.put(newE); renderExams(); if (db) await safeDbExec(db.from('exams').insert([newE])); showToast('បានរក្សាទុកសម័យប្រឡងជោគជ័យ!'); logActivity('កត់ត្រាសម័យប្រឡង', newE.major); e.target.reset(); }
-    async function deleteExam(id) { if (confirm('តើអ្នកចង់លុបសម័យប្រឡងនេះមែនទេ?')) { if (db) await safeDbExec(db.from('exams').delete().eq('id', id)); await localDB.exams.delete(id); examsData = examsData.filter(e => e.id !== id); renderExams(); showToast('បានលុបជោគជ័យ!'); } }
-    
-    async function handleSaveCert(e) { e.preventDefault(); const newC = { id: generateSafeId(), num: document.getElementById('cert-num').value.trim(), recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(), date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim() }; certsData.unshift(newC); await localDB.certs.put(newC); renderCerts(); if (db) await safeDbExec(db.from('certs').insert([newC])); showToast('បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!'); logActivity('ចុះបញ្ជីសញ្ញាបត្រ', newC.num); e.target.reset(); }
-    async function deleteCert(id) { if (confirm('តើអ្នកចង់លុបបញ្ជីនេះមែនទេ?')) { if (db) await safeDbExec(db.from('certs').delete().eq('id', id)); await localDB.certs.delete(id); certsData = certsData.filter(c => c.id !== id); renderCerts(); showToast('បានលុបជោគជ័យ!'); } }
-
+   async function deleteDoc(id)
     // ====== SYSTEM TOOLS & USER MANAGEMENT ======
     document.addEventListener('click', (e) => {
       const notifCont = document.getElementById('notif-menu-container');
@@ -2569,6 +2587,23 @@
     function backupEntireSystem() { const fullBackup = { exportedAt: new Date().toISOString(), users: usersData, countries: countriesData, documents: docsData, dispatches: dispatchData, exams: examsData, trainings: trainingData, certificates: certsData }; const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'DHRD_SYSTEM_BACKUP_V2.5_' + Date.now() + '.json'; a.click(); showToast('បាន Export Backup ជោគជ័យ!'); }
     async function clearActivityLogs() { if (confirm('តើអ្នកចង់ជម្រះ Logs ចាស់ៗទាំងអស់មែនទេ?')) { if (db) await safeDbExec(db.from('audit_logs').delete().neq('user', '__USER_SYNC__')); await localDB.logs.clear(); auditLogs = []; renderLogsTable(); showToast('បានជម្រះ Logs ជោគជ័យ!'); } }
 
+    function restoreSystemFromJson(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data.documents)) { docsData = data.documents; await localDB.docs.bulkPut(docsData); if (db) await safeDbExec(db.from('docs').upsert(docsData)); }
+      if (Array.isArray(data.dispatches)) { dispatchData = data.dispatches; await localDB.dispatches.bulkPut(dispatchData); if (db) await safeDbExec(db.from('dispatches').upsert(dispatchData)); }
+      if (Array.isArray(data.trainings)) { trainingData = data.trainings; await localDB.trainings.bulkPut(trainingData); if (db) await safeDbExec(db.from('trainings').upsert(trainingData)); }
+      renderTablesAndStatsOnly();
+      showToast('បានស្តារទិន្នន័យទាំងអស់ពី JSON ជោគជ័យ!');
+    } catch (err) {
+      alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ!');
+    }
+  };
+  reader.readAsText(file);
+}
     // ====== IMPORT / EXPORT / PRINT / QR ======
     function handleImportExcel(e) {
       const file = e.target.files[0]; if (!file) return;
