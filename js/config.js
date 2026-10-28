@@ -1,36 +1,16 @@
+export const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
+export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
 
-body { font-family: 'Battambang', system-ui, -apple-system, sans-serif; }
-.font-moul { font-family: 'Moul', cursive; }
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+export const db = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-input, textarea, select {
-  line-height: 1.625 !important;
-  padding-top: 0.55rem !important;
-  padding-bottom: 0.55rem !important;
-  overflow: visible !important;
-}
-.form-input-focus { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-.form-input-focus:focus-visible { outline: 2px solid #059669; outline-offset: 2px; border-color: transparent; }
-
-table.resizable-table th { position: relative; user-select: none; }
-.col-resizer {
-  position: absolute; top: 0; right: 0; width: 6px; height: 100%;
-  cursor: col-resize; background: transparent; z-index: 20;
-}
-.col-resizer:hover, .col-resizer.resizing { background: #10b981; }
-
-#app-sidebar { transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-#app-sidebar.collapsed { width: 5.25rem; }
-#app-sidebar.collapsed .sidebar-text,
-#app-sidebar.collapsed .sidebar-section-label,
-#app-sidebar.collapsed #sidebar-bureau-box { display: none !important; }
-#app-sidebar.collapsed .sidebar-nav-btn { justify-content: center; padding-left: 0.5rem; padding-right: 0.5rem; }
-
-@media print {
-  body * { visibility: hidden; }
-  #printable-preview-content, #printable-preview-content * { visibility: visible; }
-  #printable-preview-content { position: absolute; left: 0; top: 0; width: 100%; border: none; }
-}
+export const localDB = new Dexie("DHRD_DB_V4");
+localDB.version(2).stores({
+    docs: 'id, bureau, code, title, category, fileSize, fileName, storage, createdBy',
+    trainings: 'id, trainee, unit, course, duration, dates, country, sponsor',
+    dispatches: 'id, bureau, type, code, title, stage, location, date, assignee',
+    exams: 'id, major, type, session, candidates, status',
+    certs: 'id, num, recipient, type, date, signer',
+    countries: 'code, kh, en',
+    users: 'id, username',
+    logs: 'id, time, user, action'
+});
