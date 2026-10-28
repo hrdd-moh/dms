@@ -3,8 +3,11 @@ export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 
 export const db = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-export const localDB = new Dexie("DHRD_DB_V4");
-localDB.version(2).stores({
+// បង្កើត Object បម្រុងទុក (Fallback) ប្រសិនបើ Incognito បិទ IndexedDB
+let tempDexie = null;
+try {
+  tempDexie = new Dexie("DHRD_DB_V4");
+  tempDexie.version(2).stores({
     docs: 'id, bureau, code, title, category, fileSize, fileName, storage, createdBy',
     trainings: 'id, trainee, unit, course, duration, dates, country, sponsor',
     dispatches: 'id, bureau, type, code, title, stage, location, date, assignee',
@@ -13,4 +16,8 @@ localDB.version(2).stores({
     countries: 'code, kh, en',
     users: 'id, username',
     logs: 'id, time, user, action'
-});
+  });
+} catch(e) {
+  console.warn("⚠️ Incognito Mode Blocked IndexedDB. Using RAM Fallback.");
+}
+export const localDB = tempDexie;
