@@ -191,11 +191,15 @@
         <!-- ផ្នែកខាងស្តាំនៃ Top Bar: Sync + KH/EN Switcher + Notification Bell + User Profile -->
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          <!-- ប៊ូតុង Sync -->
-          <button onclick="syncFromSupabase(true)" title="Sync Cloud Data" class="h-9 px-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold flex items-center gap-1.5 transition form-input-focus">
-            <span id="sync-btn-icon" class="text-sm">🔄</span>
-            <span class="hidden sm:inline">Sync</span>
-          </button>
+      <!-- ១. ប៊ូតុង Sync (ទុកតែ Icon វិល គ្មានអក្សរ Sync) -->
+<button onclick="syncFromSupabase(true)" title="ធ្វើសមកាលកម្មទិន្នន័យ" class="w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition">
+  <span id="sync-btn-icon" class="text-sm">🔄</span>
+</button>
+
+<!-- ២. ប៊ូតុងប្តូរភាសា (បង្ហាញតែអក្សរ EN ឬ KH គ្មានពាក្យ GB) -->
+<button onclick="toggleLang()" id="lang-toggle-btn" class="h-9 px-3.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200/80 text-xs font-extrabold flex items-center justify-center transition">
+  EN
+</button>
 
           <!-- ប៊ូតុងប្តូរភាសា KH ⇄ EN (តាមសំណើក្នុងរង្វង់ក្រហមរូបទី១) -->
           <button onclick="toggleAppLanguage()" id="lang-switch-btn" title="ចុចប្តូរភាសា (Switch Language KH / EN)" class="h-9 px-3 rounded-full bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200/80 flex items-center justify-center gap-1.5 text-xs font-extrabold text-slate-700 hover:text-emerald-800 transition form-input-focus cursor-pointer shadow-2xs">
@@ -365,6 +369,7 @@
                   <tbody id="docs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="docs-pagination" class="flex justify-between items-center pt-2 text-xs"></div>
             </div>
 
             <!-- TAB 2: DISPATCH TABLE -->
@@ -401,6 +406,7 @@
                   <tbody id="dispatch-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
               </div>
+              <div id="dispatch-pagination" class="flex justify-between items-center pt-2 text-xs"></div>
             </div>
 
             <!-- TAB 3A: EXAMS -->
@@ -616,6 +622,7 @@
         <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📁 File System</button>
         <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🛡️ Security Center</button>
         <button onclick="switchSystemToolTab('logging')" id="systab-logging" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📋 Audit Logging</button>
+        <button onclick="switchSystemToolTab('trash')" id="systab-trash" class="px-4 py-2 rounded-xl font-bold bg-rose-50 text-rose-600">🗑️ ធុងសំរាម (Recycle Bin)</button>
         <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📖 User Manual</button>
       </div>
 
