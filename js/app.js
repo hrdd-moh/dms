@@ -651,4 +651,17 @@ window.app = {
 
 window.addEventListener('DOMContentLoaded', async () => {
   await initLocalDB();
+  
+  // បង្ខំឱ្យពិនិត្យមើល Session ឱ្យបានត្រឹមត្រូវ បើគ្មាន User ទេ ត្រូវបង្ហាញផ្ទាំង Login ភ្លាម
+  try {
+    const sessionStr = localStorage.getItem('hrd_moh_session_cache');
+    if (sessionStr) {
+      currentUser = JSON.parse(sessionStr);
+      checkAuth();
+    } else {
+      checkAuth(); // ហៅមុខងារ checkAuth ដើម្បីបើក Modal Login ស្វ័យប្រវត្តិ
+    }
+  } catch (e) {
+    checkAuth();
+  }
 });
