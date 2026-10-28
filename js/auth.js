@@ -4,7 +4,6 @@ export const defaultUsers = [
   { id: 3, username: 'user2', password: '123', fullname: 'មន្ត្រីការិយាល័យទី២', role: 'Editor', bureau: 'bureau_2' },
   { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីការិយាល័យទី៣', role: 'Editor', bureau: 'bureau_3' }
 ];
-
 export function authenticateUser(username, password) {
   const u = String(username || '').trim().toLowerCase();
   const p = String(password || '').trim();
