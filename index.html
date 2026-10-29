@@ -2463,13 +2463,20 @@ async function savePermModal() {
         const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
         const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
         const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
-        const actions = canManageUser(u)
-                const editBtn = canEditPerm(u) ? `<button onclick="openPermModal(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
+           function renderUsersTable() {
+      const tbody = document.getElementById('users-table-body'); if (!tbody) return;
+      tbody.innerHTML = usersData.filter(u => u.status !== 'Deleted').map(u => {
+        const fn = u.fullname || u.username || 'U';
+        const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
+        const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
+        const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
+        const editBtn = canEditPerm(u) ? `<button onclick="openPermModal(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
         const actions = editBtn + (canManageUser(u)
           ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${u.status === 'Active' ? 'ផ្អាក (Suspend)' : 'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>`
           : `<span class="text-slate-400 text-xs">${String(u.username).toLowerCase() === 'admin' ? 'Master Account' : (u.username.toLowerCase() === currentUser.username.toLowerCase() ? 'គណនីរបស់អ្នក' : 'Protected')}</span>`);
+        return `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
+      }).join('');
     }
-
     function renderLogsTable() {
       const tbody = document.getElementById('logs-table-body'); if (!tbody) return;
       const q = (document.getElementById('log-search-input')?.value || '').toLowerCase().trim();
