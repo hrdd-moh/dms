@@ -318,7 +318,7 @@
             <!-- TAB: TRACKING (NEW) -->
             <div id="section-tracking" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">🔎 តាមដានឯកសារតាមកូដ</h3>
-              <input id="track-code" type="text" oninput="renderTracking()" placeholder="បញ្ចូលកូដ ឧ. EABA2209081400564346" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono">
+              <input id="track-code" type="text" oninput="trackPickId=null;renderTracking()" placeholder="បញ្ចូលកូដ ឧ. EABA2209081400564346" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono">
               <div id="track-result"></div>
             </div>
 
@@ -1200,12 +1200,24 @@
     }
 
     // រក្សាទុក Record មួយ៖ Local ភ្លាមៗ → Cloud → បើបរាជ័យ សម្គាល់ _pending ដើម្បី Sync ម្តងទៀត
+    let retryTimer = null, retryDelay = 4000;
+    function hasPendingRows() { return DATA_TABLES.some(t => store[t].some(r => r._pending)); }
+    function scheduleRetrySync() {
+      if (retryTimer || !db) return;
+      retryTimer = setTimeout(async () => {
+        retryTimer = null;
+        await syncFromSupabase(false, true);
+        if (hasPendingRows()) { retryDelay = Math.min(retryDelay * 2, 60000); scheduleRetrySync(); } else retryDelay = 4000;
+      }, retryDelay);
+    }
+
     async function persist(table, rec) {
       const idx = store[table].findIndex(r => r.id === rec.id);
       if (idx === -1) store[table].unshift(rec); else store[table][idx] = rec;
       let ok = false;
       if (db) { const res = await cloudUpsert(table, [toCloud(table, rec)]); ok = res.ok && !res.critical; }
       rec._pending = ok ? 0 : 1;
+      if (!ok) scheduleRetrySync();
       try { await localDB[table].put(rec); } catch (e) { console.warn('Local save error', e); }
       return ok;
     }
@@ -1219,6 +1231,7 @@
         let ok = false;
         if (db) { const res = await cloudUpsert(table, chunk.map(r => toCloud(table, r))); ok = res.ok && !res.critical; }
         chunk.forEach(r => { r._pending = ok ? 0 : 1; });
+        if (!ok) scheduleRetrySync();
       }
       try { await localDB[table].bulkPut(recs); } catch (e) { console.warn('Local bulk save error', e); }
     }
@@ -1258,9 +1271,9 @@
       store[table] = sortRecords(merged);
     }
 
-    async function syncFromSupabase(isManual = false) {
+    async function syncFromSupabase(isManual = false, force = false) {
       if (!db || isSyncing) return;
-      if (!isManual && document.hidden) return;
+      if (!isManual && !force && document.hidden) return;
       isSyncing = true;
       const syncIcon = document.getElementById('sync-btn-icon');
       if (syncIcon) syncIcon.classList.add('spin');
@@ -1347,6 +1360,7 @@
       await syncFromSupabase(false);
       setInterval(() => syncFromSupabase(false), SYNC_INTERVAL_MS);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) syncFromSupabase(false); });
+      window.addEventListener('online', () => syncFromSupabase(false, true));
     }
 
     // Session មិនរក្សាទុកពាក្យសម្ងាត់ក្នុង localStorage ទៀតទេ
@@ -1845,22 +1859,20 @@
       const late = diffDays(due, todayISO());
       return late > 0 ? { due, days: late } : null;
     }
-    function renderTracking() {
-      const box = document.getElementById('track-result'); if (!box) return;
-      const q = (document.getElementById('track-code')?.value || '').trim().toUpperCase();
-      if (!q) { box.innerHTML = '<div class="text-sm text-slate-400 text-center py-6">បញ្ចូលកូដដើម្បីតាមដានឯកសារ</div>'; return; }
-      const d = dispatchScopeRows().find(x => String(x.code || '').toUpperCase() === q);
-      if (!d) { box.innerHTML = '<div class="text-sm text-rose-600 text-center py-6">រកមិនឃើញកូដនេះទេ</div>'; return; }
+    let trackPickId = null;
+    function trackNorm(v) { return normalizeKhmerDigits(String(v == null ? '' : v)).replace(/\s+/g, '').toUpperCase(); }
+    function trackingCard(d) {
       const od = overdueInfo(d);
       const hist = Array.isArray(d.stage_history) ? d.stage_history : [];
       const steps = hist.length ? hist : [{ stage: d.stage, location: d.location, by: d.assignee || '-', at: d.created_at || d.date }];
       const badgeCls = od ? 'bg-rose-100 text-rose-700' : (d.stage === STAGE_DONE ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700');
       const badgeTxt = od ? `⚠️ ហួសកំណត់ ${od.days} ថ្ងៃ` : (d.stage === STAGE_DONE ? '✅ រួចរាល់' : '⏳ កំពុងដំណើរការ');
-      box.innerHTML = `
+      return `
         <div class="rounded-2xl border border-slate-200 p-4 space-y-2">
           <div class="flex flex-wrap items-center gap-2">
             <span class="font-mono font-bold text-slate-900">${esc(d.code)}</span>
             <span class="px-2 py-0.5 rounded text-xs font-bold ${badgeCls}">${esc(badgeTxt)}</span>
+            <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-xs font-bold">${esc(bureauShort(d.bureau))}</span>
           </div>
           <div class="font-bold text-slate-800">${esc(d.title)}</div>
           <div class="text-xs text-slate-500">📅 ${esc(d.date)} • 📍 ${esc(d.location || '-')} • ⏳ ${esc(d.stage)}</div>
@@ -1874,6 +1886,21 @@
               ${h.note ? `<div class="text-[11px] text-slate-500 italic">“${esc(h.note)}”</div>` : ''}
             </li>`).join('')}
         </ol>`;
+    }
+    function pickTracking(id) { trackPickId = id; renderTracking(); }
+    function renderTracking() {
+      const box = document.getElementById('track-result'); if (!box || !currentUser) return;
+      const q = trackNorm(document.getElementById('track-code')?.value || '');
+      if (!q) { box.innerHTML = '<div class="text-sm text-slate-400 text-center py-6">បញ្ចូលកូដដើម្បីតាមដានឯកសារ (លេខខ្មែរ ឬឡាតាំង)</div>'; return; }
+      // Admin / SuperAdmin ស្វែងរកបានគ្រប់ការិយាល័យ; អ្នកផ្សេងត្រឹមការិយាល័យខ្លួន
+      const pool = isAdmin() ? activeRows('dispatches') : activeRows('dispatches').filter(d => d.bureau === currentUser.bureau);
+      let hits = pool.filter(x => trackNorm(x.code) === q);
+      if (!hits.length) hits = pool.filter(x => trackNorm(x.code).includes(q));
+      if (!hits.length) { box.innerHTML = '<div class="text-sm text-rose-600 text-center py-6">រកមិនឃើញកូដនេះទេ</div>'; return; }
+      const picked = trackPickId != null ? hits.find(x => x.id === trackPickId) : null;
+      if (picked || hits.length === 1) { box.innerHTML = trackingCard(picked || hits[0]); return; }
+      box.innerHTML = `<div class="text-xs text-slate-500 mb-2">រកឃើញ ${hits.length} កំណត់ត្រា — ជ្រើសរើសមួយ៖</div><div class="space-y-2">` +
+        hits.slice(0, 10).map(d => `<button onclick="pickTracking(${d.id})" class="w-full text-left rounded-xl border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 p-3 transition"><span class="font-mono font-bold text-slate-900">${esc(d.code)}</span> <span class="text-xs text-slate-500">• ${esc(bureauShort(d.bureau))} • ${esc(d.stage)}</span><div class="text-xs text-slate-700 truncate">${esc(d.title)}</div></button>`).join('') + '</div>';
     }
 
     function renderDispatch() {
