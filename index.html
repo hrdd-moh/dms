@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.3 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -84,7 +84,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.3</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -142,7 +142,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -206,6 +206,7 @@
               </div>
               <button onclick="openProfileModal()" class="w-full text-left px-4 py-2 text-xs font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-2.5"><span>👤</span> <span data-i18n="menu_profile_btn">ព័ត៌មានគណនី & រូបថត</span></button>
               <button onclick="openSystemModal('settings')" class="admin-only-item w-full text-left px-4 py-2 text-xs font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-2.5"><span>⚙️</span> <span>System Tools Dashboard</span></button>
+              <div class="admin-only-item px-4 py-2 border-t border-slate-100"><label class="block text-[10px] font-bold text-slate-500 mb-1">⏱️ Logout ស្វ័យប្រវត្តិ (ឧបករណ៍នេះ)</label><select id="idle-select" onchange="setIdleMinutes(this.value)" class="w-full border border-slate-200 rounded-lg p-1.5 text-xs bg-white"></select></div>
               <div class="border-t border-slate-100 my-1"></div>
               <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2.5"><span>🚪</span> <span data-i18n="menu_logout_btn">ចាកចេញពីប្រព័ន្ធ (Logout)</span></button>
             </div>
@@ -446,7 +447,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -544,6 +545,16 @@
     </div>
   </div>
 
+  <!-- V3.4: IDLE WARNING -->
+  <div id="modal-idle" role="alertdialog" aria-modal="true" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-[95] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center space-y-3">
+      <div class="text-4xl">⏳</div>
+      <h3 class="text-base font-bold text-slate-900">អ្នកមិនបានប្រើប្រាស់ប្រព័ន្ធមួយរយៈ</h3>
+      <p class="text-sm text-slate-600">ប្រព័ន្ធនឹង Logout ស្វ័យប្រវត្តិក្នុងរយៈពេល <b id="idle-count" class="text-rose-600 text-lg">60</b> វិនាទី ដើម្បីសុវត្ថិភាព</p>
+      <button onclick="idleStay()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold form-input-focus">✅ ខ្ញុំនៅទីនេះ — បន្តប្រើប្រាស់</button>
+    </div>
+  </div>
+
   <!-- V3.3: RECORD EDITOR -->
   <div id="modal-rec-edit" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[70] flex items-center justify-center p-4 hidden">
     <form onsubmit="saveRecEdit(event)" class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
@@ -592,7 +603,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.3</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -603,7 +614,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.3 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
     </div>
   </div>
 
@@ -772,7 +783,7 @@
       <!-- MANUAL -->
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.3</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1409,7 +1420,8 @@
       } catch (e) { console.warn('Local DB init:', e); usersData = mergeUserLists(); }
 
       const cached = safeJSON(localStorage.getItem('hrd_moh_session_cache'), null);
-      if (cached && cached.username) {
+      if (cached && cached.username && idleSessionExpired()) { setSessionUser(null); setTimeout(() => showToast('🔒 Session ផុតកំណត់ដោយសារអសកម្ម — សូមចូលម្តងទៀត', true), 900); }
+      else if (cached && cached.username) {
         const me = usersData.find(x => x.username.toLowerCase() === String(cached.username).toLowerCase());
         currentUser = (me && me.status !== 'Suspended' && me.status !== 'Deleted') ? normalizeUserFromRecord(me) : null;
         if (!currentUser) setSessionUser(null);
@@ -1446,6 +1458,7 @@
       document.getElementById('current-user-fullname').innerText = fn;
       document.getElementById('dropdown-user-fullname').innerText = fn;
       document.getElementById('dropdown-user-username').innerText = '@' + currentUser.username;
+      const idleSel = document.getElementById('idle-select'); if (idleSel) idleSel.innerHTML = IDLE_OPTIONS.map(v => `<option value="${v}" ${v === idleMinutes() ? 'selected' : ''}>${v ? v + ' នាទី' + (v === IDLE_DEFAULT_MIN ? ' (លំនាំដើម)' : '') : 'មិនបិទ'}</option>`).join('');
       renderUserAvatarUI();
 
       const admin = isAdmin();
@@ -1508,7 +1521,7 @@
       checkAuth();
       showToast(appLang === 'en' ? 'Signed in successfully!' : 'ចូលប្រព័ន្ធជោគជ័យ!');
       if (String(currentUser.username).toLowerCase() === 'admin' && p === 'admin123') showToast('🔐 សូមប្តូរពាក្យសម្ងាត់ Default របស់ admin ភ្លាមៗ!', true);
-      logActivity('ចូលប្រព័ន្ធ', '@' + currentUser.username);
+      idleStay(); logActivity('ចូលប្រព័ន្ធ', '@' + currentUser.username);
       syncFromSupabase(false);
     }
 
@@ -1556,7 +1569,7 @@
       const dd = document.getElementById('notif-dropdown');
       document.getElementById('profile-dropdown')?.classList.add('hidden');
       if (!dd) return; dd.classList.toggle('hidden');
-      if (!dd.classList.contains('hidden')) renderNotifDropdownList();
+      if (!dd.classList.contains('hidden')) { renderNotifDropdownList(); setNotifSeen(Date.now()); notifLastUnread = 0; renderNotifBadge(); }
     }
 
     function toggleProfileDropdown() {
@@ -1564,25 +1577,72 @@
       document.getElementById('profile-dropdown')?.classList.toggle('hidden');
     }
 
-    function renderNotifDropdownList() {
-      const listEl = document.getElementById('notif-dropdown-list'); if (!listEl) return;
-      const overdue = dispatchScopeRows().map(d => ({ d, o: overdueInfo(d) })).filter(x => x.o).sort((a, b) => b.o.days - a.o.days).slice(0, 6);
-      const recent = auditLogs.filter(l => l.user !== '__USER_SYNC__').slice(0, 8);
-      let html = '';
-      if (overdue.length) {
-        html += '<div class="px-4 py-2 bg-rose-50 text-rose-800 font-bold">⚠️ ' + esc(appLang === 'en' ? 'Overdue dispatches' : 'លិខិតហួសកំណត់') + '</div>';
-        html += overdue.map(x => `<button onclick="openStageModal(${x.d.id})" class="w-full text-left px-4 py-2.5 hover:bg-rose-50 transition"><div class="font-bold text-rose-700">${esc(x.d.code)} — ${x.o.days} ${esc(tStr('days'))}</div><div class="text-slate-700 truncate">${esc(x.d.title)}</div><div class="text-[10px] text-slate-400 mt-0.5">${esc(x.d.stage)} • ${esc(x.d.location)}</div></button>`).join('');
-      }
-      if (recent.length) {
-        html += recent.map(l => `<div class="px-4 py-2.5 hover:bg-slate-50 transition"><div class="font-bold text-emerald-700">${esc(l.action)}</div><div class="text-slate-700 truncate">${esc(l.target)}</div><div class="text-[10px] text-slate-400 mt-0.5">${esc(l.user)} • ${esc(formatDT(l.time))}</div></div>`).join('');
-      }
-      listEl.innerHTML = html || '<div class="p-4 text-center text-slate-400">មិនទាន់មានសារជូនដំណឹងថ្មីឡើយ</div>';
+    // ---------- V3.4: សាររំលឹក / សកម្មភាពអ្នកប្រើ ----------
+    let notifPrimedFor = null, notifLastUnread = 0;
+    const NOISE_ACTION = /ចូលប្រព័ន្ធ|ចាកចេញ|Logout|Print|Export|Restore|Backup/i;
+    function notifSeenKey() { return 'hrd_notif_seen_' + (currentUser ? currentUser.username : ''); }
+    function getNotifSeen() { try { return Number(localStorage.getItem(notifSeenKey())) || 0; } catch (e) { return 0; } }
+    function setNotifSeen(t) { try { localStorage.setItem(notifSeenKey(), String(t)); } catch (e) {} }
+    function agoTxt(iso) {
+      const t = Date.parse(iso); if (isNaN(t)) return '';
+      const m = Math.floor((Date.now() - t) / 60000); if (m < 1) return 'អម្បាញ់មិញ';
+      if (m < 60) return m + ' នាទីមុន'; const h = Math.floor(m / 60); if (h < 24) return h + ' ម៉ោងមុន'; return Math.floor(h / 24) + ' ថ្ងៃមុន';
     }
-
+    function logUserBureau(l) { const m = /@([^)]+)\)/.exec(l.user || ''); const u = m && usersData.find(x => String(x.username).toLowerCase() === m[1].toLowerCase()); return u ? u.bureau : null; }
+    function buildNotifs() {
+      const me = currentUser, seen = getNotifSeen(), admin = isAdmin(), mineTag = ('@' + me.username).toLowerCase();
+      const N = { reminders: [], overdue: [], soon: [], mine: [], activity: [] };
+      const rows = dispatchScopeRows(), today = todayISO();
+      rows.forEach(d => {
+        if (isDeleted(d) || d.stage === STAGE_DONE) return;
+        const o = overdueInfo(d); if (o) { N.overdue.push({ d, days: o.days }); return; }
+        const due = isISODate(d.due_date) ? String(d.due_date).slice(0, 10) : addDaysISO(d.date, OVERDUE_DEFAULT_DAYS);
+        if (due) { const left = diffDays(today, due); if (left >= 0 && left <= 2) N.soon.push({ d, left }); }
+      });
+      N.overdue.sort((a, b) => b.days - a.days); N.soon.sort((a, b) => a.left - b.left);
+      const nm = String(me.fullname || '').trim().toLowerCase(), un = String(me.username).toLowerCase();
+      rows.forEach(d => { if (d.stage === STAGE_DONE) return; const a = String(d.assignee || '').trim().toLowerCase(); if (a && (a === nm || a === un)) N.mine.push(d); });
+      // រំលឹករបាយការណ៍ប្រចាំខែ៖ ថ្ងៃទី ២៥→៥ នៃខែបន្ទាប់
+      const now = new Date(), dd = now.getDate();
+      if (dd >= 25 || dd <= 5) {
+        let y = now.getFullYear(), m = now.getMonth() + 1; if (dd <= 5) { m -= 1; if (m < 1) { m = 12; y -= 1; } }
+        const period = y + '-' + String(m).padStart(2, '0');
+        const need = (admin ? ['bureau_1', 'bureau_2', 'bureau_3'] : [me.bureau]).filter(k => OFFICIAL_NAMES[k] && !getNote(k, period));
+        if (need.length) N.reminders.push({ icon: '📝', title: 'ដល់ពេលរៀបចំរបាយការណ៍ប្រចាំខែ' + MONTHS_KH[m - 1] + ' ' + y, sub: 'មិនទាន់មានកំណត់ចំណាំ៖ ' + need.map(k => OFFICIAL_NAMES[k]).join(', '), act: `openMonthlyReport(${y}, ${m})` });
+      }
+      auditLogs.forEach(l => {
+        if (N.activity.length >= 30 || l.user === '__USER_SYNC__' || NOISE_ACTION.test(l.action || '')) return;
+        if (String(l.user || '').toLowerCase().includes(mineTag)) return;
+        const ub = logUserBureau(l); if (!admin && !(ub && (ub === me.bureau || ub === 'all'))) return;
+        N.activity.push({ l, unread: Date.parse(l.time) > seen });
+      });
+      N.unread = N.activity.filter(x => x.unread).length;
+      N.count = N.reminders.length + N.overdue.length + N.soon.length + N.unread;
+      return N;
+    }
+    function openMonthlyReport(y, m) {
+      document.getElementById('notif-dropdown')?.classList.add('hidden');
+      rpt.view = 'official'; rpt.year = y; rpt.month = m; rpt.userKey = null; switchBureauTab('reports');
+    }
+    function renderNotifDropdownList() {
+      const listEl = document.getElementById('notif-dropdown-list'); if (!listEl || !currentUser) return;
+      const N = buildNotifs(), head = (t, cls) => `<div class="px-4 py-1.5 ${cls} font-bold text-[11px]">${t}</div>`;
+      const dRow = (d, line, cls) => `<button onclick="document.getElementById('notif-dropdown').classList.add('hidden');openDocPage(${d.id})" class="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition"><div class="font-bold ${cls}">${esc(d.code)} — ${esc(line)}</div><div class="text-slate-600 truncate">${esc(d.title)}</div></button>`;
+      let h = '';
+      if (N.reminders.length) h += head('🔔 រំលឹក', 'bg-amber-50 text-amber-800') + N.reminders.map(r => `<button onclick="${r.act}" class="w-full text-left px-4 py-2.5 hover:bg-amber-50 transition"><div class="font-bold text-amber-800">${r.icon} ${esc(r.title)}</div><div class="text-slate-600">${esc(r.sub)}</div></button>`).join('');
+      if (N.overdue.length) h += head('⚠️ លិខិតហួសកំណត់ (' + N.overdue.length + ')', 'bg-rose-50 text-rose-800') + N.overdue.slice(0, 6).map(x => dRow(x.d, 'ហួស ' + x.days + ' ថ្ងៃ', 'text-rose-700')).join('');
+      if (N.soon.length) h += head('⏰ ជិតដល់កំណត់ (' + N.soon.length + ')', 'bg-orange-50 text-orange-800') + N.soon.slice(0, 5).map(x => dRow(x.d, x.left === 0 ? 'ផុតកំណត់ថ្ងៃនេះ' : 'នៅសល់ ' + x.left + ' ថ្ងៃ', 'text-orange-700')).join('');
+      if (N.mine.length) h += head('📌 ការងារដែលអ្នកកំពុងកាន់ (' + N.mine.length + ')', 'bg-sky-50 text-sky-800') + N.mine.slice(0, 4).map(d => dRow(d, d.stage || '', 'text-sky-700')).join('');
+      if (N.activity.length) h += head('👥 សកម្មភាពអ្នកដទៃ' + (N.unread ? ' — ថ្មី ' + N.unread : ''), 'bg-slate-50 text-slate-700') + N.activity.slice(0, 12).map(x => `<div class="px-4 py-2.5 ${x.unread ? 'bg-emerald-50/60' : ''}"><div class="font-bold text-emerald-700">${x.unread ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 align-middle"></span>' : ''}${esc(x.l.action)}</div><div class="text-slate-700 truncate">${esc(x.l.target)}</div><div class="text-[10px] text-slate-400 mt-0.5">${esc(x.l.user)} • ${esc(agoTxt(x.l.time))}</div></div>`).join('');
+      listEl.innerHTML = h || '<div class="p-4 text-center text-slate-400">មិនទាន់មានសារជូនដំណឹងថ្មីឡើយ</div>';
+    }
     function renderNotifBadge() {
       const dot = document.getElementById('notif-badge-dot'); if (!dot || !currentUser) return;
-      const n = dispatchScopeRows().filter(overdueInfo).length;
-      if (n > 0) { dot.innerText = n > 99 ? '99+' : String(n); dot.classList.remove('hidden'); dot.classList.add('flex'); }
+      const N = buildNotifs();
+      if (notifPrimedFor !== currentUser.username) { notifPrimedFor = currentUser.username; notifLastUnread = N.unread; }
+      else if (N.unread > notifLastUnread) { showToast('🔔 មានសកម្មភាពថ្មី ' + (N.unread - notifLastUnread) + ' ពីអ្នកប្រើផ្សេង — ចុចរូបកណ្តឹង'); notifLastUnread = N.unread; }
+      else notifLastUnread = N.unread;
+      if (N.count > 0) { dot.innerText = N.count > 99 ? '99+' : String(N.count); dot.classList.remove('hidden'); dot.classList.add('flex'); }
       else { dot.classList.add('hidden'); dot.classList.remove('flex'); }
     }
 
@@ -1743,7 +1803,7 @@
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
       const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8, .xl\\:col-span-12');
-      const hidePanel = activeTab === 'docs' && !isAdmin();
+      const hidePanel = ['tracking', 'reports'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) { mainCol.classList.toggle('xl:col-span-12', hidePanel); mainCol.classList.toggle('xl:col-span-8', !hidePanel); }
       if (hidePanel) { container.innerHTML = ''; return; }
@@ -3535,6 +3595,39 @@
       closeProfileModal(); closeDocViewerModal(); closeSystemModal(); closePrintPreviewModal(); closeStageModal(); toggleScannerModal(false);
     }
 
+    // ---------- V3.4: Logout ស្វ័យប្រវត្តិពេលអសកម្ម ----------
+    const IDLE_DEFAULT_MIN = 15, IDLE_OPTIONS = [5, 10, 15, 30, 60, 0];
+    let idleLast = Date.now(), idleWarn = false, idleTick = null, idleStamp = 0;
+    function idleMinutes() { try { const v = localStorage.getItem('hrd_idle_min'); if (v != null && IDLE_OPTIONS.includes(Number(v))) return Number(v); } catch (e) {} return IDLE_DEFAULT_MIN; }
+    function setIdleMinutes(v) { try { localStorage.setItem('hrd_idle_min', String(Number(v))); } catch (e) {} idleStay(); showToast(Number(v) ? 'Logout ស្វ័យប្រវត្តិ៖ ' + v + ' នាទី (លើឧបករណ៍នេះ)' : 'បានបិទ Logout ស្វ័យប្រវត្តិ (លើឧបករណ៍នេះ)'); }
+    function idleLastActive() { let s = 0; try { s = Number(localStorage.getItem('hrd_last_active')) || 0; } catch (e) {} return Math.max(idleLast, s); }
+    function idleMark() {
+      if (idleWarn) return;
+      const now = Date.now(); idleLast = now;
+      if (now - idleStamp > 5000) { idleStamp = now; try { localStorage.setItem('hrd_last_active', String(now)); } catch (e) {} }
+    }
+    function idleStay() { idleWarn = false; document.getElementById('modal-idle')?.classList.add('hidden'); idleLast = Date.now(); idleStamp = idleLast; try { localStorage.setItem('hrd_last_active', String(idleLast)); } catch (e) {} }
+    function idleSessionExpired() { const lim = idleMinutes() * 60000; if (!lim) return false; let s = 0; try { s = Number(localStorage.getItem('hrd_last_active')) || 0; } catch (e) {} return !!s && Date.now() - s >= lim; }
+    function idleCheck() {
+      if (!currentUser) { if (idleWarn) { idleWarn = false; document.getElementById('modal-idle')?.classList.add('hidden'); } return; }
+      const lim = idleMinutes() * 60000; if (!lim) { if (idleWarn) idleStay(); return; }
+      const idle = Date.now() - idleLastActive(), warnAt = Math.min(60000, lim / 2);
+      if (idle >= lim) {
+        logActivity('Logout ស្វ័យប្រវត្តិ (អសកម្ម)', '@' + currentUser.username);
+        idleWarn = false; document.getElementById('modal-idle')?.classList.add('hidden');
+        document.getElementById('login-username').value = ''; document.getElementById('login-password').value = '';
+        forceLogout('🔒 បានចាកចេញស្វ័យប្រវត្តិ ដោយសារមិនមានសកម្មភាព ' + idleMinutes() + ' នាទី');
+      } else if (idle >= lim - warnAt) {
+        idleWarn = true; document.getElementById('modal-idle')?.classList.remove('hidden');
+        const s = Math.max(0, Math.ceil((lim - idle) / 1000)); const el = document.getElementById('idle-count'); if (el) el.innerText = s;
+      } else if (idleWarn) idleStay();
+    }
+    function startIdleWatcher() {
+      ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(ev => document.addEventListener(ev, idleMark, { passive: true, capture: true }));
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) idleCheck(); });
+      if (!idleTick) idleTick = setInterval(idleCheck, 3000);
+    }
+
     // ---------------- 20. GLOBAL EVENTS & BOOTSTRAP ----------------
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllModals(); });
     document.addEventListener('click', e => {
@@ -3543,7 +3636,7 @@
       const pc = document.getElementById('profile-menu-container'), pd = document.getElementById('profile-dropdown');
       if (pc && pd && !pc.contains(e.target)) pd.classList.add('hidden');
     });
-    window.addEventListener('DOMContentLoaded', () => { initLocalDB(); });
+    window.addEventListener('DOMContentLoaded', () => { startIdleWatcher(); initLocalDB(); });
   </script>
 </body>
 </html>
