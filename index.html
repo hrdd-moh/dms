@@ -1741,6 +1741,12 @@
       const titleEl = document.getElementById('side-panel-header-title');
       const descEl = document.getElementById('side-panel-header-desc');
       if (!container) return;
+      // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
+      const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8, .xl\\:col-span-12');
+      const hidePanel = activeTab === 'docs' && !isAdmin();
+      if (panel) panel.classList.toggle('hidden', hidePanel);
+      if (mainCol) { mainCol.classList.toggle('xl:col-span-12', hidePanel); mainCol.classList.toggle('xl:col-span-8', !hidePanel); }
+      if (hidePanel) { container.innerHTML = ''; return; }
       const en = appLang === 'en';
       const tgt = entryBureau();
       const targetBureauSelectHtml = tgt
@@ -2878,6 +2884,7 @@
     async function handleSaveDoc(e) {
       e.preventDefault();
       if (!can('upload')) return showToast('គ្មានសិទ្ធិ Upload', true);
+      if (!isAdmin()) return showToast('មានតែ Admin / Super Admin ទេដែលអាចបង្ហោះឯកសារក្នុងបណ្ណាល័យរួម', true);
       if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
       const saveBtn = document.getElementById('btn-save-doc');
       if (!currentUploadedFile.rawFile) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
