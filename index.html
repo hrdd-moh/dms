@@ -314,6 +314,13 @@
               <div id="pager-docs"></div>
             </div>
 
+            <!-- TAB: TRACKING (NEW) -->
+            <div id="section-tracking" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">🔎 តាមដានឯកសារតាមកូដ</h3>
+              <input id="track-code" type="text" oninput="renderTracking()" placeholder="បញ្ចូលកូដ ឧ. EABA2209081400564346" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono">
+              <div id="track-result"></div>
+            </div>
+
             <!-- TAB: DISPATCH -->
             <div id="section-dispatch" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
@@ -999,16 +1006,16 @@
         desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' },
           { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
-          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' } ] },
+          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' } ] }
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] }
     };
     function bureauShort(k) { const b = BUREAUS[k]; return b ? (appLang === 'en' ? b.shortNameEn : b.shortName) : (k || '-'); }
     function specialtyTabFor(k) { return k === 'bureau_1' ? 'exams' : (k === 'bureau_3' ? 'certs' : 'training'); }
@@ -1598,7 +1605,7 @@
         const on = t.id === activeTab;
         return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-lg shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span></button>`;
       }).join('');
-      ['docs', 'dispatch', 'exams', 'training', 'certs'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      ['docs', 'dispatch', 'exams', 'training', 'certs', 'tracking'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + activeTab)?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
@@ -1819,8 +1826,40 @@
       const late = diffDays(due, todayISO());
       return late > 0 ? { due, days: late } : null;
     }
+    function renderTracking() {
+      const box = document.getElementById('track-result'); if (!box) return;
+      const q = (document.getElementById('track-code')?.value || '').trim().toUpperCase();
+      if (!q) { box.innerHTML = '<div class="text-sm text-slate-400 text-center py-6">បញ្ចូលកូដដើម្បីតាមដានឯកសារ</div>'; return; }
+      const d = dispatchScopeRows().find(x => String(x.code || '').toUpperCase() === q);
+      if (!d) { box.innerHTML = '<div class="text-sm text-rose-600 text-center py-6">រកមិនឃើញកូដនេះទេ</div>'; return; }
+      const od = overdueInfo(d);
+      const hist = Array.isArray(d.stage_history) ? d.stage_history : [];
+      const steps = hist.length ? hist : [{ stage: d.stage, location: d.location, by: d.assignee || '-', at: d.created_at || d.date }];
+      const badgeCls = od ? 'bg-rose-100 text-rose-700' : (d.stage === STAGE_DONE ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700');
+      const badgeTxt = od ? `⚠️ ហួសកំណត់ ${od.days} ថ្ងៃ` : (d.stage === STAGE_DONE ? '✅ រួចរាល់' : '⏳ កំពុងដំណើរការ');
+      box.innerHTML = `
+        <div class="rounded-2xl border border-slate-200 p-4 space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-mono font-bold text-slate-900">${esc(d.code)}</span>
+            <span class="px-2 py-0.5 rounded text-xs font-bold ${badgeCls}">${esc(badgeTxt)}</span>
+          </div>
+          <div class="font-bold text-slate-800">${esc(d.title)}</div>
+          <div class="text-xs text-slate-500">📅 ${esc(d.date)} • 📍 ${esc(d.location || '-')} • ⏳ ${esc(d.stage)}</div>
+        </div>
+        <ol class="relative border-l-2 border-emerald-200 ml-3 mt-4 space-y-4">
+          ${steps.map((h, i) => `
+            <li class="ml-5 relative">
+              <span class="absolute -left-[27px] mt-1 w-4 h-4 rounded-full border-2 border-white ${i === steps.length - 1 ? 'bg-emerald-600' : 'bg-emerald-300'}"></span>
+              <div class="text-sm font-bold text-slate-900">${esc(h.stage)}</div>
+              <div class="text-[11px] text-slate-600">📍 ${esc(h.location || '-')} • 🕒 ${esc(formatDT(h.at))}</div>
+              ${h.note ? `<div class="text-[11px] text-slate-500 italic">“${esc(h.note)}”</div>` : ''}
+            </li>`).join('')}
+        </ol>`;
+    }
+
     function renderDispatch() {
       const tbody = document.getElementById('dispatch-table-body'); if (!tbody) return;
+      renderTracking();
       const admin = isAdmin(); const view = admin ? activeBureauKey : currentUser.bureau;
       const q = (document.getElementById('filter-disp-search')?.value || '').toLowerCase().trim();
       const typeF = document.getElementById('filter-disp-type')?.value || 'all';
