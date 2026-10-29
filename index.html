@@ -315,6 +315,13 @@
               <div id="pager-docs"></div>
             </div>
 
+            <!-- TAB: REPORTS (NEW) -->
+            <div id="section-reports" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">📈 របាយការណ៍ប្រចាំខែ / ឆ្នាំ</h3>
+              <div id="report-controls" class="flex flex-wrap gap-2 items-end"></div>
+              <div id="report-printable"></div>
+            </div>
+
             <!-- TAB: TRACKING (NEW) -->
             <div id="section-tracking" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">🔎 តាមដានឯកសារតាមកូដ</h3>
@@ -1043,16 +1050,16 @@
         desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' },
           { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
-          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
+          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' } ] }
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
     };
     function bureauShort(k) { const b = BUREAUS[k]; return b ? (appLang === 'en' ? b.shortNameEn : b.shortName) : (k || '-'); }
     function specialtyTabFor(k) { return k === 'bureau_1' ? 'exams' : (k === 'bureau_3' ? 'certs' : 'training'); }
@@ -1664,7 +1671,7 @@
         const on = t.id === activeTab;
         return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-lg shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span></button>`;
       }).join('');
-      ['docs', 'dispatch', 'exams', 'training', 'certs', 'tracking'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      ['docs', 'dispatch', 'exams', 'training', 'certs', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + activeTab)?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
@@ -1673,6 +1680,7 @@
     function renderTablesAndStatsOnly() {
       if (!currentUser) return;
       renderDocs(); renderDispatch();
+      if (activeTab === 'reports') renderReports();
       if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') renderExams();
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') renderTrainingList();
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') renderCerts();
@@ -1885,6 +1893,171 @@
       const late = diffDays(due, todayISO());
       return late > 0 ? { due, days: late } : null;
     }
+    const MONTHS_KH = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'];
+    const rpt = { bureau: null, mode: 'month', year: new Date().getFullYear(), month: new Date().getMonth() + 1, last: null, userKey: null };
+
+    function dayOf(v) {
+      if (!v) return null; const s = String(v);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+      const t = Date.parse(s); if (isNaN(t)) return null;
+      const d = new Date(t); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+    function periodBounds(mode, y, m) {
+      if (mode === 'year') return [y + '-01-01', (y + 1) + '-01-01'];
+      const ny = m === 12 ? y + 1 : y, nm = m === 12 ? 1 : m + 1;
+      return [y + '-' + String(m).padStart(2, '0') + '-01', ny + '-' + String(nm).padStart(2, '0') + '-01'];
+    }
+    function tally(arr, fn) { const m = new Map(); arr.forEach(x => { const k = String(fn(x) || '-').trim() || '-'; m.set(k, (m.get(k) || 0) + 1); }); return [...m.entries()].sort((a, b) => b[1] - a[1]); }
+
+    function buildReport(bureau, mode, y, m) {
+      const [start, end] = periodBounds(mode, y, m);
+      const inRange = (v, s, e) => { const x = dayOf(v); return !!x && x >= s && x < e; };
+      const dAll = activeRows('dispatches').filter(d => bureau === 'all' || d.bureau === bureau);
+      const disp = dAll.filter(d => inRange(d.date, start, end));
+      const histOf = d => Array.isArray(d.stage_history) ? d.stage_history : [];
+      const dueOf = d => isISODate(d.due_date) ? String(d.due_date).slice(0, 10) : addDaysISO(d.date, OVERDUE_DEFAULT_DAYS);
+      const doneRows = disp.filter(d => d.stage === STAGE_DONE);
+      let sumDays = 0, nDays = 0, onTime = 0, nOn = 0;
+      doneRows.forEach(d => {
+        const h = histOf(d); if (!h.length) return;
+        const t0 = Date.parse(h[0].at), t1 = Date.parse(h[h.length - 1].at); if (isNaN(t0) || isNaN(t1)) return;
+        sumDays += (t1 - t0) / 86400000; nDays++;
+        const due = dueOf(d), dn = dayOf(new Date(t1).toISOString()); if (due && dn) { nOn++; if (dn <= due) onTime++; }
+      });
+      const open = disp.filter(d => d.stage !== STAGE_DONE), today = todayISO();
+      const aging = [['0–3 ថ្ងៃ', 0, 3], ['4–7 ថ្ងៃ', 4, 7], ['8–14 ថ្ងៃ', 8, 14], ['15+ ថ្ងៃ', 15, 1e9]].map(([l, a, b]) => [l, open.filter(d => { const age = diffDays(dayOf(d.date) || today, today); return age >= a && age <= b; }).length]);
+      const stageKnown = STAGES.map(st => [st, disp.filter(d => d.stage === st).length]);
+      const stageOther = disp.filter(d => !STAGES.includes(d.stage)).length; if (stageOther) stageKnown.push(['ផ្សេងៗ', stageOther]);
+      const cnt = (s, e) => dAll.filter(d => inRange(d.date, s, e)).length;
+      let prevCount = null, yoyCount = null;
+      if (mode === 'month') { const py = m === 1 ? y - 1 : y, pm = m === 1 ? 12 : m - 1; prevCount = cnt(...periodBounds('month', py, pm)); yoyCount = cnt(...periodBounds('month', y - 1, m)); }
+      else prevCount = cnt(...periodBounds('year', y - 1, 1));
+      const trend = [];
+      for (let i = 0; i < 12; i++) {
+        let ty, tm; if (mode === 'year') { ty = y; tm = i + 1; } else { const idx = (y * 12 + (m - 1)) - (11 - i); ty = Math.floor(idx / 12); tm = idx % 12 + 1; }
+        const [s, e] = periodBounds('month', ty, tm), rows = dAll.filter(d => inRange(d.date, s, e));
+        trend.push({ y: ty, m: tm, in: rows.filter(d => d.type === 'ចូល').length, out: rows.filter(d => d.type === 'ចេញ').length, total: rows.length,
+          done: rows.filter(d => d.stage === STAGE_DONE).length, open: rows.filter(d => d.stage !== STAGE_DONE).length, selected: mode === 'month' ? (ty === y && tm === m) : true });
+      }
+      const exams = (bureau === 'all' || bureau === 'bureau_1') ? activeRows('exams').filter(e => inRange(e.created_at, start, end)) : [];
+      const trainings = (bureau === 'all' || bureau === 'bureau_2') ? activeRows('trainings').filter(t => inRange(t.created_at, start, end)) : [];
+      const certs = (bureau === 'all' || bureau === 'bureau_3') ? activeRows('certs').filter(c => inRange(c.date || c.created_at, start, end)) : [];
+      return { bureau, mode, y, m, start, end, disp, total: disp.length, inCount: disp.filter(d => d.type === 'ចូល').length, outCount: disp.filter(d => d.type === 'ចេញ').length,
+        done: doneRows.length, overdue: open.filter(d => overdueInfo(d)).length, openCount: open.length,
+        onTimePct: nOn ? Math.round(onTime / nOn * 100) : null, onTimeN: onTime, onTimeOf: nOn, avgDays: nDays ? Math.round(sumDays / nDays * 10) / 10 : null,
+        aging, stages: stageKnown, assignees: tally(disp, d => d.assignee).slice(0, 5), prevCount, yoyCount, trend, exams, trainings, certs };
+    }
+
+    function rptDelta(cur, prev) {
+      if (prev == null) return '';
+      if (!prev && !cur) return '<span class="text-slate-400">—</span>';
+      const d = cur - prev, pct = prev ? Math.round(d / prev * 100) + '%' : 'ថ្មី';
+      return `<span class="${d > 0 ? 'text-emerald-600' : d < 0 ? 'text-rose-600' : 'text-slate-400'} font-bold">${d > 0 ? '▲ +' : d < 0 ? '▼ ' : '＝ '}${d}${d ? ' (' + pct + ')' : ''}</span>`;
+    }
+    function rptTable(heads, rows) {
+      return `<div class="overflow-x-auto"><table class="w-full text-xs text-left border border-slate-200 rounded-xl"><thead class="bg-emerald-50 text-emerald-900"><tr>${heads.map((h, i) => `<th class="p-2 font-bold ${i ? 'text-right' : ''}">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.map(r => `<tr class="border-t border-slate-100">${r.map((c, i) => `<td class="p-2 ${i ? 'text-right font-mono' : ''}">${esc(c)}</td>`).join('')}</tr>`).join('') : `<tr><td class="p-3 text-slate-400" colspan="${heads.length}">មិនមានទិន្នន័យ</td></tr>`}</tbody></table></div>`;
+    }
+    function rptChart(trend) {
+      const W = 600, H = 170, pad = 14, bw = (W - pad * 2) / 12, max = Math.max(1, ...trend.map(t => t.total)), yB = H - 24, avail = H - 54;
+      const bars = trend.map((t, i) => {
+        const x = pad + i * bw + 5, w = bw - 10, hIn = (t.in / max) * avail, hOut = (t.out / max) * avail;
+        return `<g opacity="${t.selected ? 1 : 0.45}"><title>${esc(MONTHS_KH[t.m - 1])} ${t.y}: ចូល ${t.in}, ចេញ ${t.out}</title>
+          <rect x="${x}" y="${yB - hIn}" width="${w}" height="${hIn}" fill="#10b981" rx="2"/><rect x="${x}" y="${yB - hIn - hOut}" width="${w}" height="${hOut}" fill="#f59e0b" rx="2"/>
+          <text x="${x + w / 2}" y="${yB - hIn - hOut - 4}" font-size="10" text-anchor="middle" fill="#334155">${t.total || ''}</text>
+          <text x="${x + w / 2}" y="${H - 8}" font-size="10" text-anchor="middle" fill="#64748b">${t.m}</text></g>`;
+      }).join('');
+      return `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" role="img" aria-label="និន្នាការលិខិត ១២ ខែ">${bars}</svg>
+        <div class="flex gap-4 text-[11px] text-slate-500 mt-1"><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500"></span> ចូល</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-yellow-500"></span> ចេញ</span></div>`;
+    }
+    function rptTitle(r) {
+      const bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៣' : (BUREAUS[r.bureau]?.name || r.bureau);
+      return 'របាយការណ៍' + (r.mode === 'month' ? 'ប្រចាំខែ' + MONTHS_KH[r.m - 1] + ' ឆ្នាំ ' + r.y : 'ប្រចាំឆ្នាំ ' + r.y) + ' — ' + bn;
+    }
+
+    function reportHTML(r) {
+      const kpi = (label, value, sub, cls) => `<div class="rounded-2xl border border-slate-200 p-3.5 ${cls || 'bg-white'}"><div class="text-[11px] text-slate-500 font-semibold">${esc(label)}</div><div class="text-2xl font-bold text-slate-900 mt-0.5">${value}</div><div class="text-[11px] mt-0.5">${sub || ''}</div></div>`;
+      const cmp = r.mode === 'month' ? `${rptDelta(r.total, r.prevCount)} <span class="text-slate-400">ធៀបខែមុន</span><br>${rptDelta(r.total, r.yoyCount)} <span class="text-slate-400">ធៀបខែដូចគ្នាឆ្នាំមុន</span>` : `${rptDelta(r.total, r.prevCount)} <span class="text-slate-400">ធៀបឆ្នាំមុន</span>`;
+      let h = `<div class="space-y-5">
+        <div><div class="text-base font-bold text-slate-900">${esc(rptTitle(r))}</div><div class="text-[11px] text-slate-400">ចន្លោះពេល ${esc(r.start)} → ${esc(addDaysISO(r.end, -1))} • លិខិតរាប់តាមថ្ងៃចុះលិខិត</div></div>
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3">
+          ${kpi('លិខិតសរុប', r.total, cmp)}
+          ${kpi('បញ្ចប់រួចរាល់', r.done + '<span class="text-sm text-slate-400"> / ' + r.total + '</span>', r.total ? Math.round(r.done / r.total * 100) + '% នៃសរុប' : '')}
+          ${kpi('ហួសកំណត់ (បច្ចុប្បន្ន)', r.overdue, 'នៅបន្ត ' + r.openCount, r.overdue ? 'bg-rose-50' : 'bg-white')}
+          ${kpi('ទាន់ពេល', r.onTimePct == null ? '—' : r.onTimePct + '%', r.onTimeOf ? r.onTimeN + ' / ' + r.onTimeOf + ' (មានប្រវត្តិដំណាក់កាល)' : 'មិនមានទិន្នន័យ')}
+          ${kpi('រយៈពេលមធ្យម', r.avgDays == null ? '—' : r.avgDays + '<span class="text-sm text-slate-400"> ថ្ងៃ</span>', 'ពីទទួល → បញ្ចប់')}
+        </div>
+        <div class="grid grid-cols-2 gap-3">${kpi('លិខិតចូល', r.inCount, '', 'bg-emerald-50')}${kpi('លិខិតចេញ', r.outCount, '', 'bg-yellow-50')}</div>
+        <div class="rounded-2xl border border-slate-200 p-4"><div class="text-sm font-bold text-slate-900 mb-2">📊 ${r.mode === 'month' ? 'និន្នាការ ១២ ខែចុងក្រោយ' : 'លិខិតតាមខែ ក្នុងឆ្នាំ ' + r.y}</div>${rptChart(r.trend)}</div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div><div class="text-sm font-bold text-slate-900 mb-2">ដំណាក់កាលបច្ចុប្បន្ន</div>${rptTable(['ដំណាក់កាល', 'ចំនួន'], r.stages)}</div>
+          <div><div class="text-sm font-bold text-slate-900 mb-2">អាយុលិខិតដែលនៅបន្ត</div>${rptTable(['អាយុ', 'ចំនួន'], r.aging)}</div>
+          <div><div class="text-sm font-bold text-slate-900 mb-2">អ្នកទទួលខុសត្រូវ (កំពូល ៥)</div>${rptTable(['ឈ្មោះ', 'ចំនួន'], r.assignees)}</div>
+        </div>`;
+      if (r.mode === 'year') h += `<div><div class="text-sm font-bold text-slate-900 mb-2">តារាងប្រចាំខែ ឆ្នាំ ${r.y}</div>${rptTable(['ខែ', 'ចូល', 'ចេញ', 'សរុប', 'បញ្ចប់', 'នៅបន្ត'], r.trend.map(t => [MONTHS_KH[t.m - 1], t.in, t.out, t.total, t.done, t.open]).concat([['សរុបឆ្នាំ', r.inCount, r.outCount, r.total, r.done, r.openCount]]))}</div>`;
+      if (r.bureau === 'all' || r.bureau === 'bureau_1') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🎓 ការិយាល័យទី១ — ការប្រឡងថ្នាក់ជាតិ</div>
+        <div class="text-xs text-slate-600">សម័យប្រឡង ${r.exams.length} • បេក្ខជនសរុប ${r.exams.reduce((a, e) => a + (Number(e.candidates) || 0), 0)}</div>
+        ${rptTable(['ជំនាញ', 'ប្រភេទ', 'សម័យ', 'បេក្ខជន', 'ស្ថានភាព'].map(String), r.exams.map(e => [e.major, e.type, e.session, Number(e.candidates) || 0, e.status || '-']))}</div>`;
+      if (r.bureau === 'all' || r.bureau === 'bureau_2') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🌐 ការិយាល័យទី២ — បណ្តុះបណ្តាលបន្ត</div>
+        <div class="text-xs text-slate-600">សិក្ខាកាមសរុប ${r.trainings.length}</div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4"><div>${rptTable(['ប្រភេទ', 'ចំនួន'], tally(r.trainings, t => t.scope))}</div><div>${rptTable(['ប្រទេស', 'ចំនួន'], tally(r.trainings, t => t.country).slice(0, 8))}</div><div>${rptTable(['ដៃគូឧបត្ថម្ភ', 'ចំនួន'], tally(r.trainings, t => t.sponsor).slice(0, 8))}</div></div>
+        ${rptTable(['វគ្គសិក្សា', 'សិក្ខាកាម'], tally(r.trainings, t => t.course).slice(0, 10))}</div>`;
+      if (r.bureau === 'all' || r.bureau === 'bureau_3') { const nums = r.certs.map(c => c.num).filter(Boolean).sort(); h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">📜 ការិយាល័យទី៣ — ចុះបញ្ជីសញ្ញាបត្រ</div>
+        <div class="text-xs text-slate-600">សញ្ញាបត្រសរុប ${r.certs.length}${nums.length ? ' • ជួរលេខ ' + esc(nums[0]) + ' → ' + esc(nums[nums.length - 1]) : ''}</div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4"><div>${rptTable(['ប្រភេទ', 'ចំនួន'], tally(r.certs, c => c.type))}</div><div>${rptTable(['អ្នកចុះហត្ថលេខា', 'ចំនួន'], tally(r.certs, c => c.signer))}</div></div></div>`; }
+      return h + '</div>';
+    }
+
+    function renderReportControls() {
+      const box = document.getElementById('report-controls'); if (!box) return;
+      const cy = new Date().getFullYear(), years = []; for (let y = cy + 1; y >= cy - 6; y--) years.push(y);
+      const sel = 'form-input-focus border border-slate-200 rounded-xl p-2 text-xs bg-white font-semibold text-slate-700', lab = 'block text-[10px] font-bold text-slate-500 mb-1';
+      box.innerHTML = `
+        <div><label class="${lab}">ការិយាល័យ</label>${isAdmin() ? `<select id="rpt-bureau" onchange="rptSet('bureau', this.value)" class="${sel}">${['all', 'bureau_1', 'bureau_2', 'bureau_3'].map(k => `<option value="${k}" ${k === rpt.bureau ? 'selected' : ''}>${esc(k === 'all' ? 'ការិយាល័យទាំង ៣' : bureauShort(k))}</option>`).join('')}</select>` : `<div class="${sel} bg-slate-50">${esc(bureauShort(rpt.bureau))}</div>`}</div>
+        <div><label class="${lab}">ប្រភេទរបាយការណ៍</label><select id="rpt-mode" onchange="rptSet('mode', this.value)" class="${sel}"><option value="month" ${rpt.mode === 'month' ? 'selected' : ''}>ប្រចាំខែ</option><option value="year" ${rpt.mode === 'year' ? 'selected' : ''}>ប្រចាំឆ្នាំ</option></select></div>
+        <div id="rpt-month-wrap" style="${rpt.mode === 'year' ? 'display:none' : ''}"><label class="${lab}">ខែ</label><select id="rpt-month" onchange="rptSet('month', +this.value)" class="${sel}">${MONTHS_KH.map((n, i) => `<option value="${i + 1}" ${rpt.month === i + 1 ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+        <div><label class="${lab}">ឆ្នាំ</label><select id="rpt-year" onchange="rptSet('year', +this.value)" class="${sel}">${years.map(y => `<option value="${y}" ${rpt.year === y ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
+        <div class="flex gap-2 ml-auto"><button onclick="printReport()" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button><button onclick="exportReportExcel()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button></div>`;
+    }
+    function rptSet(k, v) { rpt[k] = v; const w = document.getElementById('rpt-month-wrap'); if (w) w.style.display = rpt.mode === 'year' ? 'none' : ''; renderReports(); }
+    function renderReports() {
+      const root = document.getElementById('report-printable'); if (!root || !currentUser) return;
+      if (!isAdmin()) rpt.bureau = currentUser.bureau; else if (!rpt.bureau) rpt.bureau = (activeBureauKey && BUREAUS[activeBureauKey]) ? activeBureauKey : 'all';
+      if (rpt.userKey !== currentUser.username || !document.getElementById('rpt-mode')) { rpt.userKey = currentUser.username; renderReportControls(); }
+      rpt.last = buildReport(rpt.bureau, rpt.mode, rpt.year, rpt.month);
+      root.innerHTML = reportHTML(rpt.last);
+    }
+
+    function printReport() {
+      const el = document.getElementById('report-printable'); if (!el || !rpt.last) return;
+      const r = rpt.last, bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៣' : (BUREAUS[r.bureau]?.name || '');
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up ដើម្បី Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(rptTitle(r))}</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet"><style>body{font-family:'Battambang',sans-serif;padding:28px;color:#0f172a}.font-moul{font-family:'Moul',cursive}table{border-collapse:collapse}@media print{body{padding:10px}}</style></head><body>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+          <div style="font-size:13px;line-height:1.7"><div class="font-moul">ក្រសួងសុខាភិបាល</div><div class="font-moul">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div><div>${esc(bn)}</div></div>
+          <div style="text-align:center;font-size:13px;line-height:1.7"><div class="font-moul">ព្រះរាជាណាចក្រកម្ពុជា</div><div class="font-moul">ជាតិ សាសនា ព្រះមហាក្សត្រ</div></div></div>
+        ${el.innerHTML}
+        <div style="display:flex;justify-content:space-between;margin-top:40px;font-size:13px"><div style="text-align:center">អ្នកត្រួតពិនិត្យ<br><br><br><br>.....................</div><div style="text-align:center">រៀបចំដោយ៖ ${esc(currentUser?.fullname || '')}<br>ថ្ងៃទី ${new Date().getDate()} ខែ ${MONTHS_KH[new Date().getMonth()]} ឆ្នាំ ${new Date().getFullYear()}<br><br><br>.....................</div></div>
+        <script>setTimeout(function(){window.print();},800);<\/script></body></html>`);
+      win.document.close();
+      logActivity('Print របាយការណ៍', rptTitle(r));
+    }
+
+    function exportReportExcel() {
+      if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
+      if (!can('download')) return showToast('អ្នកមិនមានសិទ្ធិ Download', true);
+      const r = rpt.last; if (!r) return;
+      const wb = XLSX.utils.book_new(), add = (name, rows) => XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows.length ? rows : [{ 'ព័ត៌មាន': 'មិនមានទិន្នន័យ' }]), name.slice(0, 31));
+      add('សង្ខេប', [['ចំណងជើង', rptTitle(r)], ['លិខិតសរុប', r.total], ['លិខិតចូល', r.inCount], ['លិខិតចេញ', r.outCount], ['បញ្ចប់រួចរាល់', r.done], ['ហួសកំណត់', r.overdue], ['នៅបន្ត', r.openCount],
+        ['ទាន់ពេល (%)', r.onTimePct == null ? '-' : r.onTimePct], ['រយៈពេលមធ្យម (ថ្ងៃ)', r.avgDays == null ? '-' : r.avgDays]].map(([a, b]) => ({ 'សូចនាករ': a, 'តម្លៃ': b })));
+      add('ប្រចាំខែ', r.trend.map(t => ({ 'ឆ្នាំ': t.y, 'ខែ': MONTHS_KH[t.m - 1], 'ចូល': t.in, 'ចេញ': t.out, 'សរុប': t.total, 'បញ្ចប់': t.done, 'នៅបន្ត': t.open })));
+      add('លិខិតចេញ-ចូល', r.disp.map(d => { const od = overdueInfo(d); return { 'កូដ': d.code, 'ចំណងជើង': d.title, 'ប្រភេទ': d.type, 'ការិយាល័យ': bureauShort(d.bureau), 'ថ្ងៃចុះលិខិត': d.date, 'ថ្ងៃផុតកំណត់': d.due_date || '', 'ដំណាក់កាល': d.stage, 'អ្នកទទួលខុសត្រូវ': d.assignee || '', 'ទីតាំង': d.location || '', 'ហួសកំណត់ (ថ្ងៃ)': od ? od.days : 0 }; }));
+      if (r.exams.length || r.bureau === 'bureau_1') add('ប្រឡងថ្នាក់ជាតិ', r.exams.map(e => ({ 'ជំនាញ': e.major, 'ប្រភេទ': e.type, 'សម័យ': e.session, 'បេក្ខជន': e.candidates, 'ស្ថានភាព': e.status })));
+      if (r.trainings.length || r.bureau === 'bureau_2') add('បណ្តុះបណ្តាលបន្ត', r.trainings.map(t => ({ 'ឈ្មោះ': t.trainee, 'អង្គភាព': t.unit, 'វគ្គ': t.course, 'រយៈពេល': t.duration, 'ប្រភេទ': t.scope || '', 'កាលបរិច្ឆេទ': t.dates, 'ប្រទេស': t.country, 'ដៃគូឧបត្ថម្ភ': t.sponsor })));
+      if (r.certs.length || r.bureau === 'bureau_3') add('សញ្ញាបត្រ', r.certs.map(c => ({ 'លេខ': c.num, 'សាមីខ្លួន': c.recipient, 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date, 'ហត្ថលេខា': c.signer })));
+      XLSX.writeFile(wb, 'របាយការណ៍_' + (r.mode === 'month' ? r.y + '-' + String(r.m).padStart(2, '0') : r.y) + '_' + r.bureau + '.xlsx');
+      showToast('បាន Export Excel ជោគជ័យ!'); logActivity('Export របាយការណ៍ Excel', rptTitle(r));
+    }
+
     let docPageId = null;
     function fmtDur(ms) {
       if (!isFinite(ms) || ms < 0) return '-';
