@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.3 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;500;600;700&family=Moul&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
   <style>
@@ -83,7 +84,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.3</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -107,7 +108,7 @@
         <div class="p-3 space-y-1">
           <p class="sidebar-section-label px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400" data-i18n="core_menu_header">ម៉ឺនុយការងារស្នូល</p>
           <div id="bureau-tabs-nav" class="space-y-1"></div>
-          <button onclick="toggleScannerModal(true)" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition form-input-focus">
+          <button id="nav-qr-btn" onclick="toggleScannerModal(true)" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition form-input-focus">
             <span class="text-lg shrink-0">📷</span>
             <span class="sidebar-text truncate" data-i18n="nav_qr_scan">ស្កេនផ្ទៀងផ្ទាត់ QR Code</span>
           </button>
@@ -141,7 +142,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.0 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -374,7 +375,7 @@
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
-                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_category">ប្រភេទ</th><th class="p-3.5 min-w-[200px]" data-i18n="th_major">ជំនាញ / ឯកទេស</th><th class="p-3.5 min-w-[160px]" data-i18n="th_session">សម័យប្រឡង</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_candidates">បេក្ខជន</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_status">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
+                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_category">ប្រភេទ</th><th class="p-3.5 min-w-[200px]" data-i18n="th_major">ជំនាញ / ឯកទេស</th><th class="p-3.5 min-w-[160px]" data-i18n="th_session">សម័យប្រឡង</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_candidates">បេក្ខជន</th><th class="p-3.5 text-center min-w-[170px]">ជាប់ / ធ្លាក់ / អវត្តមាន</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_status">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
                   </thead>
                   <tbody id="exams-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
@@ -405,7 +406,7 @@
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
-                    <tr><th class="p-3.5 min-w-[180px]" data-i18n="th_trainee">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_unit">អង្គភាព</th><th class="p-3.5 min-w-[200px]" data-i18n="th_course">វគ្គសិក្សា</th><th class="p-3.5 text-center min-w-[90px]" data-i18n="th_duration">រយៈពេល</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_country">ប្រទេស</th><th class="p-3.5 min-w-[150px]" data-i18n="th_sponsor">ឧបត្ថម្ភ</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
+                    <tr><th class="p-3.5 min-w-[180px]" data-i18n="th_trainee">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_unit">អង្គភាព</th><th class="p-3.5 min-w-[200px]" data-i18n="th_course">វគ្គសិក្សា</th><th class="p-3.5 text-center min-w-[130px]">ភេទ · ថ្នាក់</th><th class="p-3.5 text-center min-w-[90px]" data-i18n="th_duration">រយៈពេល</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_country">ប្រទេស</th><th class="p-3.5 min-w-[150px]" data-i18n="th_sponsor">ឧបត្ថម្ភ</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
                   </thead>
                   <tbody id="training-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
@@ -445,7 +446,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.0 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -543,6 +544,25 @@
     </div>
   </div>
 
+  <!-- V3.3: RECORD EDITOR -->
+  <div id="modal-rec-edit" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[70] flex items-center justify-center p-4 hidden">
+    <form onsubmit="saveRecEdit(event)" class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 id="rec-edit-title" class="text-base font-bold text-slate-900">✏️ កែសម្រួល</h3>
+        <button type="button" onclick="closeRecEdit()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none">✕</button></div>
+      <div id="rec-edit-body" class="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto"></div>
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-100"><button type="button" onclick="closeRecEdit()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">💾 រក្សាទុកការកែ</button></div>
+    </form>
+  </div>
+
+  <!-- V3.3: REPORT NOTES -->
+  <div id="modal-rpt-notes" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[70] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-3 max-h-[92vh] flex flex-col">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📝 កំណត់ចំណាំរបាយការណ៍ប្រចាំខែ</h3>
+        <button type="button" onclick="closeRptNotes()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none">✕</button></div>
+      <div id="rpt-notes-body" class="space-y-3 overflow-y-auto"></div>
+    </div>
+  </div>
+
   <!-- STAGE HISTORY / UPDATE -->
   <div id="modal-stage" role="dialog" aria-modal="true" aria-labelledby="stage-modal-title" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[68] flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
@@ -572,7 +592,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.3</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -583,7 +603,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.0 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.3 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
     </div>
   </div>
 
@@ -752,7 +772,7 @@
       <!-- MANUAL -->
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.3</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -841,12 +861,12 @@
     const CLOUD_FETCH_MAX = 10000;
     const SYSTEM_USER_REGISTRY_ID = 999999999;
     const SYSTEM_USER_REGISTRY_CODE = "__SYSTEM_USERS_REGISTRY__";
-    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs'];
-    const CRITICAL_COLS = ['deleted_at', 'stage_history', 'due_date'];
+    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes'];
+    const CRITICAL_COLS = ['deleted_at', 'stage_history', 'due_date', 'gender', 'level', 'start_date', 'end_date', 'institution', 'passed', 'failed', 'absent'];
     const STAGE_DONE = 'បញ្ចប់រួចរាល់';
     const STAGES = ['រដ្ឋបាលទទួល', 'កំពុងពិនិត្យបច្ចេកទេស', 'រង់ចាំចំណារ/ហត្ថលេខា', 'បញ្ចប់រួចរាល់'];
     const LOCATIONS = ['ការិយាល័យសាមី', 'ប្រធាននាយកដ្ឋាន (DHRD)', 'អគ្គនាយកដ្ឋានសុខាភិបាល', 'ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី', 'ទីស្តីការគណៈរដ្ឋមន្ត្រី', 'ក្រសួងមុខងារសាធារណៈ'];
-    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', certs: '📜 សញ្ញាបត្រ', users: '👤 គណនី' };
+    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', certs: '📜 សញ្ញាបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', users: '👤 គណនី' };
 
     // ---------------- 2. I18N ----------------
     let appLang = localStorage.getItem('hrd_moh_lang_cache') || 'km';
@@ -989,13 +1009,14 @@
       dispatches: 'id, bureau, type, code, title, stage, location, date, assignee',
       exams: 'id, major, type, session, candidates, status',
       certs: 'id, num, recipient, type, date, signer',
+      report_notes: 'id, bureau, period',
       countries: 'code, kh, en',
       users: 'id, username',
       logs: 'id, time, user, action'
     };
     function makeLocalDB(name, memory) {
       const d = (window.Dexie && !memory) ? new Dexie(name) : new MemoryDB();
-      d.version(2).stores(LOCAL_SCHEMA);
+      d.version(3).stores(LOCAL_SCHEMA);
       return d;
     }
     let localDB = makeLocalDB('DHRD_DB_V4');
@@ -1028,7 +1049,7 @@
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
     ];
 
-    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [] };
+    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [] };
     let countriesData = [...defaultCountries];
     let usersData = [];
     let auditLogs = [];
@@ -1043,6 +1064,12 @@
     const missingCloudCols = new Set();
     let migrationWarned = false, identityWarned = false;
 
+    // ការិយាល័យគោលដៅនៃការបញ្ចូល៖ តាម User ដែលមានសិទ្ធិ (Admin → តាមការិយាល័យដែលបានជ្រើសនៅ Sidebar)
+    function entryBureau() {
+      if (!currentUser) return null;
+      if (isAdmin()) return (activeBureauKey !== 'all' && BUREAUS[activeBureauKey]) ? activeBureauKey : null;
+      return (currentUser.bureau && currentUser.bureau !== 'all' && BUREAUS[currentUser.bureau]) ? currentUser.bureau : null;
+    }
     function activeRows(table) { return store[table].filter(r => !isDeleted(r)); }
 
     const BUREAUS = {
@@ -1171,7 +1198,7 @@
       renderMigrationStatus();
       if (migrationWarned) return;
       migrationWarned = true;
-      showToast('Supabase ខ្វះ column ថ្មី (' + col + ')។ សូម Run ហ្វាល supabase-migration-v3.0.sql ក្នុង SQL Editor', true);
+      showToast('Supabase ខ្វះ column ថ្មី (' + col + ')។ សូម Run ហ្វាល supabase-migration-v3.3.sql ក្នុង SQL Editor', true);
     }
 
     function hasValue(v) { return v != null && v !== '' && !(Array.isArray(v) && v.length === 0); }
@@ -1193,7 +1220,7 @@
         const m = /Could not find the '([^']+)' column/i.exec(res.error.message || '') || /column "([^"]+)" of relation/i.exec(res.error.message || '');
         if (!m) {
           console.warn('Cloud upsert error [' + table + ']:', res.error);
-          if (/GENERATED ALWAYS|identity column|non-DEFAULT value/i.test([res.error.message, res.error.details, res.error.hint].join(' ')) && !identityWarned) { identityWarned = true; showToast('Supabase: column id ជា GENERATED ALWAYS (' + table + ') — សូម Run supabase-migration-v3.0.sql ក្នុង SQL Editor', true); }
+          if (/GENERATED ALWAYS|identity column|non-DEFAULT value/i.test([res.error.message, res.error.details, res.error.hint].join(' ')) && !identityWarned) { identityWarned = true; showToast('Supabase: column id ជា GENERATED ALWAYS (' + table + ') — សូម Run supabase-migration-v3.3.sql ក្នុង SQL Editor', true); }
           return { ok: false, critical: false };
         }
         const col = m[1];
@@ -1228,6 +1255,7 @@
       }
       const o = { ...r };
       if (table === 'dispatches') { const h = safeJSON(o.stage_history, []); o.stage_history = Array.isArray(h) ? h : []; }
+      if (table === 'report_notes') { const n = safeJSON(o.nums, {}); o.nums = (n && typeof n === 'object') ? n : {}; }
       return o;
     }
 
@@ -1450,7 +1478,9 @@
       document.querySelectorAll('.admin-only-item, .admin-only-tab').forEach(el => el.style.display = admin ? '' : 'none');
       document.querySelectorAll('.perm-upload-el').forEach(el => el.style.display = can('upload') ? '' : 'none');
       document.querySelectorAll('.perm-download-el').forEach(el => el.style.display = can('download') ? '' : 'none');
+      const qrBtn = document.getElementById('nav-qr-btn'); if (qrBtn) qrBtn.style.display = canUseQR() ? '' : 'none';
     }
+    function canUseQR() { return !!currentUser && (isAdmin() || currentUser.bureau === 'bureau_3'); }
 
     function togglePasswordVisibility() { const p = document.getElementById('login-password'); p.type = (p.type === 'password') ? 'text' : 'password'; }
 
@@ -1712,11 +1742,10 @@
       const descEl = document.getElementById('side-panel-header-desc');
       if (!container) return;
       const en = appLang === 'en';
-      const targetBureauSelectHtml = activeBureauKey === 'all' ? `
-        <div><label class="block text-xs font-bold text-emerald-800 mb-1">${en ? '🏛️ Target Bureau *' : '🏛️ ជ្រើសរើសការិយាល័យគោលដៅ *'}</label>
-          <select id="quick-form-target-bureau" class="form-input-focus w-full border border-emerald-300 rounded-xl p-2.5 bg-emerald-50/50 font-bold text-emerald-950">
-            <option value="bureau_1">១. ការិយាល័យទី១ (មុនពេលបម្រើការងារ)</option><option value="bureau_2">២. ការិយាល័យទី២ (បណ្តុះបណ្តាលបន្ត)</option><option value="bureau_3">៣. ការិយាល័យទី៣ (ចុះបញ្ជិកា និងសញ្ញាបត្រ)</option>
-          </select></div>` : '';
+      const tgt = entryBureau();
+      const targetBureauSelectHtml = tgt
+        ? `<div class="flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">🏛️ ${en ? 'Entry to' : 'បញ្ចូលទៅ'}៖ ${esc(bureauShort(tgt))}</div>`
+        : `<div class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">⚠️ ${en ? 'Select a specific bureau in the sidebar first' : 'សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន ទើបអាចបញ្ចូលបាន'}</div>`;
       const headers = {
         training: ['🌐', en ? 'Quick Add Training' : 'បញ្ចូលវគ្គបណ្តុះបណ្តាលរហ័ស', 'Continuing Training Entry'],
         dispatch: ['🔄', en ? 'Quick Add Dispatch' : 'កត់ត្រាលិខិតចេញ-ចូលរហ័ស', 'Dispatch Letter Entry'],
@@ -1737,6 +1766,7 @@
         container.innerHTML = `
           <form id="form-quick-training" onsubmit="handleSaveTraining(event)" class="space-y-3.5 text-sm font-medium">
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Trainee Name *' : 'ឈ្មោះសិក្ខាកាម *'}</label><input type="text" id="train-trainee" required placeholder="ឧ. លោកវេជ្ជ. នង មុន្នីពេជ្យ" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
+            <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Gender' : 'ភេទ'}</label><select id="train-gender" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— មិនបញ្ជាក់ —</option><option value="ប្រុស">ប្រុស</option><option value="ស្រី">ស្រី</option></select></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Level' : 'ថ្នាក់ / កម្រិត'}</label><select id="train-level" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— តាមរយៈពេល —</option>${LEVELS.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('')}</select></div></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Role & Organization *' : 'តួនាទី និងអង្គភាព *'}</label><input type="text" id="train-unit" required placeholder="ឧ. មន្ទីរពេទ្យកាល់ម៉ែត" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Training Course *' : 'វគ្គសិក្សា *'}</label><input type="text" id="train-course" required placeholder="ឈ្មោះវគ្គសិក្សា..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Duration *' : 'រយៈពេល *'}</label><input type="text" id="train-duration" required placeholder="6M, 1A..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Scope' : 'ប្រភេទ'}</label><select id="train-scope-input" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"><option value="International">✈️ ក្រៅប្រទេស</option><option value="Domestic">🇰🇭 ក្នុងប្រទេស</option></select></div></div>
@@ -1763,10 +1793,13 @@
         container.innerHTML = `
           <form onsubmit="handleSaveExam(event)" class="space-y-3.5 text-sm font-medium">
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Major / Specialty' : 'ជំនាញ / ឯកទេស'}</label><input type="text" id="exam-major" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Exam Type' : 'ប្រភេទ'}</label><select id="exam-type" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="ប្រឡងចូល">ប្រឡងចូល</option><option value="ប្រឡងចេញ">ប្រឡងចេញ</option></select></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Exam Type' : 'ប្រភេទ'}</label><select id="exam-type" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXAM_TYPES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join("")}</select></div>
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Session' : 'សម័យប្រឡង'}</label><input type="text" id="exam-session" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Total Candidates' : 'ចំនួនបេក្ខជនសរុប'}</label><input type="number" min="0" id="exam-candidates" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Status' : 'ស្ថានភាព'}</label><input type="text" id="exam-status" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="កំពុងរៀបចំវិញ្ញាសា"></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">គ្រឹះស្ថាន (ជម្រើស)</label><input type="text" id="exam-institution" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="ឧ. សាកលវិទ្យាល័យន័រតុន"></div>
+            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ថ្ងៃប្រឡង (ចាប់ផ្តើម)</label><input type="date" id="exam-start" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="exam-end" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
+            <div class="grid grid-cols-3 gap-2 bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200"><div class="col-span-3 text-[11px] font-bold text-emerald-800">លទ្ធផល (ទុកទទេបើមិនទាន់ដឹង — កែបានក្រោយដោយ ✏️)</div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ជាប់</label><input type="number" min="0" id="exam-passed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ធ្លាក់</label><input type="number" min="0" id="exam-failed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">អវត្តមាន</label><input type="number" min="0" id="exam-absent" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
             <button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">Submit Exam</button>
           </form>`;
       } else if (activeTab === 'certs') {
@@ -1939,8 +1972,8 @@
         trend.push({ y: ty, m: tm, in: rows.filter(d => d.type === 'ចូល').length, out: rows.filter(d => d.type === 'ចេញ').length, total: rows.length,
           done: rows.filter(d => d.stage === STAGE_DONE).length, open: rows.filter(d => d.stage !== STAGE_DONE).length, selected: mode === 'month' ? (ty === y && tm === m) : true });
       }
-      const exams = (bureau === 'all' || bureau === 'bureau_1') ? activeRows('exams').filter(e => inRange(e.created_at, start, end)) : [];
-      const trainings = (bureau === 'all' || bureau === 'bureau_2') ? activeRows('trainings').filter(t => inRange(t.created_at, start, end)) : [];
+      const exams = (bureau === 'all' || bureau === 'bureau_1') ? activeRows('exams').filter(e => inRange(e.start_date || e.created_at, start, end)) : [];
+      const trainings = (bureau === 'all' || bureau === 'bureau_2') ? activeRows('trainings').filter(t => inRange(trainStart(t), start, end)) : [];
       const certs = (bureau === 'all' || bureau === 'bureau_3') ? activeRows('certs').filter(c => inRange(c.date || c.created_at, start, end)) : [];
       return { bureau, mode, y, m, start, end, disp, total: disp.length, inCount: disp.filter(d => d.type === 'ចូល').length, outCount: disp.filter(d => d.type === 'ចេញ').length,
         done: doneRows.length, overdue: open.filter(d => overdueInfo(d)).length, openCount: open.length,
@@ -1996,7 +2029,7 @@
       if (r.mode === 'year') h += `<div><div class="text-sm font-bold text-slate-900 mb-2">តារាងប្រចាំខែ ឆ្នាំ ${r.y}</div>${rptTable(['ខែ', 'ចូល', 'ចេញ', 'សរុប', 'បញ្ចប់', 'នៅបន្ត'], r.trend.map(t => [MONTHS_KH[t.m - 1], t.in, t.out, t.total, t.done, t.open]).concat([['សរុបឆ្នាំ', r.inCount, r.outCount, r.total, r.done, r.openCount]]))}</div>`;
       if (r.bureau === 'all' || r.bureau === 'bureau_1') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🎓 ការិយាល័យទី១ — ការប្រឡងថ្នាក់ជាតិ</div>
         <div class="text-xs text-slate-600">សម័យប្រឡង ${r.exams.length} • បេក្ខជនសរុប ${r.exams.reduce((a, e) => a + (Number(e.candidates) || 0), 0)}</div>
-        ${rptTable(['ជំនាញ', 'ប្រភេទ', 'សម័យ', 'បេក្ខជន', 'ស្ថានភាព'].map(String), r.exams.map(e => [e.major, e.type, e.session, Number(e.candidates) || 0, e.status || '-']))}</div>`;
+        ${rptTable(['ជំនាញ', 'ប្រភេទ', 'សម័យ', 'បេក្ខជន', 'ជាប់', 'ធ្លាក់', 'អវត្តមាន'], r.exams.map(e => [e.major, e.type, e.session, Number(e.candidates) || 0, e.passed ?? '-', e.failed ?? '-', e.absent ?? '-']))}</div>`;
       if (r.bureau === 'all' || r.bureau === 'bureau_2') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🌐 ការិយាល័យទី២ — បណ្តុះបណ្តាលបន្ត</div>
         <div class="text-xs text-slate-600">សិក្ខាកាមសរុប ${r.trainings.length}</div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4"><div>${rptTable(['ប្រភេទ', 'ចំនួន'], tally(r.trainings, t => t.scope))}</div><div>${rptTable(['ប្រទេស', 'ចំនួន'], tally(r.trainings, t => t.country).slice(0, 8))}</div><div>${rptTable(['ដៃគូឧបត្ថម្ភ', 'ចំនួន'], tally(r.trainings, t => t.sponsor).slice(0, 8))}</div></div>
@@ -2011,23 +2044,35 @@
       const box = document.getElementById('report-controls'); if (!box) return;
       const cy = new Date().getFullYear(), years = []; for (let y = cy + 1; y >= cy - 6; y--) years.push(y);
       const sel = 'form-input-focus border border-slate-200 rounded-xl p-2 text-xs bg-white font-semibold text-slate-700', lab = 'block text-[10px] font-bold text-slate-500 mb-1';
+      const offv = rpt.view === 'official';
+      const tab = (v, t) => `<button onclick="rptSet('view','${v}')" class="px-3 py-2 rounded-xl text-xs font-bold ${rpt.view === v ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-emerald-50'}">${t}</button>`;
       box.innerHTML = `
+        <div class="w-full flex flex-wrap gap-2 mb-1">${tab('stats', '📊 ស្ថិតិ / KPI')}${tab('official', '📄 របាយការណ៍ផ្លូវការ (I / II / III)')}</div>
         <div><label class="${lab}">ការិយាល័យ</label>${isAdmin() ? `<select id="rpt-bureau" onchange="rptSet('bureau', this.value)" class="${sel}">${['all', 'bureau_1', 'bureau_2', 'bureau_3'].map(k => `<option value="${k}" ${k === rpt.bureau ? 'selected' : ''}>${esc(k === 'all' ? 'ការិយាល័យទាំង ៣' : bureauShort(k))}</option>`).join('')}</select>` : `<div class="${sel} bg-slate-50">${esc(bureauShort(rpt.bureau))}</div>`}</div>
-        <div><label class="${lab}">ប្រភេទរបាយការណ៍</label><select id="rpt-mode" onchange="rptSet('mode', this.value)" class="${sel}"><option value="month" ${rpt.mode === 'month' ? 'selected' : ''}>ប្រចាំខែ</option><option value="year" ${rpt.mode === 'year' ? 'selected' : ''}>ប្រចាំឆ្នាំ</option></select></div>
-        <div id="rpt-month-wrap" style="${rpt.mode === 'year' ? 'display:none' : ''}"><label class="${lab}">ខែ</label><select id="rpt-month" onchange="rptSet('month', +this.value)" class="${sel}">${MONTHS_KH.map((n, i) => `<option value="${i + 1}" ${rpt.month === i + 1 ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+        ${offv ? '' : `<div><label class="${lab}">ប្រភេទរបាយការណ៍</label><select id="rpt-mode" onchange="rptSet('mode', this.value)" class="${sel}"><option value="month" ${rpt.mode === 'month' ? 'selected' : ''}>ប្រចាំខែ</option><option value="year" ${rpt.mode === 'year' ? 'selected' : ''}>ប្រចាំឆ្នាំ</option></select></div>`}
+        <div id="rpt-month-wrap" style="${!offv && rpt.mode === 'year' ? 'display:none' : ''}"><label class="${lab}">ខែ</label><select id="rpt-month" onchange="rptSet('month', +this.value)" class="${sel}">${MONTHS_KH.map((n, i) => `<option value="${i + 1}" ${rpt.month === i + 1 ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
         <div><label class="${lab}">ឆ្នាំ</label><select id="rpt-year" onchange="rptSet('year', +this.value)" class="${sel}">${years.map(y => `<option value="${y}" ${rpt.year === y ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
-        <div class="flex gap-2 ml-auto"><button onclick="printReport()" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button><button onclick="exportReportExcel()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button></div>`;
+        ${offv ? `<label class="flex items-center gap-1.5 text-xs font-bold text-slate-600 pb-2"><input type="checkbox" ${rpt.kh ? 'checked' : ''} onchange="rptSet('kh', this.checked)"> លេខខ្មែរ</label>` : ''}
+        <div class="flex flex-wrap gap-2 ml-auto">${offv
+          ? `${can('edit') ? `<button onclick="openRptNotes()" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold">📝 កំណត់ចំណាំ / បញ្ហាប្រឈម</button>` : ''}<button onclick="exportReportWord()" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">📄 Word (.docx)</button><button onclick="printReport()" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button>`
+          : `<button onclick="printReport()" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button><button onclick="exportReportExcel()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button>`}</div>`;
     }
-    function rptSet(k, v) { rpt[k] = v; const w = document.getElementById('rpt-month-wrap'); if (w) w.style.display = rpt.mode === 'year' ? 'none' : ''; renderReports(); }
+    function rptSet(k, v) { rpt[k] = v; renderReportControls(); renderReports(); }
     function renderReports() {
       const root = document.getElementById('report-printable'); if (!root || !currentUser) return;
       if (!isAdmin()) rpt.bureau = currentUser.bureau; else if (!rpt.bureau) rpt.bureau = (activeBureauKey && BUREAUS[activeBureauKey]) ? activeBureauKey : 'all';
-      if (rpt.userKey !== currentUser.username || !document.getElementById('rpt-mode')) { rpt.userKey = currentUser.username; renderReportControls(); }
+      if (rpt.userKey !== currentUser.username || !document.getElementById('rpt-year')) { rpt.userKey = currentUser.username; renderReportControls(); }
+      if (rpt.view === 'official') {
+        rpt.off = buildOfficial(rpt.bureau, rpt.year, rpt.month);
+        root.innerHTML = officialWarnHTML(rpt.off) + `<div class="rounded-2xl border border-slate-200 bg-slate-50 p-3 overflow-x-auto">${officialDocHTML(rpt.off)}</div>`;
+        return;
+      }
       rpt.last = buildReport(rpt.bureau, rpt.mode, rpt.year, rpt.month);
       root.innerHTML = reportHTML(rpt.last);
     }
 
     function printReport() {
+      if (rpt.view === 'official') return printOfficial();
       const el = document.getElementById('report-printable'); if (!el || !rpt.last) return;
       const r = rpt.last, bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៣' : (BUREAUS[r.bureau]?.name || '');
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up ដើម្បី Print', true);
@@ -2056,6 +2101,385 @@
       if (r.certs.length || r.bureau === 'bureau_3') add('សញ្ញាបត្រ', r.certs.map(c => ({ 'លេខ': c.num, 'សាមីខ្លួន': c.recipient, 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date, 'ហត្ថលេខា': c.signer })));
       XLSX.writeFile(wb, 'របាយការណ៍_' + (r.mode === 'month' ? r.y + '-' + String(r.m).padStart(2, '0') : r.y) + '_' + r.bureau + '.xlsx');
       showToast('បាន Export Excel ជោគជ័យ!'); logActivity('Export របាយការណ៍ Excel', rptTitle(r));
+    }
+
+    // =====================================================================
+    // V3.3 — OFFICIAL MONTHLY REPORT (I. លទ្ធផល / II. បញ្ហាប្រឈម / III. ទិសដៅបន្ត) + RECORD EDITOR + WORD EXPORT
+    // =====================================================================
+    const KD = '០១២៣៤៥៦៧៨៩';
+    rpt.view = 'stats'; rpt.kh = true; rpt.off = null; rpt.notesBureau = null;
+    const LEVELS = ['វគ្គខ្លី', 'បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត', 'ផ្សេងៗ'];
+    const LONG_LEVELS = ['បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត'];
+    const EXAM_TYPES = ['ប្រឡងបញ្ចប់ការសិក្សាផ្ទៃក្នុង', 'ប្រឡងចូល', 'ប្រឡងចេញ'];
+    const OFFICIAL_NAMES = { bureau_1: 'ការិយាល័យបណ្តុះបណ្តាលមូលដ្ឋាន', bureau_2: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', bureau_3: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ' };
+    const OFFICIAL_LETTER = { bureau_1: 'ក', bureau_2: 'ខ', bureau_3: 'គ' };
+    const NOTE_NUMS = {
+      bureau_1: [
+        ['equiv_in', 'បានទទួលពាក្យស្នើសុំសមមូលសញ្ញាបត្រពីក្រៅប្រទេស (នាក់)', 'number'],
+        ['equiv_in_detail', 'ក្នុងនោះមាន… (ឧ. វេជ្ជបណ្ឌិតឯកទេស ១១នាក់, ឱសថសាស្ត្រ ២២នាក់)', 'text'],
+        ['equiv_out', 'បានចេញលិខិតសមមូល (នាក់)', 'number'],
+        ['equiv_out_detail', 'ក្នុងនោះមាន… (ឧ. វេជ្ជបណ្ឌិត ២៧នាក់, មន្ទីរពិសោធន៍ ១នាក់)', 'text'],
+        ['sign_req', 'សញ្ញាបត្រគ្រឹះស្ថានស្នើចុះហត្ថលេខា (សន្លឹក)', 'number'],
+        ['sign_back', 'ប្រគល់សញ្ញាបត្រដែលចុះហត្ថលេខារួចជូនគ្រឹះស្ថានវិញ (សន្លឹក)', 'number'],
+        ['sign_review', 'សញ្ញាបត្រកំពុងពិនិត្យ (សន្លឹក)', 'number']],
+      bureau_2: [
+        ['reply_cnt', 'ពិនិត្យ/រៀបចំឯកសារឆ្លើយតបការស្នើសុំបើកវគ្គ (នាក់)', 'number'],
+        ['promo', 'ផ្សព្វផ្សាយការផ្តល់វគ្គបណ្តុះបណ្តាលមន្ត្រី (ច្បាប់)', 'number'],
+        ['other_docs', 'ឯកសារផ្សេងៗ (ច្បាប់)', 'number'],
+        ['workshop', 'ស្នើសុំរៀបចំសិក្ខាសាលា សន្និសីទ សន្និបាត វគ្គបណ្តុះបណ្តាល (ច្បាប់)', 'number']],
+      bureau_3: [
+        ['officers_n', 'បានកែសម្រួល និងបញ្ចូលព័ត៌មានមន្ត្រី (នាក់)', 'number'],
+        ['officers_unit', 'អង្គភាពរបស់មន្ត្រីទាំងនោះ (ឧ. មន្ទីរពេទ្យកុមារជាតិ)', 'text'],
+        ['courses_pre', 'វគ្គមុនពេលបម្រើការងារ (វគ្គ)', 'number'],
+        ['courses_in', 'វគ្គក្នុងពេលបម្រើការងារ (វគ្គ)', 'number']]
+    };
+
+    function fxd(s) { return rpt.kh ? String(s == null ? '' : s).replace(/\d/g, d => KD[d]) : String(s == null ? '' : s); }
+    const c2 = n => String(Math.max(0, Math.round(Number(n) || 0))).padStart(2, '0');
+    const pctTxt = (a, b) => { if (!b) return '0%'; return String(Math.round(a / b * 10000) / 100).replace('.', ',') + '%'; };
+    const hasNum = v => v !== '' && v != null && !isNaN(Number(v));
+    const NI = (t, subs) => ({ t, subs: subs || [] });
+
+    function parseDMY(s) {
+      const m = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(String(s || '')); if (!m) return null;
+      let y = +m[3]; if (y < 100) y += 2000;
+      return y + '-' + String(m[2]).padStart(2, '0') + '-' + String(m[1]).padStart(2, '0');
+    }
+    function trainRange(t) {
+      let s = isISODate(t.start_date) ? String(t.start_date).slice(0, 10) : null, e = isISODate(t.end_date) ? String(t.end_date).slice(0, 10) : null;
+      if (!s && t.dates) { const p = String(t.dates).split('-'); s = parseDMY(p[0]); e = e || parseDMY(p[1]); }
+      return [s, e];
+    }
+    function trainStart(t) { return trainRange(t)[0] || dayOf(t.created_at); }
+    function monthsBetween(s, e) {
+      const [y1, m1, d1] = s.split('-').map(Number), [y2, m2, d2] = addDaysISO(e, 1).split('-').map(Number);
+      return (y2 - y1) * 12 + (m2 - m1) + (d2 - d1) / 30.4;
+    }
+    function trainIsLong(t) {
+      if (LONG_LEVELS.includes(t.level)) return true;
+      if (t.level === 'វគ្គខ្លី') return false;
+      const [s, e] = trainRange(t);
+      if (s && e) return monthsBetween(s, e) >= 5.95;
+      const m = /(\d+(?:\.\d+)?)\s*([A-Za-zក-៿]+)/.exec(String(t.duration || ''));
+      if (m) { const n = parseFloat(m[1]), u = m[2].toUpperCase(); const mon = /^(A|Y|ឆ្នាំ)/.test(u) ? n * 12 : /^(M|ខែ)/.test(u) ? n : /^(W|សប្តាហ៍)/.test(u) ? n / 4.3 : /^(D|ថ្ងៃ)/.test(u) ? n / 30 : 0; return mon >= 5.95; }
+      return false;
+    }
+    function khDateRange(s, e) {
+      if (!s) return '';
+      const [y1, m1, d1] = s.split('-').map(Number);
+      if (!e || e === s) return `ថ្ងៃទី${d1} ខែ${MONTHS_KH[m1 - 1]} ឆ្នាំ${y1}`;
+      const [y2, m2, d2] = e.split('-').map(Number);
+      if (y1 === y2 && m1 === m2) return `ថ្ងៃទី${d1}ដល់ថ្ងៃទី${d2} ខែ${MONTHS_KH[m1 - 1]} ឆ្នាំ${y1}`;
+      if (y1 === y2) return `ថ្ងៃទី${d1} ខែ${MONTHS_KH[m1 - 1]} ដល់ថ្ងៃទី${d2} ខែ${MONTHS_KH[m2 - 1]} ឆ្នាំ${y1}`;
+      return `ថ្ងៃទី${d1} ខែ${MONTHS_KH[m1 - 1]} ឆ្នាំ${y1} ដល់ថ្ងៃទី${d2} ខែ${MONTHS_KH[m2 - 1]} ឆ្នាំ${y2}`;
+    }
+    function toCountry(n) { n = String(n || '').trim(); return !n ? '' : (/^(សាធារណរដ្ឋ|ប្រទេស|ព្រះរាជាណាចក្រ|សហព័ន្ធ|សហរដ្ឋ|សហភាព)/.test(n) ? n : 'ប្រទេស' + n); }
+
+    function getNote(bureau, period) {
+      const rows = activeRows('report_notes').filter(n => n.bureau === bureau && n.period === period);
+      rows.sort((a, b) => String(b.updated_at || b.created_at || '').localeCompare(String(a.updated_at || a.created_at || '')));
+      return rows[0] || null;
+    }
+    function noteNums(n) { const v = n && n.nums; const o = (v && typeof v === 'object') ? v : safeJSON(v, {}); return (o && typeof o === 'object') ? o : {}; }
+    function linesToItems(s) {
+      const out = [];
+      String(s || '').split(/\r?\n/).map(x => x.trim()).filter(Boolean).forEach(l => {
+        const m = /^[-–•]\s*(.*)$/.exec(l);
+        if (m && out.length) out[out.length - 1].subs.push(NI(m[1])); else out.push(NI(l.replace(/^[-–•]\s*/, '')));
+      });
+      return out;
+    }
+
+    function buildOfficial(bureau, y, m) {
+      const [start, end] = periodBounds('month', y, m), period = y + '-' + String(m).padStart(2, '0');
+      const inR = v => { const x = dayOf(v); return !!x && x >= start && x < end; };
+      const warn = new Set();
+      const keys = bureau === 'all' ? ['bureau_1', 'bureau_2', 'bureau_3'] : [bureau];
+      const secs = keys.map(k => {
+        const note = getNote(k, period), nums = noteNums(note), res = [];
+        const disp = activeRows('dispatches').filter(d => d.bureau === k && inR(d.date));
+
+        if (k === 'bureau_1') {
+          if (hasNum(nums.equiv_in)) res.push(NI(`បានទទួលពាក្យបេក្ខជនស្នើសុំសមមូលសញ្ញាបត្រមកពីក្រៅប្រទេសចំនួន${c2(nums.equiv_in)}នាក់` + (nums.equiv_in_detail ? ` ក្នុងនោះមាន ${String(nums.equiv_in_detail).trim()}។` : '។')));
+          if (hasNum(nums.equiv_out)) res.push(NI(`បានចេញលិខិតសមមូលរបស់បេក្ខជនស្នើសុំសមមូលសញ្ញាបត្រមកពីក្រៅប្រទេសចំនួន${c2(nums.equiv_out)}នាក់` + (nums.equiv_out_detail ? ` ក្នុងនោះមាន៖ ${String(nums.equiv_out_detail).trim()}។` : '។')));
+          if (hasNum(nums.sign_req) || hasNum(nums.sign_back) || hasNum(nums.sign_review)) {
+            const parts = [];
+            if (hasNum(nums.sign_req)) parts.push(`សញ្ញាបត្របញ្ជូនមកពីគ្រឹះស្ថានបណ្តុះបណ្តាលស្នើចុះហត្ថលេខាចំនួន${c2(nums.sign_req)}សន្លឹក`);
+            if (hasNum(nums.sign_back)) parts.push(`ប្រគល់សញ្ញាបត្រដែលចុះហត្ថលេខាថ្នាក់ដឹកនាំរួចជូនដល់គ្រឹះស្ថានបណ្តុះបណ្តាលវិញ សរុបចំនួន${c2(nums.sign_back)}សន្លឹក`);
+            if (hasNum(nums.sign_review)) parts.push(`សញ្ញាបត្រកំពុងពិនិត្យចំនួន${c2(nums.sign_review)}សន្លឹក`);
+            res.push(NI(parts.join(' ') + '។'));
+          }
+          const exams = activeRows('exams').filter(e => inR(e.start_date || e.created_at));
+          const groups = new Map();
+          exams.forEach(e => {
+            if (!e.start_date) warn.add('សម័យប្រឡងខ្លះមិនមានថ្ងៃប្រឡង — ចុច ✏️ ក្នុងតារាងប្រឡង ដើម្បីបញ្ចូលថ្ងៃ/គ្រឹះស្ថាន');
+            const key = [e.start_date || '', e.end_date || '', e.institution || '', e.session || '', e.type || ''].join('|');
+            if (!groups.has(key)) groups.set(key, []); groups.get(key).push(e);
+          });
+          [...groups.values()].sort((a, b) => String(a[0].start_date || a[0].created_at).localeCompare(String(b[0].start_date || b[0].created_at))).forEach(g => {
+            const e0 = g[0], range = khDateRange(e0.start_date, e0.end_date || e0.start_date);
+            const head = `បានចូលរួមត្រួតពិនិត្យការ${(e0.type || 'ប្រឡង').replace(/^ការ/, '')}` + (e0.session ? ' ' + e0.session : '') + (range ? ` សម័យប្រឡង${range}` : '') + (e0.institution ? ` នៅ${e0.institution}` : '');
+            const subs = g.map(e => {
+              const tot = Number(e.candidates) || 0, p = Number(e.passed) || 0, f = Number(e.failed) || 0, a = Number(e.absent) || 0;
+              const hasRes = hasNum(e.passed) || hasNum(e.failed) || hasNum(e.absent);
+              let s = `${e.major} និស្សិតសរុប${c2(tot)}នាក់`;
+              if (hasRes) {
+                s += ` ជាប់${c2(p)}នាក់ ស្មើ${pctTxt(p, tot)}`;
+                if (f) s += `, ធ្លាក់${c2(f)}នាក់ ${pctTxt(f, tot)}`;
+                if (a) s += ` និងអវត្តមាន${c2(a)}នាក់ ${pctTxt(a, tot)}`;
+                if (p + f + a !== tot) warn.add(`"${e.major}" — ជាប់+ធ្លាក់+អវត្តមាន (${p + f + a}) ≠ បេក្ខជនសរុប (${tot})`);
+              } else warn.add(`"${e.major}" មិនទាន់មានលទ្ធផល ជាប់/ធ្លាក់/អវត្តមាន`);
+              return NI(s);
+            });
+            res.push(NI(head, subs));
+          });
+        }
+
+        if (k === 'bureau_2') {
+          const tr = activeRows('trainings').filter(t => inR(trainStart(t)));
+          const noG = tr.filter(t => !t.gender).length;
+          if (noG) warn.add(`សិក្ខាកាម ${noG} នាក់មិនទាន់បញ្ជាក់ភេទ (ស្រី) — ចុច ✏️ ក្នុងតារាងបណ្តុះបណ្តាល`);
+          const fem = a => a.filter(t => t.gender === 'ស្រី').length;
+          const dom = tr.filter(t => t.scope === 'Domestic'), intl = tr.filter(t => t.scope !== 'Domestic');
+          const domS = dom.filter(t => !trainIsLong(t)), domL = dom.filter(trainIsLong);
+          const inS = intl.filter(t => !trainIsLong(t)), inL = intl.filter(trainIsLong);
+          if (hasNum(nums.reply_cnt)) res.push(NI(`ពិនិត្យ និងរៀបចំឯកសារឆ្លើយតបចំពោះការស្នើសុំបើកវគ្គបណ្តុះបណ្តាលផ្សេងៗ៖ ${c2(nums.reply_cnt)}នាក់`));
+          res.push(NI(`ការបណ្តុះបណ្តាលក្នុងប្រទេស៖ ${c2(dom.length)}នាក់`, [NI(`រយៈពេលតិចជាង 6ខែ៖ ${c2(domS.length)}នាក់`), NI(`រយៈពេលចាប់ពី 6ខែឡើង៖ ${c2(domL.length)}នាក់`)]));
+          const byCountry = arr => tally(arr, t => t.country).map(([c, n]) => { const f = fem(arr.filter(t => (String(t.country || '-').trim() || '-') === c)); return `${c2(n)}នាក់(ស្រី.${c2(f)}នាក់) ទៅ${toCountry(c)}`; });
+          let sTxt = `រយៈពេលតិចជាង 6ខែ៖ មានចំនួន៖ ${c2(inS.length)}នាក់ (ស្រី.${c2(fem(inS))}នាក់)`;
+          if (inS.length) sTxt += ` ដែលបានទៅចូលរួមប្រជុំ សិក្ខាសាលា និងវគ្គបណ្តុះបណ្តាលខ្លីៗ មាន៖ ` + byCountry(inS).join(', ') + '។';
+          const lvSubs = [];
+          tally(inL, t => t.level && t.level !== 'ផ្សេងៗ' ? t.level : 'ផ្សេងៗ').forEach(([lv]) => {
+            const arr = inL.filter(t => (t.level && t.level !== 'ផ្សេងៗ' ? t.level : 'ផ្សេងៗ') === lv);
+            const cs = [...new Set(arr.map(t => String(t.country || '').trim()).filter(Boolean))];
+            lvSubs.push(NI(`ថ្នាក់${lv} ៖ ${c2(arr.length)}នាក់(ស្រី.${c2(fem(arr))}នាក់)` + (cs.length ? ' នៅ' + cs.map(toCountry).join(' និង') : '')));
+          });
+          const lTxt = `រយៈពេលចាប់ពី 6ខែឡើង៖ មានចំនួន៖ ${c2(inL.length)}នាក់ (ស្រី.${c2(fem(inL))}នាក់)` + (inL.length ? ' ទៅរៀន៖' : '');
+          res.push(NI(`ការបណ្តុះបណ្តាលក្រៅប្រទេស៖ ${c2(intl.length)}នាក់`, [NI(sTxt), NI(lTxt, lvSubs)]));
+          if (hasNum(nums.promo)) res.push(NI(`ផ្សព្វផ្សាយ ការផ្តល់វគ្គបណ្តុះបណ្តាលមន្ត្រី៖ ${c2(nums.promo)}ច្បាប់`));
+          if (hasNum(nums.other_docs)) res.push(NI(`ឯកសារផ្សេងៗ៖ ${c2(nums.other_docs)}ច្បាប់`));
+          if (hasNum(nums.workshop)) res.push(NI(`ការស្នើសុំរៀបចំសិក្ខាសាលា សន្និសីទ សន្និបាត និងវគ្គបណ្តុះបណ្តាលផ្សេងៗ៖ ចំនួន ${c2(nums.workshop)}ច្បាប់`));
+        }
+
+        if (k === 'bureau_3') {
+          if (hasNum(nums.officers_n)) res.push(NI(`បានកែសម្រួល និងបញ្ចូលព័ត៌មានមន្ត្រី${nums.officers_unit ? String(nums.officers_unit).trim() : ''}ចំនួន${c2(nums.officers_n)}នាក់`));
+          if (hasNum(nums.courses_pre) || hasNum(nums.courses_in)) {
+            const a = Number(nums.courses_pre) || 0, b = Number(nums.courses_in) || 0;
+            res.push(NI(`បានបញ្ចូលវគ្គបណ្តុះបណ្តាល សរុបចំនួន${c2(a + b)}វគ្គ (វគ្គមុនពេលបម្រើការងារចំនួន${c2(a)}វគ្គ ក្នុងពេលបម្រើការងារចំនួន${c2(b)}វគ្គ)`));
+          }
+          const certs = activeRows('certs').filter(c => inR(c.date || c.created_at));
+          if (certs.length) {
+            const nn = certs.map(c => c.num).filter(Boolean).sort();
+            res.push(NI(`បានចុះបញ្ជី និងកំណត់លេខសញ្ញាបត្រក្នុងប្រព័ន្ធចំនួន${c2(certs.length)}សន្លឹក` + (nn.length ? ` (លេខ ${nn[0]}${nn.length > 1 ? ' ដល់ ' + nn[nn.length - 1] : ''})` : ''),
+              tally(certs, c => c.type).map(([t, n]) => NI(`${t}៖ ${c2(n)}សន្លឹក`))));
+          }
+        }
+
+        linesToItems(note && note.extra).forEach(it => res.push(it));
+        if (k === 'bureau_1' || disp.length) {
+          const inN = disp.filter(d => d.type === 'ចូល').length, outN = disp.filter(d => d.type === 'ចេញ').length, doneN = disp.filter(d => d.stage === STAGE_DONE).length;
+          res.push(NI('ការងារលិខិតរដ្ឋបាលប្រចាំថ្ងៃផ្សេងៗ' + (disp.length ? ` (លិខិតចូល ${c2(inN)} ច្បាប់ លិខិតចេញ ${c2(outN)} ច្បាប់ បានដោះស្រាយរួច ${c2(doneN)} ច្បាប់)` : '') + '។'));
+        }
+        return { key: k, letter: OFFICIAL_LETTER[k], name: OFFICIAL_NAMES[k], results: res, challenges: linesToItems(note && note.challenges), directions: linesToItems(note && note.directions), hasNote: !!note };
+      });
+      return { bureau, y, m, period, secs, warn: [...warn] };
+    }
+
+    // Blocks មួយសម្រាប់ទាំង Preview HTML, Print និង Word
+    function offBlocks(off) {
+      const B = [], heads = [['I', 'លទ្ធផលសំខាន់ៗដែលសម្រេចបានតាមការិយាល័យនីមួយៗ៖', 'results'], ['II', 'បញ្ហាប្រឈម៖', 'challenges'], ['III', 'ទិសដៅបន្ត៖', 'directions']];
+      const walk = (items, lvl) => items.forEach((it, i) => { B.push({ k: 'item', lvl, no: i + 1, t: it.t }); if (it.subs && it.subs.length) walk(it.subs, lvl + 1); });
+      heads.forEach(([r, title, key]) => {
+        B.push({ k: 'h1', t: r + '. ' + title });
+        off.secs.forEach(s => {
+          B.push({ k: 'h2', t: s.letter + '. ' + s.name + '៖' });
+          if (!s[key].length) B.push({ k: 'blank', t: '………………………………………………………………' }); else walk(s[key], 0);
+        });
+      });
+      return B;
+    }
+    function offTitles(off) {
+      const single = off.secs.length === 1;
+      return { l1: 'របាយការណ៍ប្រចាំខែ' + MONTHS_KH[off.m - 1] + ' ឆ្នាំ' + off.y, l2: 'ស្តីពី', l3: 'វឌ្ឍនភាពការងាររបស់' + (single ? OFFICIAL_NAMES[off.secs[0].key] : 'នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស') };
+    }
+    function officialDocHTML(off) {
+      const T = offTitles(off), fx = fxd;
+      const mark = b => b.lvl === 0 ? fx(b.no + '.') : (b.lvl === 1 ? '-' : '•');
+      const body = offBlocks(off).map(b =>
+        b.k === 'h1' ? `<div style="font-weight:700;margin:14px 0 4px">${esc(fx(b.t))}</div>`
+          : b.k === 'h2' ? `<div style="font-weight:700;margin:8px 0 3px">${esc(fx(b.t))}</div>`
+            : b.k === 'blank' ? `<div style="color:#94a3b8;margin:2px 0 2px 26px">${b.t}</div>`
+              : `<div style="display:flex;margin:2px 0;padding-left:${b.lvl * 24}px;text-align:justify"><span style="flex:0 0 ${b.lvl ? 16 : 26}px">${mark(b)}</span><span style="flex:1">${esc(fx(b.t))}</span></div>`).join('');
+      return `<div id="rpt-doc" style="font-family:'Battambang',sans-serif;font-size:13px;line-height:1.75;color:#0f172a;background:#fff;max-width:820px;margin:0 auto;padding:28px 32px">
+        <div style="text-align:center"><div style="font-family:'Moul',cursive">ព្រះរាជាណាចក្រកម្ពុជា</div><div style="font-family:'Moul',cursive">ជាតិ សាសនា ព្រះមហាក្សត្រ</div></div>
+        <div style="margin-top:6px;font-family:'Moul',cursive;line-height:1.9"><div>ក្រសួងសុខាភិបាល</div><div>អគ្គនាយកដ្ឋានបច្ចេកទេសសុខាភិបាល</div><div>នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div></div>
+        <div style="text-align:center;margin-top:18px;font-family:'Moul',cursive;line-height:1.9"><div>${esc(fx(T.l1))}</div><div>${esc(T.l2)}</div><div>${esc(T.l3)}</div></div>
+        ${body}</div>`;
+    }
+    function officialWarnHTML(off) {
+      const noNote = off.secs.filter(s => !s.hasNote).map(s => s.name);
+      const rows = [...off.warn.map(w => '⚠️ ' + w), ...noNote.map(n => 'ℹ️ ' + n + ' — មិនទាន់បញ្ចូល «កំណត់ចំណាំ» (បញ្ហាប្រឈម/ទិសដៅបន្ត) សម្រាប់ខែនេះ → ចុច 📝')];
+      return `<div class="rounded-2xl border ${off.warn.length ? 'border-amber-300 bg-amber-50' : 'border-slate-200 bg-slate-50'} p-3.5 text-xs text-slate-700 space-y-1 mb-3">
+        <div class="font-bold text-slate-900">ត្រួតពិនិត្យទិន្នន័យមុនបោះពុម្ព</div>
+        ${rows.length ? rows.map(r => `<div>${esc(r)}</div>`).join('') : '<div class="text-emerald-700 font-bold">✅ ទិន្នន័យគ្រប់គ្រាន់</div>'}
+        <div class="text-[11px] text-slate-400 pt-1">រាប់៖ ប្រឡងតាមថ្ងៃប្រឡង • វគ្គបណ្តុះបណ្តាលតាមថ្ងៃចាប់ផ្តើម • សញ្ញាបត្រតាមថ្ងៃចុះបញ្ជី • លិខិតតាមថ្ងៃចុះលិខិត។ អាចកែបន្ថែមក្នុង Word បានគ្រប់ចំណុច។</div></div>`;
+    }
+
+    // ---------- WORD (.docx) ----------
+    function docxEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function dRun(text, o) {
+      o = o || {}; const f = o.font || 'Khmer OS Siemreap', sz = o.sz || 24;
+      return `<w:r><w:rPr><w:rFonts w:ascii="${f}" w:hAnsi="${f}" w:eastAsia="${f}" w:cs="${f}"/>${o.b ? '<w:b/><w:bCs/>' : ''}<w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/><w:lang w:bidi="km-KH"/></w:rPr><w:t xml:space="preserve">${docxEsc(text)}</w:t></w:r>`;
+    }
+    function dPara(inner, o) {
+      o = o || {};
+      return `<w:p><w:pPr>${o.keepNext ? '<w:keepNext/>' : ''}<w:spacing w:before="${o.before || 0}" w:after="${o.after == null ? 40 : o.after}" w:line="${o.line || 300}" w:lineRule="auto"/>${o.left || o.hanging ? `<w:ind w:left="${o.left || 0}"${o.hanging ? ` w:hanging="${o.hanging}"` : ''}/>` : ''}<w:jc w:val="${o.jc || 'left'}"/></w:pPr>${inner}</w:p>`;
+    }
+    function buildDocxXML(off) {
+      const T = offTitles(off), fx = fxd, MUOL = 'Khmer OS Muol Light';
+      const P = [];
+      P.push(dPara(dRun('ព្រះរាជាណាចក្រកម្ពុជា', { font: MUOL }), { jc: 'center', after: 0 }));
+      P.push(dPara(dRun('ជាតិ សាសនា ព្រះមហាក្សត្រ', { font: MUOL }), { jc: 'center', after: 120 }));
+      ['ក្រសួងសុខាភិបាល', 'អគ្គនាយកដ្ឋានបច្ចេកទេសសុខាភិបាល', 'នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស'].forEach(t => P.push(dPara(dRun(t, { font: MUOL }), { after: 0 })));
+      P.push(dPara('', { after: 120 }));
+      [T.l1, T.l2, T.l3].forEach(t => P.push(dPara(dRun(fx(t), { font: MUOL, sz: 26 }), { jc: 'center', after: 0 })));
+      P.push(dPara('', { after: 120 }));
+      offBlocks(off).forEach(b => {
+        if (b.k === 'h1') P.push(dPara(dRun(fx(b.t), { b: true }), { jc: 'both', before: 160, keepNext: true }));
+        else if (b.k === 'h2') P.push(dPara(dRun(fx(b.t), { b: true }), { jc: 'both', before: 80, keepNext: true }));
+        else if (b.k === 'blank') P.push(dPara(dRun(b.t), { jc: 'left', left: 567 }));
+        else {
+          const left = [567, 1134, 1701][b.lvl] || 1701, hang = b.lvl === 0 ? 567 : 397;
+          const mk = b.lvl === 0 ? fx(b.no + '.') : (b.lvl === 1 ? '-' : '•');
+          P.push(dPara(dRun(mk) + '<w:r><w:tab/></w:r>' + dRun(fx(b.t)), { jc: 'both', left, hanging: hang }));
+        }
+      });
+      return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${P.join('')}<w:sectPr><w:pgSz w:w="11906" w:h="16838" w:code="9"/><w:pgMar w:top="1247" w:right="851" w:bottom="1134" w:left="1134" w:header="340" w:footer="500" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+    }
+    async function exportReportWord() {
+      if (!window.JSZip) return showToast('Library JSZip មិនទាន់ផ្ទុកបានទេ — សូមពិនិត្យអ៊ីនធឺណិត', true);
+      if (!can('download')) return showToast('អ្នកមិនមានសិទ្ធិ Download', true);
+      const off = rpt.off; if (!off) return;
+      const NS = 'http://schemas.openxmlformats.org/';
+      const zip = new JSZip(), put = (n, d) => zip.file(n, d, { createFolders: false });
+      put('[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="${NS}package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`);
+      put('_rels/.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="${NS}package/2006/relationships"><Relationship Id="rId1" Type="${NS}officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+      put('word/_rels/document.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="${NS}package/2006/relationships"><Relationship Id="rId1" Type="${NS}officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+      put('word/styles.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="${NS}wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Khmer OS Siemreap" w:hAnsi="Khmer OS Siemreap" w:eastAsia="Khmer OS Siemreap" w:cs="Khmer OS Siemreap"/><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="en-US" w:eastAsia="en-US" w:bidi="km-KH"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`);
+      put('word/document.xml', buildDocxXML(off));
+      const blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      downloadBlob(blob, 'របាយការណ៍ប្រចាំខែ' + MONTHS_KH[off.m - 1] + '_' + off.y + (off.secs.length === 1 ? '_' + off.secs[0].key : '') + '.docx');
+      showToast('បាននាំចេញ Word (.docx) — អាចកែសម្រួលក្នុង Word បាន'); logActivity('Export របាយការណ៍ Word', off.period + ' ' + off.bureau);
+    }
+    function printOfficial() {
+      const el = document.getElementById('rpt-doc'); if (!el) return;
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up ដើម្បី Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(offTitles(rpt.off).l1)}</title><link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet"><style>@page{size:A4;margin:14mm 12mm 14mm 18mm}body{margin:0}#rpt-doc{padding:0!important;max-width:none!important}</style></head><body>${el.outerHTML}<script>setTimeout(function(){window.print();},800);<\/script></body></html>`);
+      win.document.close(); logActivity('Print របាយការណ៍ផ្លូវការ', rpt.off.period);
+    }
+
+    // ---------- NOTES MODAL ----------
+    function notesPeriod() { return rpt.year + '-' + String(rpt.month).padStart(2, '0'); }
+    function openRptNotes(bureau) {
+      if (!can('edit')) return showToast('អ្នកមិនមានសិទ្ធិកែសម្រួល', true);
+      let b = bureau || (rpt.bureau && rpt.bureau !== 'all' ? rpt.bureau : (isAdmin() ? 'bureau_1' : currentUser.bureau));
+      if (!isAdmin()) b = currentUser.bureau;
+      rpt.notesBureau = b; renderRptNotesForm(); document.getElementById('modal-rpt-notes').classList.remove('hidden');
+    }
+    function closeRptNotes() { document.getElementById('modal-rpt-notes').classList.add('hidden'); }
+    function renderRptNotesForm() {
+      const b = rpt.notesBureau, period = notesPeriod(), note = getNote(b, period), nums = noteNums(note);
+      const inp = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-xs';
+      const bureauSel = isAdmin() ? `<select onchange="rpt.notesBureau=this.value;renderRptNotesForm()" class="${inp} font-bold">${['bureau_1', 'bureau_2', 'bureau_3'].map(k => `<option value="${k}" ${k === b ? 'selected' : ''}>${esc(OFFICIAL_LETTER[k] + '. ' + OFFICIAL_NAMES[k])}</option>`).join('')}</select>` : `<div class="${inp} bg-slate-50 font-bold">${esc(OFFICIAL_LETTER[b] + '. ' + OFFICIAL_NAMES[b])}</div>`;
+      document.getElementById('rpt-notes-body').innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ការិយាល័យ</label>${bureauSel}</div>
+          <div><label class="block text-[11px] font-bold text-slate-600 mb-1">ខែ / ឆ្នាំ</label><div class="${inp} bg-slate-50 font-bold">${esc(MONTHS_KH[rpt.month - 1])} ${rpt.year}</div></div></div>
+        <div class="rounded-2xl border border-slate-200 p-3 space-y-2"><div class="text-xs font-bold text-slate-800">🔢 លេខដែលប្រព័ន្ធមិនមានទិន្នន័យ (ទុកទទេ = មិនបង្ហាញ)</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">${NOTE_NUMS[b].map(([key, label, type]) => `<div class="${type === 'text' ? 'sm:col-span-2' : ''}"><label class="block text-[11px] text-slate-600 mb-1">${esc(label)}</label><input data-nk="${key}" type="${type}" ${type === 'number' ? 'min="0"' : ''} value="${esc(nums[key] ?? '')}" class="${inp}"></div>`).join('')}</div></div>
+        <div><label class="block text-xs font-bold text-slate-800 mb-1">➕ លទ្ធផលការងារផ្សេងៗ (ក្នុងផ្នែក I) <span class="font-normal text-slate-400">— ១ បន្ទាត់ = ១ ចំណុច • ចាប់ផ្តើមដោយ - = ចំណុចរង</span></label><textarea id="rn-extra" rows="4" class="${inp}" placeholder="ឧ. ការងារគម្រោង STRINGS៖&#10;- រៀបចំសិក្ខាសាលាតាមដាន ចំនួន ៣៨នាក់">${esc(note?.extra || '')}</textarea></div>
+        <div><label class="block text-xs font-bold text-slate-800 mb-1">⚠️ II. បញ្ហាប្រឈម <span class="font-normal text-slate-400">— ១ បន្ទាត់ = ១ ចំណុច</span></label><textarea id="rn-challenges" rows="4" class="${inp}">${esc(note?.challenges || '')}</textarea></div>
+        <div><label class="block text-xs font-bold text-slate-800 mb-1">🎯 III. ទិសដៅបន្ត <span class="font-normal text-slate-400">— ១ បន្ទាត់ = ១ ចំណុច</span></label><textarea id="rn-directions" rows="4" class="${inp}">${esc(note?.directions || '')}</textarea></div>
+        <div class="flex flex-wrap gap-2 justify-between pt-1"><button type="button" onclick="copyPrevNotes()" class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700">📋 ចម្លង «បញ្ហាប្រឈម/ទិសដៅ» ពីខែមុន</button>
+          <button type="button" onclick="saveRptNotes()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">💾 រក្សាទុក</button></div>`;
+    }
+    function copyPrevNotes() {
+      const py = rpt.month === 1 ? rpt.year - 1 : rpt.year, pm = rpt.month === 1 ? 12 : rpt.month - 1;
+      const prev = getNote(rpt.notesBureau, py + '-' + String(pm).padStart(2, '0'));
+      if (!prev) return showToast('ខែមុនមិនមានកំណត់ចំណាំទេ', true);
+      document.getElementById('rn-challenges').value = prev.challenges || ''; document.getElementById('rn-directions').value = prev.directions || '';
+      showToast('បានចម្លងពីខែមុន — សូមកែសម្រួលរួចរក្សាទុក');
+    }
+    async function saveRptNotes() {
+      if (!can('edit')) return;
+      const b = rpt.notesBureau; if (!isAdmin() && b !== currentUser.bureau) return showToast('មិនមានសិទ្ធិលើការិយាល័យនេះ', true);
+      const period = notesPeriod(), nums = {};
+      document.querySelectorAll('#rpt-notes-body [data-nk]').forEach(el => { nums[el.dataset.nk] = el.value.trim(); });
+      const rec = getNote(b, period) || { id: generateSafeId(), bureau: b, period, created_at: nowISO(), deleted_at: null, deleted_by: null };
+      rec.nums = nums; rec.extra = document.getElementById('rn-extra').value; rec.challenges = document.getElementById('rn-challenges').value; rec.directions = document.getElementById('rn-directions').value;
+      rec.updated_at = nowISO(); rec.updated_by = currentUser.username;
+      const ok = await persist('report_notes', rec);
+      closeRptNotes(); renderReports();
+      showToast(ok ? 'បានរក្សាទុកកំណត់ចំណាំរបាយការណ៍!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync (ត្រូវ Run supabase-migration-v3.3.sql)', !ok);
+      logActivity('កែកំណត់ចំណាំរបាយការណ៍', OFFICIAL_NAMES[b] + ' ' + period);
+    }
+
+    // ---------- GENERIC RECORD EDITOR (trainings / exams / certs) ----------
+    const REC_FIELDS = {
+      trainings: [['trainee', 'ឈ្មោះសិក្ខាកាម', 'text'], ['gender', 'ភេទ', 'select', ['', 'ប្រុស', 'ស្រី']], ['unit', 'តួនាទី និងអង្គភាព', 'text'], ['course', 'វគ្គសិក្សា', 'text'],
+        ['level', 'ថ្នាក់ / កម្រិត', 'select', ['', ...LEVELS]], ['duration', 'រយៈពេល', 'text'], ['scope', 'ប្រភេទ', 'select', [['International', '✈️ ក្រៅប្រទេស'], ['Domestic', '🇰🇭 ក្នុងប្រទេស']]],
+        ['start_date', 'ថ្ងៃចាប់ផ្តើម', 'date'], ['end_date', 'ថ្ងៃបញ្ចប់', 'date'], ['country', 'ប្រទេស', 'country'], ['sponsor', 'ដៃគូឧបត្ថម្ភ', 'text']],
+      exams: [['major', 'ជំនាញ / ថ្នាក់ / មុខវិជ្ជា', 'text'], ['type', 'ប្រភេទប្រឡង', 'select', EXAM_TYPES], ['session', 'សម័យប្រឡង (ឧ. លើកទី១)', 'text'], ['institution', 'គ្រឹះស្ថាន', 'text'],
+        ['start_date', 'ថ្ងៃប្រឡង (ចាប់ផ្តើម)', 'date'], ['end_date', 'ថ្ងៃប្រឡង (បញ្ចប់)', 'date'], ['candidates', 'បេក្ខជនសរុប', 'number'],
+        ['passed', 'ជាប់', 'number'], ['failed', 'ធ្លាក់', 'number'], ['absent', 'អវត្តមាន', 'number'], ['status', 'ស្ថានភាព', 'text']],
+      certs: [['num', 'លេខកូដសញ្ញាបត្រ', 'text'], ['recipient', 'ឈ្មោះសាមីខ្លួន', 'text'], ['type', 'ប្រភេទសញ្ញាបត្រ', 'text'], ['date', 'កាលបរិច្ឆេទ', 'date'], ['signer', 'ហត្ថលេខា', 'text']]
+    };
+    let recEdit = null;
+    function editBtn(table, id) { return can('edit') ? `<button onclick="openRecEdit('${table}', ${id})" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs font-bold text-slate-700 form-input-focus" title="កែសម្រួល">✏️</button>` : ''; }
+    function openRecEdit(table, id) {
+      if (!can('edit')) return showToast('អ្នកមិនមានសិទ្ធិកែសម្រួល', true);
+      const rec = store[table].find(r => r.id === id); if (!rec) return;
+      recEdit = { table, id };
+      const vals = { ...rec };
+      if (table === 'trainings') { const [s, e] = trainRange(rec); vals.start_date = s || ''; vals.end_date = e || ''; }
+      const inp = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      document.getElementById('rec-edit-title').innerText = '✏️ កែសម្រួល — ' + TABLE_LABELS[table];
+      document.getElementById('rec-edit-body').innerHTML = REC_FIELDS[table].map(([key, label, type, opts]) => {
+        const v = vals[key] == null ? '' : vals[key];
+        let ctl;
+        if (type === 'select') {
+          const list = (opts || []).map(o => Array.isArray(o) ? o : [o, o || '— មិនបញ្ជាក់ —']);
+          if (v !== '' && !list.some(o => o[0] === v)) list.push([v, v]);
+          ctl = `<select data-rk="${key}" class="${inp}">${list.map(([ov, ol]) => `<option value="${esc(ov)}" ${String(ov) === String(v) ? 'selected' : ''}>${esc(ol)}</option>`).join('')}</select>`;
+        } else if (type === 'country') {
+          const list = countriesData.map(c => c.kh); if (v && !list.includes(v)) list.push(v);
+          ctl = `<select data-rk="${key}" class="${inp}"><option value="">—</option>${list.map(c => `<option value="${esc(c)}" ${c === v ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>`;
+        } else ctl = `<input data-rk="${key}" type="${type}" ${type === 'number' ? 'min="0"' : ''} value="${esc(type === 'date' ? String(v).slice(0, 10) : v)}" class="${inp}">`;
+        return `<div><label class="block text-[11px] font-bold text-slate-600 mb-1">${esc(label)}</label>${ctl}</div>`;
+      }).join('');
+      document.getElementById('modal-rec-edit').classList.remove('hidden');
+    }
+    function closeRecEdit() { document.getElementById('modal-rec-edit').classList.add('hidden'); recEdit = null; }
+    async function saveRecEdit(e) {
+      e.preventDefault(); if (!recEdit || !can('edit')) return;
+      const { table, id } = recEdit, rec = store[table].find(r => r.id === id); if (!rec) return;
+      const next = {};
+      REC_FIELDS[table].forEach(([key, , type]) => {
+        const el = document.querySelector('#rec-edit-body [data-rk="' + key + '"]'); let v = el ? el.value.trim() : '';
+        if (type === 'number') v = v === '' ? null : Math.max(0, Number(v) || 0);
+        else if (type === 'date') v = v || null;
+        next[key] = v;
+      });
+      if (table === 'certs' && store.certs.some(c => c.id !== id && !isDeleted(c) && String(c.num).toLowerCase() === String(next.num).toLowerCase())) return alert('⚠️ លេខកូដសញ្ញាបត្រ "' + next.num + '" មានរួចហើយ!');
+      if (table === 'trainings' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      if (table === 'exams' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      const before = { ...rec }, changes = [];
+      Object.keys(next).forEach(k => { const o = before[k] == null ? '' : before[k], n = next[k] == null ? '' : next[k]; if (String(o) !== String(n)) changes.push(k + ': ' + (o === '' ? '∅' : o) + ' → ' + (n === '' ? '∅' : n)); rec[k] = next[k]; });
+      if (table === 'trainings' && next.start_date && next.end_date) rec.dates = formatDateDisplay(next.start_date) + '-' + formatDateDisplay(next.end_date);
+      if (!changes.length) { closeRecEdit(); return showToast('មិនមានការផ្លាស់ប្តូរ'); }
+      const ok = await persist(table, rec);
+      closeRecEdit(); rerenderTable(table); if (activeTab === 'reports') renderReports();
+      showToast(ok ? 'បានកែសម្រួលជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync (ត្រូវ Run supabase-migration-v3.3.sql)', !ok);
+      logActivity('កែសម្រួលកំណត់ត្រា', TABLE_LABELS[table] + ' #' + id + ' — ' + changes.join('; '));
     }
 
     let docPageId = null;
@@ -2248,11 +2672,12 @@
       tbody.innerHTML = pg.total ? pg.rows.map(e => `<tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold ${String(e.type || '').includes('ចេញ') ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${esc(e.type)}</span></td>
           <td class="p-3.5 font-bold text-slate-900 text-sm">${esc(e.major)}</td>
-          <td class="p-3.5 text-slate-600 font-bold text-sm whitespace-nowrap">${esc(e.session)}</td>
+          <td class="p-3.5 text-slate-600 font-bold text-sm whitespace-nowrap">${esc(e.session)}${(e.institution || e.start_date) ? `<div class="text-[10px] font-normal text-slate-400">${esc(e.institution || '')}${e.start_date ? ' • ' + esc(String(e.start_date).slice(0, 10)) : ''}</div>` : ''}</td>
           <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap">${esc(Number(e.candidates || 0).toLocaleString())} នាក់</td>
+          <td class="p-3.5 text-center text-xs font-bold whitespace-nowrap">${(e.passed != null && e.passed !== '') || (e.failed != null && e.failed !== '') || (e.absent != null && e.absent !== '') ? `<span class="text-emerald-700">${esc(e.passed ?? 0)}</span> / <span class="text-rose-600">${esc(e.failed ?? 0)}</span> / <span class="text-amber-600">${esc(e.absent ?? 0)}</span>` : '<span class="text-slate-300">— មិនទាន់មាន</span>'}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50">${esc(e.status)}</span></td>
-          <td class="p-3.5 text-center whitespace-nowrap">${deleteBtn('exams', e.id) || '<span class="text-slate-300">-</span>'}</td>
-        </tr>`).join('') : emptyRow(6);
+          <td class="p-3.5 text-center whitespace-nowrap">${editBtn('exams', e.id)}${deleteBtn('exams', e.id) || (can('edit') ? '' : '<span class="text-slate-300">-</span>')}</td>
+        </tr>`).join('') : emptyRow(7);
       renderPager('exams', pg);
     }
 
@@ -2285,12 +2710,13 @@
           <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${esc(t.trainee)}</td>
           <td class="p-3.5 text-slate-700 text-sm">${esc(t.unit)}</td>
           <td class="p-3.5 text-emerald-900 font-bold text-sm">${esc(t.course)}</td>
+          <td class="p-3.5 text-center text-xs whitespace-nowrap ${t.gender ? 'text-slate-700 font-bold' : 'text-slate-300'}">${esc(t.gender || '—')} · ${esc(t.level || '—')}</td>
           <td class="p-3.5 text-center font-bold text-slate-700 text-sm whitespace-nowrap">${esc(t.duration)}</td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(t.dates)}</td>
           <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap"><span class="inline-block px-3 py-1 bg-slate-100 rounded-md">${esc(t.country)}</span></td>
           <td class="p-3.5 text-slate-700 text-sm whitespace-nowrap">${esc(t.sponsor)}</td>
-          <td class="p-3.5 text-center whitespace-nowrap">${deleteBtn('trainings', t.id) || '<span class="text-slate-300">-</span>'}</td>
-        </tr>`).join('') : emptyRow(8);
+          <td class="p-3.5 text-center whitespace-nowrap">${editBtn('trainings', t.id)}${deleteBtn('trainings', t.id) || (can('edit') ? '' : '<span class="text-slate-300">-</span>')}</td>
+        </tr>`).join('') : emptyRow(9);
       renderPager('trainings', pg);
     }
 
@@ -2305,7 +2731,7 @@
           <td class="p-3.5 text-slate-700 font-bold text-sm">${esc(c.type)}</td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(c.date)}</td>
           <td class="p-3.5 text-slate-700 font-medium text-sm whitespace-nowrap">${esc(c.signer)}</td>
-          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button>${deleteBtn('certs', c.id)}</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button> ${editBtn('certs', c.id)}${deleteBtn('certs', c.id)}</td>
         </tr>`).join('') : emptyRow(6);
       renderPager('certs', pg);
     }
@@ -2452,6 +2878,7 @@
     async function handleSaveDoc(e) {
       e.preventDefault();
       if (!can('upload')) return showToast('គ្មានសិទ្ធិ Upload', true);
+      if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
       const saveBtn = document.getElementById('btn-save-doc');
       if (!currentUploadedFile.rawFile) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
       const code = document.getElementById('doc-code').value.trim();
@@ -2461,7 +2888,7 @@
       await currentUploadedFile.ready;
       const snap = { ...currentUploadedFile };
       const docId = generateSafeId();
-      const chosenBureau = document.getElementById('quick-form-target-bureau')?.value || (activeBureauKey === 'all' ? 'bureau_1' : activeBureauKey);
+      const chosenBureau = entryBureau();
       let cloudFileUrl = '';
       if (db && snap.rawFile) {
         try {
@@ -2501,7 +2928,7 @@
       const rec = { id: generateSafeId(), trainee: document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(),
         course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value,
         dates: formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd), country: document.getElementById('train-country-select').value,
-        sponsor: document.getElementById('train-sponsor-input').value.trim(), created_at: nowISO(), deleted_at: null, deleted_by: null };
+        sponsor: document.getElementById('train-sponsor-input').value.trim(), gender: document.getElementById('train-gender').value || null, level: document.getElementById('train-level').value || null, start_date: dStart || null, end_date: dEnd || null, created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('trainings', rec);
       renderTrainingList(); updateStats();
       showToast(ok ? 'បានរក្សាទុកវគ្គបណ្តុះបណ្តាលទៅ Cloud ជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
@@ -2512,7 +2939,7 @@
     async function handleSaveDispatch(e) {
       e.preventDefault(); if (!can('create')) return;
       const btn = document.getElementById('btn-save-disp');
-      const chosenBureau = document.getElementById('quick-form-target-bureau')?.value || (activeBureauKey === 'all' ? 'bureau_1' : activeBureauKey);
+      const chosenBureau = entryBureau(); if (!chosenBureau) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
       const date = document.getElementById('disp-date').value; const due = document.getElementById('disp-due').value;
       if (due && due < date) return alert('⚠️ ថ្ងៃផុតកំណត់ត្រូវនៅក្រោយកាលបរិច្ឆេទលិខិត!');
       btn.disabled = true;
@@ -2527,11 +2954,15 @@
       e.target.reset(); document.getElementById('disp-date').value = todayISO(); flashSaved(btn, 'Submit Letter / រក្សាទុក');
     }
 
+    function examNum(id) { const v = document.getElementById(id)?.value; return (v === '' || v == null) ? null : Math.max(0, Number(v) || 0); }
     async function handleSaveExam(e) {
       e.preventDefault(); if (!can('create')) return;
       const rec = { id: generateSafeId(), major: document.getElementById('exam-major').value.trim(), type: document.getElementById('exam-type').value,
         session: document.getElementById('exam-session').value.trim(), candidates: Number(document.getElementById('exam-candidates').value) || 0,
-        status: document.getElementById('exam-status').value.trim(), created_at: nowISO(), deleted_at: null, deleted_by: null };
+        status: document.getElementById('exam-status').value.trim(), institution: document.getElementById('exam-institution').value.trim() || null,
+        start_date: document.getElementById('exam-start').value || null, end_date: document.getElementById('exam-end').value || null,
+        passed: examNum('exam-passed'), failed: examNum('exam-failed'), absent: examNum('exam-absent'), created_at: nowISO(), deleted_at: null, deleted_by: null };
+      if (rec.start_date && rec.end_date && rec.end_date < rec.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       const ok = await persist('exams', rec); renderExams(); updateStats();
       showToast(ok ? 'បានរក្សាទុកសម័យប្រឡងជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាសម័យប្រឡង', rec.major); e.target.reset();
@@ -2555,6 +2986,7 @@
       if (table === 'dispatches') return (r.code || '') + ' — ' + (r.title || '');
       if (table === 'exams') return (r.major || '') + ' (' + (r.session || '') + ')';
       if (table === 'certs') return (r.num || '') + ' — ' + (r.recipient || '');
+      if (table === 'report_notes') return (r.period || '') + ' / ' + (r.bureau || '');
       return String(r.id);
     }
     function rerenderTable(table) {
@@ -2727,7 +3159,7 @@
     function renderMigrationStatus() {
       const el = document.getElementById('migration-status'); if (!el) return;
       el.innerHTML = missingCloudCols.size
-        ? `<div class="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800"><b>⚠️ Supabase ខ្វះ column៖</b> ${[...missingCloudCols].map(esc).join(', ')}<br>សូម Run ហ្វាល <b>supabase-migration-v3.0.sql</b> ក្នុង Supabase → SQL Editor ដើម្បីឱ្យ Soft Delete / Stage History / Overdue Sync គ្រប់ឧបករណ៍។</div>`
+        ? `<div class="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800"><b>⚠️ Supabase ខ្វះ column៖</b> ${[...missingCloudCols].map(esc).join(', ')}<br>សូម Run ហ្វាល <b>supabase-migration-v3.3.sql</b> ក្នុង Supabase → SQL Editor ដើម្បីឱ្យ Soft Delete / Stage History / Overdue Sync គ្រប់ឧបករណ៍។</div>`
         : `<div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 font-bold">✅ មិនទាន់រកឃើញបញ្ហា Schema លើ Cloud</div>`;
     }
 
@@ -2965,7 +3397,7 @@
       const strip = r => { const c = { ...r }; delete c._pending; if (c.driveLink) delete c.fileDataUrl; return c; };
       const full = { app: 'HRDD DMS', version: 'V2.5', exportedAt: nowISO(), exportedBy: currentUser?.username,
         users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
-        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip) };
+        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip) };
       downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
     }
@@ -2977,7 +3409,7 @@
       let data;
       try { data = JSON.parse(await file.text()); } catch (err) { return alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ ឬខូច!'); }
       if (!data || typeof data !== 'object') return alert('⚠️ ទម្រង់ Backup មិនត្រឹមត្រូវ!');
-      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs };
+      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes };
       const clean = {};
       DATA_TABLES.forEach(t => {
         clean[t] = (Array.isArray(src[t]) ? src[t] : []).filter(r => r && r.id != null && !isNaN(Number(r.id))).map(r => {
@@ -3072,6 +3504,7 @@
     let html5QrcodeScanner = null;
     function toggleScannerModal(show) {
       const modal = document.getElementById('modal-scanner'); if (!modal) return;
+      if (show && !canUseQR()) return showToast('មុខងារ QR មានសម្រាប់ការិយាល័យទី៣ និង Admin ប៉ុណ្ណោះ', true);
       if (show) {
         modal.classList.remove('hidden');
         const resEl = document.getElementById('scan-result');
