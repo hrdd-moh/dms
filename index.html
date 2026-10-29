@@ -457,14 +457,17 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- MODAL: EDIT PERMISSION -->
-  <div id="modal-perm" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 z-[70] flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-      <h3 id="perm-modal-title" class="text-base font-bold text-slate-900">✏️ កែសិទ្ធិ</h3>
-      <div id="perm-modal-grid" class="grid grid-cols-2 gap-2 text-xs"></div>
-      <div class="flex justify-end gap-2">
-        <button onclick="closePermModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs">បោះបង់</button>
-        <button onclick="savePermModal()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs">💾 រក្សាទុក</button>
+  <!-- MODAL: USER DETAIL / EDIT / HISTORY (double-click on user row) -->
+  <div id="modal-user-detail" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 z-[70] flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center p-5 border-b border-slate-100 shrink-0">
+        <h3 id="ud-title" class="text-base font-bold text-slate-900">👤 ព័ត៌មានគណនី</h3>
+        <button onclick="closeUserDetail()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none transition">✕</button>
+      </div>
+      <div id="ud-body" class="p-5 overflow-y-auto space-y-5 min-h-0"></div>
+      <div class="flex justify-end gap-2 p-4 border-t border-slate-100 shrink-0">
+        <button onclick="closeUserDetail()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs">បិទ</button>
+        <button id="ud-save-btn" onclick="saveUserDetail()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs">💾 រក្សាទុកការកែប្រែ</button>
       </div>
     </div>
   </div>
@@ -2459,41 +2462,98 @@
     }
 
     const PERM_KEYS = [['read','👁️ Read'],['create','✏️ Create'],['edit','📝 Edit'],['delete','🗑️ Delete'],['upload','📤 Upload'],['download','📥 Download'],['export','📊 Export'],['approve','✅ Approve'],['admin','👑 Manage Users']];
-    let permEditId = null;
+    const ROLE_OPTS = [['Editor','Editor / Officer'],['Viewer','Viewer / Read Only'],['Approver','Approver / Auditor'],['Admin','System Admin'],['SuperAdmin','Super Admin']];
+    const STATUS_OPTS = [['Active','🟢 Active'],['Suspended','🔴 Suspended'],['Pending','🟡 Pending']];
+    let userDetailId = null;
 
     function canEditPerm(u) {
-      if (!u || !currentUser) return false;
+      if (!u || !currentUser || u.status === 'Deleted') return false;
       if (String(u.username).toLowerCase() === String(currentUser.username).toLowerCase()) return false;
       if (isSuperAdmin()) return true;
       if (!isAdmin()) return false;
-      return u.role !== 'SuperAdmin' && String(u.username).toLowerCase() !== 'admin';
+      return !isAdmin(u) && String(u.username).toLowerCase() !== 'admin';
     }
 
-    function openPermModal(id) {
-      const u = usersData.find(x => x.id === id);
-      if (!canEditPerm(u)) return alert('មិនអាចកែសិទ្ធិគណនីនេះបានទេ!');
-      permEditId = id;
-      document.getElementById('perm-modal-title').innerText = '✏️ កែសិទ្ធិ @' + u.username;
-      const lockAdmin = !isSuperAdmin();
-      document.getElementById('perm-modal-grid').innerHTML = PERM_KEYS.map(([k, label]) =>
-        `<label class="flex items-center gap-1.5 p-2 rounded-xl border border-slate-200 bg-slate-50 ${k === 'admin' && lockAdmin ? 'opacity-50' : ''}"><input type="checkbox" data-perm="${k}" ${u.permissions?.[k] === true ? 'checked' : ''} ${k === 'admin' && lockAdmin ? 'disabled' : ''} class="rounded text-emerald-600"><span>${label}</span></label>`).join('');
-      document.getElementById('modal-perm').classList.remove('hidden');
+    function rolePresetPerms(role) {
+      const S = role === 'SuperAdmin', A = role === 'Admin', P = role === 'Approver', E = role === 'Editor';
+      return { read: true, create: S || A || E, edit: S || A || E, delete: S || A, upload: S || A || E || P, download: true, export: S || A || P, approve: S || A || P, admin: S || A };
+    }
+    function udApplyPreset(role) {
+      const p = rolePresetPerms(role);
+      document.querySelectorAll('#ud-perms input[data-perm]').forEach(cb => { if (!cb.disabled) cb.checked = !!p[cb.dataset.perm]; });
+    }
+    function userDetailHistory(u) {
+      const re = new RegExp('^@' + String(u.username).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(\\s|$)', 'i');
+      return auditLogs.filter(l => l.user !== '__USER_SYNC__' && re.test(String(l.target || ''))).slice(0, 40);
     }
 
-    function closePermModal() { document.getElementById('modal-perm')?.classList.add('hidden'); permEditId = null; }
+    function openUserDetail(id) {
+      const u = usersData.find(x => x.id === id); if (!u || u.status === 'Deleted') return;
+      userDetailId = id;
+      const editable = canEditPerm(u), sup = isSuperAdmin(), dis = editable ? '' : 'disabled';
+      const roles = ROLE_OPTS.filter(([v]) => sup || (v !== 'Admin' && v !== 'SuperAdmin') || v === u.role);
+      const bureaus = [['bureau_1', bureauShort('bureau_1')], ['bureau_2', bureauShort('bureau_2')], ['bureau_3', bureauShort('bureau_3')]];
+      if (sup || u.bureau === 'all') bureaus.push(['all', '👑 ការិយាល័យទាំង ៣']);
+      const perms = u.permissions || {};
+      const sel = 'form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white font-semibold text-slate-700 disabled:bg-slate-100';
+      const hist = userDetailHistory(u);
+      document.getElementById('ud-title').innerText = '👤 @' + u.username + (editable ? ' — កែប្រែ' : ' — មើលតែប៉ុណ្ណោះ');
+      document.getElementById('ud-save-btn').style.display = editable ? '' : 'none';
+      document.getElementById('ud-body').innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div><label class="block font-bold text-slate-700 mb-1">ឈ្មោះពេញ</label><input id="ud-fullname" type="text" value="${esc(u.fullname)}" ${dis} class="${sel}"></div>
+          <div><label class="block font-bold text-slate-700 mb-1">Username</label><input type="text" value="@${esc(u.username)}" disabled class="${sel} font-mono"></div>
+          <div><label class="block font-bold text-slate-700 mb-1">Role</label><select id="ud-role" onchange="udApplyPreset(this.value)" ${dis} class="${sel}">${roles.map(([v, l]) => `<option value="${v}" ${v === u.role ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
+          <div><label class="block font-bold text-slate-700 mb-1">ការិយាល័យ</label><select id="ud-bureau" ${dis} class="${sel}">${bureaus.map(([v, l]) => `<option value="${v}" ${v === u.bureau ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
+          <div><label class="block font-bold text-slate-700 mb-1">ស្ថានភាព</label><select id="ud-status" ${dis} class="${sel}">${STATUS_OPTS.map(([v, l]) => `<option value="${v}" ${v === u.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+          <div><label class="block font-bold text-slate-700 mb-1">លេខសម្ងាត់ថ្មី (ទុកទទេ = មិនប្តូរ)</label><input id="ud-password" type="text" minlength="6" autocomplete="off" ${dis} class="${sel}" placeholder="យ៉ាងតិច ៦ តួ"></div>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-slate-700 mb-2">🔐 សិទ្ធិ</div>
+          <div id="ud-perms" class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">${PERM_KEYS.map(([k, label]) => {
+            const lock = !editable || (k === 'admin' && !sup);
+            return `<label class="flex items-center gap-1.5 p-2 rounded-xl border border-slate-200 bg-slate-50 ${lock ? 'opacity-60' : ''}"><input type="checkbox" data-perm="${k}" ${perms[k] === true ? 'checked' : ''} ${lock ? 'disabled' : ''} class="rounded text-emerald-600"><span>${label}</span></label>`; }).join('')}</div>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-slate-700 mb-2">🕒 ប្រវត្តិការផ្លាស់ប្តូរ (${hist.length})</div>
+          <div class="max-h-56 overflow-y-auto rounded-xl border border-slate-200 divide-y divide-slate-100 text-[11px]">
+            ${hist.length ? hist.map(l => `<div class="p-2.5"><div class="font-bold text-slate-800">${esc(l.action)}</div><div class="text-slate-500">👤 ${esc(l.user)} • 🕒 ${esc(formatDT(l.time))}</div></div>`).join('') : '<div class="p-3 text-slate-400">មិនទាន់មានប្រវត្តិ</div>'}
+          </div>
+        </div>`;
+      document.getElementById('modal-user-detail').classList.remove('hidden');
+    }
 
-    async function savePermModal() {
-      const u = usersData.find(x => x.id === permEditId);
-      if (!canEditPerm(u)) return alert('មិនអាចកែសិទ្ធិគណនីនេះបានទេ!');
-      const next = { ...(u.permissions || {}) };
-      document.querySelectorAll('#perm-modal-grid input[data-perm]').forEach(cb => {
-        if (cb.dataset.perm === 'admin' && !isSuperAdmin()) return;
-        next[cb.dataset.perm] = cb.checked;
-      });
-      u.permissions = next;
-      await saveUsersLocal(); renderUsersTable(); await pushUsersToCloud([u]);
-      closePermModal();
-      showToast('បានកែសិទ្ធិ @' + u.username); logActivity('កែសិទ្ធិគណនី', '@' + u.username);
+    function closeUserDetail() { document.getElementById('modal-user-detail')?.classList.add('hidden'); userDetailId = null; }
+
+    async function saveUserDetail() {
+      const u = usersData.find(x => x.id === userDetailId);
+      if (!canEditPerm(u)) return alert('មិនអាចកែគណនីនេះបានទេ!');
+      const sup = isSuperAdmin();
+      const fullname = document.getElementById('ud-fullname').value.trim();
+      if (!fullname) return alert('សូមបញ្ចូលឈ្មោះពេញ');
+      const role = document.getElementById('ud-role').value, bureau = document.getElementById('ud-bureau').value, status = document.getElementById('ud-status').value;
+      if (!sup && (role === 'Admin' || role === 'SuperAdmin' || bureau === 'all')) return alert('មានតែ Super Admin ទេដែលអាចផ្តល់សិទ្ធិ Admin!');
+      const pw = normalizeKhmerDigits(document.getElementById('ud-password').value.trim());
+      if (pw && pw.length < 6) return alert('លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួ');
+      const flags = {};
+      document.querySelectorAll('#ud-perms input[data-perm]').forEach(cb => { flags[cb.dataset.perm] = cb.checked; });
+      if (!sup) flags.admin = u.permissions?.admin === true;
+      const changes = [];
+      if (fullname !== u.fullname) changes.push('ឈ្មោះ: ' + u.fullname + ' → ' + fullname);
+      if (role !== u.role) changes.push('Role: ' + u.role + ' → ' + role);
+      if (bureau !== u.bureau) changes.push('ការិយាល័យ: ' + bureauShort(u.bureau) + ' → ' + bureauShort(bureau));
+      if (status !== u.status) changes.push('Status: ' + u.status + ' → ' + status);
+      const pd = PERM_KEYS.filter(([k]) => (flags[k] === true) !== (u.permissions?.[k] === true)).map(([k]) => k + (flags[k] ? ' ✓' : ' ✗'));
+      if (pd.length) changes.push('សិទ្ធិ: ' + pd.join(', '));
+      if (pw) changes.push('កំណត់លេខសម្ងាត់ថ្មី');
+      if (!changes.length) return showToast('មិនមានការផ្លាស់ប្ដូរ', true);
+      const upd = normalizeUserFromRecord({ ...u, fullname, role, bureau, status, password: pw || u.password, permissions: { ...(u.permissions || {}), ...flags, _role: role, _status: status } });
+      Object.assign(u, upd);
+      await saveUsersLocal(); renderUsersTable();
+      const ok = await pushUsersToCloud([u]);
+      logActivity('កែគណនី: ' + changes.join(' • '), '@' + u.username);
+      showToast(ok ? 'បានធ្វើបច្ចុប្បន្នភាព @' + u.username : 'បានរក្សាទុកក្នុងឧបករណ៍ (មិនទាន់ឡើង Cloud)', !ok);
+      openUserDetail(u.id);
     }
 
     function renderUsersTable() {
@@ -2503,11 +2563,11 @@
         const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
         const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
         const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
-        const editBtn = canEditPerm(u) ? `<button onclick="openPermModal(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
+        const editBtn = canEditPerm(u) ? `<button onclick="openUserDetail(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
         const actions = editBtn + (canManageUser(u)
           ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${u.status === 'Active' ? 'ផ្អាក (Suspend)' : 'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>`
           : `<span class="text-slate-400 text-xs">${String(u.username).toLowerCase() === 'admin' ? 'Master Account' : (u.username.toLowerCase() === currentUser.username.toLowerCase() ? 'គណនីរបស់អ្នក' : 'Protected')}</span>`);
-        return `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
+        return `<tr ondblclick="if(!event.target.closest('button'))openUserDetail(${u.id})" title="Double-click ដើម្បីមើល/កែ" class="hover:bg-emerald-50 transition cursor-pointer select-none"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
       }).join('');
     }
 
