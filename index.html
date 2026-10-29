@@ -457,6 +457,12 @@
 
   <!-- ================= MODALS ================= -->
 
+  <!-- DOCUMENT PAGE (double-click on a dispatch row): flow, timeline, stages -->
+  <div id="doc-page" role="dialog" aria-modal="true" class="fixed inset-0 z-[60] bg-slate-50 overflow-y-auto hidden">
+    <div id="doc-page-bar" class="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-200 px-4 sm:px-6 py-3 flex items-center gap-3"></div>
+    <div id="doc-page-body" class="max-w-4xl mx-auto p-4 sm:p-6 space-y-5"></div>
+  </div>
+
   <!-- MODAL: USER DETAIL / EDIT / HISTORY (double-click on user row) -->
   <div id="modal-user-detail" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 z-[70] flex items-center justify-center p-3 sm:p-4 hidden">
     <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col">
@@ -1879,6 +1885,98 @@
       const late = diffDays(due, todayISO());
       return late > 0 ? { due, days: late } : null;
     }
+    let docPageId = null;
+    function fmtDur(ms) {
+      if (!isFinite(ms) || ms < 0) return '-';
+      const m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mi = m % 60;
+      if (d) return d + ' ថ្ងៃ' + (h ? ' ' + h + ' ម៉ោង' : '');
+      if (h) return h + ' ម៉ោង' + (mi ? ' ' + mi + ' នាទី' : '');
+      return mi < 1 ? '< 1 នាទី' : mi + ' នាទី';
+    }
+
+    function renderDocPage() {
+      const d = store.dispatches.find(x => x.id === docPageId);
+      if (!d || isDeleted(d) || !currentUser) { closeDocPage(); return; }
+      const od = overdueInfo(d), done = d.stage === STAGE_DONE;
+      const hist = (Array.isArray(d.stage_history) && d.stage_history.length) ? d.stage_history : [{ stage: d.stage, location: d.location, by: d.assignee || '-', at: d.created_at || d.date, note: '' }];
+      const tFirst = Date.parse(hist[0].at), tLast = Date.parse(hist[hist.length - 1].at);
+      const total = (done ? tLast : Date.now()) - tFirst;
+      const due = isISODate(d.due_date) ? String(d.due_date).slice(0, 10) : addDaysISO(d.date, OVERDUE_DEFAULT_DAYS);
+      const left = due ? diffDays(todayISO(), due) : null;
+      const idx = STAGES.indexOf(d.stage), pct = done ? 100 : (idx < 0 ? 0 : Math.round((idx / (STAGES.length - 1)) * 100));
+      const badgeCls = od ? 'bg-rose-100 text-rose-700' : (done ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700');
+      const badgeTxt = od ? `⚠️ ហួសកំណត់ ${od.days} ថ្ងៃ` : (done ? '✅ រួចរាល់' : '⏳ កំពុងដំណើរការ');
+      const dueTxt = !due ? '-' : (done ? due : (left < 0 ? due + ' (ហួស ' + (-left) + ' ថ្ងៃ)' : left === 0 ? due + ' (ថ្ងៃនេះ)' : due + ' (នៅសល់ ' + left + ' ថ្ងៃ)'));
+
+      document.getElementById('doc-page-bar').innerHTML = `
+        <button onclick="closeDocPage()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-700 font-bold flex items-center justify-center shrink-0" aria-label="Back">←</button>
+        <div class="min-w-0 flex-1"><div class="font-mono font-bold text-slate-900 truncate">${esc(d.code)}</div><div class="text-[11px] text-slate-500 truncate">${esc(d.title)}</div></div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeCls} whitespace-nowrap">${esc(badgeTxt)}</span>
+        ${can('edit') ? `<button onclick="openStageModal(${d.id})" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold whitespace-nowrap">🔄 ប្តូរដំណាក់កាល</button>` : ''}`;
+
+      const info = [['ប្រភេទ', d.type], ['ការិយាល័យ', bureauShort(d.bureau)], ['ថ្ងៃចុះលិខិត', d.date], ['ថ្ងៃផុតកំណត់', dueTxt], ['អ្នកទទួលខុសត្រូវ', d.assignee || '-'], ['ទីតាំងបច្ចុប្បន្ន', d.location || '-']];
+      const steps = STAGES.map((st, i) => {
+        const state = done || i < idx ? 'done' : (i === idx ? 'cur' : 'todo');
+        const circle = state === 'done' ? 'bg-emerald-600 text-white' : (state === 'cur' ? 'bg-amber-500 text-white ring-4 ring-amber-100' : 'bg-slate-200 text-slate-500');
+        return `<div class="flex-1 min-w-[88px] flex flex-col items-center text-center gap-1.5 relative">
+          ${i > 0 ? `<span class="absolute top-4 right-1/2 w-full h-0.5 ${state === 'todo' ? 'bg-slate-200' : 'bg-emerald-400'}"></span>` : ''}
+          <span class="relative z-[1] w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${circle}">${state === 'done' ? '✓' : i + 1}</span>
+          <span class="text-[11px] font-bold ${state === 'todo' ? 'text-slate-400' : 'text-slate-800'}">${esc(st)}</span></div>`;
+      }).join('');
+
+      const rows = hist.map((h, i) => {
+        const last = i === hist.length - 1;
+        const gap = i ? fmtDur(Date.parse(h.at) - Date.parse(hist[i - 1].at)) : '';
+        const dot = last ? (done ? 'bg-emerald-600' : 'bg-amber-500 animate-pulse') : 'bg-emerald-300';
+        return `<li class="ml-6 relative">
+          <span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full border-2 border-white ${dot}"></span>
+          <div class="rounded-2xl border ${last ? 'border-emerald-300 bg-emerald-50/50' : 'border-slate-200 bg-white'} p-3.5">
+            <div class="flex flex-wrap items-center gap-2"><span class="font-bold text-slate-900 text-sm">${esc(h.stage)}</span>
+              ${h.from && h.from !== h.stage ? `<span class="text-[11px] text-slate-400">(ពី ${esc(h.from)})</span>` : ''}
+              ${last ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${done ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${done ? 'បញ្ចប់' : 'បច្ចុប្បន្ន'}</span>` : ''}</div>
+            <div class="text-[11px] text-slate-600 mt-1">📍 ${esc(h.location || '-')} • 👤 @${esc(h.by || '-')} • 🕒 ${esc(formatDT(h.at))}</div>
+            ${gap ? `<div class="text-[11px] text-indigo-600 font-semibold mt-0.5">⏱ បន្ទាប់ពីដំណាក់កាលមុន ${esc(gap)}</div>` : ''}
+            ${last && !done ? `<div class="text-[11px] text-amber-700 font-semibold mt-0.5">⏳ នៅដំណាក់កាលនេះ ${esc(fmtDur(Date.now() - tLast))}</div>` : ''}
+            ${h.note ? `<div class="text-[11px] text-slate-500 italic mt-1">“${esc(h.note)}”</div>` : ''}
+          </div></li>`;
+      }).join('');
+
+      document.getElementById('doc-page-body').innerHTML = `
+        <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-3">
+          <div class="text-lg font-bold text-slate-900">${esc(d.title)}</div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">${info.map(([k, v]) => `<div class="rounded-xl bg-slate-50 border border-slate-100 p-2.5"><div class="text-slate-400 text-[10px]">${esc(k)}</div><div class="font-bold text-slate-800 break-words">${esc(v)}</div></div>`).join('')}</div>
+        </div>
+        <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs space-y-4">
+          <div class="flex items-center justify-between"><h3 class="font-bold text-slate-900 text-sm">📊 ដំណាក់កាល</h3><span class="text-xs font-bold text-emerald-700">${pct}%</span></div>
+          <div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-emerald-500 rounded-full transition-all" style="width:${pct}%"></div></div>
+          <div class="flex gap-1 overflow-x-auto pb-1">${steps}</div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="bg-white rounded-2xl border border-slate-200 p-3"><div class="text-[10px] text-slate-400">ការផ្លាស់ប្តូរ</div><div class="text-xl font-bold text-slate-900">${Math.max(hist.length - 1, 0)}</div></div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-3"><div class="text-[10px] text-slate-400">រយៈពេលសរុប</div><div class="text-sm font-bold text-slate-900">${esc(fmtDur(total))}</div></div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-3"><div class="text-[10px] text-slate-400">ដំណាក់កាលបច្ចុប្បន្ន</div><div class="text-sm font-bold text-slate-900">${esc(d.stage)}</div></div>
+        </div>
+        <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-2xs">
+          <h3 class="font-bold text-slate-900 text-sm mb-4">🕒 លំហូរឯកសារ និងពេលវេលា</h3>
+          <ol class="relative border-l-2 border-emerald-200 ml-2 space-y-4">${rows}</ol>
+        </div>`;
+    }
+
+    function openDocPage(id) {
+      const d = store.dispatches.find(x => x.id === id); if (!d || isDeleted(d)) return;
+      docPageId = id; renderDocPage();
+      const el = document.getElementById('doc-page'); el.classList.remove('hidden'); el.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      if (location.hash !== '#doc-' + id) { try { history.pushState({ doc: id }, '', '#doc-' + id); } catch (e) {} }
+    }
+    function closeDocPage(fromPop) {
+      const wasOpen = docPageId != null;
+      docPageId = null; document.getElementById('doc-page')?.classList.add('hidden'); document.body.style.overflow = '';
+      if (wasOpen && !fromPop && /^#doc-/.test(location.hash)) { try { history.back(); } catch (e) {} }
+    }
+    window.addEventListener('popstate', () => { if (docPageId != null && !/^#doc-/.test(location.hash)) closeDocPage(true); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && docPageId != null && document.getElementById('modal-stage')?.classList.contains('hidden')) closeDocPage(); });
+
     let trackPickId = null;
     function trackNorm(v) { return normalizeKhmerDigits(String(v == null ? '' : v)).replace(/\s+/g, '').toUpperCase(); }
     function trackingCard(d) {
@@ -1893,6 +1991,7 @@
             <span class="font-mono font-bold text-slate-900">${esc(d.code)}</span>
             <span class="px-2 py-0.5 rounded text-xs font-bold ${badgeCls}">${esc(badgeTxt)}</span>
             <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-xs font-bold">${esc(bureauShort(d.bureau))}</span>
+            <button onclick="openDocPage(${d.id})" class="ml-auto px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">🔍 មើលលម្អិត</button>
           </div>
           <div class="font-bold text-slate-800">${esc(d.title)}</div>
           <div class="text-xs text-slate-500">📅 ${esc(d.date)} • 📍 ${esc(d.location || '-')} • ⏳ ${esc(d.stage)}</div>
@@ -1926,6 +2025,7 @@
     function renderDispatch() {
       const tbody = document.getElementById('dispatch-table-body'); if (!tbody) return;
       renderTracking();
+      if (docPageId != null) renderDocPage();
       const admin = isAdmin(); const view = admin ? activeBureauKey : currentUser.bureau;
       const q = (document.getElementById('filter-disp-search')?.value || '').toLowerCase().trim();
       const typeF = document.getElementById('filter-disp-type')?.value || 'all';
@@ -1954,14 +2054,14 @@
         const od = overdueInfo(d);
         const bTag = view === 'all' ? `<span class="block text-[10px] text-slate-400">${esc(bureauShort(d.bureau))}</span>` : '';
         const due = isISODate(d.due_date) ? String(d.due_date).slice(0, 10) : '';
-        return `<tr class="hover:bg-emerald-50 transition ${od ? 'bg-rose-50/40' : ''}">
+        return `<tr ondblclick="if(!event.target.closest('button'))openDocPage(${d.id})" title="Double-click ដើម្បីមើលលំហូរឯកសារ" class="hover:bg-emerald-50 transition cursor-pointer select-none ${od ? 'bg-rose-50/40' : ''}">
           <td class="p-3.5 whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold ${d.type === 'ចូល' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">${esc(d.type)}</span></td>
           <td class="p-3.5 font-mono font-bold text-slate-800 text-sm whitespace-nowrap">${esc(d.code)}${bTag}</td>
           <td class="p-3.5 font-bold text-slate-900 text-sm">${esc(d.title)}${d.assignee ? `<span class="block text-[10px] text-slate-400 font-normal">👤 ${esc(d.assignee)}</span>` : ''}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold ${d.stage === STAGE_DONE ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800 border border-amber-200'}">${esc(d.stage)}</span>${od ? `<span class="block mt-1 text-[10px] font-bold text-rose-700">⚠️ ${esc(tStr('overdue'))} ${od.days} ${esc(tStr('days'))}</span>` : ''}</td>
           <td class="p-3.5 text-emerald-800 font-bold text-xs whitespace-nowrap">${esc(d.location)}</td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(d.date)}${due ? `<span class="block text-[10px] text-slate-400">⏰ ${esc(due)}</span>` : ''}</td>
-          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="openStageModal(${d.id})" class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 form-input-focus">${esc(tStr('btn_stage'))}</button>${deleteBtn('dispatches', d.id)}</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="openDocPage(${d.id})" title="មើលលំហូរឯកសារ" aria-label="Details" class="px-2 py-1.5 mr-1 bg-white hover:bg-emerald-50 border border-slate-200 rounded-lg text-xs form-input-focus">🔍</button><button onclick="openStageModal(${d.id})" class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 form-input-focus">${esc(tStr('btn_stage'))}</button>${deleteBtn('dispatches', d.id)}</td>
         </tr>`;
       }).join('') : emptyRow(7, appLang === 'en' ? 'No dispatch letters found' : 'មិនទាន់មានលិខិតឡើយ');
       renderPager('dispatches', pg);
@@ -2818,7 +2918,7 @@
       }
     }
 
-    function closeAllModals() {
+    function closeAllModals() { try { closeDocPage(true); } catch (e) {}
       closeProfileModal(); closeDocViewerModal(); closeSystemModal(); closePrintPreviewModal(); closeStageModal(); toggleScannerModal(false);
     }
 
