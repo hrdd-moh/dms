@@ -1055,7 +1055,8 @@
           admin: Boolean(p.admin || u.bureau === 'all' || roleVal === 'SuperAdmin' || roleVal === 'Admin'),
           read: p.read !== false, create: Boolean(p.create ?? true), edit: Boolean(p.edit ?? true), delete: Boolean(p.delete ?? false),
           upload: p.upload !== false, download: p.download !== false, export: Boolean(p.export ?? false), approve: Boolean(p.approve ?? false),
-          _role: roleVal, _status: statusVal, _avatar: avatarVal, _deleted_at: p._deleted_at || null, _deleted_by: p._deleted_by || null
+          _role: roleVal, _status: statusVal, _avatar: avatarVal, _deleted_at: p._deleted_at || null, _deleted_by: p._deleted_by || null,
+          _prev_usernames: Array.isArray(p._prev_usernames) ? p._prev_usernames.slice(-10) : []
         } };
       delete out.altPass; // 🔒 បិទ Backdoor ពាក្យសម្ងាត់ '123' របស់ admin
       return out;
@@ -1081,7 +1082,9 @@
           map.set(k, normalizeUserFromRecord(merged));
         });
       });
-      return Array.from(map.values());
+      const all = Array.from(map.values()), ghosts = new Set();
+      all.forEach(u => (u.permissions?._prev_usernames || []).forEach(n => ghosts.add(String(n).toLowerCase() + '#' + u.id)));
+      return all.filter(u => !ghosts.has(String(u.username).toLowerCase() + '#' + u.id));
     }
 
     function setUserStatus(u, status) {
@@ -2483,7 +2486,8 @@
       document.querySelectorAll('#ud-perms input[data-perm]').forEach(cb => { if (!cb.disabled) cb.checked = !!p[cb.dataset.perm]; });
     }
     function userDetailHistory(u) {
-      const re = new RegExp('^@' + String(u.username).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(\\s|$)', 'i');
+      const names = [u.username, ...(u.permissions?._prev_usernames || [])].map(n => String(n).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const re = new RegExp('^@(' + names.join('|') + ')(\\s|$)', 'i');
       return auditLogs.filter(l => l.user !== '__USER_SYNC__' && re.test(String(l.target || ''))).slice(0, 40);
     }
 
@@ -2502,7 +2506,7 @@
       document.getElementById('ud-body').innerHTML = `
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div><label class="block font-bold text-slate-700 mb-1">ឈ្មោះពេញ</label><input id="ud-fullname" type="text" value="${esc(u.fullname)}" ${dis} class="${sel}"></div>
-          <div><label class="block font-bold text-slate-700 mb-1">Username</label><input type="text" value="@${esc(u.username)}" disabled class="${sel} font-mono"></div>
+          <div><label class="block font-bold text-slate-700 mb-1">Username</label><input id="ud-username" type="text" value="${esc(u.username)}" ${dis} maxlength="32" autocomplete="off" class="${sel} font-mono"></div>
           <div><label class="block font-bold text-slate-700 mb-1">Role</label><select id="ud-role" onchange="udApplyPreset(this.value)" ${dis} class="${sel}">${roles.map(([v, l]) => `<option value="${v}" ${v === u.role ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
           <div><label class="block font-bold text-slate-700 mb-1">ការិយាល័យ</label><select id="ud-bureau" ${dis} class="${sel}">${bureaus.map(([v, l]) => `<option value="${v}" ${v === u.bureau ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
           <div><label class="block font-bold text-slate-700 mb-1">ស្ថានភាព</label><select id="ud-status" ${dis} class="${sel}">${STATUS_OPTS.map(([v, l]) => `<option value="${v}" ${v === u.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
@@ -2533,12 +2537,19 @@
       if (!fullname) return alert('សូមបញ្ចូលឈ្មោះពេញ');
       const role = document.getElementById('ud-role').value, bureau = document.getElementById('ud-bureau').value, status = document.getElementById('ud-status').value;
       if (!sup && (role === 'Admin' || role === 'SuperAdmin' || bureau === 'all')) return alert('មានតែ Super Admin ទេដែលអាចផ្តល់សិទ្ធិ Admin!');
+      const username = document.getElementById('ud-username').value.trim().replace(/^@/, '');
+      if (!/^[A-Za-z0-9_.\-]{3,32}$/.test(username)) return alert('Username ត្រូវមាន ៣–៣២ តួ (A-Z, a-z, 0-9, _ . -)');
+      if (username.toLowerCase() === 'admin' && String(u.username).toLowerCase() !== 'admin') return alert('មិនអាចប្រើ Username "admin" បានទេ');
+      if (usersData.some(x => x.id !== u.id && String(x.username).toLowerCase() === username.toLowerCase())) return alert('Username នេះមានរួចហើយ (រួមទាំងគណនីក្នុងធុងសំរាម)!');
+      const oldName = u.username, renamed = username.toLowerCase() !== String(oldName).toLowerCase();
+      if (renamed && !confirm('ប្តូរ Username @' + oldName + ' → @' + username + '?\nអ្នកប្រើត្រូវ Login ឡើងវិញដោយប្រើ Username ថ្មី។')) return;
       const pw = normalizeKhmerDigits(document.getElementById('ud-password').value.trim());
       if (pw && pw.length < 6) return alert('លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួ');
       const flags = {};
       document.querySelectorAll('#ud-perms input[data-perm]').forEach(cb => { flags[cb.dataset.perm] = cb.checked; });
       if (!sup) flags.admin = u.permissions?.admin === true;
       const changes = [];
+      if (username !== oldName) changes.push('Username: @' + oldName + ' → @' + username);
       if (fullname !== u.fullname) changes.push('ឈ្មោះ: ' + u.fullname + ' → ' + fullname);
       if (role !== u.role) changes.push('Role: ' + u.role + ' → ' + role);
       if (bureau !== u.bureau) changes.push('ការិយាល័យ: ' + bureauShort(u.bureau) + ' → ' + bureauShort(bureau));
@@ -2547,7 +2558,9 @@
       if (pd.length) changes.push('សិទ្ធិ: ' + pd.join(', '));
       if (pw) changes.push('កំណត់លេខសម្ងាត់ថ្មី');
       if (!changes.length) return showToast('មិនមានការផ្លាស់ប្ដូរ', true);
-      const upd = normalizeUserFromRecord({ ...u, fullname, role, bureau, status, password: pw || u.password, permissions: { ...(u.permissions || {}), ...flags, _role: role, _status: status } });
+      const prev = (u.permissions?._prev_usernames || []).filter(n => String(n).toLowerCase() !== username.toLowerCase());
+      if (renamed) prev.push(oldName);
+      const upd = normalizeUserFromRecord({ ...u, username, fullname, role, bureau, status, password: pw || u.password, permissions: { ...(u.permissions || {}), ...flags, _role: role, _status: status, _prev_usernames: prev } });
       Object.assign(u, upd);
       await saveUsersLocal(); renderUsersTable();
       const ok = await pushUsersToCloud([u]);
