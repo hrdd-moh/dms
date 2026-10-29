@@ -15,7 +15,6 @@
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
   <style>
-        #modal-system-tools [id^="syscontent-"] { min-height: 0; }
     body { font-family: 'Battambang', system-ui, -apple-system, sans-serif; }
     .font-moul { font-family: 'Moul', cursive; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -166,7 +165,6 @@
 
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           <!-- Sync: Icon តែមួយ -->
-                    <button onclick="syncFromSupabase(true)" title="Sync Cloud Data" aria-label="Sync Cloud Data" class="hidden w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition form-input-focus">
           <button onclick="syncFromSupabase(true)" title="Sync Cloud Data" aria-label="Sync Cloud Data" class="w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition form-input-focus">
             <span id="sync-btn-icon" class="text-base inline-block">🔄</span>
           </button>
@@ -450,22 +448,11 @@
   </nav>
 
   <!-- ================= MODALS ================= -->
-<!-- MODAL: EDIT PERMISSION (NEW) -->
-<div id="modal-perm" class="fixed inset-0 bg-slate-900/70 z-[70] flex items-center justify-center p-4 hidden">
-  <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-    <h3 id="perm-modal-title" class="text-base font-bold text-slate-900">✏️ កែសិទ្ធិ</h3>
-    <div id="perm-modal-grid" class="grid grid-cols-2 gap-2 text-xs"></div>
-    <div class="flex justify-end gap-2">
-      <button onclick="closePermModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs">បោះបង់</button>
-      <button onclick="savePermModal()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs">💾 រក្សាទុក</button>
-    </div>
-  </div>
-</div>
-  
+
   <!-- USER PROFILE -->
   <div id="modal-user-profile" role="dialog" aria-modal="true" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[65] flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3 shrink-0">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><span>👤</span> <span data-i18n="prof_modal_title">ព័ត៌មានគណនីមន្ត្រី (User Profile)</span></h3>
         <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none">✕</button>
       </div>
@@ -572,7 +559,7 @@
         <button onclick="closeSystemModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none transition form-input-focus">✕</button>
       </div>
 
-       <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-1 overflow-x-auto overflow-y-hidden text-xs shrink-0" id="system-tools-nav-bar
+      <div class="flex items-center gap-2 border-b border-slate-100 pb-2 overflow-x-auto text-xs" id="system-tools-nav-bar">
         <button onclick="switchSystemToolTab('settings')" id="systab-settings" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus whitespace-nowrap">⚙️ User Management</button>
         <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🌍 Location</button>
         <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">📁 File System</button>
@@ -2408,44 +2395,7 @@
       await saveUsersLocal(); renderUsersTable(); await pushUsersToCloud([u]);
       showToast('គណនី @' + u.username + ' → ' + u.status); logActivity('ប្តូរ Status: ' + u.status, '@' + u.username);
     }
-const PERM_KEYS = [['read','👁️ Read'],['create','✏️ Create'],['edit','📝 Edit'],['delete','🗑️ Delete'],['upload','📤 Upload'],['download','📥 Download'],['export','📊 Export'],['approve','✅ Approve'],['admin','👑 Manage Users']];
-let permEditId = null;
 
-function canEditPerm(u) {
-  if (!u || !currentUser) return false;
-  if (u.username.toLowerCase() === currentUser.username.toLowerCase()) return false; // កុំឱ្យកែខ្លួនឯង
-  if (isSuperAdmin()) return true;
-  if (!isAdmin()) return false;
-  return u.role !== 'SuperAdmin' && String(u.username).toLowerCase() !== 'admin';
-}
-
-function openPermModal(id) {
-  const u = usersData.find(x => x.id === id);
-  if (!canEditPerm(u)) return alert('មិនអាចកែសិទ្ធិគណនីនេះបានទេ!');
-  permEditId = id;
-  document.getElementById('perm-modal-title').innerText = '✏️ កែសិទ្ធិ @' + u.username;
-  document.getElementById('perm-modal-grid').innerHTML = PERM_KEYS.map(([k, label]) =>
-    `<label class="flex items-center gap-1.5 p-2 rounded-xl border border-slate-200 bg-slate-50 ${k === 'admin' && !isSuperAdmin() ? 'opacity-50' : ''}">
-       <input type="checkbox" data-perm="${k}" ${u.permissions?.[k] === true ? 'checked' : ''} ${k === 'admin' && !isSuperAdmin() ? 'disabled' : ''} class="rounded text-emerald-600">
-       <span>${label}</span></label>`).join('');
-  document.getElementById('modal-perm').classList.remove('hidden');
-}
-
-function closePermModal() { document.getElementById('modal-perm')?.classList.add('hidden'); permEditId = null; }
-
-async function savePermModal() {
-  const u = usersData.find(x => x.id === permEditId);
-  if (!canEditPerm(u)) return alert('មិនអាចកែសិទ្ធិគណនីនេះបានទេ!');
-  const next = { ...(u.permissions || {}) };
-  document.querySelectorAll('#perm-modal-grid input[data-perm]').forEach(cb => {
-    if (cb.dataset.perm === 'admin' && !isSuperAdmin()) return; // មាន SuperAdmin ប៉ុណ្ណោះដែលផ្តល់ Manage Users បាន
-    next[cb.dataset.perm] = cb.checked;
-  });
-  u.permissions = next;
-  await saveUsersLocal(); renderUsersTable(); await pushUsersToCloud([u]);
-  closePermModal();
-  showToast('បានកែសិទ្ធិ @' + u.username); logActivity('កែសិទ្ធិគណនី', '@' + u.username);
-}
     async function deleteUser(id) {
       const u = usersData.find(x => x.id === id);
       if (!canManageUser(u)) return alert('មិនអាចលុបគណនីនេះបានទេ!');
@@ -2463,20 +2413,13 @@ async function savePermModal() {
         const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
         const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
         const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
-           function renderUsersTable() {
-      const tbody = document.getElementById('users-table-body'); if (!tbody) return;
-      tbody.innerHTML = usersData.filter(u => u.status !== 'Deleted').map(u => {
-        const fn = u.fullname || u.username || 'U';
-        const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
-        const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
-        const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
-        const editBtn = canEditPerm(u) ? `<button onclick="openPermModal(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
-        const actions = editBtn + (canManageUser(u)
+        const actions = canManageUser(u)
           ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${u.status === 'Active' ? 'ផ្អាក (Suspend)' : 'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>`
-          : `<span class="text-slate-400 text-xs">${String(u.username).toLowerCase() === 'admin' ? 'Master Account' : (u.username.toLowerCase() === currentUser.username.toLowerCase() ? 'គណនីរបស់អ្នក' : 'Protected')}</span>`);
+          : `<span class="text-slate-400 text-xs">${String(u.username).toLowerCase() === 'admin' ? 'Master Account' : (u.username.toLowerCase() === currentUser.username.toLowerCase() ? 'គណនីរបស់អ្នក' : 'Protected')}</span>`;
         return `<tr class="hover:bg-emerald-50 transition"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
       }).join('');
     }
+
     function renderLogsTable() {
       const tbody = document.getElementById('logs-table-body'); if (!tbody) return;
       const q = (document.getElementById('log-search-input')?.value || '').toLowerCase().trim();
