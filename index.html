@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.3 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.4 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -65,6 +65,7 @@
     }
     #modal-system-tools [id^="syscontent-"] { min-height: 0; }
       @media (min-width: 1280px) { .main-wide { grid-column: 1 / -1 !important; } }
+    .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;max-height:3em}
   </style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased h-screen overflow-hidden flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
@@ -85,7 +86,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.3</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.4</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -143,7 +144,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.4.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -256,8 +257,6 @@
           </div>
         </div>
 
-        <div id="bureau-duties"></div>
-
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start flex-1">
           <div class="xl:col-span-8 space-y-5">
 
@@ -270,7 +269,6 @@
                 </div>
                 <div class="flex items-center gap-2">
                   <button onclick="resetDocFilters()" class="px-3.5 py-2 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200 transition form-input-focus" data-i18n="btn_reset_filter">🔄 Reset តម្រង</button>
-                  <button onclick="exportDocsCSV()" class="perm-download-el px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-2xs form-input-focus">📥 Export CSV</button>
                 </div>
               </div>
               <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
@@ -315,7 +313,6 @@
                       <th class="p-3.5 min-w-[110px]">Doc ID</th>
                       <th class="p-3.5 min-w-[230px]" data-i18n="th_doc_title">ចំណងជើងឯកសារ</th>
                       <th class="p-3.5 text-center min-w-[140px]" data-i18n="th_category">ប្រភេទ</th>
-                      <th class="p-3.5 text-center min-w-[130px]" data-i18n="th_status">ស្ថានភាព</th>
                       <th class="p-3.5 text-center min-w-[90px]" data-i18n="th_size">ទំហំ</th>
                       <th class="p-3.5 min-w-[130px]" data-i18n="th_owner">ម្ចាស់ឯកសារ</th>
                       <th class="p-3.5 text-center min-w-[160px]" data-i18n="th_actions">សកម្មភាព</th>
@@ -417,7 +414,7 @@
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
-                    <tr><th class="p-3.5 min-w-[180px]" data-i18n="th_trainee">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_unit">អង្គភាព</th><th class="p-3.5 min-w-[200px]" data-i18n="th_course">វគ្គសិក្សា</th><th class="p-3.5 text-center min-w-[130px]">ភេទ · ថ្នាក់</th><th class="p-3.5 text-center min-w-[90px]" data-i18n="th_duration">រយៈពេល</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_country">ប្រទេស</th><th class="p-3.5 min-w-[150px]" data-i18n="th_sponsor">ឧបត្ថម្ភ</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
+                    <tr><th class="p-3.5 text-center w-12">ល.រ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_trainee">ឈ្មោះ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_unit">អង្គភាព</th><th class="p-3.5 min-w-[200px]" data-i18n="th_course">វគ្គសិក្សា</th><th class="p-3.5 text-center min-w-[130px]">ភេទ · ថ្នាក់</th><th class="p-3.5 text-center min-w-[90px]" data-i18n="th_duration">រយៈពេល</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_country">ប្រទេស</th><th class="p-3.5 min-w-[150px]" data-i18n="th_sponsor">ឧបត្ថម្ភ</th><th class="p-3.5 text-center min-w-[100px]" data-i18n="th_actions">សកម្មភាព</th></tr>
                   </thead>
                   <tbody id="training-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
@@ -457,7 +454,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.4.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -613,7 +610,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.3</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.4</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -625,7 +622,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.3 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.4 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
     </div>
   </div>
 
@@ -639,7 +636,7 @@
 
       <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-1 overflow-x-auto overflow-y-hidden text-xs shrink-0" id="system-tools-nav-bar">
         <button onclick="switchSystemToolTab('settings')" id="systab-settings" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus whitespace-nowrap">⚙️ User Management</button>
-        <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🌍 Location</button>
+        <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">⚙️ កំណត់ (Lists)</button>
         <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">📁 File System</button>
         <button onclick="switchSystemToolTab('recycle')" id="systab-recycle" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🗑️ Recycle Bin</button>
         <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🛡️ Security Center</button>
@@ -705,6 +702,13 @@
 
       <!-- LOCATION -->
       <div id="syscontent-location" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden">
+        <div class="flex flex-wrap gap-2 text-xs" id="list-subtabs">
+          <button onclick="switchListTab('location')" id="listtab-location" class="px-3.5 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus">🌍 Location (ប្រទេស)</button>
+          <button onclick="switchListTab('docCats')" id="listtab-docCats" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📂 ប្រភេទឯកសារ</button>
+          <button onclick="switchListTab('examTypes')" id="listtab-examTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🎓 ប្រភេទប្រឡង</button>
+          <button onclick="switchListTab('sponsors')" id="listtab-sponsors" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🤝 អ្នកឧបត្ថម្ភ</button>
+        </div>
+        <div id="sub-location" class="space-y-4">
         <div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
           <form onsubmit="handleAddCountry(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 items-end">
             <div><label class="block text-[10px] font-bold text-slate-600 mb-1">Code</label><input type="text" id="new-country-code" required maxlength="3" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"></div>
@@ -719,6 +723,8 @@
             <tbody id="countries-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
+        </div>
+        <div id="sub-lists" class="hidden space-y-4"></div>
       </div>
 
       <!-- FILES / BACKUP / RESTORE -->
@@ -793,8 +799,9 @@
 
       <!-- MANUAL -->
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
+        <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.3</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.4</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1034,11 +1041,12 @@
       report_notes: 'id, bureau, period',
       countries: 'code, kh, en',
       users: 'id, username',
-      logs: 'id, time, user, action'
+      logs: 'id, time, user, action',
+      app_lists: 'key'
     };
     function makeLocalDB(name, memory) {
       const d = (window.Dexie && !memory) ? new Dexie(name) : new MemoryDB();
-      d.version(3).stores(LOCAL_SCHEMA);
+      d.version(4).stores(LOCAL_SCHEMA);
       return d;
     }
     let localDB = makeLocalDB('DHRD_DB_V4');
@@ -1369,6 +1377,8 @@
           if (!error && Array.isArray(data) && data.length > 0) { countriesData = data; await localDB.countries.clear(); await localDB.countries.bulkPut(countriesData); }
         } catch (e) {}
 
+        try { await pullLists(); } catch (e) { }
+
         try {
           const cloudUsers = await fetchAllCloudUsers();
           if (cloudUsers.length) {
@@ -1421,6 +1431,7 @@
           if (t === 'docs') rows = rows.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE);
           store[t] = sortRecords(rows);
         }
+        try { (await localDB.app_lists.toArray()).forEach(r => { if (LIST_DEFS[r.key] && Array.isArray(r.items)) appLists[r.key] = r.items; }); applyLists(); } catch (e) { }
         const rawLogs = await localDB.logs.orderBy('id').reverse().toArray();
         auditLogs = rawLogs.filter(l => l.user !== '__USER_SYNC__');
         const c = await localDB.countries.toArray();
@@ -1772,18 +1783,16 @@
       bureau_2: ['កត់ត្រាទិន្នន័យបណ្តុះបណ្តាលបន្ត ក្នុង/ក្រៅប្រទេស (ឈ្មោះ ភេទ កម្រិត រយៈពេល ប្រទេស អ្នកឧបត្ថម្ភ)', 'Import/Export បញ្ជីអ្នកបណ្តុះបណ្តាលតាម Excel/CSV', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី២'],
       bureau_3: ['ចុះបញ្ជី និងចេញលេខកូដវិញ្ញាបនបត្រ/សញ្ញាបត្រ ព្រមទាំង QR សម្រាប់ផ្ទៀងផ្ទាត់', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រក្សាឯកសារពាក់ព័ន្ធក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី៣']
     };
-    function renderBureauDuties() {
-      const el = document.getElementById('bureau-duties'); if (!el) return;
-      const list = BUREAU_DUTIES[activeBureauKey]; if (!list) { el.innerHTML = ''; return; }
-      let open = true; try { open = localStorage.getItem('hrd_duties_open') !== '0'; } catch (e) { }
-      el.innerHTML = `<details ${open ? 'open' : ''} ontoggle="try{localStorage.setItem('hrd_duties_open',this.open?'1':'0')}catch(e){}" class="mb-5 bg-white rounded-2xl border border-slate-200 shadow-2xs"><summary class="cursor-pointer px-4 py-3 text-sm font-bold text-slate-800">📋 ភារកិច្ចរបស់ ${esc(BUREAUS[activeBureauKey].name)}</summary><ol class="px-4 pb-4 pt-1 space-y-1.5 text-xs text-slate-600 font-medium">${list.map((t, i) => `<li class="flex gap-2"><span class="font-bold text-emerald-700">${toKhmerDigits(i + 1)}.</span><span>${esc(t)}</span></li>`).join('')}</ol></details>`;
+    function renderManualDuties() {
+      const el = document.getElementById('manual-duties'); if (!el) return;
+      const mine = currentUser && currentUser.bureau;
+      const keys = ['all', 'bureau_1', 'bureau_2', 'bureau_3'];
+      el.innerHTML = '<h4 class="font-bold text-slate-900 text-sm">📋 ភារកិច្ចរបស់ការិយាល័យនីមួយៗ</h4>' + keys.map(k => `<div class="p-3 rounded-xl border ${k === mine ? 'border-emerald-300 bg-emerald-50/60' : 'border-slate-200 bg-white'}"><p class="font-bold text-slate-800 mb-1.5">${esc(BUREAUS[k].name)}${k === mine ? ' <span class="text-[10px] text-emerald-700">(ការិយាល័យរបស់អ្នក)</span>' : ''}</p><ol class="space-y-1">${BUREAU_DUTIES[k].map((t, i) => `<li class="flex gap-2"><span class="font-bold text-emerald-700">${toKhmerDigits(i + 1)}.</span><span>${esc(t)}</span></li>`).join('')}</ol></div>`).join('');
     }
-
     function renderBureauWorkspace() {
       const b = BUREAUS[activeBureauKey] || BUREAUS.bureau_1;
       document.getElementById('active-bureau-title').innerText = appLang === 'en' ? b.nameEn : b.name;
       document.getElementById('active-bureau-desc').innerText = appLang === 'en' ? b.descEn : b.desc;
-      renderBureauDuties();
       const s1 = document.getElementById('active-bureau-select'); if (s1) s1.value = activeBureauKey;
       const s2 = document.getElementById('mobile-bureau-select'); if (s2) s2.value = activeBureauKey;
       document.getElementById('stat-bureau-badge').innerText = appLang === 'en' ? b.shortNameEn : b.shortName;
@@ -1869,7 +1878,7 @@
             <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Duration *' : 'រយៈពេល *'}</label><input type="text" id="train-duration" required placeholder="6M, 1A..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Scope' : 'ប្រភេទ'}</label><select id="train-scope-input" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"><option value="International">✈️ ក្រៅប្រទេស</option><option value="Domestic">🇰🇭 ក្នុងប្រទេស</option></select></div></div>
             <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើម</label><input type="date" id="train-date-start" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="train-date-end" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Country *' : 'ប្រទេស (Location) *'}</label><select id="train-country-select" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-bold"></select></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Sponsor *' : 'ដៃគូឧបត្ថម្ភ (Sponsor) *'}</label><input type="text" id="train-sponsor-input" required placeholder="ឧ. ទីភ្នាក់ងារជប៉ុន, សាមីខ្លួន..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Sponsor *' : 'ដៃគូឧបត្ថម្ភ (Sponsor) *'}</label><input type="text" id="train-sponsor-input" required list="sponsor-list" autocomplete="off" placeholder="ឧ. ទីភ្នាក់ងារជប៉ុន, សាមីខ្លួន..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"><datalist id="sponsor-list">${sponsorOptions()}</datalist></div>
             <button type="submit" id="btn-save-training" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Record / រក្សាទុក</span></button>
           </form>`;
         populateCountryDropdowns();
@@ -1919,7 +1928,7 @@
               <p id="file-sublabel" class="text-[11px] text-rose-500 font-bold mt-1">${en ? 'Max ≤ 8MB (Direct View & Print)' : 'ទំហំគាំទ្រ ≤ 8MB (គាំទ្រការមើល និង Print ផ្ទាល់)'}</p>
             </div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Code / No. *' : 'កូដ / លេខឯកសារ *'}</label><input type="text" id="doc-code" required autocomplete="off" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50" placeholder="${en ? 'e.g. Sub-Decree No. …, Royal Decree No. … or Doc No.' : 'ឧ. អនុក្រឹត្យលេខ …, ព្រះរាជក្រឹត្យលេខ … ឬ លេខឯកសារ'}"></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Category' : 'ប្រភេទ'}</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option><option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option><option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option><option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option><option value="ច្បាប់">ច្បាប់</option><option value="ព្រះរាជក្រឹត្យ">ព្រះរាជក្រឹត្យ</option><option value="អនុក្រឹត្យ">អនុក្រឹត្យ</option><option value="សេចក្តីសម្រេច">សេចក្តីសម្រេច</option><option value="ប្រកាស">ប្រកាស</option><option value="សារាចរ">សារាចរ</option></select></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Category' : 'ប្រភេទ'}</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${docCatOptions()}</select></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Title *' : 'ចំណងជើងឯកសារ *'}</label><input type="text" id="doc-title" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <button type="submit" id="btn-save-doc" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Document / រក្សាទុក</span></button>
           </form>`;
@@ -1995,20 +2004,20 @@
     }
     function renderDocs() {
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
+      fillDocCatFilter();
       const pg = paginate('docs', getFilteredDocs());
       tbody.innerHTML = pg.total ? pg.rows.map((d, ix) => {
         const status = d._pending ? ['⏳ Pending Sync', 'bg-slate-100 text-slate-700'] : d.driveLink ? ['☁️ In Cloud', 'bg-emerald-100 text-emerald-800'] : d.fileDataUrl ? ['📄 Local Only', 'bg-teal-100 text-teal-800'] : ['Cloud Record', 'bg-amber-100 text-amber-800'];
-        return `<tr class="hover:bg-emerald-50 transition">
+        return `<tr class="hover:bg-emerald-50 transition cursor-pointer" ondblclick="openDocViewerById(${d.id})" title="Double click ដើម្បីបើកឯកសារ">
           <td class="p-3.5 text-center font-bold text-slate-500 text-sm">${toKhmerDigits(pg.start + ix + 1)}</td>
-          <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}</td>
-          <td class="p-3.5 font-bold text-slate-900 text-sm">${esc(d.title)}</td>
+          <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}${d._pending ? ' <span title="រង់ចាំ Sync">⏳</span>' : ''}</td>
+          <td class="p-3.5 font-bold text-slate-900 text-sm"><div class="clamp2" title="${esc(d.title)}">${esc(d.title)}</div></td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${esc(d.category)}</span></td>
-          <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-full text-xs font-bold ${status[1]}">${status[0]}</span></td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(d.fileSize)}</td>
           <td class="p-3.5 text-slate-600 font-bold text-xs whitespace-nowrap">${esc(bureauShort(d.bureau))}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><button onclick="openDocViewerById(${d.id})" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_view_print'))}</button>${deleteBtn('docs', d.id)}</td>
         </tr>`;
-      }).join('') : emptyRow(8, appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ');
+      }).join('') : emptyRow(7, appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ');
       renderPager('docs', pg);
     }
 
@@ -2209,6 +2218,86 @@
     const LEVELS = ['វគ្គខ្លី', 'បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត', 'ផ្សេងៗ'];
     const LONG_LEVELS = ['បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត'];
     const EXAM_TYPES = ['ប្រឡងបញ្ចប់ការសិក្សាផ្ទៃក្នុង', 'ប្រឡងចូល', 'ប្រឡងចេញ'];
+
+    // ---------------- បញ្ជីកំណត់ (Lists) : ប្រភេទឯកសារ / ប្រភេទប្រឡង / អ្នកឧបត្ថម្ភ ----------------
+    const LIST_DEFS = {
+      docCats: { icon: '📂', label: 'ប្រភេទឯកសារ', hint: 'ឧ. ច្បាប់, អនុក្រឹត្យ…', def: ['ឯកសារបទដ្ឋាន', 'កម្មវិធីបណ្តុះបណ្តាល', 'វិញ្ញាសា/របាយការណ៍', 'សេចក្តីណែនាំ', 'ច្បាប់', 'ព្រះរាជក្រឹត្យ', 'អនុក្រឹត្យ', 'សេចក្តីសម្រេច', 'ប្រកាស', 'សារាចរ'] },
+      examTypes: { icon: '🎓', label: 'ប្រភេទប្រឡង', hint: 'ឧ. ប្រឡងចូល', def: EXAM_TYPES.slice() },
+      sponsors: { icon: '🤝', label: 'អ្នកឧបត្ថម្ភ', hint: 'ឧ. រដ្ឋាភិបាលអូស្រ្តាលី', def: ['សាមីខ្លួន'] }
+    };
+    let appLists = {};
+    function getList(k) { return Array.isArray(appLists[k]) && appLists[k].length ? appLists[k] : LIST_DEFS[k].def; }
+    function listDirty() { try { return JSON.parse(localStorage.getItem('hrd_lists_dirty') || '[]'); } catch (e) { return []; } }
+    function setListDirty(k, on) { try { const d = new Set(listDirty()); on ? d.add(k) : d.delete(k); localStorage.setItem('hrd_lists_dirty', JSON.stringify([...d])); } catch (e) { } }
+    function applyLists() {
+      EXAM_TYPES.splice(0, EXAM_TYPES.length, ...getList('examTypes'));
+      const dl = document.getElementById('sponsor-list'); if (dl) dl.innerHTML = sponsorOptions();
+      const ec = document.getElementById('exam-type'); if (ec) { const cur = ec.value; ec.innerHTML = EXAM_TYPES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join(''); ec.value = cur; }
+      const dc = document.getElementById('doc-category'); if (dc) { const cur = dc.value; dc.innerHTML = docCatOptions(); if (cur) dc.value = cur; }
+    }
+    function docCatOptions() { return getList('docCats').map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join(''); }
+    function sponsorOptions() { return [...new Set([...getList('sponsors'), ...activeRows('trainings').map(t => t.sponsor).filter(Boolean)])].map(v => `<option value="${esc(v)}">`).join(''); }
+    function fillDocCatFilter() {
+      const sel = document.getElementById('filter-doc-category'); if (!sel) return;
+      const cur = sel.value, all = [...new Set([...getList('docCats'), ...activeRows('docs').map(d => d.category).filter(Boolean)])];
+      sel.innerHTML = `<option value="all">${appLang === 'en' ? '📂 All Categories' : '📂 ប្រភេទទាំងអស់'}</option>` + all.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+      sel.value = all.includes(cur) ? cur : 'all';
+    }
+    async function pushList(k) {
+      if (!db) return false;
+      const r = await cloudUpsert('app_lists', [{ key: k, items: getList(k), updated_at: nowISO() }], { onConflict: 'key' });
+      setListDirty(k, !r.ok); return r.ok;
+    }
+    async function saveList(k, items) {
+      appLists[k] = items; await localDB.app_lists.put({ key: k, items }).catch(() => { });
+      applyLists(); fillDocCatFilter();
+      const ok = await pushList(k);
+      showToast(ok ? 'បានរក្សាទុកបញ្ជី ជោគជ័យ!' : 'រក្សាទុកក្នុងឧបករណ៍ — Cloud មិនទាន់មានតារាង app_lists (សូម Run SQL v3.4.4)', !ok);
+    }
+    async function pullLists() {
+      const { data, error } = await db.from('app_lists').select('*');
+      if (error || !Array.isArray(data)) return;
+      const dirty = listDirty();
+      for (const r of data) {
+        if (!LIST_DEFS[r.key] || dirty.includes(r.key)) continue;
+        const items = safeJSON(r.items, null);
+        if (Array.isArray(items)) { appLists[r.key] = items; await localDB.app_lists.put({ key: r.key, items }).catch(() => { }); }
+      }
+      applyLists(); fillDocCatFilter();
+      for (const k of dirty) await pushList(k);
+    }
+    let curListTab = 'location';
+    function switchListTab(k) {
+      curListTab = k;
+      ['location', ...Object.keys(LIST_DEFS)].forEach(t => { const b = document.getElementById('listtab-' + t); if (b) { b.classList.toggle('bg-emerald-600', t === k); b.classList.toggle('text-white', t === k); b.classList.toggle('bg-slate-100', t !== k); b.classList.toggle('text-slate-600', t !== k); } });
+      document.getElementById('sub-location')?.classList.toggle('hidden', k !== 'location');
+      const lp = document.getElementById('sub-lists'); if (lp) lp.classList.toggle('hidden', k === 'location');
+      if (k === 'location') renderCountriesTable(); else renderListPanel(k);
+    }
+    function listUsage(k, v) {
+      return k === 'docCats' ? activeRows('docs').filter(d => d.category === v).length : k === 'examTypes' ? activeRows('exams').filter(e => e.type === v).length : activeRows('trainings').filter(t => t.sponsor === v).length;
+    }
+    function renderListPanel(k) {
+      const el = document.getElementById('sub-lists'); if (!el) return;
+      const d = LIST_DEFS[k], items = getList(k);
+      el.innerHTML = `<div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4"><form onsubmit="listAdd(event,'${k}')" class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 items-end"><div class="sm:col-span-3"><label class="block text-[10px] font-bold text-slate-600 mb-1">${d.icon} ${esc(d.label)} (${esc(d.hint)})</label><input id="list-new-val" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"></div><button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition form-input-focus">+ បន្ថែម</button></form></div>
+      <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs"><table class="w-full text-left"><thead class="bg-emerald-50/50 text-emerald-900 font-bold border-b border-emerald-100"><tr><th class="p-3 w-14 text-center">ល.រ</th><th class="p-3">${esc(d.label)}</th><th class="p-3 text-center w-28">កំពុងប្រើ</th><th class="p-3 text-right w-32">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${items.map((v, i) => `<tr><td class="p-3 text-center font-bold text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3 font-bold text-slate-800">${esc(v)}</td><td class="p-3 text-center text-slate-500">${toKhmerDigits(listUsage(k, v))}</td><td class="p-3 text-right"><button onclick="listDel('${k}',${i})" class="text-rose-600 font-bold hover:underline">លុប</button></td></tr>`).join('')}</tbody></table></div>
+      <div class="text-right"><button onclick="listReset('${k}')" class="text-[11px] text-slate-500 hover:text-slate-700 underline">↺ ស្តារបញ្ជីលំនាំដើម</button></div>`;
+    }
+    async function listAdd(e, k) {
+      e.preventDefault(); const v = document.getElementById('list-new-val').value.trim(); if (!v) return;
+      const items = getList(k).slice(); if (items.includes(v)) return alert('មានរួចហើយ!');
+      items.push(v); await saveList(k, items); renderListPanel(k);
+    }
+    async function listDel(k, i) {
+      const items = getList(k).slice(), v = items[i];
+      if (items.length <= 1) return alert('ត្រូវមានយ៉ាងហោចណាស់ ១ ធាតុ');
+      const n = listUsage(k, v);
+      if (!confirm('លុប "' + v + '" ?' + (n ? '\n(មាន ' + n + ' កំណត់ត្រាកំពុងប្រើ — កំណត់ត្រាទាំងនោះនៅរក្សាតម្លៃដដែល)' : ''))) return;
+      items.splice(i, 1); await saveList(k, items); renderListPanel(k);
+    }
+    async function listReset(k) { if (!confirm('ស្តារបញ្ជីនេះទៅលំនាំដើម?')) return; await saveList(k, LIST_DEFS[k].def.slice()); renderListPanel(k); }
+
     const OFFICIAL_NAMES = { bureau_1: 'ការិយាល័យបណ្តុះបណ្តាលមូលដ្ឋាន', bureau_2: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', bureau_3: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ' };
     const OFFICIAL_LETTER = { bureau_1: 'ក', bureau_2: 'ខ', bureau_3: 'គ' };
     const NOTE_NUMS = {
@@ -2804,17 +2893,18 @@
         sponsorSel.innerHTML = `<option value="all">${appLang === 'en' ? 'All Sponsors' : 'អ្នកឧបត្ថម្ភទាំងអស់'}</option>` + sponsors.map(s => `<option value="${esc(s)}" ${s === cur ? 'selected' : ''}>${esc(s)}</option>`).join('');
       }
       const pg = paginate('trainings', getFilteredTrainingData());
-      tbody.innerHTML = pg.total ? pg.rows.map(t => `<tr class="hover:bg-emerald-50 transition">
-          <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${esc(t.trainee)}</td>
-          <td class="p-3.5 text-slate-700 text-sm">${esc(t.unit)}</td>
-          <td class="p-3.5 text-emerald-900 font-bold text-sm">${esc(t.course)}</td>
+      tbody.innerHTML = pg.total ? pg.rows.map((t, ix) => `<tr class="hover:bg-emerald-50 transition h-16">
+          <td class="p-3.5 text-center font-bold text-slate-500 text-sm">${toKhmerDigits(pg.start + ix + 1)}</td>
+          <td class="p-3.5 font-bold text-slate-900 text-sm min-w-[180px]"><div class="clamp2" title="${esc(t.trainee)}">${esc(t.trainee)}</div></td>
+          <td class="p-3.5 text-slate-700 text-sm min-w-[160px]"><div class="clamp2" title="${esc(t.unit)}">${esc(t.unit)}</div></td>
+          <td class="p-3.5 text-emerald-900 font-bold text-sm min-w-[200px]"><div class="clamp2" title="${esc(t.course)}">${esc(t.course)}</div></td>
           <td class="p-3.5 text-center text-xs whitespace-nowrap ${t.gender ? 'text-slate-700 font-bold' : 'text-slate-300'}">${esc(t.gender || '—')} · ${esc(t.level || '—')}</td>
           <td class="p-3.5 text-center font-bold text-slate-700 text-sm whitespace-nowrap">${esc(t.duration)}</td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(t.dates)}</td>
           <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap"><span class="inline-block px-3 py-1 bg-slate-100 rounded-md">${esc(t.country)}</span></td>
           <td class="p-3.5 text-slate-700 text-sm whitespace-nowrap">${esc(t.sponsor)}</td>
           <td class="p-3.5 text-center whitespace-nowrap">${editBtn('trainings', t.id)}${deleteBtn('trainings', t.id) || (can('edit') ? '' : '<span class="text-slate-300">-</span>')}</td>
-        </tr>`).join('') : emptyRow(9);
+        </tr>`).join('') : emptyRow(10);
       renderPager('trainings', pg);
     }
 
@@ -3247,12 +3337,14 @@
       document.getElementById('syscontent-' + tab)?.classList.remove('hidden');
       const ab = document.getElementById('systab-' + tab);
       if (ab) { ab.classList.add('bg-emerald-600', 'text-white'); ab.classList.remove('bg-slate-100', 'text-slate-600'); }
+      if (tab === 'manual') renderManualDuties();
       refreshOpenSystemTab();
       initResizableTables();
     }
     function refreshOpenSystemTab() {
       if (document.getElementById('modal-system-tools')?.classList.contains('hidden') || !isAdmin()) return;
-      ({ settings: renderUsersTable, location: renderCountriesTable, files: renderFilesSystemList, recycle: renderRecycleBin, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
+      if (currentSysTab === 'manual') renderManualDuties();
+      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
     }
 
     function renderMigrationStatus() {
