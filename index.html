@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.2 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.3 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -85,7 +85,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.2</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.3</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -143,7 +143,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.4.2 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -256,6 +256,8 @@
           </div>
         </div>
 
+        <div id="bureau-duties"></div>
+
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start flex-1">
           <div class="xl:col-span-8 space-y-5">
 
@@ -280,6 +282,12 @@
                     <option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option>
                     <option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option>
                     <option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option>
+                    <option value="ច្បាប់">ច្បាប់</option>
+                    <option value="ព្រះរាជក្រឹត្យ">ព្រះរាជក្រឹត្យ</option>
+                    <option value="អនុក្រឹត្យ">អនុក្រឹត្យ</option>
+                    <option value="សេចក្តីសម្រេច">សេចក្តីសម្រេច</option>
+                    <option value="ប្រកាស">ប្រកាស</option>
+                    <option value="សារាចរ">សារាចរ</option>
                   </select>
                 </div>
                 <div>
@@ -303,6 +311,7 @@
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
                     <tr>
+                      <th class="p-3.5 text-center w-12">ល.រ</th>
                       <th class="p-3.5 min-w-[110px]">Doc ID</th>
                       <th class="p-3.5 min-w-[230px]" data-i18n="th_doc_title">ចំណងជើងឯកសារ</th>
                       <th class="p-3.5 text-center min-w-[140px]" data-i18n="th_category">ប្រភេទ</th>
@@ -448,7 +457,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.4.2 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4.3 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -604,7 +613,7 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.3</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -616,7 +625,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.2 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.3 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
     </div>
   </div>
 
@@ -785,7 +794,7 @@
       <!-- MANUAL -->
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.2</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.3</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1756,10 +1765,25 @@
     }
     function switchBureauTab(tId) { activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+
+    const BUREAU_DUTIES = {
+      all: ['ត្រួតពិនិត្យបណ្ណាល័យឯកសាររួម របស់ការិយាល័យទាំង ៣', 'តាមដានលិខិតចេញ-ចូលទាំង ៣ ការិយាល័យ និងករណីហួសកំណត់', 'មើលទិន្នន័យប្រឡង បណ្តុះបណ្តាល និងវិញ្ញាបនបត្រ ជាភាពរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែ (ទម្រង់ I/II/III) និងនាំចេញ Word', 'គ្រប់គ្រងអ្នកប្រើ សិទ្ធិ ប្រទេស និង Backup (សម្រាប់ Admin)'],
+      bureau_1: ['បញ្ចូល និងគ្រប់គ្រងទិន្នន័យប្រឡងចូល-ចេញថ្នាក់ជាតិ (ស្ថាប័ន កាលបរិច្ឆេទ ជាប់/ធ្លាក់/អវត្តមាន)', 'កត់ត្រាលិខិតចេញ-ចូលរបស់ការិយាល័យ និងតាមដានដំណាក់កាល', 'រក្សាឯកសារបទដ្ឋាន កម្មវិធីបណ្តុះបណ្តាល និងវិញ្ញាសា ក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី១'],
+      bureau_2: ['កត់ត្រាទិន្នន័យបណ្តុះបណ្តាលបន្ត ក្នុង/ក្រៅប្រទេស (ឈ្មោះ ភេទ កម្រិត រយៈពេល ប្រទេស អ្នកឧបត្ថម្ភ)', 'Import/Export បញ្ជីអ្នកបណ្តុះបណ្តាលតាម Excel/CSV', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី២'],
+      bureau_3: ['ចុះបញ្ជី និងចេញលេខកូដវិញ្ញាបនបត្រ/សញ្ញាបត្រ ព្រមទាំង QR សម្រាប់ផ្ទៀងផ្ទាត់', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រក្សាឯកសារពាក់ព័ន្ធក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី៣']
+    };
+    function renderBureauDuties() {
+      const el = document.getElementById('bureau-duties'); if (!el) return;
+      const list = BUREAU_DUTIES[activeBureauKey]; if (!list) { el.innerHTML = ''; return; }
+      let open = true; try { open = localStorage.getItem('hrd_duties_open') !== '0'; } catch (e) { }
+      el.innerHTML = `<details ${open ? 'open' : ''} ontoggle="try{localStorage.setItem('hrd_duties_open',this.open?'1':'0')}catch(e){}" class="mb-5 bg-white rounded-2xl border border-slate-200 shadow-2xs"><summary class="cursor-pointer px-4 py-3 text-sm font-bold text-slate-800">📋 ភារកិច្ចរបស់ ${esc(BUREAUS[activeBureauKey].name)}</summary><ol class="px-4 pb-4 pt-1 space-y-1.5 text-xs text-slate-600 font-medium">${list.map((t, i) => `<li class="flex gap-2"><span class="font-bold text-emerald-700">${toKhmerDigits(i + 1)}.</span><span>${esc(t)}</span></li>`).join('')}</ol></details>`;
+    }
+
     function renderBureauWorkspace() {
       const b = BUREAUS[activeBureauKey] || BUREAUS.bureau_1;
       document.getElementById('active-bureau-title').innerText = appLang === 'en' ? b.nameEn : b.name;
       document.getElementById('active-bureau-desc').innerText = appLang === 'en' ? b.descEn : b.desc;
+      renderBureauDuties();
       const s1 = document.getElementById('active-bureau-select'); if (s1) s1.value = activeBureauKey;
       const s2 = document.getElementById('mobile-bureau-select'); if (s2) s2.value = activeBureauKey;
       document.getElementById('stat-bureau-badge').innerText = appLang === 'en' ? b.shortNameEn : b.shortName;
@@ -1894,8 +1918,8 @@
               <p id="file-label" class="text-xs sm:text-sm font-bold text-slate-700">${en ? 'Click to select or drop file' : 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'}</p>
               <p id="file-sublabel" class="text-[11px] text-rose-500 font-bold mt-1">${en ? 'Max ≤ 8MB (Direct View & Print)' : 'ទំហំគាំទ្រ ≤ 8MB (គាំទ្រការមើល និង Print ផ្ទាល់)'}</p>
             </div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Code *' : 'កូដឯកសារ *'}</label><input type="text" id="doc-code" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50" placeholder="DOC-2026-001"></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Category' : 'ប្រភេទ'}</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option><option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option><option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option><option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option></select></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Code / No. *' : 'កូដ / លេខឯកសារ *'}</label><input type="text" id="doc-code" required autocomplete="off" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50" placeholder="${en ? 'e.g. Sub-Decree No. …, Royal Decree No. … or Doc No.' : 'ឧ. អនុក្រឹត្យលេខ …, ព្រះរាជក្រឹត្យលេខ … ឬ លេខឯកសារ'}"></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Category' : 'ប្រភេទ'}</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="ឯកសារបទដ្ឋាន">ឯកសារបទដ្ឋាន</option><option value="កម្មវិធីបណ្តុះបណ្តាល">កម្មវិធីបណ្តុះបណ្តាល</option><option value="វិញ្ញាសា/របាយការណ៍">វិញ្ញាសា/របាយការណ៍</option><option value="សេចក្តីណែនាំ">សេចក្តីណែនាំ</option><option value="ច្បាប់">ច្បាប់</option><option value="ព្រះរាជក្រឹត្យ">ព្រះរាជក្រឹត្យ</option><option value="អនុក្រឹត្យ">អនុក្រឹត្យ</option><option value="សេចក្តីសម្រេច">សេចក្តីសម្រេច</option><option value="ប្រកាស">ប្រកាស</option><option value="សារាចរ">សារាចរ</option></select></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Title *' : 'ចំណងជើងឯកសារ *'}</label><input type="text" id="doc-title" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <button type="submit" id="btn-save-doc" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Document / រក្សាទុក</span></button>
           </form>`;
@@ -1972,9 +1996,10 @@
     function renderDocs() {
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
       const pg = paginate('docs', getFilteredDocs());
-      tbody.innerHTML = pg.total ? pg.rows.map(d => {
+      tbody.innerHTML = pg.total ? pg.rows.map((d, ix) => {
         const status = d._pending ? ['⏳ Pending Sync', 'bg-slate-100 text-slate-700'] : d.driveLink ? ['☁️ In Cloud', 'bg-emerald-100 text-emerald-800'] : d.fileDataUrl ? ['📄 Local Only', 'bg-teal-100 text-teal-800'] : ['Cloud Record', 'bg-amber-100 text-amber-800'];
         return `<tr class="hover:bg-emerald-50 transition">
+          <td class="p-3.5 text-center font-bold text-slate-500 text-sm">${toKhmerDigits(pg.start + ix + 1)}</td>
           <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}</td>
           <td class="p-3.5 font-bold text-slate-900 text-sm">${esc(d.title)}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${esc(d.category)}</span></td>
@@ -1983,7 +2008,7 @@
           <td class="p-3.5 text-slate-600 font-bold text-xs whitespace-nowrap">${esc(bureauShort(d.bureau))}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><button onclick="openDocViewerById(${d.id})" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_view_print'))}</button>${deleteBtn('docs', d.id)}</td>
         </tr>`;
-      }).join('') : emptyRow(7, appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ');
+      }).join('') : emptyRow(8, appLang === 'en' ? 'No documents found' : 'មិនមានឯកសារស្របតាមលក្ខខណ្ឌស្វែងរកឡើយ');
       renderPager('docs', pg);
     }
 
