@@ -886,14 +886,20 @@
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
 
     let db = null;
-    if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { console.warn('Supabase init error:', e); } }
+    function fetchTO(u, o) {
+      o = o || {}; const ms = /\/storage\/v1\//.test(String(u && u.url || u)) ? 180000 : 25000;
+      const ac = new AbortController(), t = setTimeout(() => ac.abort(), ms);
+      if (o.signal) o.signal.addEventListener('abort', () => ac.abort());
+      return fetch(u, { ...o, signal: ac.signal }).finally(() => clearTimeout(t));
+    }
+    if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { fetch: fetchTO } }); } catch (e) { console.warn('Supabase init error:', e); } }
 
     const MAX_FILE_SIZE = 8 * 1024 * 1024;
     const PAGE_SIZES = [10, 25, 50, 100];
     const DEFAULT_PAGE_SIZE = 25;
     const OVERDUE_DEFAULT_DAYS = 7;
     const RECYCLE_RETENTION_DAYS = 30;
-    const SYNC_INTERVAL_MS = 15000; // Auto-Sync ១៥ វិនាទី (ប៊ូតុងត្រូវបានលាក់)
+    const SYNC_INTERVAL_MS = 40000; // Auto-Sync ៤០ វិនាទី
     const CLOUD_FETCH_MAX = 10000;
     const SYSTEM_USER_REGISTRY_ID = 999999999;
     const SYSTEM_USER_REGISTRY_CODE = "__SYSTEM_USERS_REGISTRY__";
@@ -1312,7 +1318,8 @@
       const idx = store[table].findIndex(r => r.id === rec.id);
       if (idx === -1) store[table].unshift(rec); else store[table][idx] = rec;
       let ok = false;
-      if (db) { const res = await cloudUpsert(table, [toCloud(table, rec)]); ok = res.ok && !res.critical; }
+      const ik = table + ':' + rec.id; inflight.add(ik);
+      try { if (db) { const res = await cloudUpsert(table, [toCloud(table, rec)]); ok = res.ok && !res.critical; } } finally { inflight.delete(ik); }
       rec._pending = ok ? 0 : 1;
       if (!ok) scheduleRetrySync();
       try { await localDB[table].put(rec); } catch (e) { console.warn('Local save error', e); }
@@ -1326,7 +1333,8 @@
       for (let i = 0; i < recs.length; i += 200) {
         const chunk = recs.slice(i, i + 200);
         let ok = false;
-        if (db) { const res = await cloudUpsert(table, chunk.map(r => toCloud(table, r))); ok = res.ok && !res.critical; }
+        const iks = chunk.map(r => table + ':' + r.id); iks.forEach(k => inflight.add(k));
+        try { if (db) { const res = await cloudUpsert(table, chunk.map(r => toCloud(table, r))); ok = res.ok && !res.critical; } } finally { iks.forEach(k => inflight.delete(k)); }
         chunk.forEach(r => { r._pending = ok ? 0 : 1; });
         if (!ok) scheduleRetrySync();
       }
@@ -1344,33 +1352,56 @@
       return out;
     }
 
-    async function syncTable(table) {
-      const local = await localDB[table].toArray().catch(() => []);
-      const pendingMap = new Map();
-      for (const p of local.filter(r => r._pending)) {
-        const res = await cloudUpsert(table, [toCloud(table, p)]);
-        if (res.ok && !res.critical) { p._pending = 0; } else { pendingMap.set(p.id, p); }
+    // Sync តាមតារាង៖ ទាញតែអ្វីដែលប្តូរ (updated_at) + ទាញពេញលេញរៀងរាល់ ១០ នាទី ដើម្បីចាប់ការលុបពិតប្រាកដ
+    const inflight = new Set(), syncState = {}, FULL_RESYNC_MS = 10 * 60 * 1000;
+    async function fetchChangedRows(table, since) {
+      const out = [], CH = 1000;
+      for (let from = 0; from < CLOUD_FETCH_MAX; from += CH) {
+        const { data, error } = await db.from(table).select('*').gte('updated_at', since).order('updated_at', { ascending: true }).order('id', { ascending: true }).range(from, from + CH - 1);
+        if (error) throw error;
+        out.push(...(data || []));
+        if (!data || data.length < CH) break;
       }
-      const remoteRaw = await fetchAllRows(table);
-      const localMap = new Map(local.map(r => [r.id, r]));
-      let merged = remoteRaw
-        .filter(r => !(table === 'docs' && r.code === SYSTEM_USER_REGISTRY_CODE))
-        .map(r => {
-          const rec = fromCloud(table, r);
-          const l = localMap.get(rec.id);
-          if (table === 'docs' && l) { rec.fileDataUrl = l.fileDataUrl || null; rec.mimeType = l.mimeType || ''; }
-          return pendingMap.get(rec.id) || rec;
-        });
-      const remoteIds = new Set(merged.map(r => r.id));
-      pendingMap.forEach(p => { if (!remoteIds.has(p.id)) merged.push(p); });
-      await localDB[table].clear();
-      if (merged.length) await localDB[table].bulkPut(merged);
-      store[table] = sortRecords(merged);
+      return out;
+    }
+    async function syncTable(table) {
+      const st = syncState[table] || (syncState[table] = { last: '', lastFull: 0, inc: false });
+      for (const p of store[table].filter(r => r._pending && !inflight.has(table + ':' + r.id))) {
+        const ik = table + ':' + p.id; inflight.add(ik);
+        try { const res = await cloudUpsert(table, [toCloud(table, p)]); if (res.ok && !res.critical) { p._pending = 0; await localDB[table].put(p).catch(() => {}); } } finally { inflight.delete(ik); }
+      }
+      const full = !st.inc || !st.last || (Date.now() - st.lastFull > FULL_RESYNC_MS);
+      const snapIds = new Set(store[table].map(r => r.id));
+      const since = full ? '' : new Date(Date.parse(st.last) - 10000).toISOString();
+      const raw = full ? await fetchAllRows(table) : await fetchChangedRows(table, since);
+      // --- ប្រមូលផ្តុំដោយមិនមាន await (ការពារ race ជាមួយការរក្សាទុកដែលកំពុងកើតឡើង) ---
+      const liveMap = new Map(store[table].map(r => [r.id, r]));
+      const keep = r => r._pending || r._upl || inflight.has(table + ':' + r.id);
+      const conv = r => { const rec = fromCloud(table, r); const l = liveMap.get(rec.id); if (table === 'docs' && l) { rec.fileDataUrl = l.fileDataUrl || null; rec.mimeType = l.mimeType || ''; } return rec; };
+      const rows = raw.filter(r => !(table === 'docs' && r.code === SYSTEM_USER_REGISTRY_CODE));
+      let merged, toPut, toDelete = [];
+      if (full) {
+        merged = new Map(rows.map(conv).map(r => [r.id, r]));
+        liveMap.forEach((l, id) => { if (keep(l) || !snapIds.has(id)) merged.set(id, l); });
+        liveMap.forEach((l, id) => { if (!merged.has(id)) toDelete.push(id); });
+        toPut = [...merged.values()];
+      } else {
+        merged = new Map(liveMap); toPut = [];
+        rows.forEach(r => { const rec = conv(r), l = liveMap.get(rec.id); if (l && keep(l)) return; merged.set(rec.id, rec); toPut.push(rec); });
+      }
+      store[table] = sortRecords([...merged.values()]);
+      let mx = st.last; raw.forEach(r => { if (r.updated_at && String(r.updated_at) > mx) mx = String(r.updated_at); });
+      if (full) { st.lastFull = Date.now(); st.inc = raw.some(r => r.updated_at); }
+      st.last = mx;
+      try { if (toDelete.length) await localDB[table].bulkDelete(toDelete); if (toPut.length) await localDB[table].bulkPut(toPut); } catch (e) { console.warn('Local sync write', e); }
     }
 
+    let syncTick = 0;
     async function syncFromSupabase(isManual = false, force = false) {
       if (!db || isSyncing) return;
       if (!isManual && !force && document.hidden) return;
+      if (!isManual && navigator.onLine === false) return;
+      const slow = isManual || (syncTick++ % 8 === 0);
       isSyncing = true;
       const syncIcon = document.getElementById('sync-btn-icon');
       if (syncIcon) syncIcon.classList.add('spin');
@@ -1378,13 +1409,15 @@
       try {
         const tableResults = await Promise.allSettled(DATA_TABLES.map(t => syncTable(t)));
         tableResults.forEach((r, i) => { if (r.status === 'rejected') { failed++; console.warn('Sync failed:', DATA_TABLES[i], r.reason); } });
+        processUploadQueue();
 
-        try {
-          const { data, error } = await db.from('countries').select('*');
-          if (!error && Array.isArray(data) && data.length > 0) { countriesData = data; await localDB.countries.clear(); await localDB.countries.bulkPut(countriesData); }
-        } catch (e) {}
-
-        try { await pullLists(); } catch (e) { }
+        if (slow) {
+          try {
+            const { data, error } = await db.from('countries').select('*');
+            if (!error && Array.isArray(data) && data.length > 0) { countriesData = data; await localDB.countries.clear(); await localDB.countries.bulkPut(countriesData); }
+          } catch (e) {}
+          try { await pullLists(); } catch (e) { }
+        }
 
         try {
           const cloudUsers = await fetchAllCloudUsers();
@@ -1399,10 +1432,12 @@
           }
         } catch (e) {}
 
-        try {
-          const { data, error } = await db.from('audit_logs').select('*').order('id', { ascending: false }).limit(500);
-          if (!error && Array.isArray(data)) auditLogs = data.filter(l => l.user !== '__USER_SYNC__');
-        } catch (e) {}
+        if (slow) {
+          try {
+            const { data, error } = await db.from('audit_logs').select('*').order('id', { ascending: false }).limit(500);
+            if (!error && Array.isArray(data)) auditLogs = data.filter(l => l.user !== '__USER_SYNC__');
+          } catch (e) {}
+        }
 
         if (currentUser) { renderTablesAndStatsOnly(); populateCountryDropdowns(); refreshOpenSystemTab(); }
         if (isManual) {
@@ -2019,7 +2054,7 @@
         const status = d._pending ? ['⏳ Pending Sync', 'bg-slate-100 text-slate-700'] : d.driveLink ? ['☁️ In Cloud', 'bg-emerald-100 text-emerald-800'] : d.fileDataUrl ? ['📄 Local Only', 'bg-teal-100 text-teal-800'] : ['Cloud Record', 'bg-amber-100 text-amber-800'];
         return `<tr class="hover:bg-emerald-50 transition cursor-pointer" ondblclick="openDocViewerById(${d.id})" title="Double click ដើម្បីបើកឯកសារ">
           <td class="p-3.5 text-center font-bold text-slate-500 text-sm">${toKhmerDigits(pg.start + ix + 1)}</td>
-          <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}${d._pending ? ' <span title="រង់ចាំ Sync">⏳</span>' : ''}</td>
+          <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}${d._pending ? ' <span title="រង់ចាំ Sync">⏳</span>' : ''}${d._upl ? ' <span title="ឯកសាររង់ចាំ upload ឡើង Cloud">⬆️</span>' : ''}</td>
           <td class="p-3.5 font-bold text-slate-900 text-sm"><div class="clamp2" title="${esc(d.title)}">${esc(d.title)}</div></td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${esc(d.category)}</span></td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(d.fileSize)}</td>
@@ -3076,6 +3111,58 @@
       setTimeout(() => { btn.innerHTML = '<span>' + label + '</span>'; }, 2500);
     }
 
+
+    // ---------------- Upload ឯកសារ៖ Progress + Retry + ជួរចាំ (Queue) ----------------
+    function uploadToStorage(path, blob, contentType, onProgress) {
+      return new Promise(resolve => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', SUPABASE_URL + '/storage/v1/object/documents/' + path.split('/').map(encodeURIComponent).join('/'));
+        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY); xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON_KEY);
+        xhr.setRequestHeader('x-upsert', 'true'); xhr.setRequestHeader('cache-control', 'max-age=3600');
+        xhr.setRequestHeader('Content-Type', contentType || 'application/octet-stream');
+        xhr.timeout = 180000;
+        xhr.upload.onprogress = e => { if (e.lengthComputable && onProgress) onProgress(Math.round(e.loaded / e.total * 100)); };
+        xhr.onload = () => resolve(xhr.status >= 200 && xhr.status < 300 ? { ok: true, url: SUPABASE_URL + '/storage/v1/object/public/documents/' + path } : { ok: false, retry: xhr.status >= 500 || xhr.status === 429 || xhr.status === 408, status: xhr.status });
+        xhr.onerror = xhr.ontimeout = xhr.onabort = () => resolve({ ok: false, retry: true, status: 0 });
+        xhr.send(blob);
+      });
+    }
+    async function uploadWithRetry(path, blob, contentType, onProgress) {
+      let r = { ok: false, retry: true, status: 0 };
+      for (let i = 0; i < 3; i++) {
+        if (navigator.onLine === false) return { ok: false, retry: true, status: 0 };
+        r = await uploadToStorage(path, blob, contentType, onProgress);
+        if (r.ok || !r.retry) return r;
+        await new Promise(res => setTimeout(res, [1500, 4000][i] || 0));
+      }
+      return r;
+    }
+    function dataUrlToBlob(dataUrl) {
+      try {
+        const parts = String(dataUrl).split(','), mime = ((parts[0].match(/data:([^;]+)/) || [])[1]) || 'application/octet-stream';
+        const bin = atob(parts[1]), arr = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+        return new Blob([arr], { type: mime });
+      } catch (e) { return null; }
+    }
+    let uplBusy = false;
+    async function processUploadQueue() {
+      if (uplBusy || !db || navigator.onLine === false) return;
+      uplBusy = true;
+      try {
+        for (const d of store.docs.filter(x => x._upl && !x.driveLink && x.fileDataUrl && !isDeleted(x))) {
+          const blob = dataUrlToBlob(d.fileDataUrl);
+          if (!blob) { d._upl = 0; await localDB.docs.put(d).catch(() => { }); continue; }
+          const r = await uploadToStorage(d._uplPath || ('bureau_docs/' + d.id + '_' + Date.now()), blob, d.mimeType);
+          if (r.ok) {
+            d.driveLink = r.url; d.storage = '☁️ Cloud Storage'; d._upl = 0; delete d._uplPath;
+            await persist('docs', d); renderDocs();
+            showToast('ឯកសារ "' + d.code + '" បានឡើង Cloud រួចរាល់');
+          } else if (!r.retry) { d._upl = 0; await localDB.docs.put(d).catch(() => { }); }
+        }
+      } finally { uplBusy = false; }
+    }
+
     async function handleSaveDoc(e) {
       e.preventDefault();
       if (!can('upload')) return showToast('គ្មានសិទ្ធិ Upload', true);
@@ -3090,26 +3177,31 @@
       const snap = { ...currentUploadedFile };
       const docId = generateSafeId();
       const chosenBureau = entryBureau() || 'all';
-      let cloudFileUrl = '';
+      let cloudFileUrl = '', queued = false, upPath = '';
       if (db && snap.rawFile) {
-        try {
-          const ext = (snap.name.split('.').pop() || 'pdf').toLowerCase();
-          const path = 'bureau_docs/' + docId + '_' + Date.now() + '.' + ext;
-          const { data: up, error: upErr } = await db.storage.from('documents').upload(path, snap.rawFile, { cacheControl: '3600', upsert: true, contentType: snap.type || 'application/octet-stream' });
-          if (!upErr && up) { const { data: pub } = db.storage.from('documents').getPublicUrl(path); if (pub?.publicUrl) cloudFileUrl = pub.publicUrl; }
-          else if (upErr) console.warn('Storage upload error:', upErr);
-        } catch (err) { console.warn('Storage upload note:', err); }
+        const ext = (snap.name.split('.').pop() || 'pdf').toLowerCase();
+        upPath = 'bureau_docs/' + docId + '_' + Date.now() + '.' + ext;
+        const r = await uploadWithRetry(upPath, snap.rawFile, snap.type, pct => { saveBtn.innerHTML = '<span>⏳ កំពុងបង្ហោះ ' + pct + '%</span>'; });
+        if (r.ok) cloudFileUrl = r.url;
+        else if (r.retry) queued = true;
+        else {
+          try {
+            const { data: up, error: upErr } = await db.storage.from('documents').upload(upPath, snap.rawFile, { cacheControl: '3600', upsert: true, contentType: snap.type || 'application/octet-stream' });
+            if (!upErr && up) { const { data: pub } = db.storage.from('documents').getPublicUrl(upPath); if (pub?.publicUrl) cloudFileUrl = pub.publicUrl; }
+            else if (upErr) console.warn('Storage upload error:', upErr);
+          } catch (err) { console.warn('Storage upload note:', err); }
+        }
       }
       const newDoc = { id: docId, bureau: chosenBureau, code, title: document.getElementById('doc-title').value.trim(), category: document.getElementById('doc-category').value,
-        fileSize: snap.size, fileName: snap.name, mimeType: snap.type, fileDataUrl: snap.dataUrl, storage: cloudFileUrl ? '☁️ Cloud Storage' : '☁️ Google Drive',
-        driveLink: cloudFileUrl, createdBy: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null };
+        fileSize: snap.size, fileName: snap.name, mimeType: snap.type, fileDataUrl: snap.dataUrl, storage: cloudFileUrl ? '☁️ Cloud Storage' : (queued ? '⏳ រង់ចាំ upload' : '☁️ Google Drive'),
+        driveLink: cloudFileUrl, _upl: queued ? 1 : 0, _uplPath: queued ? upPath : '', createdBy: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('docs', newDoc);
       renderDocs(); updateStats();
-      showToast(cloudFileUrl ? 'អ្នកបានបញ្ចូលរួចរាល់!' : (ok ? 'បានរក្សាទុកឯកសារ (កំពុងផ្ញើហ្វាលទៅ Google Drive)...' : 'បានរក្សាទុកនៅលើឧបករណ៍នេះ — នឹង Sync ឡើង Cloud ពេលមានអ៊ីនធឺណិត'), !ok);
+      showToast(cloudFileUrl ? 'អ្នកបានបញ្ចូលរួចរាល់!' : queued ? 'បានរក្សាទុក — ឯកសារនឹងឡើង Cloud ដោយស្វ័យប្រវត្តិពេលមានបណ្តាញ' : (ok ? 'បានរក្សាទុកឯកសារ (កំពុងផ្ញើហ្វាលទៅ Google Drive)...' : 'បានរក្សាទុកនៅលើឧបករណ៍នេះ — នឹង Sync ឡើង Cloud ពេលមានអ៊ីនធឺណិត'), !ok);
       logActivity('Upload ឯកសារ', newDoc.code);
       resetDocForm(); flashSaved(saveBtn, 'Submit Document / រក្សាទុក');
 
-      if (!cloudFileUrl && snap.base64) {
+      if (!cloudFileUrl && !queued && snap.base64) {
         fetch(GOOGLE_DRIVE_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fileName: snap.name, mimeType: snap.type, base64: snap.base64 }) })
           .then(r => r.json()).then(async res => {
             if (res.status === 'success' && res.webViewLink) {
