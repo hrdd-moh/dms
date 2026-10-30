@@ -397,10 +397,16 @@
                 <div><h3 class="text-base font-bold text-slate-900" data-i18n="sec_train_title">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3></div>
                 <div class="flex items-center gap-2.5 flex-wrap">
                   <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
-                  <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-2xs form-input-focus"><span class="text-lg">📥</span> Import Excel</button>
-                  <button onclick="exportTrainingExcel()" class="perm-download-el px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-2xs form-input-focus"><span class="text-lg">📊</span> Excel</button>
-                  <button onclick="exportTrainingCSV()" class="perm-download-el px-4 py-2 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition form-input-focus">CSV</button>
-                  <button onclick="openPrintPreviewModal()" class="perm-download-el px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-sm font-bold transition shadow-2xs form-input-focus"><span class="text-lg">👁️</span> Print</button>
+                  <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-2xs form-input-focus"><span class="text-lg">📥</span> Import From Excel</button>
+                  <div class="relative perm-download-el">
+                    <button onclick="toggleExportMenu(event)" class="px-4 py-2 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition flex items-center gap-2 form-input-focus"><span class="text-lg">📤</span> Export ▾</button>
+                    <div id="export-menu" class="hidden absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-sm font-bold">
+                      <button onclick="exportTrainingExcel()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">📊 Excel</button>
+                      <button onclick="exportTrainingCSV()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">📄 CSV</button>
+                      <button onclick="openPrintPreviewModal()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">🖨️ Print</button>
+                    </div>
+                  </div>
+                  <button onclick="openTrainReport()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-2xs form-input-focus"><span class="text-lg">📊</span> Report</button>
                 </div>
               </div>
               <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-sm">
@@ -3822,6 +3828,116 @@
       };
       reader.readAsArrayBuffer(file);
     }
+
+    // ---------------- REPORT បណ្តុះបណ្តាលបន្ត (លម្អិត / សង្ខេប + តម្រង) ----------------
+    const TR = { mode: 'detail', group: 'country', f: {} };
+    const TR_GROUPS = {
+      country: ['ប្រទេស', t => t.country || '-'], sponsor: ['អ្នកឧបត្ថម្ភ', t => t.sponsor || '-'], level: ['កម្រិត', t => t.level || 'មិនបញ្ជាក់'],
+      gender: ['ភេទ', t => t.gender || 'មិនបញ្ជាក់'], scope: ['ក្នុង/ក្រៅប្រទេស', t => t.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស'],
+      term: ['វគ្គខ្លី/វគ្គវែង', t => trainIsLong(t) ? 'វគ្គវែង' : 'វគ្គខ្លី'], year: ['ឆ្នាំ', t => (trainStart(t) || '').slice(0, 4) || 'មិនបញ្ជាក់'],
+      month: ['ខែ', t => (trainStart(t) || '').slice(0, 7) || 'មិនបញ្ជាក់'], unit: ['អង្គភាព', t => t.unit || '-']
+    };
+    function trFiltered() {
+      const f = TR.f, q = String(f.q || '').toLowerCase().trim();
+      return activeRows('trainings').filter(t => {
+        const st = trainStart(t);
+        return (!q || [t.trainee, t.course, t.unit].some(v => String(v || '').toLowerCase().includes(q))) &&
+          (!f.scope || (t.scope === 'Domestic' ? 'Domestic' : 'International') === f.scope) && (!f.country || t.country === f.country) && (!f.sponsor || t.sponsor === f.sponsor) &&
+          (!f.gender || (f.gender === '-' ? !t.gender : t.gender === f.gender)) && (!f.level || (f.level === '-' ? !t.level : t.level === f.level)) &&
+          (!f.term || (f.term === 'long') === trainIsLong(t)) && (!f.title || String(t.trainee || '').startsWith(f.title + '.')) &&
+          (!f.from || (st && st >= f.from)) && (!f.to || (st && st <= f.to));
+      }).sort((a, b) => String(trainStart(a) || '').localeCompare(String(trainStart(b) || '')) || String(a.trainee || '').localeCompare(String(b.trainee || '')));
+    }
+    function trDetailRows(rows) {
+      return rows.map((t, i) => { const [s, e] = trainRange(t); return { 'ល.រ': i + 1, 'ឈ្មោះ': t.trainee, 'ភេទ': t.gender || '', 'តួនាទី និងអង្គភាព': t.unit, 'កម្មវិធី/វគ្គសិក្សា': t.course, 'កម្រិត': t.level || '', 'រយៈពេល': t.duration, 'ថ្ងៃចាប់ផ្តើម': s ? formatDateDisplay(s) : '', 'ថ្ងៃបញ្ចប់': e ? formatDateDisplay(e) : '', 'ប្រទេស': t.country, 'ឧបត្ថម្ភ': t.sponsor, 'ប្រភេទ': t.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស' }; });
+    }
+    function trSummaryRows(rows) {
+      const [label, fn] = TR_GROUPS[TR.group], m = new Map();
+      rows.forEach(t => { const k = fn(t); const o = m.get(k) || { n: 0, f: 0, m: 0, u: 0 }; o.n++; t.gender === 'ស្រី' ? o.f++ : t.gender === 'ប្រុស' ? o.m++ : o.u++; m.set(k, o); });
+      let arr = [...m.entries()];
+      arr = (TR.group === 'year' || TR.group === 'month') ? arr.sort((a, b) => String(a[0]).localeCompare(String(b[0]))) : arr.sort((a, b) => b[1].n - a[1].n || String(a[0]).localeCompare(String(b[0])));
+      const out = arr.map(([k, o], i) => ({ 'ល.រ': i + 1, [label]: k, 'សរុប': o.n, 'ស្រី': o.f, 'ប្រុស': o.m, 'មិនបញ្ជាក់ភេទ': o.u }));
+      out.push({ 'ល.រ': '', [label]: 'សរុបរួម', 'សរុប': rows.length, 'ស្រី': rows.filter(t => t.gender === 'ស្រី').length, 'ប្រុស': rows.filter(t => t.gender === 'ប្រុស').length, 'មិនបញ្ជាក់ភេទ': rows.filter(t => !t.gender).length });
+      return out;
+    }
+    function trFilterText() {
+      const f = TR.f, p = [];
+      if (f.scope) p.push(f.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស'); if (f.country) p.push('ប្រទេស៖ ' + f.country); if (f.sponsor) p.push('អ្នកឧបត្ថម្ភ៖ ' + f.sponsor);
+      if (f.gender) p.push('ភេទ៖ ' + (f.gender === '-' ? 'មិនបញ្ជាក់' : f.gender)); if (f.level) p.push('កម្រិត៖ ' + (f.level === '-' ? 'មិនបញ្ជាក់' : f.level)); if (f.term) p.push(f.term === 'long' ? 'វគ្គវែង' : 'វគ្គខ្លី');
+      if (f.title) p.push('Title៖ ' + f.title); if (f.q) p.push('ស្វែងរក៖ ' + f.q); if (f.from || f.to) p.push('ថ្ងៃចាប់ផ្តើម៖ ' + (f.from ? formatDateDisplay(f.from) : '…') + ' → ' + (f.to ? formatDateDisplay(f.to) : '…'));
+      return p.length ? p.join(' • ') : 'ទិន្នន័យទាំងអស់';
+    }
+    function trTitle() { return 'របាយការណ៍ទិន្នន័យបណ្តុះបណ្តាលបន្ត — ' + (TR.mode === 'detail' ? 'លម្អិត' : 'សង្ខេបតាម' + TR_GROUPS[TR.group][0]); }
+    function trTableHTML(data, cls) {
+      if (!data.length) return '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>';
+      const keys = Object.keys(data[0]);
+      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${TR.mode === 'summary' && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    function trRead() {
+      const g = id => document.getElementById('trf-' + id)?.value || '';
+      TR.f = { q: g('q'), scope: g('scope'), country: g('country'), sponsor: g('sponsor'), gender: g('gender'), level: g('level'), term: g('term'), title: g('title'), from: g('from'), to: g('to') };
+      TR.group = g('group') || TR.group;
+    }
+    function trSetMode(m) { TR.mode = m; trRender(); }
+    function trRender() {
+      trRead();
+      const rows = trFiltered(), data = TR.mode === 'detail' ? trDetailRows(rows) : trSummaryRows(rows);
+      document.getElementById('tr-count').textContent = 'រកឃើញ ' + toKhmerDigits(rows.length) + ' កំណត់ត្រា';
+      document.getElementById('tr-result').innerHTML = trTableHTML(data);
+      document.getElementById('tr-group-wrap').classList.toggle('hidden', TR.mode !== 'summary');
+      ['detail', 'summary'].forEach(m => { const b = document.getElementById('trtab-' + m); b.classList.toggle('bg-emerald-600', TR.mode === m); b.classList.toggle('text-white', TR.mode === m); b.classList.toggle('bg-slate-100', TR.mode !== m); b.classList.toggle('text-slate-600', TR.mode !== m); });
+    }
+    function trClose() { document.getElementById('modal-train-report')?.remove(); }
+    function openTrainReport() {
+      trClose();
+      const all = activeRows('trainings'), uniq = k => [...new Set(all.map(t => t[k]).filter(Boolean))].sort();
+      const sel = (id, label, opts) => `<div><label class="block text-[10px] font-bold text-slate-600 mb-1">${label}</label><select id="trf-${id}" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"><option value="">ទាំងអស់</option>${opts.map(o => Array.isArray(o) ? `<option value="${esc(o[0])}">${esc(o[1])}</option>` : `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>`;
+      const d = document.createElement('div'); d.id = 'modal-train-report'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📊 Report — បណ្តុះបណ្តាលបន្ត</h3><button type="button" onclick="trClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
+          ${sel('scope', 'ក្នុង/ក្រៅប្រទេស', [['International', 'ក្រៅប្រទេស'], ['Domestic', 'ក្នុងប្រទេស']])}${sel('country', 'ប្រទេស', uniq('country'))}${sel('sponsor', 'អ្នកឧបត្ថម្ភ', uniq('sponsor'))}
+          ${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('level', 'កម្រិត', [...LEVELS, ['-', 'មិនបញ្ជាក់']])}
+          ${sel('term', 'រយៈពេល', [['short', 'វគ្គខ្លី'], ['long', 'វគ្គវែង']])}${sel('title', 'Title', getList('titles'))}
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ចាប់ផ្តើម ពី</label><input type="date" id="trf-from" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="trf-to" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (ឈ្មោះ/អង្គភាព/វគ្គ)</label><input id="trf-q" oninput="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <button id="trtab-detail" onclick="trSetMode('detail')" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">📋 Detail Report</button>
+          <button id="trtab-summary" onclick="trSetMode('summary')" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">🧮 Summary Report</button>
+          <div id="tr-group-wrap" class="hidden flex items-center gap-2"><span class="font-bold text-slate-600">ដោយតាម៖</span><select id="trf-group" onchange="trRender()" class="form-input-focus border border-slate-300 rounded-xl p-2 text-xs bg-white">${Object.entries(TR_GROUPS).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div>
+          <span id="tr-count" class="ml-auto font-bold text-emerald-700"></span>
+        </div>
+        <div id="tr-result" class="overflow-auto border border-slate-200 rounded-xl flex-1 min-h-[200px]"></div>
+        <div class="flex justify-end gap-2"><button onclick="trExport('xlsx')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button><button onclick="trExport('csv')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">CSV</button><button onclick="trPrint()" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print</button></div></div>`;
+      document.body.appendChild(d);
+      TR.mode = 'detail'; document.getElementById('trf-group').value = TR.group; trRender();
+    }
+    function trCurrentData() { const rows = trFiltered(); return TR.mode === 'detail' ? trDetailRows(rows) : trSummaryRows(rows); }
+    function trExport(kind) {
+      trRead(); const data = trCurrentData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      if (kind === 'xlsx') {
+        if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(data), TR.mode === 'detail' ? 'Detail' : 'Summary');
+        XLSX.writeFile(wb, 'training_' + TR.mode + '_' + todayISO() + '.xlsx');
+      } else {
+        const keys = Object.keys(data[0]); let csv = '﻿' + keys.map(csvCell).join(',') + '\n';
+        data.forEach(r => { csv += keys.map(k => csvCell(r[k])).join(',') + '\n'; });
+        downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'training_' + TR.mode + '_' + todayISO() + '.csv');
+      }
+      showToast('បាន Export រួចរាល់');
+    }
+    function trPrint() {
+      trRead(); const data = trCurrentData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      const keys = Object.keys(data[0]), now = new Date();
+      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${TR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(trTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}</style></head><body><h2>${esc(trTitle())}</h2><p class="s">${esc(trFilterText())} — សរុប ${toKhmerDigits(trFiltered().length)} កំណត់ត្រា</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div><script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
+      win.document.close();
+    }
+    function toggleExportMenu(ev) { ev.stopPropagation(); document.getElementById('export-menu')?.classList.toggle('hidden'); }
+    document.addEventListener('click', () => document.getElementById('export-menu')?.classList.add('hidden'));
 
     function exportDocsCSV() {
       const rows = getFilteredDocs();
