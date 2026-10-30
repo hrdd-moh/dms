@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.1 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -64,6 +64,7 @@
       #printable-preview-content { position: absolute; left: 0; top: 0; width: 100%; border: none; }
     }
     #modal-system-tools [id^="syscontent-"] { min-height: 0; }
+      @media (min-width: 1280px) { .main-wide { grid-column: 1 / -1 !important; } }
   </style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased h-screen overflow-hidden flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
@@ -84,7 +85,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.1</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -142,7 +143,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4.1 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -447,7 +448,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.4 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4.1 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -603,18 +604,19 @@
         <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.1</h3>
         <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
-        <div><label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label><input type="text" id="login-username" required autocomplete="username" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="បញ្ចូលឈ្មោះគណនី..."></div>
+        <div><label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label><input type="text" id="login-username" required autocomplete="username" lang="en" autocapitalize="none" spellcheck="false" oninput="latinOnly(this)" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="username (a-z, 0-9)"></div>
         <div><label class="block text-xs font-bold text-slate-700 mb-1">លេខសម្ងាត់ (Password)</label>
-          <div class="relative"><input type="password" id="login-password" required autocomplete="current-password" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••"><button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm form-input-focus">👁️</button></div>
+          <div class="relative"><input type="password" id="login-password" required autocomplete="current-password" lang="en" oninput="latinOnly(this)" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 pr-10 text-xs bg-slate-50/50" placeholder="••••••••"><button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm form-input-focus">👁️</button></div>
         </div>
+        <p id="login-latin-hint" class="text-[11px] text-slate-400 -mt-1">🔤 ប្រើអក្សរឡាតាំង លេខ និងនិមិត្តសញ្ញាប៉ុណ្ណោះ (សូមប្តូរក្តារចុចទៅ English)</p>
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.1 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
     </div>
   </div>
 
@@ -783,7 +785,7 @@
       <!-- MANUAL -->
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.1</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1495,14 +1497,18 @@
     }
     function canUseQR() { return !!currentUser && (isAdmin() || currentUser.bureau === 'bureau_3'); }
 
+    // អនុញ្ញាតតែតួ ASCII (ឡាតាំង លេខ និមិត្តសញ្ញា)
+    function latinOnly(el) { const v = el.value, c = v.replace(/[^\x20-\x7E]/g, ''); if (v !== c) { el.value = c; const h = document.getElementById('login-latin-hint'); if (h) { h.classList.remove('text-slate-400'); h.classList.add('text-rose-600', 'font-bold'); } } }
+    const isLatin = v => /^[\x20-\x7E]*$/.test(String(v == null ? '' : v));
     function togglePasswordVisibility() { const p = document.getElementById('login-password'); p.type = (p.type === 'password') ? 'text' : 'password'; }
 
     async function handleLogin(e) {
       if (e) e.preventDefault();
       const btn = document.getElementById('btn-login-submit');
       const errEl = document.getElementById('login-error');
-      const u = normalizeKhmerDigits(document.getElementById('login-username').value).toLowerCase();
-      const p = normalizeKhmerDigits(document.getElementById('login-password').value);
+      const u = document.getElementById('login-username').value.trim().toLowerCase();
+      const p = document.getElementById('login-password').value.trim();
+      if (!isLatin(u) || !isLatin(p)) { errEl.innerText = 'សូមប្រើអក្សរឡាតាំងប៉ុណ្ណោះ (មិនអនុញ្ញាតអក្សរខ្មែរ)!'; errEl.classList.remove('hidden'); return; }
       btn.disabled = true; btn.innerText = 'កំពុងទាញគណនីពី Cloud...';
       if (db) {
         try { const cloudUsers = await fetchAllCloudUsers(); if (cloudUsers.length) { usersData = mergeUserLists(usersData, cloudUsers); await saveUsersLocal(); } } catch (err) {}
@@ -1720,6 +1726,7 @@
       const me = usersData.find(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
       if (!me || normalizeKhmerDigits(me.password) !== oldP) return alert('⚠️ ពាក្យសម្ងាត់ចាស់មិនត្រឹមត្រូវ!');
       if (newP.length < 6) return alert('⚠️ ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងហោចណាស់ ៦ តួ!');
+      if (!isLatin(newP)) return alert('⚠️ ពាក្យសម្ងាត់ត្រូវប្រើអក្សរឡាតាំងប៉ុណ្ណោះ!');
       if (newP === oldP) return alert('⚠️ ពាក្យសម្ងាត់ថ្មីត្រូវខុសពីពាក្យសម្ងាត់ចាស់!');
       await updateMyUserRecord(u => { u.password = newP; });
       showToast('បានផ្លាស់ប្ដូរ Password និងរក្សាទុកលើ Cloud ជោគជ័យ!');
@@ -1802,10 +1809,10 @@
       const descEl = document.getElementById('side-panel-header-desc');
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
-      const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8, .xl\\:col-span-12');
+      const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8');
       const hidePanel = ['tracking', 'reports'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
-      if (mainCol) { mainCol.classList.toggle('xl:col-span-12', hidePanel); mainCol.classList.toggle('xl:col-span-8', !hidePanel); }
+      if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
       if (hidePanel) { container.innerHTML = ''; return; }
       const en = appLang === 'en';
       const tgt = entryBureau();
@@ -2200,7 +2207,7 @@
         ['courses_in', 'វគ្គក្នុងពេលបម្រើការងារ (វគ្គ)', 'number']]
     };
 
-    function fxd(s) { return rpt.kh ? String(s == null ? '' : s).replace(/\d/g, d => KD[d]) : String(s == null ? '' : s); }
+    function fxd(s) { s = String(s == null ? '' : s); return rpt.kh ? s.replace(/[A-Za-z0-9][A-Za-z0-9_.\/\-]*/g, t => /[A-Za-z]/.test(t) ? t : t.replace(/\d/g, d => KD[d])) : s; }
     const c2 = n => String(Math.max(0, Math.round(Number(n) || 0))).padStart(2, '0');
     const pctTxt = (a, b) => { if (!b) return '0%'; return String(Math.round(a / b * 10000) / 100).replace('.', ',') + '%'; };
     const hasNum = v => v !== '' && v != null && !isNaN(Number(v));
@@ -2540,7 +2547,7 @@
       if (table === 'exams' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       const before = { ...rec }, changes = [];
       Object.keys(next).forEach(k => { const o = before[k] == null ? '' : before[k], n = next[k] == null ? '' : next[k]; if (String(o) !== String(n)) changes.push(k + ': ' + (o === '' ? '∅' : o) + ' → ' + (n === '' ? '∅' : n)); rec[k] = next[k]; });
-      if (table === 'trainings' && next.start_date && next.end_date) rec.dates = formatDateDisplay(next.start_date) + '-' + formatDateDisplay(next.end_date);
+      if (table === 'trainings') rec.dates = (next.start_date && next.end_date) ? formatDateDisplay(next.start_date) + '-' + formatDateDisplay(next.end_date) : '';
       if (!changes.length) { closeRecEdit(); return showToast('មិនមានការផ្លាស់ប្តូរ'); }
       const ok = await persist(table, rec);
       closeRecEdit(); rerenderTable(table); if (activeTab === 'reports') renderReports();
@@ -3247,7 +3254,7 @@
       const statusVal = document.getElementById('new-user-status').value;
       const g = id => document.getElementById(id).checked;
       const newUser = normalizeUserFromRecord({ id: generateSafeId(), fullname: document.getElementById('new-user-fullname').value.trim(), username: uname,
-        password: normalizeKhmerDigits(document.getElementById('new-user-password').value), role: roleVal, bureau: document.getElementById('new-user-bureau').value, status: statusVal, avatar: '',
+        password: document.getElementById('new-user-password').value.trim(), role: roleVal, bureau: document.getElementById('new-user-bureau').value, status: statusVal, avatar: '',
         permissions: { admin: g('perm-admin'), read: g('perm-read'), create: g('perm-create'), edit: g('perm-edit'), delete: g('perm-delete'), upload: g('perm-upload'),
           download: g('perm-download'), export: g('perm-export'), approve: g('perm-approve'), _role: roleVal, _status: statusVal, _avatar: '' } });
       usersData.unshift(newUser); await saveUsersLocal(); renderUsersTable();
@@ -3362,8 +3369,9 @@
       if (usersData.some(x => x.id !== u.id && String(x.username).toLowerCase() === username.toLowerCase())) return alert('Username នេះមានរួចហើយ (រួមទាំងគណនីក្នុងធុងសំរាម)!');
       const oldName = u.username, renamed = username.toLowerCase() !== String(oldName).toLowerCase();
       if (renamed && !confirm('ប្តូរ Username @' + oldName + ' → @' + username + '?\nអ្នកប្រើត្រូវ Login ឡើងវិញដោយប្រើ Username ថ្មី។')) return;
-      const pw = normalizeKhmerDigits(document.getElementById('ud-password').value.trim());
+      const pw = document.getElementById('ud-password').value.trim();
       if (pw && pw.length < 6) return alert('លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួ');
+      if (pw && !isLatin(pw)) return alert('លេខសម្ងាត់ត្រូវប្រើអក្សរឡាតាំងប៉ុណ្ណោះ');
       const flags = {};
       document.querySelectorAll('#ud-perms input[data-perm]').forEach(cb => { flags[cb.dataset.perm] = cb.checked; });
       if (!sup) flags.admin = u.permissions?.admin === true;
