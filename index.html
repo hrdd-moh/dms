@@ -706,6 +706,7 @@
           <button onclick="switchListTab('location')" id="listtab-location" class="px-3.5 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus">🌍 Location (ប្រទេស)</button>
           <button onclick="switchListTab('docCats')" id="listtab-docCats" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📂 ប្រភេទឯកសារ</button>
           <button onclick="switchListTab('examTypes')" id="listtab-examTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🎓 ប្រភេទប្រឡង</button>
+          <button onclick="switchListTab('titles')" id="listtab-titles" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🏷️ Title</button>
           <button onclick="switchListTab('sponsors')" id="listtab-sponsors" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🤝 អ្នកឧបត្ថម្ភ</button>
         </div>
         <div id="sub-location" class="space-y-4">
@@ -1849,7 +1850,9 @@
       if (hidePanel) { container.innerHTML = ''; return; }
       const en = appLang === 'en';
       const tgt = entryBureau();
-      const targetBureauSelectHtml = tgt
+      const targetBureauSelectHtml = activeTab === 'docs'
+        ? `<div class="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">📚 ${en ? 'Shared library — everyone can view; Admin uploads' : 'បណ្ណាល័យរួម — មើលបានគ្រប់គ្នា · Admin ជាអ្នកបញ្ចូល'}</div>`
+        : tgt
         ? `<div class="flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">🏛️ ${en ? 'Entry to' : 'បញ្ចូលទៅ'}៖ ${esc(bureauShort(tgt))}</div>`
         : `<div class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">⚠️ ${en ? 'Select a specific bureau in the sidebar first' : 'សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន ទើបអាចបញ្ចូលបាន'}</div>`;
       const headers = {
@@ -1871,13 +1874,13 @@
       if (activeTab === 'training') {
         container.innerHTML = `
           <form id="form-quick-training" onsubmit="handleSaveTraining(event)" class="space-y-3.5 text-sm font-medium">
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Trainee Name *' : 'ឈ្មោះសិក្ខាកាម *'}</label><input type="text" id="train-trainee" required placeholder="ឧ. លោកវេជ្ជ. នង មុន្នីពេជ្យ" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
+            <div class="grid grid-cols-3 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Title' : 'ពាក្យនាំមុខ'}</label><select id="train-title" onchange="onTrainTitle(this.value)" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="">—</option>${getList('titles').map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></div><div class="col-span-2"><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Trainee Name *' : 'ឈ្មោះសិក្ខាកាម *'}</label><input type="text" id="train-trainee" required placeholder="ឧ. នង មុន្នីពេជ្យ" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div></div>
             <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Gender' : 'ភេទ'}</label><select id="train-gender" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— មិនបញ្ជាក់ —</option><option value="ប្រុស">ប្រុស</option><option value="ស្រី">ស្រី</option></select></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Level' : 'ថ្នាក់ / កម្រិត'}</label><select id="train-level" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— តាមរយៈពេល —</option>${LEVELS.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('')}</select></div></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Role & Organization *' : 'តួនាទី និងអង្គភាព *'}</label><input type="text" id="train-unit" required placeholder="ឧ. មន្ទីរពេទ្យកាល់ម៉ែត" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Training Course *' : 'វគ្គសិក្សា *'}</label><input type="text" id="train-course" required placeholder="ឈ្មោះវគ្គសិក្សា..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Duration *' : 'រយៈពេល *'}</label><input type="text" id="train-duration" required placeholder="6M, 1A..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Scope' : 'ប្រភេទ'}</label><select id="train-scope-input" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"><option value="International">✈️ ក្រៅប្រទេស</option><option value="Domestic">🇰🇭 ក្នុងប្រទេស</option></select></div></div>
-            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើម</label><input type="date" id="train-date-start" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="train-date-end" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Country *' : 'ប្រទេស (Location) *'}</label><select id="train-country-select" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-bold"></select></div>
+            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើម</label><input type="date" id="train-date-start" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="train-date-end" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Sponsor *' : 'ដៃគូឧបត្ថម្ភ (Sponsor) *'}</label><input type="text" id="train-sponsor-input" required list="sponsor-list" autocomplete="off" placeholder="ឧ. ទីភ្នាក់ងារជប៉ុន, សាមីខ្លួន..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"><datalist id="sponsor-list">${sponsorOptions()}</datalist></div>
             <button type="submit" id="btn-save-training" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Record / រក្សាទុក</span></button>
           </form>`;
@@ -1892,7 +1895,7 @@
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Current Location' : 'នៅទីណា (ទីតាំង)'}</label><select id="disp-location" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${LOCATIONS.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('')}</select></div>
             <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Date' : 'កាលបរិច្ឆេទ'}</label><input type="date" id="disp-date" required value="${todayISO()}" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Due date' : 'ថ្ងៃផុតកំណត់'}</label><input type="date" id="disp-due" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white" title="ទុកទទេ = ${OVERDUE_DEFAULT_DAYS} ថ្ងៃក្រោយកាលបរិច្ឆេទលិខិត"></div></div>
             <p class="text-[10px] text-slate-400 -mt-2">ទុក «ថ្ងៃផុតកំណត់» ទទេ = ${OVERDUE_DEFAULT_DAYS} ថ្ងៃក្រោយកាលបរិច្ឆេទលិខិត</p>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Officer' : 'មន្ត្រីកាន់ការ'}</label><input type="text" id="disp-assignee" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50" placeholder="ឈ្មោះមន្ត្រី..."></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Officer' : 'មន្ត្រីកាន់ការ'}</label><input type="text" id="disp-assignee" required value="${esc(currentUser?.fullname || '')}" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50" placeholder="ឈ្មោះមន្ត្រី..."></div>
             <button type="submit" id="btn-save-disp" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Letter / រក្សាទុក</span></button>
           </form>`;
       } else if (activeTab === 'exams') {
@@ -1989,7 +1992,7 @@
       const sort = document.getElementById('filter-doc-sort')?.value || 'newest';
       let rows = activeRows('docs').filter(d =>
         (!q || [d.title, d.code, d.category].some(v => String(v || '').toLowerCase().includes(q))) &&
-        (cat === 'all' || d.category === cat) && (bur === 'all' || d.bureau === bur));
+        (cat === 'all' || d.category === cat) && (bur === 'all' || d.bureau === bur || d.bureau === 'all'));
       if (sort === 'oldest') rows = sortRecords(rows).reverse();
       else if (sort === 'title') rows.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')));
       else if (sort === 'code') rows.sort((a, b) => String(a.code || '').localeCompare(String(b.code || ''), undefined, { numeric: true }));
@@ -2223,6 +2226,7 @@
     const LIST_DEFS = {
       docCats: { icon: '📂', label: 'ប្រភេទឯកសារ', hint: 'ឧ. ច្បាប់, អនុក្រឹត្យ…', def: ['ឯកសារបទដ្ឋាន', 'កម្មវិធីបណ្តុះបណ្តាល', 'វិញ្ញាសា/របាយការណ៍', 'សេចក្តីណែនាំ', 'ច្បាប់', 'ព្រះរាជក្រឹត្យ', 'អនុក្រឹត្យ', 'សេចក្តីសម្រេច', 'ប្រកាស', 'សារាចរ'] },
       examTypes: { icon: '🎓', label: 'ប្រភេទប្រឡង', hint: 'ឧ. ប្រឡងចូល', def: EXAM_TYPES.slice() },
+      titles: { icon: '🏷️', label: 'Title (ពាក្យនាំមុខ)', hint: 'ឧ. លោក, លោកស្រី, វេជ្ជបណ្ឌិត', def: ['លោក', 'លោកស្រី', 'កញ្ញា', 'វេជ្ជបណ្ឌិត', 'សាស្ត្រាចារ្យ', 'ឯកឧត្តម', 'លោកជំទាវ'] },
       sponsors: { icon: '🤝', label: 'អ្នកឧបត្ថម្ភ', hint: 'ឧ. រដ្ឋាភិបាលអូស្រ្តាលី', def: ['សាមីខ្លួន'] }
     };
     let appLists = {};
@@ -2274,7 +2278,10 @@
       const lp = document.getElementById('sub-lists'); if (lp) lp.classList.toggle('hidden', k === 'location');
       if (k === 'location') renderCountriesTable(); else renderListPanel(k);
     }
+    function titleGender(t) { return /លោកស្រី|កញ្ញា|លោកជំទាវ|អ្នកស្រី/.test(t) ? 'ស្រី' : /^(លោក|ឯកឧត្តម)$/.test(t) ? 'ប្រុស' : ''; }
+    function onTrainTitle(v) { const g = titleGender(v), el = document.getElementById('train-gender'); if (el && g) el.value = g; }
     function listUsage(k, v) {
+      if (k === 'titles') return activeRows('trainings').filter(t => String(t.trainee || '').startsWith(v + '.')).length;
       return k === 'docCats' ? activeRows('docs').filter(d => d.category === v).length : k === 'examTypes' ? activeRows('exams').filter(e => e.type === v).length : activeRows('trainings').filter(t => t.sponsor === v).length;
     }
     function renderListPanel(k) {
@@ -3067,17 +3074,16 @@
       e.preventDefault();
       if (!can('upload')) return showToast('គ្មានសិទ្ធិ Upload', true);
       if (!isAdmin()) return showToast('មានតែ Admin / Super Admin ទេដែលអាចបង្ហោះឯកសារក្នុងបណ្ណាល័យរួម', true);
-      if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
       const saveBtn = document.getElementById('btn-save-doc');
       if (!currentUploadedFile.rawFile) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
       const code = document.getElementById('doc-code').value.trim();
       if (activeRows('docs').some(d => String(d.code).toLowerCase() === code.toLowerCase()) && !confirm('⚠️ កូដឯកសារ "' + code + '" មានរួចហើយ។ តើនៅតែចង់រក្សាទុកទេ?')) return;
 
-      saveBtn.disabled = true; saveBtn.innerHTML = '<span>⏳ កំពុងបង្ហោះហ្វាលទៅ Cloud Storage...</span>';
+      saveBtn.disabled = true; saveBtn.innerHTML = '<span>⏳ កំពុងបង្ហោះឯកសារ...</span>';
       await currentUploadedFile.ready;
       const snap = { ...currentUploadedFile };
       const docId = generateSafeId();
-      const chosenBureau = entryBureau();
+      const chosenBureau = entryBureau() || 'all';
       let cloudFileUrl = '';
       if (db && snap.rawFile) {
         try {
@@ -3093,7 +3099,7 @@
         driveLink: cloudFileUrl, createdBy: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('docs', newDoc);
       renderDocs(); updateStats();
-      showToast(cloudFileUrl ? 'បានបង្ហោះឯកសារចូល Cloud Storage ជោគជ័យ!' : (ok ? 'បានរក្សាទុកឯកសារ (កំពុងផ្ញើហ្វាលទៅ Google Drive)...' : 'បានរក្សាទុកនៅលើឧបករណ៍នេះ — នឹង Sync ឡើង Cloud ពេលមានអ៊ីនធឺណិត'), !ok);
+      showToast(cloudFileUrl ? 'អ្នកបានបញ្ចូលរួចរាល់!' : (ok ? 'បានរក្សាទុកឯកសារ (កំពុងផ្ញើហ្វាលទៅ Google Drive)...' : 'បានរក្សាទុកនៅលើឧបករណ៍នេះ — នឹង Sync ឡើង Cloud ពេលមានអ៊ីនធឺណិត'), !ok);
       logActivity('Upload ឯកសារ', newDoc.code);
       resetDocForm(); flashSaved(saveBtn, 'Submit Document / រក្សាទុក');
 
@@ -3114,13 +3120,13 @@
       const dStart = document.getElementById('train-date-start').value, dEnd = document.getElementById('train-date-end').value;
       if (dEnd < dStart) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       btn.disabled = true;
-      const rec = { id: generateSafeId(), trainee: document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(),
+      const rec = { id: generateSafeId(), trainee: ((document.getElementById('train-title')?.value || '') ? document.getElementById('train-title').value + '.' : '') + document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(),
         course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value,
         dates: formatDateDisplay(dStart) + '-' + formatDateDisplay(dEnd), country: document.getElementById('train-country-select').value,
         sponsor: document.getElementById('train-sponsor-input').value.trim(), gender: document.getElementById('train-gender').value || null, level: document.getElementById('train-level').value || null, start_date: dStart || null, end_date: dEnd || null, created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('trainings', rec);
       renderTrainingList(); updateStats();
-      showToast(ok ? 'បានរក្សាទុកវគ្គបណ្តុះបណ្តាលទៅ Cloud ជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+      showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល', rec.trainee);
       e.target.reset(); populateCountryDropdowns(); flashSaved(btn, 'Submit Record / រក្សាទុក');
     }
@@ -3138,7 +3144,7 @@
         stage_history: [{ stage, location, by: currentUser.username, at: nowISO(), note: 'បង្កើតកំណត់ត្រា' }], created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('dispatches', rec);
       renderDispatch(); updateStats(); renderNotifBadge();
-      showToast(ok ? 'បានកត់ត្រាលិខិតទៅ Cloud ជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+      showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាលិខិត', rec.code);
       e.target.reset(); document.getElementById('disp-date').value = todayISO(); flashSaved(btn, 'Submit Letter / រក្សាទុក');
     }
@@ -3153,7 +3159,7 @@
         passed: examNum('exam-passed'), failed: examNum('exam-failed'), absent: examNum('exam-absent'), created_at: nowISO(), deleted_at: null, deleted_by: null };
       if (rec.start_date && rec.end_date && rec.end_date < rec.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       const ok = await persist('exams', rec); renderExams(); updateStats();
-      showToast(ok ? 'បានរក្សាទុកសម័យប្រឡងជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+      showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាសម័យប្រឡង', rec.major); e.target.reset();
     }
 
@@ -3164,7 +3170,7 @@
       const rec = { id: generateSafeId(), num, recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(),
         date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim(), created_at: nowISO(), deleted_at: null, deleted_by: null };
       const ok = await persist('certs', rec); renderCerts(); updateStats();
-      showToast(ok ? 'បានចុះបញ្ជីលេខសញ្ញាបត្រជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+      showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('ចុះបញ្ជីសញ្ញាបត្រ', rec.num); e.target.reset(); document.getElementById('cert-date').value = todayISO();
     }
 
