@@ -1,0 +1,29 @@
+name: Supabase Keep-Alive
+
+# រៀងរាល់ ២ ថ្ងៃ ម៉ោង 8 ព្រឹក (Asia/Phnom_Penh = UTC+7 → 01:00 UTC)
+on:
+  schedule:
+    - cron: '0 1 */2 * *'
+  workflow_dispatch: # អាច run ដោយដៃបាន
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          echo "Pinging Supabase at $(date)..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${SUPABASE_URL}/rest/v1/app_lists?select=key&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" = "200" ] || [ "$STATUS" = "206" ]; then
+            echo "✅ Supabase is active."
+          else
+            echo "⚠️ Unexpected status: $STATUS"
+            exit 1
+          fi
