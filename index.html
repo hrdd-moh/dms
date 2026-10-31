@@ -997,6 +997,56 @@
     function isImageName(n) { return /\.(png|jpe?g|gif|webp|bmp)$/i.test(n || ''); }
     function isPdfName(n) { return /\.pdf$/i.test(n || ''); }
     function isOfficeName(n) { return /\.(docx?|xlsx?|pptx?)$/i.test(n || ''); }
+
+    // ---- Google Drive link helpers (V3.4.4) ----
+    function driveInfo(raw) {
+      const s = String(raw || '').trim(); if (!/^https?:\/\//i.test(s)) return null;
+      let u; try { u = new URL(s); } catch (e) { return null; }
+      const h = u.hostname.toLowerCase();
+      if (h !== 'drive.google.com' && h !== 'docs.google.com') return null;
+      if (/\/folders\//.test(u.pathname)) return { kind: 'folder' };
+      let id = '', type = 'file', m;
+      if ((m = /\/(document|spreadsheets|presentation)\/d\/([-\w]{10,})/.exec(u.pathname))) { type = m[1]; id = m[2]; }
+      else if ((m = /\/file\/(?:u\/\d+\/)?d\/([-\w]{10,})/.exec(u.pathname))) id = m[1];
+      else { const q = u.searchParams.get('id'); if (q && /^[-\w]{10,}$/.test(q)) id = q; }
+      if (!id) return { kind: 'bad' };
+      if (type === 'file') return { kind: 'file', id, view: 'https://drive.google.com/file/d/' + id + '/view', preview: 'https://drive.google.com/file/d/' + id + '/preview', download: 'https://drive.google.com/uc?export=download&id=' + id };
+      const base = 'https://docs.google.com/' + type + '/d/' + id;
+      return { kind: 'gdoc', id, view: base + '/edit', preview: base + '/preview', download: base + '/export?format=' + (type === 'spreadsheets' ? 'xlsx' : type === 'presentation' ? 'pptx' : 'pdf') };
+    }
+    function normalizeDocLink(raw) {
+      const s = String(raw || '').trim();
+      if (!s) return { ok: false, msg: 'សូមបញ្ចូលតំណ (Link) ឯកសារ' };
+      if (!/^https?:\/\//i.test(s)) return { ok: false, msg: 'តំណត្រូវចាប់ផ្តើមដោយ https://' };
+      const di = driveInfo(s);
+      if (!di) return { ok: true, url: s, id: '' };
+      if (di.kind === 'folder') return { ok: false, msg: 'នេះជាតំណ Folder។ សូមចុចស្តាំលើ «ឯកសារ» ណាមួយ → Share → Copy link' };
+      if (di.kind === 'bad') return { ok: false, msg: 'តំណ Google Drive មិនត្រឹមត្រូវ។ សូមប្រើ Share → Copy link ពី Drive' };
+      return { ok: true, url: di.view, id: di.id };
+    }
+    function cloudDownloadUrl(doc) {
+      const link = doc.driveLink || '', di = driveInfo(link);
+      if (di && di.download) return di.download;
+      if (storagePathFromUrl(link)) return link + (link.includes('?') ? '&' : '?') + 'download=' + encodeURIComponent(doc.fileName || (doc.code + '.pdf'));
+      return link;
+    }
+    function docSrcIcon(d) { if (!d.driveLink) return ''; return driveInfo(d.driveLink) ? '🔗 ' : '📎 '; }
+    let docMode = 'file';
+    function setDocMode(m) {
+      docMode = m === 'link' ? 'link' : 'file';
+      const dz = document.getElementById('drop-zone'), lz = document.getElementById('link-zone');
+      if (dz) dz.classList.toggle('hidden', docMode === 'link');
+      if (lz) lz.classList.toggle('hidden', docMode !== 'link');
+      const on = 'px-3 py-2 rounded-xl bg-emerald-600 text-white shadow-xs form-input-focus', off = 'px-3 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 form-input-focus';
+      const bf = document.getElementById('docmode-file'), bl = document.getElementById('docmode-link');
+      if (bf) bf.className = docMode === 'file' ? on : off;
+      if (bl) bl.className = docMode === 'link' ? on : off;
+    }
+    function testDocLink() {
+      const r = normalizeDocLink(document.getElementById('doc-link')?.value);
+      if (!r.ok) return showToast(r.msg, true);
+      window.open(r.url, '_blank', 'noopener');
+    }
     function guessMime(n) {
       const ext = String(n || '').split('.').pop().toLowerCase();
       return ({ pdf: 'application/pdf', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', webp: 'image/webp',
@@ -1966,6 +2016,15 @@
         container.innerHTML = `
           <form id="form-quick-doc" onsubmit="handleSaveDoc(event)" class="space-y-3.5 text-sm font-medium">
             ${targetBureauSelectHtml}
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+              <button type="button" id="docmode-file" onclick="setDocMode('file')">${en ? '📎 Upload file (≤ 8MB)' : '📎 Upload ឯកសារ (≤ 8MB)'}</button>
+              <button type="button" id="docmode-link" onclick="setDocMode('link')">${en ? '🔗 Google Drive link' : '🔗 Link ពី Google Drive'}</button>
+            </div>
+            <div id="link-zone" class="hidden space-y-2">
+              <input type="url" id="doc-link" autocomplete="off" class="form-input-focus w-full border-2 border-dashed border-blue-400 bg-blue-50/60 rounded-2xl p-3 text-xs" placeholder="https://drive.google.com/file/d/…/view">
+              <p class="text-[11px] text-slate-600 leading-relaxed">${en ? 'In Drive: right-click the file → Share → General access = “Anyone with the link” → Copy link. Then paste it here.' : 'ក្នុង Drive៖ ចុចស្តាំលើឯកសារ → Share → «Anyone with the link» → Copy link រួច Paste ទីនេះ។ (បើមិន Share ទេ មន្ត្រីនឹងបើកមិនបាន)'}</p>
+              <button type="button" onclick="testDocLink()" class="px-3 py-1.5 bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 rounded-lg text-xs font-bold form-input-focus">${en ? '🔍 Test link (opens new tab)' : '🔍 ពិនិត្យតំណ (បើកលើផ្ទាំងថ្មី)'}</button>
+            </div>
             <div id="drop-zone" tabindex="0" role="button" onclick="document.getElementById('doc-file-input').click()" class="form-input-focus border-2 border-dashed border-emerald-400 bg-emerald-50 rounded-2xl p-4 text-center cursor-pointer hover:bg-emerald-100 transition">
               <input type="file" id="doc-file-input" onchange="handleFileSelected(event)" class="hidden" accept=".pdf,.docx,.doc,.xlsx,.xls,.png,.jpg,.jpeg">
               <p id="file-label" class="text-xs sm:text-sm font-bold text-slate-700">${en ? 'Click to select or drop file' : 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'}</p>
@@ -1976,7 +2035,7 @@
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Title *' : 'ចំណងជើងឯកសារ *'}</label><input type="text" id="doc-title" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
             <button type="submit" id="btn-save-doc" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Document / រក្សាទុក</span></button>
           </form>`;
-        bindDropZone();
+        bindDropZone(); setDocMode(docMode);
       }
     }
 
@@ -2057,7 +2116,7 @@
           <td class="p-3.5 font-mono font-bold text-slate-700 text-sm whitespace-nowrap">${esc(d.code)}${d._pending ? ' <span title="រង់ចាំ Sync">⏳</span>' : ''}${d._upl ? ' <span title="ឯកសាររង់ចាំ upload ឡើង Cloud">⬆️</span>' : ''}</td>
           <td class="p-3.5 font-bold text-slate-900 text-sm"><div class="clamp2" title="${esc(d.title)}">${esc(d.title)}</div></td>
           <td class="p-3.5 text-center whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">${esc(d.category)}</span></td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(d.fileSize)}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${docSrcIcon(d)}${esc(d.fileSize)}</td>
           <td class="p-3.5 text-slate-600 font-bold text-xs whitespace-nowrap">${esc(bureauShort(d.bureau))}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><button onclick="openDocViewerById(${d.id})" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_view_print'))}</button>${deleteBtn('docs', d.id)}</td>
         </tr>`;
@@ -2992,7 +3051,7 @@
       const localIsPdf = hasLocal && (isPdfName(name) || String(doc.fileDataUrl).startsWith('data:application/pdf'));
 
       if (hasLocal) { viewerBlobUrl = dataUrlToBlobUrl(doc.fileDataUrl); dl.href = viewerBlobUrl; dl.download = name || (doc.code + '.pdf'); dl.classList.remove('hidden'); }
-      else if (hasCloud) { dl.href = doc.driveLink; dl.target = '_blank'; dl.rel = 'noopener'; dl.removeAttribute('download'); dl.classList.remove('hidden'); }
+      else if (hasCloud) { dl.href = cloudDownloadUrl(doc); dl.target = '_blank'; dl.rel = 'noopener'; dl.removeAttribute('download'); dl.classList.remove('hidden'); }
 
       if (localIsImg) {
         bodyEl.innerHTML = `<img src="${esc(viewerBlobUrl)}" alt="${esc(doc.title)}" class="max-w-full max-h-full object-contain rounded-xl shadow-md bg-white p-2">`;
@@ -3003,10 +3062,13 @@
         if (/\.(png|jpe?g|gif|webp)(\?.*)?$/i.test(link) || isImageName(name)) {
           bodyEl.innerHTML = `<img src="${esc(link)}" alt="${esc(doc.title)}" class="max-w-full max-h-full object-contain rounded-xl shadow-md bg-white p-2">`;
         } else {
+          const di = driveInfo(link);
           let previewUrl = link;
-          if (link.includes('drive.google.com')) previewUrl = link.replace(/\/view(\?.*)?$/, '/preview');
+          if (di && di.preview) previewUrl = di.preview;
+          else if (link.includes('drive.google.com')) previewUrl = link.replace(/\/view(\?.*)?$/, '/preview');
           else if (isOfficeName(name) || /\.(docx?|xlsx?|pptx?)(\?.*)?$/i.test(link)) previewUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(link);
-          bodyEl.innerHTML = `<div class="w-full h-full flex flex-col gap-2"><iframe id="doc-viewer-iframe" src="${esc(previewUrl)}" class="w-full flex-1 rounded-xl bg-white border-0 shadow-sm"></iframe><p class="text-xs text-center text-slate-500">ប្រសិនបើឯកសារមិនបង្ហាញ សូមចុច <a href="${esc(link)}" target="_blank" rel="noopener" class="text-emerald-700 font-bold underline">បើកលើផ្ទាំងថ្មី</a></p></div>`;
+          const openUrl = (di && di.view) || link;
+          bodyEl.innerHTML = `<div class="w-full h-full flex flex-col gap-2"><iframe id="doc-viewer-iframe" src="${esc(previewUrl)}" class="w-full flex-1 rounded-xl bg-white border-0 shadow-sm"></iframe><div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-slate-600"><span>ប្រសិនបើឯកសារមិនបង្ហាញ៖</span><a href="${esc(openUrl)}" target="_blank" rel="noopener" class="text-emerald-700 font-bold underline">🔗 បើកលើផ្ទាំងថ្មី</a>${di ? '<span class="text-slate-500">(Drive ត្រូវ Share ជា «Anyone with the link»)</span>' : ''}</div></div>`;
         }
       } else if (hasLocal) {
         bodyEl.innerHTML = `<div class="bg-white p-8 rounded-2xl border border-slate-200 text-center space-y-3 max-w-md"><div class="text-5xl">📄</div><p class="font-bold text-slate-800">${esc(name)}</p><p class="text-xs text-slate-500">ហ្វាលប្រភេទ Word/Excel មិនអាចមើលផ្ទាល់ក្នុងកម្មវិធីបានទេ (នៅមិនទាន់ឡើង Cloud)។ សូមចុច «📥 ទាញយក» ដើម្បីបើក។</p></div>`;
@@ -3050,7 +3112,12 @@
         } else { win.location.href = viewerBlobUrl; }
         return;
       }
-      if (doc.driveLink && /^https?:\/\//.test(doc.driveLink)) { window.open(doc.driveLink, '_blank', 'noopener'); return; }
+      if (doc.driveLink && /^https?:\/\//.test(doc.driveLink)) {
+        const di = driveInfo(doc.driveLink);
+        window.open((di && di.view) || doc.driveLink, '_blank', 'noopener');
+        if (di) showToast('សូមបោះពុម្ពពីផ្ទាំង Drive ដែលទើបបើក (Ctrl+P)');
+        return;
+      }
       const sheet = document.getElementById('doc-printable-sheet');
       if (sheet) {
         const win = window.open('', '_blank'); if (!win) return showToast('Browser បានបិទ Pop-up។ សូមអនុញ្ញាត Pop-up', true);
@@ -3098,7 +3165,7 @@
     }
 
     function resetDocForm() {
-      ['doc-code', 'doc-title'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      ['doc-code', 'doc-title', 'doc-link'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
       const inp = document.getElementById('doc-file-input'); if (inp) inp.value = '';
       const lbl = document.getElementById('file-label'); if (lbl) lbl.innerText = appLang === 'en' ? 'Click to select or drop file' : 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល';
       const sub = document.getElementById('file-sublabel'); if (sub) sub.innerText = appLang === 'en' ? 'Max ≤ 8MB (Direct View & Print)' : 'ទំហំគាំទ្រ ≤ 8MB (គាំទ្រការមើល និង Print ផ្ទាល់)';
@@ -3163,10 +3230,34 @@
       } finally { uplBusy = false; }
     }
 
+    async function handleSaveDocLink() {
+      const saveBtn = document.getElementById('btn-save-doc');
+      const code = document.getElementById('doc-code').value.trim(), title = document.getElementById('doc-title').value.trim();
+      const r = normalizeDocLink(document.getElementById('doc-link')?.value);
+      if (!r.ok) { showToast(r.msg, true); document.getElementById('doc-link')?.focus(); return; }
+      if (activeRows('docs').some(d => String(d.code).toLowerCase() === code.toLowerCase()) && !confirm('⚠️ កូដឯកសារ "' + code + '" មានរួចហើយ។ តើនៅតែចង់រក្សាទុកទេ?')) return;
+      const dup = r.id && activeRows('docs').find(d => { const x = driveInfo(d.driveLink); return x && x.id === r.id; });
+      if (dup && !confirm('⚠️ តំណ Drive នេះបានបញ្ចូលរួចហើយក្នុងឯកសារ "' + dup.code + '"។ តើនៅតែចង់រក្សាទុកទេ?')) return;
+      saveBtn.disabled = true; saveBtn.innerHTML = '<span>⏳ កំពុងរក្សាទុក...</span>';
+      try {
+        const newDoc = { id: generateSafeId(), bureau: entryBureau() || 'all', code, title, category: document.getElementById('doc-category').value,
+          fileSize: r.id ? 'Drive' : 'Link', fileName: '', mimeType: '', fileDataUrl: null, storage: '🔗 Google Drive', driveLink: r.url, _upl: 0, _uplPath: '',
+          createdBy: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null };
+        const ok = await persist('docs', newDoc);
+        renderDocs(); updateStats();
+        showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+        logActivity('បញ្ចូលតំណឯកសារ', newDoc.code);
+        resetDocForm(); flashSaved(saveBtn, 'Submit Document / រក្សាទុក');
+      } catch (err) {
+        console.warn('save link doc', err); saveBtn.disabled = false; saveBtn.innerHTML = '<span>Submit Document / រក្សាទុក</span>'; showToast('រក្សាទុកមិនបាន សូមព្យាយាមម្តងទៀត', true);
+      }
+    }
+
     async function handleSaveDoc(e) {
       e.preventDefault();
       if (!can('upload')) return showToast('គ្មានសិទ្ធិ Upload', true);
       if (!isAdmin()) return showToast('មានតែ Admin / Super Admin ទេដែលអាចបង្ហោះឯកសារក្នុងបណ្ណាល័យរួម', true);
+      if (docMode === 'link') return handleSaveDocLink();
       const saveBtn = document.getElementById('btn-save-doc');
       if (!currentUploadedFile.rawFile) return alert('សូមជ្រើសរើសហ្វាលឯកសារជាមុនសិន!');
       const code = document.getElementById('doc-code').value.trim();
