@@ -327,7 +327,7 @@
 
             <!-- TAB: REPORTS (NEW) -->
             <div id="section-reports" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
-              <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">📈 របាយការណ៍ប្រចាំខែ / ឆ្នាំ</h3>
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-100"><h3 class="text-base font-bold text-slate-900">📈 របាយការណ៍ប្រចាំខែ / ឆ្នាំ</h3><button onclick="openCertReport()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📜</span> Report សញ្ញាបត្រ</button></div>
               <div id="report-controls" class="flex flex-wrap gap-2 items-end"></div>
               <div id="report-printable"></div>
             </div>
@@ -451,14 +451,21 @@
 
             <!-- TAB: CERTS -->
             <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div class="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-slate-100">
                 <h3 class="text-base font-bold text-slate-900" data-i18n="sec_certs_title">📜 ចុះបញ្ជីការ និងកំណត់លេខសញ្ញាបត្រ</h3>
-                <input type="text" id="filter-cert-search" oninput="onFilter('certs')" placeholder="🔍 ស្វែងរកលេខកូដ ឬឈ្មោះ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-64">
+                <div class="flex flex-wrap items-center gap-2">
+                  <input type="text" id="filter-cert-search" oninput="onFilter('certs')" placeholder="🔍 ស្វែងរកលេខកូដ ឈ្មោះ ជំនាញ..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 h-9 text-xs bg-slate-50 w-full sm:w-56">
+                  <select id="filter-cert-status" onchange="onFilter('certs')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 h-9 text-xs bg-white"><option value="">ស្ថានភាពទាំងអស់</option><option>សកម្ម</option><option>ដកហូត</option><option>ជំនួស</option></select>
+                  <input type="file" id="import-cert-file" onchange="handleImportCerts(event)" class="hidden" accept=".xlsx, .xls, .csv">
+                  <button onclick="document.getElementById('import-cert-file').click()" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📥</span> Import From Excel</button>
+                  <button onclick="certImportTemplate()" title="ទាញយកគំរូ Excel" class="h-9 px-3 whitespace-nowrap bg-slate-100 hover:bg-emerald-50 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">⬇️</span> គំរូ</button>
+                  <button onclick="openCertReport()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📊</span> Report</button>
+                </div>
               </div>
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
-                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_code">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[180px]" data-i18n="th_recipient">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[200px]" data-i18n="th_cert_type">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center min-w-[120px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[150px]" data-i18n="th_signer">ហត្ថលេខា</th><th class="p-3.5 text-center min-w-[140px]" data-i18n="th_actions">សកម្មភាព</th></tr>
+                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_code">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[200px]" data-i18n="th_recipient">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_type">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center min-w-[110px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[200px]">ជំនាញ · គ្រឹះស្ថាន</th><th class="p-3.5 text-center min-w-[100px]">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[200px]" data-i18n="th_actions">សកម្មភាព</th></tr>
                   </thead>
                   <tbody id="certs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
@@ -742,6 +749,7 @@
           <button onclick="switchListTab('examTypes')" id="listtab-examTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🎓 ប្រភេទប្រឡង</button>
           <button onclick="switchListTab('titles')" id="listtab-titles" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🏷️ Title</button>
           <button onclick="switchListTab('sponsors')" id="listtab-sponsors" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🤝 អ្នកឧបត្ថម្ភ</button>
+          <button onclick="switchListTab('certTypes')" id="listtab-certTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📜 ប្រភេទសញ្ញាបត្រ</button>
         </div>
         <div id="sub-location" class="space-y-4">
         <div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
@@ -918,6 +926,897 @@
   <!-- ================= JAVASCRIPT CORE ENGINE V2.5 ================= -->
   <script>
     'use strict';
+
+/* QR encoder: Kazuhiko Arase qrcode-generator (MIT). "QR Code" is a registered trademark of DENSO WAVE. */
+const QRLIB=(function(){const M={};const req=n=>M[n.replace("./","")];
+M["QRMode"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+return module.exports;})();
+M["QRErrorCorrectLevel"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+return module.exports;})();
+M["QRMaskPattern"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+return module.exports;})();
+M["QRMath"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;var QRMath = {
+	glog : function(n) {
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		return QRMath.LOG_TABLE[n];
+	},
+	gexp : function(n) {
+		while (n < 0) {
+			n += 255;
+		}
+		while (n >= 256) {
+			n -= 255;
+		}
+		return QRMath.EXP_TABLE[n];
+	},
+	EXP_TABLE : new Array(256),
+	LOG_TABLE : new Array(256)
+};
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+module.exports = QRMath;
+return module.exports;})();
+M["QRPolynomial"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;var QRMath = require('./QRMath');
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+	var offset = 0;
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+QRPolynomial.prototype = {
+	get : function(index) {
+		return this.num[index];
+	},
+	getLength : function() {
+		return this.num.length;
+	},
+	multiply : function(e) {
+		var num = new Array(this.getLength() + e.getLength() - 1);
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+		return new QRPolynomial(num, 0);
+	},
+	mod : function(e) {
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+		var num = new Array(this.getLength() );
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+module.exports = QRPolynomial;
+return module.exports;})();
+M["QRBitBuffer"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+QRBitBuffer.prototype = {
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	getLengthInBits : function() {
+		return this.length;
+	},
+	putBit : function(bit) {
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+		this.length++;
+	}
+};
+module.exports = QRBitBuffer;
+return module.exports;})();
+M["QR8bitByte"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;var QRMode = require('./QRMode');
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+QR8bitByte.prototype = {
+	getLength : function() {
+		return this.data.length;
+	},
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+module.exports = QR8bitByte;
+return module.exports;})();
+M["QRRSBlock"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+QRRSBlock.RS_BLOCK_TABLE = [
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+	var length = rsBlock.length / 3;
+	var list = [];
+	for (var i = 0; i < length; i++) {
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	return list;
+};
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+module.exports = QRRSBlock;
+return module.exports;})();
+M["QRUtil"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+var QRUtil = {
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+    getBCHDigit : function(data) {
+        var digit = 0;
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+        return digit;
+    },
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+    getMask : function(maskPattern, i, j) {
+        switch (maskPattern) {
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+        var a = new QRPolynomial([1], 0);
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+        return a;
+    },
+    getLengthInBits : function(mode, type) {
+        if (1 <= type && type < 10) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 27) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 41) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+    getLostPoint : function(qrCode) {
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount; col++) {
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+                for (var r = -1; r <= 1; r++) {
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+                    for (var c = -1; c <= 1; c++) {
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        var darkCount = 0;
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+        return lostPoint;       
+    }
+};
+module.exports = QRUtil;
+return module.exports;})();
+M["QRCode"]=(function(){var require=req;var module={exports:{}};var exports=module.exports;
+var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+QRCode.prototype = {
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	make : function() {
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	makeImpl : function(test, maskPattern) {
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		for (var row = 0; row < this.moduleCount; row++) {
+			this.modules[row] = new Array(this.moduleCount);
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+		this.mapData(this.dataCache, maskPattern);
+	},
+	setupPositionProbePattern : function(row, col)  {
+		for (var r = -1; r <= 7; r++) {
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			for (var c = -1; c <= 7; c++) {
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	getBestMaskPattern : function() {
+		var minLostPoint = 0;
+		var pattern = 0;
+		for (var i = 0; i < 8; i++) {
+			this.makeImpl(true, i);
+			var lostPoint = QRUtil.getLostPoint(this);
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+		return pattern;
+	},
+	createMovieClip : function(target_mc, instance_name, depth) {
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+		this.make();
+		for (var row = 0; row < this.modules.length; row++) {
+			var y = row * cs;
+			for (var col = 0; col < this.modules[row].length; col++) {
+				var x = col * cs;
+				var dark = this.modules[row][col];
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		return qr_mc;
+	},
+	setupTimingPattern : function() {
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	setupPositionAdjustPattern : function() {
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		for (var i = 0; i < pos.length; i++) {
+			for (var j = 0; j < pos.length; j++) {
+				var row = pos[i];
+				var col = pos[j];
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				for (var r = -2; r <= 2; r++) {
+					for (var c = -2; c <= 2; c++) {
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	setupTypeNumber : function(test) {
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	setupTypeInfo : function(test, maskPattern) {
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+		for (var v = 0; v < 15; v++) {
+			mod = (!test && ( (bits >> v) & 1) === 1);
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+		for (var h = 0; h < 15; h++) {
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+		this.modules[this.moduleCount - 8][8] = (!test);
+	},
+	mapData : function(data, maskPattern) {
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+			if (col === 6) col--;
+			while (true) {
+				for (var c = 0; c < 2; c++) {
+					if (this.modules[row][col - c] === null) {
+						var dark = false;
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+						if (mask) {
+							dark = !dark;
+						}
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+				row += inc;
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+	}
+};
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	var buffer = new QRBitBuffer();
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+	while (true) {
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+QRCode.createBytes = function(buffer, rsBlocks) {
+	var offset = 0;
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	for (var r = 0; r < rsBlocks.length; r++) {
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		dcdata[r] = new Array(dcCount);
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+	}
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+	var data = new Array(totalCodeCount);
+	var index = 0;
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+	return data;
+};
+module.exports = QRCode;
+return module.exports;})();
+const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{const q=new C(t,0);q.addData(text);q.make();const n=q.getModuleCount(),m=[];for(let r=0;r<n;r++){m.push([]);for(let c=0;c<n;c++)m[r].push(q.isDark(r,c)?1:0);}return m;}catch(e){}}return null;}};})();
 
     // ---------------- 1. CONFIG ----------------
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
@@ -2075,15 +2974,24 @@
             <button type="submit" id="btn-save-extask" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 form-input-focus">Submit / រក្សាទុក</button>
           </form>`;
       } else if (activeTab === 'certs') {
+        const lb = (t, req) => `<label class="block text-xs mb-1 font-bold text-slate-700">${t}${req ? ' <span class="text-rose-500">*</span>' : ''}</label>`, ip = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50';
         container.innerHTML = `
-          <form onsubmit="handleSaveCert(event)" class="space-y-3.5 text-sm font-medium">
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Certificate Code' : 'លេខកូដសញ្ញាបត្រ'}</label><input type="text" id="cert-num" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Recipient Name' : 'ឈ្មោះសាមីខ្លួន'}</label><input type="text" id="cert-name" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Certificate Type' : 'ប្រភេទសញ្ញាបត្រ'}</label><input type="text" id="cert-type" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Date' : 'កាលបរិច្ឆេទ'}</label><input type="date" id="cert-date" required value="${todayISO()}" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Signed By' : 'ហត្ថលេខា'}</label><input type="text" id="cert-signer" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" value="ប្រធាននាយកដ្ឋាន"></div>
-            <button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">Submit Certificate</button>
+          <form onsubmit="handleSaveCert(event)" class="space-y-3 text-sm font-medium">
+            <div>${lb(en ? 'Certificate Type' : 'ប្រភេទសញ្ញាបត្រ', 1)}<select id="cert-type" required onchange="certRefreshCode()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${certTypeOptions('')}</select></div>
+            <div>${lb(en ? 'Issue Date' : 'កាលបរិច្ឆេទ', 1)}<input type="date" id="cert-date" required value="${todayISO()}" onchange="certRefreshCode()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div>
+            <div>${lb((en ? 'Certificate Code' : 'លេខកូដសញ្ញាបត្រ') + ' <span class="text-emerald-600 text-[10px] font-normal">(' + (en ? 'auto' : 'ស្វ័យប្រវត្តិ') + ')</span>', 1)}<div class="flex gap-1.5"><input type="text" id="cert-num" readonly class="form-input-focus flex-1 min-w-0 border border-slate-300 rounded-xl p-2.5 bg-emerald-50 font-mono font-bold"><button type="button" id="cert-manual-btn" onclick="certToggleManual()" title="${en ? 'Edit manually' : 'កែដោយដៃ'}" class="px-3 rounded-xl border border-slate-300 bg-white hover:bg-amber-50 form-input-focus">✏️</button></div></div>
+            <div>${lb(en ? 'Recipient Name' : 'ឈ្មោះសាមីខ្លួន', 1)}<input type="text" id="cert-name" required class="${ip}"></div>
+            <div class="grid grid-cols-2 gap-2.5"><div>${lb(en ? 'Gender' : 'ភេទ')}<select id="cert-gender" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="">—</option><option>ប្រុស</option><option>ស្រី</option></select></div>
+              <div>${lb(en ? 'Date of Birth' : 'ថ្ងៃកំណើត')}<input type="date" id="cert-dob" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div></div>
+            <div class="grid grid-cols-2 gap-2.5"><div>${lb(en ? 'Nationality' : 'សញ្ជាតិ')}<input type="text" id="cert-nation" value="ខ្មែរ" class="${ip}"></div>
+              <div>${lb(en ? 'Graduation Year' : 'ឆ្នាំបញ្ចប់')}<input type="number" id="cert-gradyear" min="1950" max="2100" class="${ip}"></div></div>
+            <div>${lb(en ? 'Major' : 'ជំនាញ')}<input type="text" id="cert-major" class="${ip}"></div>
+            <div>${lb(en ? 'Institution' : 'គ្រឹះស្ថាន')}<input type="text" id="cert-inst" list="cert-inst-list" autocomplete="off" class="${ip}"><datalist id="cert-inst-list">${certInstitutionOptions()}</datalist></div>
+            <div>${lb(en ? 'Signed By' : 'ហត្ថលេខា', 1)}<input type="text" id="cert-signer" required class="${ip}" value="ប្រធាននាយកដ្ឋាន"></div>
+            <div>${lb(en ? 'Attach image / file' : 'រូបភាព / ឯកសារសញ្ញាបត្រ (PDF, PNG, JPG)')}<input type="file" id="cert-file" accept=".pdf,.png,.jpg,.jpeg" class="form-input-focus w-full border border-dashed border-emerald-400 bg-emerald-50 rounded-xl p-2 text-xs"><p class="text-[11px] text-rose-500 font-bold mt-1">${en ? 'Up to ' + maxFileMB() + 'MB' : 'ទំហំអតិបរមា ' + maxFileMB() + 'MB'}</p></div>
+            <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">Submit Certificate</button>
           </form>`;
+        certManual = false; certRefreshCode();
       } else {
         container.innerHTML = `
           <form id="form-quick-doc" onsubmit="handleSaveDoc(event)" class="space-y-3.5 text-sm font-medium">
@@ -2384,13 +3292,15 @@
     const LEVELS = ['វគ្គខ្លី', 'បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត', 'ផ្សេងៗ'];
     const LONG_LEVELS = ['បរិញ្ញាបត្រជាន់ខ្ពស់', 'បណ្ឌិត'];
     const EXAM_TYPES = ['ប្រឡងបញ្ចប់ការសិក្សាផ្ទៃក្នុង', 'ប្រឡងចូល', 'ប្រឡងចេញ'];
+    const CERT_STATUS = ['សកម្ម', 'ដកហូត', 'ជំនួស'];
 
     // ---------------- បញ្ជីកំណត់ (Lists) : ប្រភេទឯកសារ / ប្រភេទប្រឡង / អ្នកឧបត្ថម្ភ ----------------
     const LIST_DEFS = {
       docCats: { icon: '📂', label: 'ប្រភេទឯកសារ', hint: 'ឧ. ច្បាប់, អនុក្រឹត្យ…', def: ['ឯកសារបទដ្ឋាន', 'កម្មវិធីបណ្តុះបណ្តាល', 'វិញ្ញាសា/របាយការណ៍', 'សេចក្តីណែនាំ', 'ច្បាប់', 'ព្រះរាជក្រឹត្យ', 'អនុក្រឹត្យ', 'សេចក្តីសម្រេច', 'ប្រកាស', 'សារាចរ'] },
       examTypes: { icon: '🎓', label: 'ប្រភេទប្រឡង', hint: 'ឧ. ប្រឡងចូល', def: EXAM_TYPES.slice() },
       titles: { icon: '🏷️', label: 'Title (ពាក្យនាំមុខ)', hint: 'ឧ. លោក, លោកស្រី, វេជ្ជបណ្ឌិត', def: ['លោក', 'លោកស្រី', 'កញ្ញា', 'វេជ្ជបណ្ឌិត', 'សាស្ត្រាចារ្យ', 'ឯកឧត្តម', 'លោកជំទាវ'] },
-      sponsors: { icon: '🤝', label: 'អ្នកឧបត្ថម្ភ', hint: 'ឧ. រដ្ឋាភិបាលអូស្រ្តាលី', def: ['សាមីខ្លួន'] }
+      sponsors: { icon: '🤝', label: 'អ្នកឧបត្ថម្ភ', hint: 'ឧ. រដ្ឋាភិបាលអូស្រ្តាលី', def: ['សាមីខ្លួន'] },
+      certTypes: { icon: '📜', label: 'ប្រភេទសញ្ញាបត្រ', hint: 'ទម្រង់ ឈ្មោះ|កូដ ឧ. វិញ្ញាបនបត្រ|VN (កូដប្រើក្នុងលេខស្វ័យប្រវត្តិ)', def: ['វិញ្ញាបនបត្រ|VN', 'សញ្ញាបត្រ|SB', 'លិខិតបញ្ជាក់|LP'] }
     };
     let appLists = {};
     function getList(k) { return Array.isArray(appLists[k]) && appLists[k].length ? appLists[k] : LIST_DEFS[k].def; }
@@ -2449,6 +3359,7 @@
     function onTrainTitle(v) { const g = titleGender(v), el = document.getElementById('train-gender'); if (el && g) el.value = g; }
     function listUsage(k, v) {
       if (k === 'titles') return activeRows('trainings').filter(t => String(t.trainee || '').startsWith(v + '.')).length;
+      if (k === 'certTypes') return activeRows('certs').filter(c => c.type === certTypeParts(v).name).length;
       return k === 'docCats' ? activeRows('docs').filter(d => d.category === v).length : k === 'examTypes' ? activeRows('exams').filter(e => e.type === v).length : activeRows('trainings').filter(t => t.sponsor === v).length;
     }
     function renderListPanel(k) {
@@ -2794,7 +3705,9 @@
         ['passed', 'ជាប់', 'number'], ['failed', 'ធ្លាក់', 'number'], ['absent', 'អវត្តមាន', 'number'], ['status', 'ស្ថានភាព', 'text']],
       exam_tasks: [['title', 'ចំណងជើងការងារ', 'text'], ['session', 'សម័យប្រឡង', 'text'], ['assignee', 'អ្នកទទួលខុសត្រូវ', 'text'], ['due_date', 'ថ្ងៃកំណត់', 'date'], ['qty', 'ចំនួន', 'number'],
         ['status', 'ស្ថានភាព', 'select', EXTASK_STATUS], ['link', 'Link ឯកសារ', 'text'], ['note', 'កំណត់ចំណាំ', 'text']],
-      certs: [['num', 'លេខកូដសញ្ញាបត្រ', 'text'], ['recipient', 'ឈ្មោះសាមីខ្លួន', 'text'], ['type', 'ប្រភេទសញ្ញាបត្រ', 'text'], ['date', 'កាលបរិច្ឆេទ', 'date'], ['signer', 'ហត្ថលេខា', 'text']]
+      certs: [['num', 'លេខកូដសញ្ញាបត្រ', 'text'], ['recipient', 'ឈ្មោះសាមីខ្លួន', 'text'], ['gender', 'ភេទ', 'select', ['', 'ប្រុស', 'ស្រី']], ['dob', 'ថ្ងៃកំណើត', 'date'], ['nationality', 'សញ្ជាតិ', 'text'],
+        ['type', 'ប្រភេទសញ្ញាបត្រ', 'select', () => certTypeNames()], ['date', 'កាលបរិច្ឆេទ', 'date'], ['major', 'ជំនាញ', 'text'], ['institution', 'គ្រឹះស្ថាន', 'text'], ['grad_year', 'ឆ្នាំបញ្ចប់', 'number'],
+        ['signer', 'ហត្ថលេខា', 'text'], ['status', 'ស្ថានភាព', 'select', CERT_STATUS], ['status_note', 'មូលហេតុ / កំណត់ចំណាំស្ថានភាព (ឧ. ជំនួសដោយលេខ…)', 'text'], ['_file', 'ឯកសារ/រូបភាពភ្ជាប់ (ជ្រើសថ្មីដើម្បីជំនួស)', 'file']]
     };
     let recEdit = null;
     function editBtn(table, id) { return can('edit') ? `<button onclick="openRecEdit('${table}', ${id})" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs font-bold text-slate-700 form-input-focus" title="កែសម្រួល">✏️</button>` : ''; }
@@ -2809,8 +3722,10 @@
       document.getElementById('rec-edit-body').innerHTML = REC_FIELDS[table].map(([key, label, type, opts]) => {
         const v = vals[key] == null ? '' : vals[key];
         let ctl;
-        if (type === 'select') {
-          const list = (opts || []).map(o => Array.isArray(o) ? o : [o, o || '— មិនបញ្ជាក់ —']);
+        if (type === 'file') {
+          ctl = `<input data-rk-file type="file" accept=".pdf,.png,.jpg,.jpeg" class="${inp}">${vals.file_name ? '<p class="text-[11px] text-slate-500 mt-1">📎 បច្ចុប្បន្ន៖ ' + esc(vals.file_name) + ' (' + esc(vals.file_size || '') + ')</p>' : ''}`;
+        } else if (type === 'select') {
+          const list = (typeof opts === 'function' ? opts() : (opts || [])).map(o => Array.isArray(o) ? o : [o, o || '— មិនបញ្ជាក់ —']);
           if (v !== '' && !list.some(o => o[0] === v)) list.push([v, v]);
           ctl = `<select data-rk="${key}" class="${inp}">${list.map(([ov, ol]) => `<option value="${esc(ov)}" ${String(ov) === String(v) ? 'selected' : ''}>${esc(ol)}</option>`).join('')}</select>`;
         } else if (type === 'country') {
@@ -2827,12 +3742,14 @@
       const { table, id } = recEdit, rec = store[table].find(r => r.id === id); if (!rec) return;
       const next = {};
       REC_FIELDS[table].forEach(([key, , type]) => {
+        if (type === 'file') return;
         const el = document.querySelector('#rec-edit-body [data-rk="' + key + '"]'); let v = el ? el.value.trim() : '';
         if (type === 'number') v = v === '' ? null : Math.max(0, Number(v) || 0);
         else if (type === 'date') v = v || null;
         next[key] = v;
       });
       if (table === 'certs' && store.certs.some(c => c.id !== id && !isDeleted(c) && String(c.num).toLowerCase() === String(next.num).toLowerCase())) return alert('⚠️ លេខកូដសញ្ញាបត្រ "' + next.num + '" មានរួចហើយ!');
+      if (table === 'certs') { const fi = document.querySelector('#rec-edit-body [data-rk-file]'); if (fi && fi.files[0]) { const up = await uploadCertFile(fi.files[0], id); if (!up) return alert('⚠️ ឯកសារភ្ជាប់មិនបានឡើង — សូមព្យាយាមម្តងទៀត'); Object.assign(next, up); } }
       if (table === 'trainings' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       if (table === 'exams' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       if (table === 'exam_tasks' && next.link) { const n = normalizeDocLink(next.link); if (!n.ok) return alert('⚠️ ' + n.msg); next.link = n.url; }
@@ -2843,7 +3760,7 @@
       const ok = await persist(table, rec);
       closeRecEdit(); rerenderTable(table); if (activeTab === 'reports') renderReports();
       showToast(ok ? 'បានកែសម្រួលជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync (ត្រូវ Run supabase-migration-v3.3.sql)', !ok);
-      logActivity('កែសម្រួលកំណត់ត្រា', TABLE_LABELS[table] + ' #' + id + ' — ' + changes.join('; '));
+      logActivity('កែសម្រួលកំណត់ត្រា', (table === 'certs' ? '📜 ' + (rec.num || id) : TABLE_LABELS[table] + ' #' + id) + ' — ' + changes.join('; '));
     }
 
     let docPageId = null;
@@ -3085,22 +4002,6 @@
       renderPager('trainings', pg);
     }
 
-    function renderCerts() {
-      const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
-      const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim();
-      const rows = sortRecords(activeRows('certs').filter(c => !q || [c.num, c.recipient, c.type].some(v => String(v || '').toLowerCase().includes(q))));
-      const pg = paginate('certs', rows);
-      tbody.innerHTML = pg.total ? pg.rows.map(c => `<tr class="hover:bg-emerald-50 transition">
-          <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${esc(c.num)}</td>
-          <td class="p-3.5 font-bold text-slate-900 text-sm whitespace-nowrap">${esc(c.recipient)}</td>
-          <td class="p-3.5 text-slate-700 font-bold text-sm">${esc(c.type)}</td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(c.date)}</td>
-          <td class="p-3.5 text-slate-700 font-medium text-sm whitespace-nowrap">${esc(c.signer)}</td>
-          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button> ${editBtn('certs', c.id)}${deleteBtn('certs', c.id)}</td>
-        </tr>`).join('') : emptyRow(6);
-      renderPager('certs', pg);
-    }
-
     // ---------------- 13. DOCUMENT VIEWER ----------------
     function revokeViewerBlob() { if (viewerBlobUrl && viewerBlobUrl.startsWith('blob:')) URL.revokeObjectURL(viewerBlobUrl); viewerBlobUrl = null; }
 
@@ -3194,23 +4095,6 @@
         win.document.write(`<html><head><title>${esc(doc.title)}</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet"><style>body{font-family:'Battambang',sans-serif}.font-moul{font-family:'Moul',cursive}</style></head><body class="p-8">${sheet.outerHTML}<script>setTimeout(function(){window.print();},600);<\/script></body></html>`);
         win.document.close();
       }
-    }
-
-    function printCertificateSheet(certId) {
-      const c = store.certs.find(x => x.id === certId); if (!c) return;
-      const win = window.open('', '_blank'); if (!win) return showToast('Browser បានបិទ Pop-up។ សូមអនុញ្ញាត Pop-up', true);
-      win.document.write(`<html><head><title>Certificate - ${esc(c.num)}</title>
-        <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet">
-        <style>body{font-family:'Battambang',sans-serif;padding:40px;text-align:center;border:6px double #059669;margin:20px;}</style></head><body>
-        <h3 style="font-family:'Moul',cursive;">ព្រះរាជាណាចក្រកម្ពុជា<br>ជាតិ សាសនា ព្រះមហាក្សត្រ</h3>
-        <h4>ក្រសួងសុខាភិបាល - នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</h4>
-        <h1 style="color:#065f46;margin-top:30px;">វិញ្ញាបនបត្របញ្ជាក់ការចុះបញ្ជី</h1>
-        <p style="font-size:18px;">សូមបញ្ជាក់ថា៖ <strong>${esc(c.recipient)}</strong></p>
-        <p style="font-size:16px;">ប្រភេទសញ្ញាបត្រ៖ <strong>${esc(c.type)}</strong></p>
-        <p style="font-size:16px;">លេខកូដចុះបញ្ជី៖ <strong>${esc(c.num)}</strong> | កាលបរិច្ឆេទ៖ <strong>${esc(c.date)}</strong></p>
-        <div style="margin-top:60px;text-align:right;padding-right:60px;"><p>ហត្ថលេខា និងត្រា</p><p><strong>${esc(c.signer)}</strong></p></div>
-        <script>setTimeout(function(){window.print();},600);<\/script></body></html>`);
-      win.document.close();
     }
 
     // ---------------- 14. CREATE ACTIONS ----------------
@@ -3486,15 +4370,408 @@
       logActivity('កត់ត្រាសម័យប្រឡង', rec.major); e.target.reset();
     }
 
+    // ================= សញ្ញាបត្រ (ការិយាល័យទី៣) : លេខស្វ័យប្រវត្តិ • QR • Import • Report =================
+    const CERT_DEF_FORMAT = '{ប្រភេទ}-{ឆ្នាំ}-{លំដាប់}';
+    let certManual = false;
+    function certTypeParts(s) { const i = String(s || '').indexOf('|'); const name = (i < 0 ? String(s || '') : String(s).slice(0, i)).trim(); const code = (i < 0 ? '' : String(s).slice(i + 1)).trim(); return { name, code: code || name }; }
+    function certTypeNames() { return getList('certTypes').map(s => certTypeParts(s).name).filter(Boolean); }
+    function certTypeCode(name) { const hit = getList('certTypes').map(certTypeParts).find(p => p.name === name); return (hit ? hit.code : String(name || '').trim()) || 'CERT'; }
+    function certTypeOptions(cur) { return '<option value="">— ជ្រើសរើស —</option>' + certTypeNames().map(n => `<option value="${esc(n)}" ${n === cur ? 'selected' : ''}>${esc(n)}</option>`).join(''); }
+    function certStatusBadge(s, note) {
+      const st = s || 'សកម្ម', cls = st === 'ដកហូត' ? 'bg-rose-100 text-rose-700' : st === 'ជំនួស' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-700';
+      return `<span title="${esc(note || '')}" class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold ${cls}">${esc(st)}</span>`;
+    }
+    // លេខកូដស្វ័យប្រវត្តិ តាមទម្រង់ក្នុង System Settings → {ប្រភេទ} {ឆ្នាំ} {ខែ} {លំដាប់}
+    function certCodeFor(type, date, extra) {
+      let fmt = String(setting('certFormat') || CERT_DEF_FORMAT).trim() || CERT_DEF_FORMAT;
+      if (fmt.indexOf('{លំដាប់}') < 0) fmt += '-{លំដាប់}';
+      const code = certTypeCode(type), d = /^\d{4}-\d{2}/.test(date || '') ? date : todayISO(), y = d.slice(0, 4), mo = d.slice(5, 7);
+      const parts = fmt.split(/(\{ប្រភេទ\}|\{ឆ្នាំ\}|\{ខែ\}|\{លំដាប់\})/);
+      const rx = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pat = parts.map(p => p === '{ប្រភេទ}' ? rx(code) : p === '{ឆ្នាំ}' ? y : p === '{ខែ}' ? mo : p === '{លំដាប់}' ? '(\\d+)' : rx(p)).join('');
+      const re = new RegExp('^' + pat + '$', 'i'); let max = 0;
+      const all = store.certs.map(c => String(c.num || '').trim()).concat(extra || []);
+      all.forEach(n => { const m = re.exec(n); if (m) max = Math.max(max, parseInt(m[1], 10) || 0); });
+      const build = n => parts.map(p => p === '{ប្រភេទ}' ? code : p === '{ឆ្នាំ}' ? y : p === '{ខែ}' ? mo : p === '{លំដាប់}' ? String(n).padStart(4, '0') : p).join('');
+      const taken = new Set(all.map(n => n.toLowerCase())); let n = max + 1; while (taken.has(build(n).toLowerCase())) n++;
+      return build(n);
+    }
+    function certRefreshCode() {
+      const num = document.getElementById('cert-num'); if (!num || certManual) return;
+      const t = document.getElementById('cert-type')?.value, d = document.getElementById('cert-date')?.value;
+      num.value = t ? certCodeFor(t, d) : ''; num.placeholder = t ? '' : 'ជ្រើសប្រភេទសិន…';
+    }
+    function certToggleManual() {
+      certManual = !certManual; const num = document.getElementById('cert-num'), b = document.getElementById('cert-manual-btn'); if (!num) return;
+      num.readOnly = !certManual; num.classList.toggle('bg-emerald-50', !certManual); num.classList.toggle('bg-white', certManual);
+      if (b) b.classList.toggle('bg-amber-100', certManual);
+      if (!certManual) certRefreshCode(); else num.focus();
+    }
+    function certInstitutionOptions() { return [...new Set(activeRows('certs').map(c => c.institution).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join(''); }
+
+    // ---------- ភ្ជាប់ឯកសារ/រូបភាព (≤ ចំណុចកាត់ → Supabase · ធំជាង → Google Drive) ----------
+    function fileToBase64(file) { return new Promise(res => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || null); r.onerror = () => res(null); r.readAsDataURL(file); }); }
+    async function uploadCertFile(file, certId) {
+      if (!file) return null;
+      if (file.size > MAX_FILE_SIZE) { alert('⚠️ ឯកសារនេះមានទំហំធំលើស ' + maxFileMB() + 'MB!'); return null; }
+      if (!/\.(pdf|png|jpe?g)$/i.test(file.name)) { alert('⚠️ គាំទ្រតែ PDF, PNG, JPG ប៉ុណ្ណោះ!'); return null; }
+      const type = file.type || guessMime(file.name), size = (file.size / 1048576).toFixed(2) + ' MB'; let link = '';
+      if (file.size > SUPA_MAX_SIZE) { const b64 = await fileToBase64(file); link = await uploadToDrive({ name: file.name, type, base64: b64 }); }
+      if (!link && db) {
+        const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
+        const r = await uploadWithRetry('certs/' + certId + '_' + Date.now() + '.' + ext, file, type);
+        if (r.ok) link = r.url;
+      }
+      return link ? { file_name: file.name, file_size: size, file_link: link } : null;
+    }
+    function certOpenFile(id) { const c = store.certs.find(x => x.id === id); if (!c || !c.file_link) return; const n = normalizeDocLink(c.file_link); window.open(n.ok ? n.url : c.file_link, '_blank', 'noopener'); }
+
+    // ---------- តារាង ----------
+    function renderCerts() {
+      const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
+      const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim(), fs = document.getElementById('filter-cert-status')?.value || '';
+      const rows = sortRecords(activeRows('certs').filter(c => (!fs || (c.status || 'សកម្ម') === fs) && (!q || [c.num, c.recipient, c.type, c.major, c.institution].some(v => String(v || '').toLowerCase().includes(q)))));
+      const pg = paginate('certs', rows);
+      tbody.innerHTML = pg.total ? pg.rows.map(c => `<tr class="hover:bg-emerald-50 transition ${c.status && c.status !== 'សកម្ម' ? 'bg-rose-50/30' : ''}">
+          <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${esc(c.num)}</td>
+          <td class="p-3.5 text-sm whitespace-nowrap"><div class="font-bold text-slate-900">${esc(c.recipient)}</div><div class="text-[11px] text-slate-500">${esc([c.gender, c.dob ? formatDateDisplay(c.dob) : '', c.nationality].filter(Boolean).join(' · '))}</div></td>
+          <td class="p-3.5 text-slate-700 font-bold text-sm">${esc(c.type)}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(c.date)}</td>
+          <td class="p-3.5 text-sm"><div class="font-medium text-slate-800">${esc(c.major || '')}</div><div class="text-[11px] text-slate-500">${esc([c.institution, c.grad_year].filter(Boolean).join(' · '))}</div></td>
+          <td class="p-3.5 text-center">${certStatusBadge(c.status, c.status_note)}</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button>${c.file_link ? ` <button onclick="certOpenFile(${c.id})" title="${esc(c.file_name || 'ឯកសារភ្ជាប់')}" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">📎</button>` : ''} <button onclick="certHistory(${c.id})" title="ប្រវត្តិ" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">🕘</button> ${editBtn('certs', c.id)}${deleteBtn('certs', c.id)}</td>
+        </tr>`).join('') : emptyRow(7);
+      renderPager('certs', pg);
+    }
+    function certHistory(id) {
+      const c = store.certs.find(x => x.id === id); if (!c) return;
+      const logs = (auditLogs || []).filter(l => String(l.target || '').includes(String(c.num))).sort((a, b) => String(a.time).localeCompare(String(b.time)));
+      document.getElementById('modal-cert-hist')?.remove();
+      const d = document.createElement('div'); d.id = 'modal-cert-hist'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-4';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-xl p-5 shadow-2xl flex flex-col max-h-[85vh] space-y-3"><div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">🕘 ប្រវត្តិ — ${esc(c.num)}</h3><button type="button" onclick="document.getElementById('modal-cert-hist').remove()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="text-xs text-slate-600">${esc(c.recipient)} • ស្ថានភាពបច្ចុប្បន្ន៖ ${certStatusBadge(c.status, c.status_note)} ${c.status_note ? '<span class="text-slate-500">(' + esc(c.status_note) + ')</span>' : ''}</div>
+        <div class="overflow-auto space-y-2">${logs.length ? logs.map(l => `<div class="border border-slate-200 rounded-xl p-2.5 text-xs"><div class="text-slate-400 font-mono">${esc(String(l.time || '').replace('T', ' ').slice(0, 16))} • ${esc(l.user || '')}</div><div class="font-bold text-slate-700">${esc(l.action || '')}</div><div class="text-slate-600 break-words">${esc(l.target || '')}</div></div>`).join('') : '<p class="text-center text-slate-400 py-6 text-sm">មិនមានប្រវត្តិកត់ត្រា</p>'}</div></div>`;
+      document.body.appendChild(d);
+    }
+
+    // ---------- QR ----------
+    function qrSvg(text, size) {
+      const m = QRLIB.matrix(text); if (!m) return '';
+      const n = m.length, q = 2; let d = '';
+      m.forEach((row, r) => { let c = 0; while (c < n) { if (row[c]) { const s = c; while (c < n && row[c]) c++; d += 'M' + (s + q) + ' ' + (r + q) + 'h' + (c - s) + 'v1h-' + (c - s) + 'z'; } else c++; } });
+      const t = n + 2 * q;
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${t} ${t}" width="${size}" height="${size}" shape-rendering="crispEdges"><rect width="${t}" height="${t}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+    }
+    function certVerifyBase() {
+      let b = setting('verifyUrl');
+      if (!b) b = location.protocol === 'file:' ? location.href : location.origin + location.pathname;
+      return b.replace(/[?#].*$/, '');
+    }
+    function certVerifyUrl(num) { return certVerifyBase() + '?verify=' + encodeURIComponent(num); }
+
+    function printCertificateSheet(certId) {
+      const c = store.certs.find(x => x.id === certId); if (!c) return;
+      const win = window.open('', '_blank'); if (!win) return showToast('Browser បានបិទ Pop-up។ សូមអនុញ្ញាត Pop-up', true);
+      const url = certVerifyUrl(c.num), st = c.status || 'សកម្ម';
+      const info = [['ភេទ', c.gender], ['ថ្ងៃកំណើត', c.dob ? formatDateDisplay(c.dob) : ''], ['សញ្ជាតិ', c.nationality], ['ជំនាញ', c.major], ['គ្រឹះស្ថាន', c.institution], ['ឆ្នាំបញ្ចប់', c.grad_year]].filter(x => x[1]);
+      win.document.write(`<html><head><meta charset="utf-8"><title>Certificate - ${esc(c.num)}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet">
+        <style>body{font-family:'Battambang',sans-serif;padding:40px;text-align:center;border:6px double #059669;margin:20px;position:relative}.qr{position:absolute;left:50px;bottom:40px;text-align:center;font-size:10px;color:#444;width:150px}.qr svg{border:6px solid #fff;outline:1px solid #ddd}.warn{background:#fee2e2;color:#991b1b;border:2px solid #991b1b;padding:6px;font-weight:bold;margin-bottom:12px}.info{display:inline-block;text-align:left;font-size:14px;margin-top:6px}.info td{padding:2px 10px}</style></head><body>
+        ${st !== 'សកម្ម' ? `<div class="warn">⚠ សញ្ញាបត្រនេះមានស្ថានភាព៖ ${esc(st)}${c.status_note ? ' (' + esc(c.status_note) + ')' : ''}</div>` : ''}
+        <h3 style="font-family:'Moul',cursive;">ព្រះរាជាណាចក្រកម្ពុជា<br>ជាតិ សាសនា ព្រះមហាក្សត្រ</h3>
+        <h4>ក្រសួងសុខាភិបាល - នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</h4>
+        <h1 style="color:#065f46;margin-top:30px;">វិញ្ញាបនបត្របញ្ជាក់ការចុះបញ្ជី</h1>
+        <p style="font-size:18px;">សូមបញ្ជាក់ថា៖ <strong>${esc(c.recipient)}</strong></p>
+        ${info.length ? `<table class="info">${info.map(([k, v]) => `<tr><td>${esc(k)}៖</td><td><strong>${esc(v)}</strong></td></tr>`).join('')}</table>` : ''}
+        <p style="font-size:16px;">ប្រភេទសញ្ញាបត្រ៖ <strong>${esc(c.type)}</strong></p>
+        <p style="font-size:16px;">លេខកូដចុះបញ្ជី៖ <strong>${esc(c.num)}</strong> | កាលបរិច្ឆេទ៖ <strong>${esc(c.date)}</strong></p>
+        <div style="margin-top:60px;min-height:130px;text-align:right;padding-right:60px;"><p>ហត្ថលេខា និងត្រា</p><p><strong>${esc(c.signer)}</strong></p></div>
+        <div class="qr">${qrSvg(url, 130)}<div>ស្កេនដើម្បីផ្ទៀងផ្ទាត់</div><div style="font-family:monospace;word-break:break-all">${esc(c.num)}</div></div>
+        <script>setTimeout(function(){window.print();},700);<\/script></body></html>`);
+      win.document.close();
+    }
+
+    // ---------- ទំព័រផ្ទៀងផ្ទាត់សាធារណៈ (?verify=លេខកូដ) — បង្ហាញតែ ឈ្មោះ • ប្រភេទ • ថ្ងៃ • ស្ថានភាព ----------
+    async function verifyLookup(code) {
+      const hdr = { apikey: SUPABASE_ANON_KEY };
+      try {
+        const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/verify_cert', { method: 'POST', headers: { ...hdr, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_code: code }) });
+        if (r.ok) { const a = await r.json(); return { ok: true, rec: (Array.isArray(a) ? a[0] : a) || null }; }
+        for (const sel of ['num,recipient,type,date,status', 'num,recipient,type,date']) {
+          const q = await fetch(SUPABASE_URL + '/rest/v1/certs?select=' + sel + '&num=eq.' + encodeURIComponent(code) + '&deleted_at=is.null&limit=1', { headers: hdr });
+          if (q.ok) { const a = await q.json(); return { ok: true, rec: a[0] || null }; }
+          if (q.status !== 400) break;
+        }
+      } catch (e) { }
+      return { ok: false };
+    }
+    function showVerifyPage(code) {
+      document.title = 'ផ្ទៀងផ្ទាត់សញ្ញាបត្រ';
+      const d = document.createElement('div'); d.id = 'verify-page';
+      d.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#ecfdf5;overflow:auto;font-family:Battambang,"Noto Sans Khmer","Khmer OS Siemreap",sans-serif;color:#0f172a';
+      d.innerHTML = `<div style="max-width:480px;margin:0 auto;padding:24px 16px">
+        <div style="text-align:center;margin-bottom:16px"><div style="font-size:13px;color:#065f46;font-weight:bold">ក្រសួងសុខាភិបាល</div><div style="font-size:12px;color:#475569">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div><h1 style="font-size:20px;margin:10px 0 0;color:#065f46">ផ្ទៀងផ្ទាត់សញ្ញាបត្រ</h1></div>
+        <form id="vf" style="display:flex;gap:8px;margin-bottom:16px"><input id="vcode" placeholder="បញ្ចូលលេខកូដសញ្ញាបត្រ" style="flex:1;padding:10px 12px;border:1px solid #94a3b8;border-radius:12px;font-size:14px" value=""><button style="padding:10px 16px;border:0;border-radius:12px;background:#059669;color:#fff;font-weight:bold;font-size:14px">ពិនិត្យ</button></form>
+        <div id="vres"></div>
+        <p style="font-size:11px;color:#64748b;text-align:center;margin-top:24px;line-height:1.6">ទំព័រនេះបង្ហាញតែព័ត៌មានជាសាធារណៈដែលចាំបាច់សម្រាប់ផ្ទៀងផ្ទាត់ប៉ុណ្ណោះ (ឈ្មោះ ប្រភេទ កាលបរិច្ឆេទ ស្ថានភាព)។</p></div>`;
+      document.body.appendChild(d);
+      const inp = d.querySelector('#vcode'); inp.value = code || '';
+      const run = async v => {
+        v = String(v || '').trim(); const box = d.querySelector('#vres'); if (!v) { box.innerHTML = ''; return; }
+        box.innerHTML = '<p style="text-align:center;color:#64748b">⏳ កំពុងពិនិត្យ…</p>';
+        const r = await verifyLookup(v), card = (bg, bd, title, body) => `<div style="background:${bg};border:2px solid ${bd};border-radius:16px;padding:18px;text-align:center"><div style="font-size:18px;font-weight:bold;margin-bottom:8px">${title}</div>${body || ''}</div>`;
+        if (!r.ok) { box.innerHTML = card('#fef3c7', '#d97706', '⚠️ មិនអាចភ្ជាប់បាន', '<div style="font-size:13px">សូមព្យាយាមម្តងទៀតពេលក្រោយ</div>'); return; }
+        if (!r.rec) { box.innerHTML = card('#fee2e2', '#dc2626', '❌ រកមិនឃើញសញ្ញាបត្រ', '<div style="font-size:13px;font-family:monospace;word-break:break-all">' + esc(v) + '</div>'); return; }
+        const c = r.rec, st = c.status || 'សកម្ម', ok = st === 'សកម្ម';
+        const rows = [['លេខកូដ', c.num], ['ឈ្មោះ', c.recipient], ['ប្រភេទ', c.type], ['កាលបរិច្ឆេទ', c.date], ['ស្ថានភាព', st]].map(([k, val]) => `<tr><td style="padding:5px 8px;color:#475569;text-align:left;font-size:13px">${k}</td><td style="padding:5px 8px;text-align:left;font-weight:bold;font-size:14px">${esc(val)}</td></tr>`).join('');
+        box.innerHTML = card(ok ? '#d1fae5' : st === 'ជំនួស' ? '#fef3c7' : '#fee2e2', ok ? '#059669' : st === 'ជំនួស' ? '#d97706' : '#dc2626',
+          ok ? '✅ សញ្ញាបត្រត្រឹមត្រូវ' : st === 'ជំនួស' ? '⚠️ សញ្ញាបត្រនេះត្រូវបានជំនួស' : '⛔ សញ្ញាបត្រនេះត្រូវបានដកហូត', `<table style="margin:0 auto">${rows}</table>`);
+      };
+      d.querySelector('#vf').addEventListener('submit', e => { e.preventDefault(); run(inp.value); });
+      if (code) run(code);
+    }
+    function certOpenInTable(num) {
+      try { toggleScannerModal(false); switchBureauTab('certs'); setTimeout(() => { const s = document.getElementById('filter-cert-search'); if (s) { s.value = num; renderCerts(); } }, 150); } catch (e) { showToast('មិនអាចបើកតារាងបាន', true); }
+    }
+    function certScanResult(decoded) {
+      const raw = String(decoded || '').trim(); let code = raw;
+      try { const u = new URL(raw); if (u.searchParams.get('verify')) code = u.searchParams.get('verify'); } catch (e) { }
+      const cert = activeRows('certs').find(c => String(c.num).trim().toLowerCase() === code.trim().toLowerCase());
+      return { code, cert };
+    }
+
+    // ---------- Save (ចុះបញ្ជីថ្មី) ----------
     async function handleSaveCert(e) {
       e.preventDefault(); if (!can('create')) return;
-      const num = document.getElementById('cert-num').value.trim();
+      const g = id => (document.getElementById(id)?.value || '').trim();
+      const type = g('cert-type'), date = g('cert-date');
+      if (!type) return alert('⚠️ សូមជ្រើសរើសប្រភេទសញ្ញាបត្រជាមុន!');
+      let num = g('cert-num'); if (!certManual) num = certCodeFor(type, date);
+      if (!num) return alert('⚠️ សូមបញ្ចូលលេខកូដសញ្ញាបត្រ!');
       if (activeRows('certs').some(c => String(c.num).toLowerCase() === num.toLowerCase())) return alert('⚠️ លេខកូដសញ្ញាបត្រ "' + num + '" មានរួចហើយ!');
-      const rec = { id: generateSafeId(), num, recipient: document.getElementById('cert-name').value.trim(), type: document.getElementById('cert-type').value.trim(),
-        date: document.getElementById('cert-date').value, signer: document.getElementById('cert-signer').value.trim(), created_at: nowISO(), deleted_at: null, deleted_by: null };
-      const ok = await persist('certs', rec); renderCerts(); updateStats();
-      showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
-      logActivity('ចុះបញ្ជីសញ្ញាបត្រ', rec.num); e.target.reset(); document.getElementById('cert-date').value = todayISO();
+      const btn = e.target.querySelector('button[type=submit]'), label = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; }
+      try {
+        const id = generateSafeId(), file = document.getElementById('cert-file')?.files[0]; let up = null;
+        if (file) { up = await uploadCertFile(file, id); if (!up && !confirm('ឯកសារភ្ជាប់មិនបានឡើងទេ។ រក្សាទុកទិន្នន័យដោយគ្មានឯកសារ?')) return; }
+        const gy = parseInt(g('cert-gradyear'), 10);
+        const rec = { id, num, recipient: g('cert-name'), type, date, signer: g('cert-signer'), gender: g('cert-gender') || null, dob: g('cert-dob') || null, nationality: g('cert-nation') || null,
+          major: g('cert-major') || null, institution: g('cert-inst') || null, grad_year: Number.isFinite(gy) ? gy : null, status: 'សកម្ម', status_note: '',
+          file_name: up ? up.file_name : '', file_size: up ? up.file_size : '', file_link: up ? up.file_link : '', created_at: nowISO(), deleted_at: null, deleted_by: null };
+        const ok = await persist('certs', rec); renderCerts(); updateStats();
+        showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់! លេខ ' + rec.num : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
+        logActivity('ចុះបញ្ជីសញ្ញាបត្រ', rec.num + ' — ' + rec.recipient);
+        e.target.reset(); document.getElementById('cert-type').value = type; document.getElementById('cert-date').value = date || todayISO(); if (certManual) certToggleManual(); certRefreshCode();
+      } finally { if (btn) { btn.disabled = false; btn.textContent = label; } }
+    }
+
+    // ---------- Import Excel សញ្ញាបត្រចាស់ ----------
+    const CIMP_HEAD = [['num', /លេខកូដ|លេខសញ្ញាបត្រ|លេខវិញ្ញាបនបត្រ|^លេខ$|code|cert.*no|certificate\s*no/i], ['institution', /គ្រឹះស្ថាន|សាកលវិទ្យាល័យ|សាលា|institution|school|universit/i], ['major', /ជំនាញ|មុខវិជ្ជា|major|field/i],
+      ['gender', /ភេទ|gender|sex/i], ['dob', /កំណើត|birth|dob/i], ['nationality', /សញ្ជាតិ|សញ្ចាតិ|nationality/i], ['grad_year', /ឆ្នាំបញ្ចប់|បញ្ចប់ការសិក្សា|graduat/i], ['signer', /ហត្ថលេខា|signer|signed/i],
+      ['status', /ស្ថានភាព|status/i], ['type', /ប្រភេទ|type/i], ['date', /កាលបរិច្ឆេទ|ថ្ងៃចេញ|ថ្ងៃចុះ|date|issue/i], ['note', /ចំណាំ|មូលហេតុ|note|remark/i], ['recipient', /ឈ្មោះ|name|recipient/i]];
+    const CIMP = { items: [], name: '' };
+    function cimpDate(v) {
+      v = impClean(v); if (!v) return '';
+      const iso = v.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/); if (iso) return iso[1] + '-' + iso[2].padStart(2, '0') + '-' + iso[3].padStart(2, '0');
+      const p = impParseDates(v).s; if (p) return p;
+      const t = Date.parse(v + ' UTC'); if (Number.isFinite(t)) { const d = new Date(t); return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0'); }
+      return '';
+    }
+    function cimpDetect(rows) {
+      for (let i = 0; i < Math.min(rows.length, 8); i++) {
+        const cells = (rows[i] || []).map(impClean), map = {};
+        cells.forEach((c, idx) => { if (!c || /^ល\.?រ$/.test(c)) return; const hit = CIMP_HEAD.find(([k, re]) => map[k] == null && re.test(c)); if (hit) map[hit[0]] = idx; });
+        if (map.recipient != null) return { start: i + 1, map };
+      }
+      return null;
+    }
+    function cimpParse(rows) {
+      const det = cimpDetect(rows); if (!det) return null;
+      const g = (r, k) => det.map[k] == null ? '' : impClean(r[det.map[k]]), out = [], seen = new Set(store.certs.filter(c => !isDeleted(c)).map(c => String(c.num).toLowerCase()));
+      const names = certTypeNames();
+      for (let i = det.start; i < rows.length; i++) {
+        const r = rows[i] || [], recipient = g(r, 'recipient'); if (!recipient) continue;
+        const w = [], num = g(r, 'num'), type = g(r, 'type');
+        let gender = g(r, 'gender'); gender = /ស្រី|^f/i.test(gender) ? 'ស្រី' : /ប្រុស|^m/i.test(gender) ? 'ប្រុស' : '';
+        const date = cimpDate(g(r, 'date')), dob = cimpDate(g(r, 'dob'));
+        const gy = (g(r, 'grad_year').match(/\d{4}/) || [])[0] || '';
+        let status = g(r, 'status'); status = /ដកហូត|revok/i.test(status) ? 'ដកហូត' : /ជំនួស|replac/i.test(status) ? 'ជំនួស' : 'សកម្ម';
+        const item = { _row: i + 1, _warn: w, _on: true, id: generateSafeId(), num, recipient, gender, dob, nationality: g(r, 'nationality'), type, date, major: g(r, 'major'), institution: g(r, 'institution'),
+          grad_year: gy, signer: g(r, 'signer'), status, status_note: g(r, 'note') };
+        if (num) { if (seen.has(num.toLowerCase())) { w.push('លេខកូដស្ទួន'); item._on = false; } seen.add(num.toLowerCase()); }
+        if (!type) { w.push('គ្មានប្រភេទ'); item._on = false; } else if (!names.includes(type)) w.push('ប្រភេទមិនទាន់មានក្នុង Lists');
+        if (!date) { w.push('គ្មានកាលបរិច្ឆេទ'); item._on = false; }
+        out.push(item);
+      }
+      return out;
+    }
+    function cimpClose() { document.getElementById('modal-cert-import')?.remove(); CIMP.items = []; }
+    function cimpSet(i, k, v) { const t = CIMP.items[i]; t[k] = v; t._warn = [];
+      if (k === 'num' && v && store.certs.some(c => !isDeleted(c) && String(c.num).toLowerCase() === v.toLowerCase())) t._warn.push('លេខកូដស្ទួន');
+      if (!t.type) t._warn.push('គ្មានប្រភេទ'); if (!t.date) t._warn.push('គ្មានកាលបរិច្ឆេទ'); cimpRender(); }
+    function cimpRender() {
+      const body = document.getElementById('cimp-body'); if (!body) return;
+      const inp = 'w-full border border-slate-200 rounded p-1';
+      body.innerHTML = CIMP.items.map((t, i) => `<tr class="${t._warn.length ? 'bg-amber-50' : ''} ${t._on ? '' : 'opacity-60'}">
+        <td class="p-2 text-center"><input type="checkbox" ${t._on ? 'checked' : ''} onchange="CIMP.items[${i}]._on=this.checked;cimpRender()"></td><td class="p-2 text-slate-400 text-center">${t._row}</td>
+        <td class="p-2 min-w-[150px]"><input value="${esc(t.num)}" placeholder="(ស្វ័យប្រវត្តិ)" onchange="cimpSet(${i},'num',this.value.trim())" class="${inp} font-mono"></td>
+        <td class="p-2 min-w-[150px]"><input value="${esc(t.recipient)}" onchange="cimpSet(${i},'recipient',this.value.trim())" class="${inp} font-bold"></td>
+        <td class="p-2">${esc(t.gender)}</td>
+        <td class="p-2 min-w-[170px]"><select onchange="cimpSet(${i},'type',this.value)" class="${inp} ${t.type ? '' : 'border-red-400 bg-red-50'}">${certTypeOptions(t.type)}${t.type && !certTypeNames().includes(t.type) ? `<option value="${esc(t.type)}" selected>${esc(t.type)}</option>` : ''}</select></td>
+        <td class="p-2"><input type="date" value="${esc(t.date)}" onchange="cimpSet(${i},'date',this.value)" class="${inp} ${t.date ? '' : 'border-red-400 bg-red-50'}"></td>
+        <td class="p-2 min-w-[120px]">${esc(t.major)}</td><td class="p-2 min-w-[130px]">${esc(t.institution)}</td><td class="p-2">${esc(t.grad_year)}</td><td class="p-2">${esc(t.status)}</td>
+        <td class="p-2 text-[11px] text-amber-700 min-w-[140px]">${t._warn.map(esc).join(' • ')}</td></tr>`).join('');
+      const on = CIMP.items.filter(t => t._on).length;
+      document.getElementById('cimp-count').textContent = 'ជ្រើស ' + on + ' / ' + CIMP.items.length + ' ជួរ';
+      document.getElementById('cimp-ok').disabled = !on;
+    }
+    function cimpOpen(items, name) {
+      cimpClose(); CIMP.items = items; CIMP.name = name;
+      const d = document.createElement('div'); d.id = 'modal-cert-import'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-4';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-7xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><div><h3 class="text-base font-bold text-slate-900">📥 ពិនិត្យមុន Import សញ្ញាបត្រ — ${esc(name)}</h3><p class="text-xs text-slate-500">ជួរពណ៌លឿង = ត្រូវពិនិត្យ។ លេខកូដទទេ = បង្កើតស្វ័យប្រវត្តិ។ ជួរគ្មានប្រភេទ/កាលបរិច្ឆេទ ត្រូវបំពេញមុន។ <span id="cimp-count" class="font-bold text-emerald-700"></span></p></div><button type="button" onclick="cimpClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr><th class="p-2">✓</th><th class="p-2">ជួរ</th><th class="p-2">លេខកូដ</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">ប្រភេទ</th><th class="p-2">កាលបរិច្ឆេទ</th><th class="p-2">ជំនាញ</th><th class="p-2">គ្រឹះស្ថាន</th><th class="p-2">ឆ្នាំបញ្ចប់</th><th class="p-2">ស្ថានភាព</th><th class="p-2">កំណត់សម្គាល់</th></tr></thead><tbody id="cimp-body" class="divide-y divide-slate-100"></tbody></table></div>
+        <div class="flex justify-end gap-2"><button type="button" onclick="cimpClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="cimp-ok" onclick="cimpCommit()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold disabled:opacity-40">✅ Import</button></div></div>`;
+      document.body.appendChild(d); cimpRender();
+    }
+    async function cimpCommit() {
+      const sel = CIMP.items.filter(t => t._on); if (!sel.length) return;
+      if (sel.some(t => !t.type || !t.date || !t.recipient)) return alert('⚠️ មានជួរគ្មានឈ្មោះ/ប្រភេទ/កាលបរិច្ឆេទ — សូមបំពេញ ឬដោះធីកចេញ');
+      const used = [], live = new Set(store.certs.filter(c => !isDeleted(c)).map(c => String(c.num).toLowerCase()));
+      for (const t of sel) if (t.num) { if (live.has(t.num.toLowerCase()) || used.some(u => u.toLowerCase() === t.num.toLowerCase())) return alert('⚠️ លេខកូដ "' + t.num + '" ស្ទួន'); used.push(t.num); }
+      const items = sel.map(t => { let num = t.num; if (!num) { num = certCodeFor(t.type, t.date, used); used.push(num); } const gy = parseInt(t.grad_year, 10);
+        return { id: t.id, num, recipient: t.recipient, type: t.type, date: t.date, signer: t.signer || '', gender: t.gender || null, dob: t.dob || null, nationality: t.nationality || null, major: t.major || null, institution: t.institution || null,
+          grad_year: Number.isFinite(gy) ? gy : null, status: t.status || 'សកម្ម', status_note: t.status_note || '', file_name: '', file_size: '', file_link: '', created_at: nowISO(), deleted_at: null, deleted_by: null }; });
+      const name = CIMP.name; cimpClose();
+      await persistMany('certs', items); renderCerts(); updateStats();
+      showToast('បាន Import សញ្ញាបត្រ ' + items.length + ' ទិន្នន័យ!'); logActivity('Import Excel សញ្ញាបត្រ', name + ' (' + items.length + ')');
+    }
+    function handleImportCerts(e) {
+      const file = e.target.files[0]; if (!file) return;
+      if (!window.XLSX) { e.target.value = ''; return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true); }
+      if (!can('create')) { e.target.value = ''; return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true); }
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        try {
+          const isCsv = /\.csv$/i.test(file.name);
+          const wb = isCsv ? XLSX.read(new TextDecoder('utf-8').decode(new Uint8Array(evt.target.result)).replace(/^﻿/, ''), { type: 'string', raw: true }) : XLSX.read(new Uint8Array(evt.target.result), { type: 'array', cellDates: false });
+          const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: false, defval: '', blankrows: false });
+          const items = cimpParse(rows);
+          if (!items) { alert('⚠️ រកមិនឃើញជួរក្បាលតារាង (ត្រូវមានជួរ «ឈ្មោះ»)។ សូមប្រើ «⬇️ គំរូ Excel»។'); return; }
+          if (!items.length) { showToast('មិនរកឃើញទិន្នន័យសញ្ញាបត្រទេ', true); return; }
+          cimpOpen(items, file.name);
+        } catch (err) { console.warn(err); alert('⚠️ កំហុសក្នុងការអានហ្វាល Excel!'); }
+        finally { e.target.value = ''; }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+    function certImportTemplate() {
+      if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
+      const ws = XLSX.utils.json_to_sheet([{ 'ល.រ': 1, 'លេខកូដ': '(ទទេ = ស្វ័យប្រវត្តិ)', 'ឈ្មោះ': 'សុខ ចាន់ណា', 'ភេទ': 'ស្រី', 'ថ្ងៃកំណើត': '15/03/1998', 'សញ្ជាតិ': 'ខ្មែរ', 'ប្រភេទ': certTypeNames()[0] || '', 'កាលបរិច្ឆេទ': '20/09/2023', 'ជំនាញ': 'ឱសថការី', 'គ្រឹះស្ថាន': 'សាកលវិទ្យាល័យ…', 'ឆ្នាំបញ្ចប់': 2023, 'ហត្ថលេខា': 'ប្រធាននាយកដ្ឋាន', 'ស្ថានភាព': 'សកម្ម', 'ចំណាំ': '' }]);
+      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Certificates'); XLSX.writeFile(wb, 'certificate_import_template.xlsx');
+    }
+
+    // ---------- Report សញ្ញាបត្រ (លម្អិត / សង្ខេប) ----------
+    const CR = { mode: 'detail', group: 'type', f: {} };
+    const CR_GROUPS = {
+      type: ['ប្រភេទសញ្ញាបត្រ', c => c.type || 'មិនបញ្ជាក់'], month: ['ខែ', c => String(c.date || '').slice(0, 7) || 'មិនបញ្ជាក់'], year: ['ឆ្នាំ', c => String(c.date || '').slice(0, 4) || 'មិនបញ្ជាក់'],
+      status: ['ស្ថានភាព', c => c.status || 'សកម្ម'], gender: ['ភេទ', c => c.gender || 'មិនបញ្ជាក់'], institution: ['គ្រឹះស្ថាន', c => c.institution || 'មិនបញ្ជាក់'],
+      major: ['ជំនាញ', c => c.major || 'មិនបញ្ជាក់'], nationality: ['សញ្ជាតិ', c => c.nationality || 'មិនបញ្ជាក់'], grad_year: ['ឆ្នាំបញ្ចប់', c => c.grad_year || 'មិនបញ្ជាក់'], signer: ['ហត្ថលេខា', c => c.signer || 'មិនបញ្ជាក់']
+    };
+    function crFiltered() {
+      const f = CR.f, q = String(f.q || '').toLowerCase().trim();
+      return activeRows('certs').filter(c => (!q || [c.num, c.recipient, c.major, c.institution].some(v => String(v || '').toLowerCase().includes(q))) && (!f.type || c.type === f.type) && (!f.status || (c.status || 'សកម្ម') === f.status) &&
+        (!f.gender || (f.gender === '-' ? !c.gender : c.gender === f.gender)) && (!f.institution || c.institution === f.institution) && (!f.year || String(c.date || '').slice(0, 4) === f.year) &&
+        (!f.month || String(c.date || '').slice(5, 7) === f.month) && (!f.from || (c.date && c.date >= f.from)) && (!f.to || (c.date && c.date <= f.to)))
+        .sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')) || String(a.num || '').localeCompare(String(b.num || '')));
+    }
+    function crDetailRows(rows) {
+      return rows.map((c, i) => ({ 'ល.រ': i + 1, 'លេខកូដ': c.num, 'ឈ្មោះ': c.recipient, 'ភេទ': c.gender || '', 'ថ្ងៃកំណើត': c.dob ? formatDateDisplay(c.dob) : '', 'សញ្ជាតិ': c.nationality || '', 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date ? formatDateDisplay(c.date) : '',
+        'ជំនាញ': c.major || '', 'គ្រឹះស្ថាន': c.institution || '', 'ឆ្នាំបញ្ចប់': c.grad_year || '', 'ហត្ថលេខា': c.signer || '', 'ស្ថានភាព': c.status || 'សកម្ម' }));
+    }
+    function crSummaryRows(rows) {
+      const [label, fn] = CR_GROUPS[CR.group], m = new Map();
+      rows.forEach(c => { const k = fn(c), o = m.get(k) || { n: 0, f: 0, m: 0, u: 0, a: 0, r: 0, s: 0 }; o.n++; c.gender === 'ស្រី' ? o.f++ : c.gender === 'ប្រុស' ? o.m++ : o.u++; const st = c.status || 'សកម្ម'; st === 'ដកហូត' ? o.r++ : st === 'ជំនួស' ? o.s++ : o.a++; m.set(k, o); });
+      let arr = [...m.entries()];
+      arr = ['year', 'month', 'grad_year'].includes(CR.group) ? arr.sort((a, b) => String(a[0]).localeCompare(String(b[0]))) : arr.sort((a, b) => b[1].n - a[1].n || String(a[0]).localeCompare(String(b[0])));
+      const out = arr.map(([k, o], i) => ({ 'ល.រ': i + 1, [label]: k, 'សរុប': o.n, 'ស្រី': o.f, 'ប្រុស': o.m, 'មិនបញ្ជាក់ភេទ': o.u, 'សកម្ម': o.a, 'ដកហូត': o.r, 'ជំនួស': o.s }));
+      const cnt = fn2 => rows.filter(fn2).length;
+      out.push({ 'ល.រ': '', [label]: 'សរុបរួម', 'សរុប': rows.length, 'ស្រី': cnt(c => c.gender === 'ស្រី'), 'ប្រុស': cnt(c => c.gender === 'ប្រុស'), 'មិនបញ្ជាក់ភេទ': cnt(c => !c.gender), 'សកម្ម': cnt(c => (c.status || 'សកម្ម') === 'សកម្ម'), 'ដកហូត': cnt(c => c.status === 'ដកហូត'), 'ជំនួស': cnt(c => c.status === 'ជំនួស') });
+      return out;
+    }
+    function crFilterText() {
+      const f = CR.f, p = [];
+      if (f.type) p.push('ប្រភេទ៖ ' + f.type); if (f.status) p.push('ស្ថានភាព៖ ' + f.status); if (f.gender) p.push('ភេទ៖ ' + (f.gender === '-' ? 'មិនបញ្ជាក់' : f.gender)); if (f.institution) p.push('គ្រឹះស្ថាន៖ ' + f.institution);
+      if (f.year) p.push('ឆ្នាំ៖ ' + f.year); if (f.month) p.push('ខែ៖ ' + f.month); if (f.q) p.push('ស្វែងរក៖ ' + f.q); if (f.from || f.to) p.push('ថ្ងៃ៖ ' + (f.from ? formatDateDisplay(f.from) : '…') + ' → ' + (f.to ? formatDateDisplay(f.to) : '…'));
+      return p.length ? p.join(' • ') : 'ទិន្នន័យទាំងអស់';
+    }
+    function crTitle() { return 'របាយការណ៍ចុះបញ្ជីសញ្ញាបត្រ — ' + (CR.mode === 'detail' ? 'លម្អិត' : 'សង្ខេបតាម' + CR_GROUPS[CR.group][0]); }
+    function crData() { const rows = crFiltered(); return CR.mode === 'detail' ? crDetailRows(rows) : crSummaryRows(rows); }
+    function crTableHTML(data, cls) {
+      if (!data.length) return '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>';
+      const keys = Object.keys(data[0]);
+      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CR.mode === 'summary' && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    function crRead() {
+      const g = id => document.getElementById('crf-' + id)?.value || '';
+      CR.f = { q: g('q'), type: g('type'), status: g('status'), gender: g('gender'), institution: g('institution'), year: g('year'), month: g('month'), from: g('from'), to: g('to') };
+      CR.group = g('group') || CR.group;
+    }
+    function crSetMode(m) { CR.mode = m; crRender(); }
+    function crRender() {
+      crRead();
+      const rows = crFiltered(), data = CR.mode === 'detail' ? crDetailRows(rows) : crSummaryRows(rows);
+      document.getElementById('cr-count').textContent = 'រកឃើញ ' + toKhmerDigits(rows.length) + ' កំណត់ត្រា';
+      document.getElementById('cr-result').innerHTML = crTableHTML(data);
+      document.getElementById('cr-group-wrap').classList.toggle('hidden', CR.mode !== 'summary');
+      ['detail', 'summary'].forEach(m => { const b = document.getElementById('crtab-' + m); b.classList.toggle('bg-emerald-600', CR.mode === m); b.classList.toggle('text-white', CR.mode === m); b.classList.toggle('bg-slate-100', CR.mode !== m); b.classList.toggle('text-slate-600', CR.mode !== m); });
+    }
+    function crClose() { document.getElementById('modal-cert-report')?.remove(); }
+    function openCertReport() {
+      crClose();
+      const all = activeRows('certs'), uniq = k => [...new Set(all.map(t => t[k]).filter(Boolean))].sort(), years = [...new Set(all.map(c => String(c.date || '').slice(0, 4)).filter(Boolean))].sort().reverse();
+      const sel = (id, label, opts) => `<div><label class="block text-[10px] font-bold text-slate-600 mb-1">${label}</label><select id="crf-${id}" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"><option value="">ទាំងអស់</option>${opts.map(o => Array.isArray(o) ? `<option value="${esc(o[0])}">${esc(o[1])}</option>` : `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>`;
+      const d = document.createElement('div'); d.id = 'modal-cert-report'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📜 Report — ចុះបញ្ជីសញ្ញាបត្រ</h3><button type="button" onclick="crClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
+          ${sel('type', 'ប្រភេទ', [...new Set([...certTypeNames(), ...uniq('type')])])}${sel('year', 'ឆ្នាំ', years)}${sel('month', 'ខែ', Array.from({ length: 12 }, (_, i) => [String(i + 1).padStart(2, '0'), 'ខែ ' + (i + 1)]))}
+          ${sel('status', 'ស្ថានភាព', CERT_STATUS)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('institution', 'គ្រឹះស្ថាន', uniq('institution'))}
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ថ្ងៃចេញ ពី</label><input type="date" id="crf-from" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="crf-to" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div class="col-span-2"><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (លេខ/ឈ្មោះ/ជំនាញ/គ្រឹះស្ថាន)</label><input id="crf-q" oninput="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <button id="crtab-detail" onclick="crSetMode('detail')" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">📋 Detail Report</button>
+          <button id="crtab-summary" onclick="crSetMode('summary')" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">🧮 Summary Report</button>
+          <div id="cr-group-wrap" class="hidden flex items-center gap-2"><span class="font-bold text-slate-600">ដោយតាម៖</span><select id="crf-group" onchange="crRender()" class="form-input-focus border border-slate-300 rounded-xl p-2 text-xs bg-white">${Object.entries(CR_GROUPS).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div>
+          <span id="cr-count" class="ml-auto font-bold text-emerald-700"></span>
+        </div>
+        <div id="cr-result" class="overflow-auto border border-slate-200 rounded-xl flex-1 min-h-[200px]"></div>
+        <div class="flex flex-wrap justify-end gap-2"><button onclick="crExport('xlsx')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button><button onclick="crExport('csv')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">CSV</button><button onclick="crPrint(false)" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold">👁️ Print Preview</button><button onclick="crPrint(true)" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button></div></div>`;
+      document.body.appendChild(d);
+      CR.mode = 'detail'; document.getElementById('crf-group').value = CR.group; crRender();
+    }
+    function crExport(kind) {
+      crRead(); const data = crData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      if (kind === 'xlsx') {
+        if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(data), CR.mode === 'detail' ? 'Detail' : 'Summary');
+        XLSX.writeFile(wb, 'certificates_' + CR.mode + '_' + todayISO() + '.xlsx');
+      } else {
+        const keys = Object.keys(data[0]); let csv = '﻿' + keys.map(csvCell).join(',') + '\n';
+        data.forEach(r => { csv += keys.map(k => csvCell(r[k])).join(',') + '\n'; });
+        downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'certificates_' + CR.mode + '_' + todayISO() + '.csv');
+      }
+      showToast('បាន Export រួចរាល់');
+    }
+    function crPrint(auto) {
+      crRead(); const data = crData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      const keys = Object.keys(data[0]), now = new Date();
+      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(crTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}.bar{position:sticky;top:0;background:#ecfdf5;border-bottom:1px solid #6ee7b7;padding:8px;text-align:center;margin:-8px -8px 10px}.bar button{padding:6px 16px;border:0;border-radius:8px;background:#059669;color:#fff;font-weight:bold;cursor:pointer}@media print{.bar{display:none}}</style></head><body>${auto ? '' : '<div class="bar"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>'}<h2>${esc(crTitle())}</h2><p class="s">${esc(crFilterText())} — សរុប ${toKhmerDigits(crFiltered().length)} កំណត់ត្រា</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div>${auto ? '<script>setTimeout(function(){window.print()},700)<\/script>' : ''}</body></html>`);
+      win.document.close();
     }
 
     // ---------------- 15. SOFT DELETE / RECYCLE BIN ----------------
@@ -3681,12 +4958,15 @@
       { k: 'recycleDays', label: 'ថ្ងៃរក្សាទុកក្នុងធុងសំរាម', def: 30, min: 7, max: 365, hint: 'ទិន្នន័យចាស់ជាងនេះអាចសម្អាតចោលបាន។' },
       { k: 'backupWarnDays', label: 'រំលឹក Backup ក្រោយ (ថ្ងៃ)', def: 30, min: 7, max: 90, hint: 'Admin ទទួលការរំលឹកពេល Backup ចាស់ជាងនេះ។' },
       { k: 'storageQuotaMB', label: 'កូតា Storage (MB)', def: 1000, min: 100, max: 100000, hint: 'សម្រាប់គណនា % ក្នុង System Health (Free plan = 1000 MB)។' },
-      { k: 'pageSize', label: 'ចំនួនជួរក្នុងមួយទំព័រ (លំនាំដើម)', def: 25, options: [10, 25, 50, 100], hint: 'ចំនួនជួរដំបូងសម្រាប់តារាងទាំងអស់។' }
+      { k: 'pageSize', label: 'ចំនួនជួរក្នុងមួយទំព័រ (លំនាំដើម)', def: 25, options: [10, 25, 50, 100], hint: 'ចំនួនជួរដំបូងសម្រាប់តារាងទាំងអស់។' },
+      { k: 'certFormat', type: 'text', label: 'ទម្រង់លេខកូដសញ្ញាបត្រ', def: '{ប្រភេទ}-{ឆ្នាំ}-{លំដាប់}', hint: 'ប្រើ {ប្រភេទ} {ឆ្នាំ} {ខែ} {លំដាប់} ឧ. {ប្រភេទ}-{ឆ្នាំ}-{លំដាប់} → VN-2026-0001 (លំដាប់រាប់ដោយស្វ័យប្រវត្តិ)។' },
+      { k: 'verifyUrl', type: 'text', label: 'Link ទំព័រផ្ទៀងផ្ទាត់សាធារណៈ (ក្នុង QR)', def: '', hint: 'ទទេ = ប្រើ link គេហទំព័រនេះ (ឧ. https://hrdd-moh.github.io/dms/) ។ QR បន្ថែម ?verify=លេខកូដ។' }
     ];
     let sysSettings = {};
     function setting(k) {
       const d = SETTINGS_DEFS.find(x => x.k === k); if (!d) return undefined;
       const raw = sysSettings[k]; const v = Number(raw);
+      if (d.type === 'text') return (raw == null || String(raw).trim() === '') ? d.def : String(raw).trim();
       if (raw == null || raw === '' || !Number.isFinite(v)) return d.def;
       if (d.options) return d.options.includes(v) ? v : d.def;
       return Math.min(d.max, Math.max(d.min, Math.round(v)));
@@ -3717,12 +4997,14 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             ${SETTINGS_DEFS.map(d => {
               const v = setting(d.k), changed = v !== d.def;
-              const ctl = d.options
+              const ctl = d.type === 'text'
+                ? `<input data-sk="${d.k}" data-st="text" type="text" value="${esc(v)}" placeholder="${esc(d.def || 'ស្វ័យប្រវត្តិ')}" class="${inp}">`
+                : d.options
                 ? `<select data-sk="${d.k}" class="${inp}">${d.options.map(o => `<option value="${o}" ${o === v ? 'selected' : ''}>${o}</option>`).join('')}</select>`
                 : `<input data-sk="${d.k}" type="number" min="${d.min}" max="${d.max}" step="1" required value="${v}" class="${inp}">`;
               return `<div class="rounded-2xl border ${changed ? 'border-emerald-300 bg-emerald-50/50' : 'border-slate-200 bg-white'} p-3.5 space-y-1.5">
                 <label class="block font-bold text-slate-800">${esc(d.label)}</label>${ctl}
-                <p class="text-[11px] text-slate-500 leading-relaxed">${esc(d.hint)} <span class="text-slate-400">(លំនាំដើម ${d.def}${d.options ? '' : ' · ' + d.min + '–' + d.max})</span></p></div>`;
+                <p class="text-[11px] text-slate-500 leading-relaxed">${esc(d.hint)} <span class="text-slate-400">(លំនាំដើម ${esc(d.def || 'ស្វ័យប្រវត្តិ')}${d.options || d.type === 'text' ? '' : ' · ' + d.min + '–' + d.max})</span></p></div>`;
             }).join('')}
           </div>
           <div class="flex flex-wrap items-center justify-end gap-2">
@@ -3746,9 +5028,10 @@
     async function saveSystemSettings(e) {
       e.preventDefault(); if (!isAdmin()) return showToast('មានតែ Admin ទេដែលអាចកែការកំណត់', true);
       const next = {};
-      document.querySelectorAll('#sysset-body [data-sk]').forEach(el => { next[el.dataset.sk] = Number(el.value); });
+      document.querySelectorAll('#sysset-body [data-sk]').forEach(el => { next[el.dataset.sk] = el.dataset.st === 'text' ? el.value.trim() : Number(el.value); });
+      if (next.verifyUrl && !/^https?:\/\//i.test(next.verifyUrl)) return alert('⚠️ Link ផ្ទៀងផ្ទាត់ត្រូវចាប់ផ្តើមដោយ https://');
       if (next.driveThresholdMB > next.maxFileMB) return alert('⚠️ ចំណុចកាត់ Google Drive មិនអាចធំជាងទំហំ file អតិបរមាទេ!');
-      SETTINGS_DEFS.forEach(d => { if (!d.options && (next[d.k] < d.min || next[d.k] > d.max)) next[d.k] = d.def; });
+      SETTINGS_DEFS.forEach(d => { if (!d.options && d.type !== 'text' && (next[d.k] < d.min || next[d.k] > d.max)) next[d.k] = d.def; });
       await commitSettings(next);
     }
     async function resetSystemSettings() {
@@ -4442,9 +5725,13 @@
         if (!html5QrcodeScanner && window.Html5QrcodeScanner) {
           html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 200 }, false);
           html5QrcodeScanner.render(decoded => {
-            const cert = activeRows('certs').find(c => String(c.num).trim() === String(decoded).trim());
-            if (cert) { resEl.className = 'text-sm p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold'; resEl.innerHTML = '✅ រកឃើញសញ្ញាបត្រត្រឹមត្រូវ៖<br>' + esc(cert.num) + ' - ' + esc(cert.recipient) + '<br><span class="text-xs font-normal">' + esc(cert.type) + ' • ' + esc(cert.date) + '</span>'; }
-            else { resEl.className = 'text-sm p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 font-bold'; resEl.innerHTML = '⚠️ កូដ៖ ' + esc(decoded) + ' (មិនមានក្នុងបញ្ជីឡើយ)'; }
+            const { code, cert } = certScanResult(decoded);
+            if (cert) {
+              const st = cert.status || 'សកម្ម', ok = st === 'សកម្ម';
+              resEl.className = 'text-sm p-4 rounded-2xl border font-bold ' + (ok ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-rose-800');
+              resEl.innerHTML = (ok ? '✅ រកឃើញសញ្ញាបត្រត្រឹមត្រូវ៖' : '⛔ សញ្ញាបត្រនេះមានស្ថានភាព៖ ' + esc(st)) + '<br>' + esc(cert.num) + ' - ' + esc(cert.recipient) + '<br><span class="text-xs font-normal">' + esc(cert.type) + ' • ' + esc(cert.date) + (cert.major ? ' • ' + esc(cert.major) : '') + (cert.institution ? ' • ' + esc(cert.institution) : '') + '</span>'
+                + '<br><button type="button" onclick="certOpenInTable(decodeURIComponent(\'' + encodeURIComponent(cert.num) + '\'))" class="mt-2 px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-bold text-slate-700">🔎 បើកក្នុងតារាង</button>';
+            } else { resEl.className = 'text-sm p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 font-bold'; resEl.innerHTML = '⚠️ កូដ៖ ' + esc(code) + ' (មិនមានក្នុងបញ្ជីឡើយ)'; }
           }, () => {});
         }
       } else {
@@ -4499,7 +5786,10 @@
       const pc = document.getElementById('profile-menu-container'), pd = document.getElementById('profile-dropdown');
       if (pc && pd && !pc.contains(e.target)) pd.classList.add('hidden');
     });
-    window.addEventListener('DOMContentLoaded', () => { startIdleWatcher(); initLocalDB(); });
+    window.addEventListener('DOMContentLoaded', () => {
+      try { const qp = new URLSearchParams(location.search); if (qp.has('verify')) { showVerifyPage(qp.get('verify')); return; } } catch (e) { }
+      startIdleWatcher(); initLocalDB();
+    });
   </script>
 </body>
 </html>
