@@ -670,6 +670,7 @@
         <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">📁 Backup / File System</button>
         <button onclick="switchSystemToolTab('recycle')" id="systab-recycle" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🗑️ Recycle Bin</button>
         <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">🖥️ ប្រព័ន្ធ</p>
+        <button onclick="switchSystemToolTab('sysset')" id="systab-sysset" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🔧 System Settings</button>
         <button onclick="switchSystemToolTab('health')" id="systab-health" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🩺 System Health</button>
         <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🛡️ Security Center</button>
         <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">📋 កំណត់ត្រា</p>
@@ -799,6 +800,11 @@
         <div id="pager-recycle"></div>
       </div>
 
+      <!-- SYSTEM SETTINGS -->
+      <div id="syscontent-sysset" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden text-xs">
+        <div><h4 class="font-bold text-slate-900 text-sm">🔧 ការកំណត់ប្រព័ន្ធ (System Settings)</h4><p class="text-slate-500">កែតម្លៃប្រើប្រាស់ទូទៅ ដោយមិនចាំបាច់កែកូដ។</p></div>
+        <div id="sysset-body"></div>
+      </div>
       <!-- HEALTH -->
       <div id="syscontent-health" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden text-xs">
         <div id="health-body" class="space-y-4"></div>
@@ -927,12 +933,12 @@
     }
     if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { fetch: fetchTO } }); } catch (e) { console.warn('Supabase init error:', e); } }
 
-    const SUPA_MAX_SIZE = 5 * 1024 * 1024;   // ≤ 5MB → Supabase
-    const MAX_FILE_SIZE = 8 * 1024 * 1024;   // អតិបរមា 8MB (> 5MB ទៅ Google Drive ស្វ័យប្រវត្តិ)
+    let SUPA_MAX_SIZE = 5 * 1024 * 1024;   // ≤ 5MB → Supabase
+    let MAX_FILE_SIZE = 8 * 1024 * 1024;   // អតិបរមា 8MB (> 5MB ទៅ Google Drive ស្វ័យប្រវត្តិ)
     const PAGE_SIZES = [10, 25, 50, 100];
-    const DEFAULT_PAGE_SIZE = 25;
+    let DEFAULT_PAGE_SIZE = 25;
     const OVERDUE_DEFAULT_DAYS = 7;
-    const RECYCLE_RETENTION_DAYS = 30;
+    let RECYCLE_RETENTION_DAYS = 30;
     const SYNC_INTERVAL_MS = 40000; // Auto-Sync ៤០ វិនាទី
     const CLOUD_FETCH_MAX = 10000;
     const SYSTEM_USER_REGISTRY_ID = 999999999;
@@ -1568,7 +1574,7 @@
           if (t === 'docs') rows = rows.filter(d => d.code !== SYSTEM_USER_REGISTRY_CODE);
           store[t] = sortRecords(rows);
         }
-        try { (await localDB.app_lists.toArray()).forEach(r => { if (LIST_DEFS[r.key] && Array.isArray(r.items)) appLists[r.key] = r.items; }); applyLists(); } catch (e) { }
+        try { (await localDB.app_lists.toArray()).forEach(r => { if (LIST_DEFS[r.key] && Array.isArray(r.items)) appLists[r.key] = r.items; if (r.key === SETTINGS_KEY && r.items && typeof r.items === 'object' && !Array.isArray(r.items)) sysSettings = r.items; }); applyLists(); applySettings(); } catch (e) { }
         const rawLogs = await localDB.logs.orderBy('id').reverse().toArray();
         auditLogs = rawLogs.filter(l => l.user !== '__USER_SYNC__');
         const c = await localDB.countries.toArray();
@@ -2085,7 +2091,7 @@
             <div id="drop-zone" tabindex="0" role="button" onclick="document.getElementById('doc-file-input').click()" class="form-input-focus border-2 border-dashed border-emerald-400 bg-emerald-50 rounded-2xl p-4 text-center cursor-pointer hover:bg-emerald-100 transition">
               <input type="file" id="doc-file-input" onchange="handleFileSelected(event)" class="hidden" accept=".pdf,.docx,.doc,.xlsx,.xls,.png,.jpg,.jpeg">
               <p id="file-label" class="text-xs sm:text-sm font-bold text-slate-700">${en ? 'Click to select or drop file' : 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល'}</p>
-              <p id="file-sublabel" class="text-[11px] text-rose-500 font-bold mt-1">${en ? 'Up to 8MB' : 'ទំហំអតិបរមា 8MB'}</p>
+              <p id="file-sublabel" class="text-[11px] text-rose-500 font-bold mt-1">${en ? 'Up to ' + maxFileMB() + 'MB' : 'ទំហំអតិបរមា ' + maxFileMB() + 'MB'}</p>
             </div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Document Code / No. *' : 'កូដ / លេខឯកសារ *'}</label><input type="text" id="doc-code" required autocomplete="off" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50" placeholder="${en ? 'e.g. Sub-Decree No. …, Royal Decree No. … or Doc No.' : 'ឧ. អនុក្រឹត្យលេខ …, ព្រះរាជក្រឹត្យលេខ … ឬ លេខឯកសារ'}"></div>
             <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Category' : 'ប្រភេទ'}</label><select id="doc-category" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${docCatOptions()}</select></div>
@@ -2420,12 +2426,16 @@
       if (error || !Array.isArray(data)) return;
       const dirty = listDirty();
       for (const r of data) {
+        if (r.key === SETTINGS_KEY) {
+          if (!dirty.includes(SETTINGS_KEY)) { const o = safeJSON(r.items, null); if (o && typeof o === 'object' && !Array.isArray(o)) { sysSettings = o; await localDB.app_lists.put({ key: SETTINGS_KEY, items: o }).catch(() => { }); applySettings(); } }
+          continue;
+        }
         if (!LIST_DEFS[r.key] || dirty.includes(r.key)) continue;
         const items = safeJSON(r.items, null);
         if (Array.isArray(items)) { appLists[r.key] = items; await localDB.app_lists.put({ key: r.key, items }).catch(() => { }); }
       }
       applyLists(); fillDocCatFilter();
-      for (const k of dirty) await pushList(k);
+      for (const k of dirty) await (k === SETTINGS_KEY ? pushSettings() : pushList(k));
     }
     let curListTab = 'location';
     function switchListTab(k) {
@@ -3208,7 +3218,7 @@
 
     function processSelectedFile(file) {
       const input = document.getElementById('doc-file-input');
-      if (file.size > MAX_FILE_SIZE) { alert('⚠️ ឯកសារនេះមានទំហំធំលើស 8MB! សូមបង្រួមទំហំជាមុន។'); if (input) input.value = ''; return; }
+      if (file.size > MAX_FILE_SIZE) { alert('⚠️ ឯកសារនេះមានទំហំធំលើស ' + maxFileMB() + 'MB! សូមបង្រួមទំហំជាមុន។'); if (input) input.value = ''; return; }
       if (!/\.(pdf|docx?|xlsx?|png|jpe?g)$/i.test(file.name)) { alert('⚠️ ប្រភេទហ្វាលមិនគាំទ្រ (PDF, Word, Excel, PNG, JPG)!'); if (input) input.value = ''; return; }
       const sizeMB = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
       document.getElementById('file-label').innerHTML = '✅ បានជ្រើសរើស៖ <span class="text-emerald-700 font-bold text-base break-all">' + esc(file.name) + '</span>';
@@ -3228,7 +3238,7 @@
       ['doc-code', 'doc-title', 'doc-link'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
       const inp = document.getElementById('doc-file-input'); if (inp) inp.value = '';
       const lbl = document.getElementById('file-label'); if (lbl) lbl.innerText = appLang === 'en' ? 'Click to select or drop file' : 'ចុចជ្រើសរើសហ្វាល ឬទម្លាក់ចូល';
-      const sub = document.getElementById('file-sublabel'); if (sub) sub.innerText = appLang === 'en' ? 'Up to 8MB' : 'ទំហំអតិបរមា 8MB';
+      const sub = document.getElementById('file-sublabel'); if (sub) sub.innerText = appLang === 'en' ? 'Up to ' + maxFileMB() + 'MB' : 'ទំហំអតិបរមា ' + maxFileMB() + 'MB';
       currentUploadedFile = { name: '', type: '', size: '', base64: null, dataUrl: null, rawFile: null, ready: Promise.resolve() };
     }
 
@@ -3650,7 +3660,7 @@
     function switchSystemToolTab(tab) {
       if (!isAdmin() && tab !== 'manual') tab = 'manual';
       currentSysTab = tab;
-      ['settings', 'location', 'files', 'recycle', 'health', 'security', 'logging', 'manual'].forEach(t => {
+      ['settings', 'location', 'files', 'recycle', 'sysset', 'health', 'security', 'logging', 'manual'].forEach(t => {
         document.getElementById('syscontent-' + t)?.classList.add('hidden');
         const b = document.getElementById('systab-' + t);
         if (b) { b.classList.remove('bg-emerald-600', 'text-white'); b.classList.add('bg-slate-100', 'text-slate-600'); }
@@ -3663,8 +3673,92 @@
       initResizableTables();
     }
 
+    // ---------------- System Settings (Admin / Super Admin) — រក្សាក្នុង app_lists key='sys_settings' ----------------
+    const SETTINGS_KEY = 'sys_settings';
+    const SETTINGS_DEFS = [
+      { k: 'maxFileMB', label: 'ទំហំ file អតិបរមា (MB)', def: 8, min: 1, max: 15, hint: 'ការកំណត់អតិបរមាសម្រាប់ upload ក្នុងបណ្ណាល័យ (1–15MB)។' },
+      { k: 'driveThresholdMB', label: 'ចំណុចកាត់ទៅ Google Drive (MB)', def: 5, min: 1, max: 15, hint: 'file ≤ ចំណុចនេះ ទៅ Supabase · ធំជាង ទៅ Google Drive។ ដាក់ស្មើទំហំអតិបរមា = ទៅ Supabase ទាំងអស់។' },
+      { k: 'recycleDays', label: 'ថ្ងៃរក្សាទុកក្នុងធុងសំរាម', def: 30, min: 7, max: 365, hint: 'ទិន្នន័យចាស់ជាងនេះអាចសម្អាតចោលបាន។' },
+      { k: 'backupWarnDays', label: 'រំលឹក Backup ក្រោយ (ថ្ងៃ)', def: 30, min: 7, max: 90, hint: 'Admin ទទួលការរំលឹកពេល Backup ចាស់ជាងនេះ។' },
+      { k: 'storageQuotaMB', label: 'កូតា Storage (MB)', def: 1000, min: 100, max: 100000, hint: 'សម្រាប់គណនា % ក្នុង System Health (Free plan = 1000 MB)។' },
+      { k: 'pageSize', label: 'ចំនួនជួរក្នុងមួយទំព័រ (លំនាំដើម)', def: 25, options: [10, 25, 50, 100], hint: 'ចំនួនជួរដំបូងសម្រាប់តារាងទាំងអស់។' }
+    ];
+    let sysSettings = {};
+    function setting(k) {
+      const d = SETTINGS_DEFS.find(x => x.k === k); if (!d) return undefined;
+      const raw = sysSettings[k]; const v = Number(raw);
+      if (raw == null || raw === '' || !Number.isFinite(v)) return d.def;
+      if (d.options) return d.options.includes(v) ? v : d.def;
+      return Math.min(d.max, Math.max(d.min, Math.round(v)));
+    }
+    function maxFileMB() { return setting('maxFileMB'); }
+    function applySettings() {
+      const mx = setting('maxFileMB');
+      MAX_FILE_SIZE = mx * 1048576;
+      SUPA_MAX_SIZE = Math.min(setting('driveThresholdMB'), mx) * 1048576;
+      RECYCLE_RETENTION_DAYS = setting('recycleDays');
+      BACKUP_WARN_DAYS = setting('backupWarnDays');
+      STORAGE_QUOTA_MB = setting('storageQuotaMB');
+      const ps = setting('pageSize');
+      if (ps !== DEFAULT_PAGE_SIZE) { DEFAULT_PAGE_SIZE = ps; try { Object.keys(pager).forEach(k => { pager[k].size = ps; pager[k].page = 1; }); } catch (e) { } }
+      const rd = document.getElementById('recycle-retention-days'); if (rd) rd.innerText = RECYCLE_RETENTION_DAYS;
+      const sub = document.getElementById('file-sublabel'); if (sub && !currentUploadedFile.rawFile) sub.innerText = appLang === 'en' ? 'Up to ' + mx + 'MB' : 'ទំហំអតិបរមា ' + mx + 'MB';
+    }
+    async function pushSettings() {
+      if (!db) { setListDirty(SETTINGS_KEY, true); return false; }
+      const r = await cloudUpsert('app_lists', [{ key: SETTINGS_KEY, items: sysSettings, updated_at: nowISO() }], { onConflict: 'key' });
+      setListDirty(SETTINGS_KEY, !r.ok); return r.ok;
+    }
+    function renderSystemSettings() {
+      const el = document.getElementById('sysset-body'); if (!el || !isAdmin()) return;
+      const inp = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      el.innerHTML = `
+        <form onsubmit="saveSystemSettings(event)" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            ${SETTINGS_DEFS.map(d => {
+              const v = setting(d.k), changed = v !== d.def;
+              const ctl = d.options
+                ? `<select data-sk="${d.k}" class="${inp}">${d.options.map(o => `<option value="${o}" ${o === v ? 'selected' : ''}>${o}</option>`).join('')}</select>`
+                : `<input data-sk="${d.k}" type="number" min="${d.min}" max="${d.max}" step="1" required value="${v}" class="${inp}">`;
+              return `<div class="rounded-2xl border ${changed ? 'border-emerald-300 bg-emerald-50/50' : 'border-slate-200 bg-white'} p-3.5 space-y-1.5">
+                <label class="block font-bold text-slate-800">${esc(d.label)}</label>${ctl}
+                <p class="text-[11px] text-slate-500 leading-relaxed">${esc(d.hint)} <span class="text-slate-400">(លំនាំដើម ${d.def}${d.options ? '' : ' · ' + d.min + '–' + d.max})</span></p></div>`;
+            }).join('')}
+          </div>
+          <div class="flex flex-wrap items-center justify-end gap-2">
+            <button type="button" onclick="resetSystemSettings()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold form-input-focus">↺ ត្រឡប់លំនាំដើម</button>
+            <button type="submit" id="btn-save-sysset" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-xs form-input-focus">💾 រក្សាទុកការកំណត់</button>
+          </div>
+          <p class="text-[11px] text-slate-500">ការកំណត់ទាំងនេះអនុវត្តចំពោះមន្ត្រីទាំងអស់ (Sync តាម Cloud) ។ ឈ្មោះក្រសួង/នាយកដ្ឋានលើក្បាលលិខិត នឹងបន្ថែមនៅកំណែក្រោយ។</p>
+        </form>`;
+    }
+    async function commitSettings(next, note) {
+      const before = { ...sysSettings };
+      sysSettings = next; applySettings();
+      await localDB.app_lists.put({ key: SETTINGS_KEY, items: sysSettings }).catch(() => { });
+      const ok = await pushSettings();
+      const changes = SETTINGS_DEFS.filter(d => String(before[d.k] ?? d.def) !== String(next[d.k] ?? d.def)).map(d => d.label + ': ' + (before[d.k] ?? d.def) + ' → ' + (next[d.k] ?? d.def));
+      logActivity('ប្តូរ System Settings', note || changes.join('; ') || 'គ្មានការផ្លាស់ប្តូរ');
+      renderSystemSettings(); rerenderAllPaged();
+      showToast(ok ? 'បានរក្សាទុកការកំណត់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — នឹង Sync ពេលមានអ៊ីនធឺណិត', !ok);
+    }
+    function rerenderAllPaged() { try { renderTablesAndStatsOnly(); } catch (e) { } }
+    async function saveSystemSettings(e) {
+      e.preventDefault(); if (!isAdmin()) return showToast('មានតែ Admin ទេដែលអាចកែការកំណត់', true);
+      const next = {};
+      document.querySelectorAll('#sysset-body [data-sk]').forEach(el => { next[el.dataset.sk] = Number(el.value); });
+      if (next.driveThresholdMB > next.maxFileMB) return alert('⚠️ ចំណុចកាត់ Google Drive មិនអាចធំជាងទំហំ file អតិបរមាទេ!');
+      SETTINGS_DEFS.forEach(d => { if (!d.options && (next[d.k] < d.min || next[d.k] > d.max)) next[d.k] = d.def; });
+      await commitSettings(next);
+    }
+    async function resetSystemSettings() {
+      if (!isAdmin()) return;
+      if (!confirm('តើចង់ត្រឡប់ការកំណត់ទាំងអស់ទៅលំនាំដើមមែនទេ?')) return;
+      await commitSettings({}, 'ត្រឡប់លំនាំដើម');
+    }
+
     // ---------------- System Health + ការរំលឹក Backup (Admin / Super Admin ប៉ុណ្ណោះ) ----------------
-    const BACKUP_WARN_DAYS = 30, STORAGE_QUOTA_MB = 1000;
+    let BACKUP_WARN_DAYS = 30, STORAGE_QUOTA_MB = 1000;
     function lastBackupTime() {
       let t = 0;
       try { t = Date.parse(localStorage.getItem('hrd_last_backup') || '') || 0; } catch (e) { }
@@ -3718,7 +3812,7 @@
     function refreshOpenSystemTab() {
       if (document.getElementById('modal-system-tools')?.classList.contains('hidden') || !isAdmin()) return;
       if (currentSysTab === 'manual') renderManualDuties();
-      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, health: renderSystemHealth, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
+      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, sysset: renderSystemSettings, health: renderSystemHealth, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
     }
 
     function renderMigrationStatus() {
