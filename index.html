@@ -414,20 +414,20 @@
 
             <!-- TAB: TRAINING -->
             <div id="section-training" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-5 hidden">
-              <div class="flex flex-col gap-3 pb-4 border-b border-slate-100">
-                <div><h3 class="text-base font-bold text-slate-900" data-i18n="sec_train_title">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3></div>
-                <div class="flex items-center gap-2.5 flex-wrap">
+              <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div class="min-w-0"><h3 class="text-base font-bold text-slate-900" data-i18n="sec_train_title">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3></div>
+                <div class="flex items-center gap-2 flex-nowrap shrink-0">
                   <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
-                  <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el h-10 px-4 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📥</span> Import From Excel</button>
+                  <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📥</span> Import From Excel</button>
                   <div class="relative perm-download-el">
-                    <button onclick="toggleExportMenu(event)" class="h-10 px-4 whitespace-nowrap bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">📤</span> Export ▾</button>
+                    <button onclick="toggleExportMenu(event)" class="h-9 px-3 whitespace-nowrap bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">📤</span> Export ▾</button>
                     <div id="export-menu" class="hidden absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-sm font-bold">
                       <button onclick="exportTrainingExcel()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">📊 Excel</button>
                       <button onclick="exportTrainingCSV()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">📄 CSV</button>
                       <button onclick="openPrintPreviewModal()" class="w-full text-left px-4 py-2.5 hover:bg-emerald-50 text-slate-700">🖨️ Print</button>
                     </div>
                   </div>
-                  <button onclick="openTrainReport()" class="h-10 px-4 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📊</span> Report</button>
+                  <button onclick="openTrainReport()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📊</span> Report</button>
                 </div>
               </div>
               <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-sm">
@@ -1897,7 +1897,8 @@
       activeTab = 'docs'; Object.keys(pager).forEach(key => pager[key].page = 1);
       renderBureauWorkspace();
     }
-    function switchBureauTab(tId) { activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    let examMenuOpen = false;
+    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
     const BUREAU_DUTIES = {
@@ -1920,9 +1921,9 @@
       const s2 = document.getElementById('mobile-bureau-select'); if (s2) s2.value = activeBureauKey;
       document.getElementById('stat-bureau-badge').innerText = appLang === 'en' ? b.shortNameEn : b.shortName;
       if (!b.tabs.some(t => t.id === activeTab)) activeTab = 'docs';
-      document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.map(t => {
+      document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.sub || examMenuOpen || EXTASK_KINDS[activeTab]).map(t => {
         const on = t.id === activeTab;
-        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span></button>`;
+        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}</button>`;
       }).join('');
       ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'certs', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
