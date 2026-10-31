@@ -661,16 +661,22 @@
         <button onclick="closeSystemModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center text-lg leading-none transition form-input-focus">✕</button>
       </div>
 
-      <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-1 overflow-x-auto overflow-y-hidden text-xs shrink-0" id="system-tools-nav-bar">
-        <button onclick="switchSystemToolTab('settings')" id="systab-settings" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus whitespace-nowrap">⚙️ User Management</button>
-        <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">⚙️ កំណត់ (Lists)</button>
-        <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">📁 File System</button>
-        <button onclick="switchSystemToolTab('recycle')" id="systab-recycle" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🗑️ Recycle Bin</button>
-        <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">🛡️ Security Center</button>
-        <button onclick="switchSystemToolTab('logging')" id="systab-logging" class="admin-only-tab px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">📋 Audit Logging</button>
-        <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus whitespace-nowrap">📖 User Manual</button>
-      </div>
-
+      <div class="flex flex-1 min-h-0 gap-4 flex-col md:flex-row">
+      <aside id="system-tools-nav-bar" class="md:w-52 shrink-0 md:overflow-y-auto md:border-r md:border-slate-100 md:pr-3 flex md:flex-col gap-1.5 overflow-x-auto text-xs">
+        <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">👥 មនុស្ស និងសិទ្ធិ</p>
+        <button onclick="switchSystemToolTab('settings')" id="systab-settings" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">⚙️ User Management</button>
+        <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">🗂️ ទិន្នន័យ</p>
+        <button onclick="switchSystemToolTab('location')" id="systab-location" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🧾 កំណត់ (Lists)</button>
+        <button onclick="switchSystemToolTab('files')" id="systab-files" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">📁 Backup / File System</button>
+        <button onclick="switchSystemToolTab('recycle')" id="systab-recycle" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🗑️ Recycle Bin</button>
+        <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">🖥️ ប្រព័ន្ធ</p>
+        <button onclick="switchSystemToolTab('health')" id="systab-health" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🩺 System Health</button>
+        <button onclick="switchSystemToolTab('security')" id="systab-security" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">🛡️ Security Center</button>
+        <p class="px-1 pt-2 first:pt-0 text-[10px] font-bold uppercase tracking-wide text-slate-400 admin-only-tab">📋 កំណត់ត្រា</p>
+        <button onclick="switchSystemToolTab('logging')" id="systab-logging" class="admin-only-tab w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">📋 Audit Logging</button>
+        <button onclick="switchSystemToolTab('manual')" id="systab-manual" class="w-full text-left px-3 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 form-input-focus whitespace-nowrap">📖 User Manual</button>
+      </aside>
+      <div class="flex-1 min-w-0 min-h-0 flex flex-col gap-3">
       <!-- USERS -->
       <div id="syscontent-settings" class="space-y-5 flex-1 overflow-y-auto pr-1">
         <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
@@ -793,6 +799,10 @@
         <div id="pager-recycle"></div>
       </div>
 
+      <!-- HEALTH -->
+      <div id="syscontent-health" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden text-xs">
+        <div id="health-body" class="space-y-4"></div>
+      </div>
       <!-- SECURITY -->
       <div id="syscontent-security" class="space-y-3 flex-1 overflow-y-auto pr-1 hidden text-xs">
         <div class="p-5 bg-emerald-50/80 border border-emerald-200 rounded-2xl space-y-2">
@@ -837,6 +847,8 @@
           <p><strong>៥. ការលុប៖</strong> ទិន្នន័យដែលលុបនឹងចូល <b>🗑️ ធុងសំរាម</b> ហើយ Admin អាចស្ដារវិញ ឬលុបជាអចិន្ត្រៃយ៍។</p>
           <p><strong>៦. Backup / Restore៖</strong> នៅ <b>📁 File System</b> អាច Export JSON និង Restore JSON វិញ។</p>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   </div>
@@ -1435,6 +1447,7 @@
 
     // Sync តាមតារាង៖ ទាញតែអ្វីដែលប្តូរ (updated_at) + ទាញពេញលេញរៀងរាល់ ១០ នាទី ដើម្បីចាប់ការលុបពិតប្រាកដ
     const inflight = new Set(), syncState = {}, FULL_RESYNC_MS = 10 * 60 * 1000;
+    const syncHealth = { at: 0, failed: 0 };
     async function fetchChangedRows(table, since) {
       const out = [], CH = 1000;
       for (let from = 0; from < CLOUD_FETCH_MAX; from += CH) {
@@ -1490,6 +1503,7 @@
       try {
         const tableResults = await Promise.allSettled(DATA_TABLES.map(t => syncTable(t)));
         tableResults.forEach((r, i) => { if (r.status === 'rejected' && OPTIONAL_TABLES.includes(DATA_TABLES[i])) console.warn('Optional table not ready:', DATA_TABLES[i]); else if (r.status === 'rejected') { failed++; console.warn('Sync failed:', DATA_TABLES[i], r.reason); } });
+        syncHealth.at = Date.now(); syncHealth.failed = failed;
         processUploadQueue();
 
         if (slow) {
@@ -1672,6 +1686,7 @@
       if (String(currentUser.username).toLowerCase() === 'admin' && p === 'admin123') showToast('🔐 សូមប្តូរពាក្យសម្ងាត់ Default របស់ admin ភ្លាមៗ!', true);
       idleStay(); logActivity('ចូលប្រព័ន្ធ', '@' + currentUser.username);
       syncFromSupabase(false);
+      setTimeout(checkBackupReminder, 3000);
     }
 
     function forceLogout(msg) {
@@ -3633,8 +3648,9 @@
     function closeSystemModal() { document.getElementById('modal-system-tools')?.classList.add('hidden'); }
     let currentSysTab = 'settings';
     function switchSystemToolTab(tab) {
+      if (!isAdmin() && tab !== 'manual') tab = 'manual';
       currentSysTab = tab;
-      ['settings', 'location', 'files', 'recycle', 'security', 'logging', 'manual'].forEach(t => {
+      ['settings', 'location', 'files', 'recycle', 'health', 'security', 'logging', 'manual'].forEach(t => {
         document.getElementById('syscontent-' + t)?.classList.add('hidden');
         const b = document.getElementById('systab-' + t);
         if (b) { b.classList.remove('bg-emerald-600', 'text-white'); b.classList.add('bg-slate-100', 'text-slate-600'); }
@@ -3646,10 +3662,63 @@
       refreshOpenSystemTab();
       initResizableTables();
     }
+
+    // ---------------- System Health + ការរំលឹក Backup (Admin / Super Admin ប៉ុណ្ណោះ) ----------------
+    const BACKUP_WARN_DAYS = 30, STORAGE_QUOTA_MB = 1000;
+    function lastBackupTime() {
+      let t = 0;
+      try { t = Date.parse(localStorage.getItem('hrd_last_backup') || '') || 0; } catch (e) { }
+      (auditLogs || []).forEach(l => { if (l && l.action === 'Export Backup JSON') { const x = Date.parse(l.time); if (x > t) t = x; } });
+      return t;
+    }
+    function checkBackupReminder() {
+      if (!currentUser || !isAdmin()) return;
+      const last = lastBackupTime(), days = last ? Math.floor((Date.now() - last) / 86400000) : null;
+      if (days !== null && days < BACKUP_WARN_DAYS) return;
+      let today = ''; try { today = localStorage.getItem('hrd_backup_nag') || ''; } catch (e) { }
+      if (today === todayISO()) return;
+      try { localStorage.setItem('hrd_backup_nag', todayISO()); } catch (e) { }
+      showToast(days === null ? '💾 មិនទាន់មាន Backup ទេ — សូម Export JSON នៅ System Tools → Backup' : '💾 Backup ចុងក្រោយ ' + days + ' ថ្ងៃមុន — សូម Export JSON ថ្មី', true);
+    }
+    function parseMB(sz) { const m = /([\d.]+)\s*(KB|MB|GB)/i.exec(String(sz || '')); if (!m) return 0; const v = parseFloat(m[1]) || 0, u = m[2].toUpperCase(); return u === 'GB' ? v * 1024 : u === 'KB' ? v / 1024 : v; }
+    function healthStats() {
+      const docs = activeRows('docs'); let sbN = 0, sbMB = 0, drN = 0, linkN = 0, noneN = 0, pendU = 0;
+      docs.forEach(d => {
+        if (d._upl) pendU++;
+        if (!d.driveLink) { noneN++; return; }
+        if (storagePathFromUrl(d.driveLink)) { sbN++; sbMB += parseMB(d.fileSize); }
+        else if (driveInfo(d.driveLink)) drN++; else linkN++;
+      });
+      const pending = DATA_TABLES.reduce((n, t) => n + store[t].filter(r => r._pending).length, 0);
+      return { docs: docs.length, sbN, sbMB, drN, linkN, noneN, pendU, pending };
+    }
+    function renderSystemHealth() {
+      const el = document.getElementById('health-body'); if (!el || !isAdmin()) return;
+      const h = healthStats(), now = Date.now();
+      const last = lastBackupTime(), bDays = last ? Math.floor((now - last) / 86400000) : null;
+      const bOk = bDays !== null && bDays < BACKUP_WARN_DAYS;
+      const pct = Math.min(100, h.sbMB / STORAGE_QUOTA_MB * 100), pcol = pct >= 85 ? 'bg-rose-500' : pct >= 70 ? 'bg-amber-500' : 'bg-emerald-500';
+      const ago = ms => { if (!ms) return 'មិនទាន់ Sync'; const s = Math.floor((now - ms) / 1000); return s < 60 ? s + ' វិនាទីមុន' : s < 3600 ? Math.floor(s / 60) + ' នាទីមុន' : Math.floor(s / 3600) + ' ម៉ោងមុន'; };
+      const card = (t, body, tone) => `<div class="rounded-2xl border p-4 space-y-1.5 ${tone || 'border-slate-200 bg-white'}"><h4 class="font-bold text-slate-800 text-sm">${t}</h4>${body}</div>`;
+      const row = (k, v) => `<div class="flex justify-between gap-3"><span class="text-slate-500">${k}</span><b class="text-slate-800 text-right">${v}</b></div>`;
+      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['certs', 'សញ្ញាបត្រ']].map(([t, k]) => row(k, activeRows(t).length)).join('');
+      const deleted = DATA_TABLES.reduce((n, t) => n + store[t].filter(isDeleted).length, 0);
+      el.innerHTML = `
+        ${bOk ? '' : `<div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 flex flex-wrap items-center justify-between gap-3"><div><b class="text-amber-900">💾 ${bDays === null ? 'មិនទាន់មាន Backup' : 'Backup ចុងក្រោយ ' + bDays + ' ថ្ងៃមុន'}</b><p class="text-amber-800">ណែនាំ Backup យ៉ាងតិចម្តងក្នុង ${BACKUP_WARN_DAYS} ថ្ងៃ ហើយរក្សាទុកក្នុង Google Drive។</p></div><button onclick="backupEntireSystem(); renderSystemHealth()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold form-input-focus">📥 Backup ឥឡូវនេះ</button></div>`}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          ${card('🔄 ការ Sync', row('ស្ថានភាព', db ? (navigator.onLine === false ? '🔴 Offline' : '🟢 ភ្ជាប់ Cloud') : '🟡 មិនមាន Cloud') + row('Sync ចុងក្រោយ', ago(syncHealth.at)) + row('តារាង Sync បរាជ័យ', syncHealth.failed || 0) + row('កំណត់ត្រារង់ចាំ Sync', h.pending) + row('ឯកសាររង់ចាំ upload', h.pendU), (h.pending || syncHealth.failed) ? 'border-amber-300 bg-amber-50' : '')}
+          ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
+          ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
+          ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.4.4') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
+        </div>`;
+    }
+
     function refreshOpenSystemTab() {
       if (document.getElementById('modal-system-tools')?.classList.contains('hidden') || !isAdmin()) return;
       if (currentSysTab === 'manual') renderManualDuties();
-      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
+      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, health: renderSystemHealth, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
     }
 
     function renderMigrationStatus() {
@@ -3896,6 +3965,7 @@
         users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
         exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip) };
       downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
+      try { localStorage.setItem('hrd_last_backup', nowISO()); } catch (e) { }
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
     }
 
