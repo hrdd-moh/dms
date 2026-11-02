@@ -332,6 +332,31 @@
               <div id="report-printable"></div>
             </div>
 
+            <!-- TAB: COURSES & CERTIFICATES (B3) -->
+            <div id="section-courses" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <div class="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-slate-100">
+                <h3 class="text-base font-bold text-slate-900">🎓 វគ្គបណ្តុះបណ្តាល & លេខវិញ្ញាបនបត្រ</h3>
+                <div class="flex flex-wrap items-center gap-2">
+                  <input type="text" id="filter-course-search" oninput="onFilter('courses')" placeholder="🔍 ស្វែងរកឈ្មោះ លេខ អង្គភាព..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 h-9 text-xs bg-slate-50 w-full sm:w-52">
+                  <select id="filter-course-name" onchange="onFilter('courses')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 h-9 text-xs bg-white max-w-[220px]"><option value="">វគ្គទាំងអស់</option></select>
+                  <input type="file" id="import-course-file" onchange="handleImportCourses(event)" class="hidden" accept=".xlsx, .xls, .csv">
+                  <button onclick="document.getElementById('import-course-file').click()" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📥</span> Import From Excel</button>
+                  <button onclick="ccImportTemplate()" title="ទាញយកគំរូ Excel" class="h-9 px-3 whitespace-nowrap bg-slate-100 hover:bg-emerald-50 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">⬇️</span> គំរូ</button>
+                  <button onclick="ccFillMissing()" title="ចេញលេខស្វ័យប្រវត្តិឱ្យជួរដែលនៅទទេ" class="h-9 px-3 whitespace-nowrap bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">🔢</span> ចេញលេខ</button>
+                  <button onclick="openCourseReport()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📊</span> Report</button>
+                </div>
+              </div>
+              <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
+                <table class="w-full text-left text-sm resizable-table">
+                  <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
+                    <tr><th class="p-3.5 min-w-[200px]">ឈ្មោះសិក្ខាកាម</th><th class="p-3.5 min-w-[200px]">ឈ្មោះវគ្គ</th><th class="p-3.5 min-w-[120px]">ទីកន្លែង</th><th class="p-3.5 text-center min-w-[150px]">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center min-w-[70px]">ម៉ោង</th><th class="p-3.5 min-w-[160px]">លេខវិញ្ញាបនបត្រ</th><th class="p-3.5 text-center min-w-[100px]">សកម្មភាព</th></tr>
+                  </thead>
+                  <tbody id="courses-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+              </div>
+              <div id="pager-courses"></div>
+            </div>
+
             <!-- TAB: TRACKING (NEW) -->
             <div id="section-tracking" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <h3 class="text-base font-bold text-slate-900 pb-2 border-b border-slate-100">🔎 តាមដានឯកសារតាមកូដ</h3>
@@ -1842,8 +1867,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const CLOUD_FETCH_MAX = 10000;
     const SYSTEM_USER_REGISTRY_ID = 999999999;
     const SYSTEM_USER_REGISTRY_CODE = "__SYSTEM_USERS_REGISTRY__";
-    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks'];
-    const OPTIONAL_TABLES = ['exam_tasks'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
+    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks', 'cert_courses'];
+    const OPTIONAL_TABLES = ['exam_tasks', 'cert_courses'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
     const EXTASK_KINDS = {
       ex_docs: { kind: 'docs', icon: '📑', kh: 'ការរៀបចំឯកសារ', en: 'Document Prep', qty: 'ចំនួនឯកសារ', ph: 'ឧ. រៀបចំសំណុំឯកសារប្រឡង' },
       ex_names: { kind: 'names', icon: '👥', kh: 'ការរៀបចំបញ្ជីឈ្មោះ', en: 'Name Lists', qty: 'ចំនួនបេក្ខជន', ph: 'ឧ. បញ្ជីឈ្មោះបេក្ខជនប្រឡង' },
@@ -1855,7 +1880,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const STAGE_DONE = 'បញ្ចប់រួចរាល់';
     const STAGES = ['រដ្ឋបាលទទួល', 'កំពុងពិនិត្យបច្ចេកទេស', 'រង់ចាំចំណារ/ហត្ថលេខា', 'បញ្ចប់រួចរាល់'];
     const LOCATIONS = ['ការិយាល័យសាមី', 'ប្រធាននាយកដ្ឋាន (DHRD)', 'អគ្គនាយកដ្ឋានសុខាភិបាល', 'ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី', 'ទីស្តីការគណៈរដ្ឋមន្ត្រី', 'ក្រសួងមុខងារសាធារណៈ'];
-    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', users: '👤 គណនី' };
+    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', cert_courses: '🎓 វគ្គ & វិញ្ញាបនបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', users: '👤 គណនី' };
 
     // ---------------- 2. I18N ----------------
     let appLang = localStorage.getItem('hrd_moh_lang_cache') || 'km';
@@ -2050,6 +2075,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       certs: 'id, num, recipient, type, date, signer',
       report_notes: 'id, bureau, period',
       exam_tasks: 'id, kind, session, status, assignee',
+      cert_courses: 'id, course, cert_no, start_date, trainee',
       countries: 'code, kh, en',
       users: 'id, username',
       logs: 'id, time, user, action',
@@ -2057,7 +2083,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     };
     function makeLocalDB(name, memory) {
       const d = (window.Dexie && !memory) ? new Dexie(name) : new MemoryDB();
-      d.version(5).stores(LOCAL_SCHEMA);
+      d.version(6).stores(LOCAL_SCHEMA);
       return d;
     }
     let localDB = makeLocalDB('DHRD_DB_V4');
@@ -2090,7 +2116,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
     ];
 
-    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [] };
+    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [] };
     let countriesData = [...defaultCountries];
     let usersData = [];
     let auditLogs = [];
@@ -2118,7 +2144,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' },
           { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others', sub: true }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
-          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+          { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'courses', icon: '🎓', label: 'វគ្គ & វិញ្ញាបនបត្រ (ទី៣)', labelEn: 'Courses & Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others', sub: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
@@ -2127,7 +2153,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'courses', icon: '🎓', label: 'វគ្គ & វិញ្ញាបនបត្រ', labelEn: 'Courses & Certificates' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
     };
     function bureauShort(k) { const b = BUREAUS[k]; return b ? (appLang === 'en' ? b.shortNameEn : b.shortName) : (k || '-'); }
     function specialtyTabFor(k) { return k === 'bureau_1' ? 'exams' : (k === 'bureau_3' ? 'certs' : 'training'); }
@@ -2845,7 +2871,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const on = t.id === activeTab;
         return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}</button>`;
       }).join('');
-      ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'certs', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
@@ -2857,7 +2883,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (activeTab === 'reports') renderReports();
       if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') renderTrainingList();
-      if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') renderCerts();
+      if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
     }
 
@@ -2906,6 +2932,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ex_names: ['👥', en ? 'Add Name List Task' : 'បន្ថែមការងាររៀបចំបញ្ជីឈ្មោះ', 'Exam Name List Preparation'],
         ex_seats: ['🪑', en ? 'Add Seating Plan Task' : 'បន្ថែមការងាររៀបចំប្លង់តុ', 'Exam Seating Plan Preparation'],
         ex_other: ['🧩', en ? 'Add Other Task' : 'បន្ថែមការងារផ្សេងៗ', 'Other Exam Tasks'],
+        courses: ['🎓', en ? 'Create Course & Certificates' : 'បង្កើតវគ្គ & ចេញវិញ្ញាបនបត្រ', 'Course Participants & Certificate Numbers'],
         certs: ['📜', en ? 'Register Certificate' : 'ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស', 'Certificate Registry'],
         docs: ['📚', en ? 'Quick Upload Document' : 'បង្ហោះឯកសាររហ័ស (Cloud)', 'Supabase Storage & Google Drive']
       };
@@ -2973,6 +3000,25 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Note' : 'កំណត់ចំណាំ'}</label><textarea id="et-note" rows="2" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></textarea></div>
             <button type="submit" id="btn-save-extask" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 form-input-focus">Submit / រក្សាទុក</button>
           </form>`;
+      } else if (activeTab === 'courses') {
+        const ip = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50', lb = (t, r) => `<label class="block text-xs mb-1 font-bold text-slate-700">${t}${r ? ' <span class="text-rose-500">*</span>' : ''}</label>`;
+        const names = [...new Set(activeRows('cert_courses').map(r => r.course).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join(''), locs = [...new Set(activeRows('cert_courses').map(r => r.location).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('');
+        container.innerHTML = `
+          <form onsubmit="handleSaveCourse(event)" class="space-y-3 text-sm font-medium">
+            <div>${lb(en ? 'Course Name' : 'ឈ្មោះវគ្គ', 1)}<input type="text" id="course-name" required list="course-name-list" autocomplete="off" class="${ip}"><datalist id="course-name-list">${names}</datalist></div>
+            <div>${lb(en ? 'Location' : 'ទីកន្លែងបណ្តុះបណ្តាល')}<input type="text" id="course-location" list="course-loc-list" autocomplete="off" class="${ip}"><datalist id="course-loc-list">${locs}</datalist></div>
+            <div class="grid grid-cols-2 gap-2.5"><div>${lb(en ? 'From' : 'ពីថ្ងៃ', 1)}<input type="date" id="course-start" required value="${todayISO()}" onchange="ccFormHint()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div>
+              <div>${lb(en ? 'To' : 'ដល់ថ្ងៃ', 1)}<input type="date" id="course-end" required value="${todayISO()}" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div></div>
+            <div>${lb(en ? 'Study hours' : 'ចំនួនម៉ោងសិក្សា')}<input type="number" id="course-hours" min="0" step="0.5" class="${ip}"></div>
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50/60 p-2.5 space-y-2">
+              ${lb(en ? 'Certificate numbering' : 'ការកំណត់លេខវិញ្ញាបនបត្រ')}
+              <select id="course-mode" onchange="ccFormHint()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="auto">🔢 ${en ? 'Automatic' : 'ស្វ័យប្រវត្តិ'}</option><option value="manual">✏️ ${en ? 'Manual (type per person)' : 'ដោយដៃ (វាយតាមជួរនីមួយៗ)'}</option></select>
+              <div id="course-prefix-wrap" class="flex items-center gap-2"><span class="text-[11px] font-bold text-slate-600 whitespace-nowrap">${en ? 'Code' : 'កូដ'}</span><input type="text" id="course-prefix" value="CT" oninput="ccFormHint()" class="form-input-focus w-24 border border-slate-300 rounded-xl p-2 bg-white font-mono"><span id="course-preview" class="text-[11px] font-mono text-emerald-700 font-bold"></span></div>
+            </div>
+            <div>${lb(en ? 'Participants (one per line)' : 'បញ្ជីឈ្មោះសិក្ខាកាម (១ នាក់ក្នុង ១ ជួរ)', 1)}<textarea id="course-names-ta" rows="8" required oninput="ccFormHint()" placeholder="សុខ ចាន់ណា, ស្រី, គិលានុបដ្ឋាយិកា មន្ទីរពេទ្យ…&#10;ចាន់ ដារ៉ា, ប្រុស, វេជ្ជបណ្ឌិត…" class="${ip} text-xs"></textarea><p id="course-names-hint" class="text-[11px] text-slate-500 mt-1"></p></div>
+            <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">${en ? 'Create Course & Issue Numbers' : 'បង្កើតវគ្គ & ចេញលេខវិញ្ញាបនបត្រ'}</button>
+          </form>`;
+        ccFormHint();
       } else if (activeTab === 'certs') {
         const lb = (t, req) => `<label class="block text-xs mb-1 font-bold text-slate-700">${t}${req ? ' <span class="text-rose-500">*</span>' : ''}</label>`, ip = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50';
         container.innerHTML = `
@@ -3022,10 +3068,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     // ---------------- 11. PAGINATION ----------------
     const pager = {};
-    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'certs', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
+    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
     const RENDERERS = {
       docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => renderExams(), exam_tasks: () => renderExamTasks(), trainings: () => renderTrainingList(),
-      certs: () => renderCerts(), logs: () => renderLogsTable(), recycle: () => renderRecycleBin()
+      certs: () => renderCerts(), courses: () => renderCourses(), logs: () => renderLogsTable(), recycle: () => renderRecycleBin()
     };
     function paginate(key, rows) {
       const p = pager[key]; const pages = Math.max(1, Math.ceil(rows.length / p.size));
@@ -3707,7 +3753,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ['status', 'ស្ថានភាព', 'select', EXTASK_STATUS], ['link', 'Link ឯកសារ', 'text'], ['note', 'កំណត់ចំណាំ', 'text']],
       certs: [['num', 'លេខកូដសញ្ញាបត្រ', 'text'], ['recipient', 'ឈ្មោះសាមីខ្លួន', 'text'], ['gender', 'ភេទ', 'select', ['', 'ប្រុស', 'ស្រី']], ['dob', 'ថ្ងៃកំណើត', 'date'], ['nationality', 'សញ្ជាតិ', 'text'],
         ['type', 'ប្រភេទសញ្ញាបត្រ', 'select', () => certTypeNames()], ['date', 'កាលបរិច្ឆេទ', 'date'], ['major', 'ជំនាញ', 'text'], ['institution', 'គ្រឹះស្ថាន', 'text'], ['grad_year', 'ឆ្នាំបញ្ចប់', 'number'],
-        ['signer', 'ហត្ថលេខា', 'text'], ['status', 'ស្ថានភាព', 'select', CERT_STATUS], ['status_note', 'មូលហេតុ / កំណត់ចំណាំស្ថានភាព (ឧ. ជំនួសដោយលេខ…)', 'text'], ['_file', 'ឯកសារ/រូបភាពភ្ជាប់ (ជ្រើសថ្មីដើម្បីជំនួស)', 'file']]
+        ['signer', 'ហត្ថលេខា', 'text'], ['status', 'ស្ថានភាព', 'select', CERT_STATUS], ['status_note', 'មូលហេតុ / កំណត់ចំណាំស្ថានភាព (ឧ. ជំនួសដោយលេខ…)', 'text'], ['_file', 'ឯកសារ/រូបភាពភ្ជាប់ (ជ្រើសថ្មីដើម្បីជំនួស)', 'file']],
+      cert_courses: [['trainee', 'ឈ្មោះសិក្ខាកាម', 'text'], ['gender', 'ភេទ', 'select', ['', 'ប្រុស', 'ស្រី']], ['unit', 'តួនាទី / អង្គភាព', 'text'], ['course', 'ឈ្មោះវគ្គ', 'text'], ['location', 'ទីកន្លែង', 'text'],
+        ['start_date', 'ពីថ្ងៃ', 'date'], ['end_date', 'ដល់ថ្ងៃ', 'date'], ['hours', 'ម៉ោងសិក្សា', 'number'], ['cert_no', 'លេខវិញ្ញាបនបត្រ', 'text'], ['note', 'កំណត់ចំណាំ', 'text']]
     };
     let recEdit = null;
     function editBtn(table, id) { return can('edit') ? `<button onclick="openRecEdit('${table}', ${id})" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs font-bold text-slate-700 form-input-focus" title="កែសម្រួល">✏️</button>` : ''; }
@@ -3748,6 +3796,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         else if (type === 'date') v = v || null;
         next[key] = v;
       });
+      if (table === 'cert_courses') { if (next.cert_no && store.cert_courses.some(r => r.id !== id && !isDeleted(r) && String(r.cert_no || '').toLowerCase() === next.cert_no.toLowerCase())) return alert('⚠️ លេខវិញ្ញាបនបត្រ "' + next.cert_no + '" មានរួចហើយ!'); if (next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!'); }
       if (table === 'certs' && store.certs.some(c => c.id !== id && !isDeleted(c) && String(c.num).toLowerCase() === String(next.num).toLowerCase())) return alert('⚠️ លេខកូដសញ្ញាបត្រ "' + next.num + '" មានរួចហើយ!');
       if (table === 'certs') { const fi = document.querySelector('#rec-edit-body [data-rk-file]'); if (fi && fi.files[0]) { const up = await uploadCertFile(fi.files[0], id); if (!up) return alert('⚠️ ឯកសារភ្ជាប់មិនបានឡើង — សូមព្យាយាមម្តងទៀត'); Object.assign(next, up); } }
       if (table === 'trainings' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
@@ -3760,7 +3809,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const ok = await persist(table, rec);
       closeRecEdit(); rerenderTable(table); if (activeTab === 'reports') renderReports();
       showToast(ok ? 'បានកែសម្រួលជោគជ័យ!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync (ត្រូវ Run supabase-migration-v3.3.sql)', !ok);
-      logActivity('កែសម្រួលកំណត់ត្រា', (table === 'certs' ? '📜 ' + (rec.num || id) : TABLE_LABELS[table] + ' #' + id) + ' — ' + changes.join('; '));
+      logActivity('កែសម្រួលកំណត់ត្រា', (table === 'certs' ? '📜 ' + (rec.num || id) : table === 'cert_courses' ? '🎓 ' + (rec.trainee || id) : TABLE_LABELS[table] + ' #' + id) + ' — ' + changes.join('; '));
     }
 
     let docPageId = null;
@@ -4565,6 +4614,251 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       } finally { if (btn) { btn.disabled = false; btn.textContent = label; } }
     }
 
+    // ================= វគ្គបណ្តុះបណ្តាល & លេខវិញ្ញាបនបត្រ (ការិយាល័យទី៣) — តារាង cert_courses =================
+    const CC_DEF_FORMAT = '{កូដ}-{ឆ្នាំ}-{លំដាប់}';
+    function ccNums(extra) { return activeRows('cert_courses').map(r => String(r.cert_no || '').trim()).filter(Boolean).concat(store.cert_courses.filter(isDeleted).map(r => String(r.cert_no || '').trim()).filter(Boolean), extra || []); }
+    // លេខស្វ័យប្រវត្តិ៖ {កូដ} {ឆ្នាំ} {ខែ} {លំដាប់} — រាប់បន្តពីលេខខ្ពស់បំផុតដែលមានរួច (រួមទាំងក្នុងធុងសំរាម)
+    function courseCertCode(prefix, date, extra) {
+      let fmt = String(setting('courseCertFormat') || CC_DEF_FORMAT).trim() || CC_DEF_FORMAT;
+      if (fmt.indexOf('{លំដាប់}') < 0) fmt += '-{លំដាប់}';
+      const code = String(prefix || '').trim() || 'CT', d = /^\d{4}-\d{2}/.test(date || '') ? date : todayISO(), y = d.slice(0, 4), mo = d.slice(5, 7);
+      const parts = fmt.split(/(\{កូដ\}|\{ឆ្នាំ\}|\{ខែ\}|\{លំដាប់\})/), rx = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const val = p => p === '{កូដ}' ? code : p === '{ឆ្នាំ}' ? y : p === '{ខែ}' ? mo : null;
+      const re = new RegExp('^' + parts.map(p => p === '{លំដាប់}' ? '(\\d+)' : (val(p) != null ? rx(val(p)) : rx(p))).join('') + '$', 'i');
+      const all = ccNums(extra); let max = 0; all.forEach(n => { const m = re.exec(n); if (m) max = Math.max(max, parseInt(m[1], 10) || 0); });
+      const build = n => parts.map(p => p === '{លំដាប់}' ? String(n).padStart(4, '0') : (val(p) != null ? val(p) : p)).join('');
+      const taken = new Set(all.map(n => n.toLowerCase())); let n = max + 1; while (taken.has(build(n).toLowerCase())) n++;
+      return build(n);
+    }
+    function ccParseLines(text) {
+      return String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
+        const c = l.split(/\t|,|;|\|/).map(x => impClean(x)); let name = c[0] || '', g = c[1] || '', unit = c[2] || '', num = c[3] || '';
+        if (g && !/ស្រី|ប្រុស|^[fm]$/i.test(g)) { num = unit; unit = g; g = ''; }
+        g = /ស្រី|^f/i.test(g) ? 'ស្រី' : /ប្រុស|^m/i.test(g) ? 'ប្រុស' : (impGender(name) || '');
+        return { trainee: name, gender: g, unit, cert_no: num };
+      }).filter(x => x.trainee);
+    }
+    function ccFormHint() {
+      const m = document.getElementById('course-mode')?.value, h = document.getElementById('course-names-hint'), n = ccParseLines(document.getElementById('course-names-ta')?.value).length;
+      if (h) h.textContent = (m === 'manual' ? 'ទម្រង់ជួរ៖ ឈ្មោះ, ភេទ, តួនាទី/អង្គភាព, លេខវិញ្ញាបនបត្រ' : 'ទម្រង់ជួរ៖ ឈ្មោះ, ភេទ, តួនាទី/អង្គភាព (លេខបង្កើតស្វ័យប្រវត្តិ)') + ' • ' + n + ' នាក់';
+      const pf = document.getElementById('course-prefix-wrap'); if (pf) pf.classList.toggle('hidden', m === 'manual');
+      const pv = document.getElementById('course-preview'), s = document.getElementById('course-start')?.value;
+      if (pv) pv.textContent = m === 'manual' ? '' : 'លេខបន្ទាប់៖ ' + courseCertCode(document.getElementById('course-prefix')?.value, s);
+    }
+    async function handleSaveCourse(e) {
+      e.preventDefault(); if (!can('create')) return;
+      const g = id => (document.getElementById(id)?.value || '').trim();
+      const course = g('course-name'), start = g('course-start'), end = g('course-end') || g('course-start'), mode = g('course-mode');
+      if (end < start) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      const people = ccParseLines(g('course-names-ta')); if (!people.length) return alert('⚠️ សូមបញ្ចូលឈ្មោះសិក្ខាកាមយ៉ាងហោចណាស់ ១ នាក់!');
+      const used = []; const hrs = parseFloat(g('course-hours'));
+      const rows = people.map(p => {
+        let num = p.cert_no; if (mode === 'auto') { num = courseCertCode(g('course-prefix'), start, used); } if (num) used.push(num);
+        return { id: generateSafeId(), course, location: g('course-location'), start_date: start, end_date: end, hours: Number.isFinite(hrs) ? hrs : null, trainee: p.trainee, gender: p.gender || null, unit: p.unit || null,
+          cert_no: num || '', note: '', created_by: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null };
+      });
+      const live = new Set(activeRows('cert_courses').map(r => String(r.cert_no || '').toLowerCase()).filter(Boolean)), seen = new Set(), dups = [];
+      rows.forEach(r => { const k = String(r.cert_no || '').toLowerCase(); if (!k) return; if (live.has(k) || seen.has(k)) dups.push(r.cert_no); seen.add(k); });
+      if (dups.length) return alert('⚠️ លេខវិញ្ញាបនបត្រស្ទួន៖ ' + [...new Set(dups)].slice(0, 5).join(', '));
+      const btn = e.target.querySelector('button[type=submit]'); if (btn) btn.disabled = true;
+      try {
+        const ok = await persistMany('cert_courses', rows); renderCourses(); updateStats();
+        showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានបង្កើតវគ្គ') + ' (' + rows.length + ' នាក់' + (rows[0].cert_no ? ' • ' + rows[0].cert_no + (rows.length > 1 ? ' → ' + rows[rows.length - 1].cert_no : '') : '') + ')', ok === false);
+        logActivity('បង្កើតវគ្គ & វិញ្ញាបនបត្រ', course + ' (' + rows.length + ' នាក់)');
+        document.getElementById('course-names-ta').value = ''; ccFormHint();
+      } finally { if (btn) btn.disabled = false; }
+    }
+    function renderCourses() {
+      const tbody = document.getElementById('courses-table-body'); if (!tbody) return;
+      const q = (document.getElementById('filter-course-search')?.value || '').toLowerCase().trim(), fc = document.getElementById('filter-course-name')?.value || '';
+      const sel = document.getElementById('filter-course-name');
+      if (sel) { const names = [...new Set(activeRows('cert_courses').map(r => r.course).filter(Boolean))].sort(); const cur = sel.value; sel.innerHTML = '<option value="">វគ្គទាំងអស់</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join(''); sel.value = names.includes(cur) ? cur : ''; }
+      const rows = sortRecords(activeRows('cert_courses').filter(r => (!fc || r.course === fc) && (!q || [r.trainee, r.course, r.unit, r.cert_no, r.location].some(v => String(v || '').toLowerCase().includes(q)))));
+      const pg = paginate('courses', rows);
+      tbody.innerHTML = pg.total ? pg.rows.map(r => `<tr class="hover:bg-emerald-50 transition">
+          <td class="p-3.5 text-sm whitespace-nowrap"><div class="font-bold text-slate-900">${esc(r.trainee)}</div><div class="text-[11px] text-slate-500">${esc([r.gender, r.unit].filter(Boolean).join(' · '))}</div></td>
+          <td class="p-3.5 text-sm font-bold text-slate-700">${esc(r.course)}</td>
+          <td class="p-3.5 text-sm text-slate-600">${esc(r.location || '')}</td>
+          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(r.start_date ? formatDateDisplay(r.start_date) : '')}${r.end_date && r.end_date !== r.start_date ? ' → ' + esc(formatDateDisplay(r.end_date)) : ''}</td>
+          <td class="p-3.5 text-center text-sm">${r.hours != null ? esc(r.hours) : ''}</td>
+          <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${r.cert_no ? esc(r.cert_no) : '<span class="text-amber-600 text-xs">មិនទាន់មានលេខ</span>'}</td>
+          <td class="p-3.5 text-center whitespace-nowrap">${editBtn('cert_courses', r.id)}${deleteBtn('cert_courses', r.id)}</td></tr>`).join('') : emptyRow(7);
+      renderPager('courses', pg);
+    }
+    // ចេញលេខឱ្យជួរដែលនៅទទេ (ជួរដែលបានបញ្ចូលដោយដៃ ឬ Import ដោយគ្មានលេខ)
+    async function ccFillMissing() {
+      if (!can('edit')) return showToast('គ្មានសិទ្ធិកែសម្រួល', true);
+      const fc = document.getElementById('filter-course-name')?.value || '';
+      const miss = activeRows('cert_courses').filter(r => !r.cert_no && (!fc || r.course === fc)).sort((a, b) => String(a.start_date || '').localeCompare(String(b.start_date || '')) || (a.id - b.id));
+      if (!miss.length) return showToast('មិនមានជួរគ្មានលេខទេ');
+      const prefix = prompt('កូដសម្រាប់លេខស្វ័យប្រវត្តិ (ឧ. CT)៖', 'CT'); if (prefix === null) return;
+      if (!confirm('ចេញលេខវិញ្ញាបនបត្រស្វ័យប្រវត្តិឱ្យ ' + miss.length + ' នាក់?')) return;
+      const used = []; for (const r of miss) { r.cert_no = courseCertCode(prefix, r.start_date, used); used.push(r.cert_no); }
+      await persistMany('cert_courses', miss); renderCourses(); logActivity('ចេញលេខវិញ្ញាបនបត្រស្វ័យប្រវត្តិ', miss.length + ' នាក់');
+      showToast('បានចេញលេខ ' + miss.length + ' នាក់');
+    }
+
+    // ---------- Import Excel / CSV ----------
+    const CCIMP_HEAD = [['cert_no', /វិញ្ញាបនបត្រ|លេខ|cert|number|no\.?$/i], ['hours', /ម៉ោង|hour/i], ['location', /ទីកន្លែង|ទីតាំង|location|place|venue/i], ['start_date', /ចាប់ផ្តើម|ពីថ្ងៃ|start|from/i], ['end_date', /បញ្ចប់|ដល់ថ្ងៃ|^end|^to$/i],
+      ['gender', /ភេទ|gender|sex/i], ['unit', /តួនាទី|អង្គភាព|unit|position|organi/i], ['course', /វគ្គ|កម្មវិធី|course|program/i], ['trainee', /ឈ្មោះ|name|trainee/i]];
+    const CCIMP = { items: [], name: '', d: {}, auto: true, prefix: 'CT' };
+    function ccimpParse(rows) {
+      let det = null;
+      for (let i = 0; i < Math.min(rows.length, 8) && !det; i++) {
+        const map = {}; (rows[i] || []).map(impClean).forEach((c, idx) => { if (!c || /^ល\.?រ$/.test(c)) return; const hit = CCIMP_HEAD.find(([k, re]) => map[k] == null && re.test(c)); if (hit) map[hit[0]] = idx; });
+        if (map.trainee != null) det = { start: i + 1, map };
+      }
+      if (!det) return null;
+      const g = (r, k) => det.map[k] == null ? '' : impClean(r[det.map[k]]), out = [];
+      for (let i = det.start; i < rows.length; i++) {
+        const r = rows[i] || [], trainee = g(r, 'trainee'); if (!trainee) continue;
+        let gender = g(r, 'gender'); gender = /ស្រី|^f/i.test(gender) ? 'ស្រី' : /ប្រុស|^m/i.test(gender) ? 'ប្រុស' : (impGender(trainee) || '');
+        const h = parseFloat(g(r, 'hours').replace(',', '.'));
+        out.push({ _row: i + 1, _on: true, _warn: [], id: generateSafeId(), trainee, gender, unit: g(r, 'unit'), course: g(r, 'course'), location: g(r, 'location'), start_date: cimpDate(g(r, 'start_date')), end_date: cimpDate(g(r, 'end_date')), hours: Number.isFinite(h) ? h : '', cert_no: g(r, 'cert_no') });
+      }
+      return out;
+    }
+    function ccimpEff(t) { const d = CCIMP.d; return { ...t, course: t.course || d.course || '', location: t.location || d.location || '', start_date: t.start_date || d.start_date || '', end_date: t.end_date || t.start_date || d.end_date || d.start_date || '', hours: t.hours !== '' ? t.hours : (d.hours || '') }; }
+    function ccimpClose() { document.getElementById('modal-cc-import')?.remove(); CCIMP.items = []; }
+    function ccimpDef(k, v) { CCIMP.d[k] = v; ccimpRender(); }
+    function ccimpRender() {
+      const body = document.getElementById('ccimp-body'); if (!body) return;
+      const inp = 'w-full border border-slate-200 rounded p-1', live = new Set(activeRows('cert_courses').map(r => String(r.cert_no || '').toLowerCase()).filter(Boolean)), seen = new Set();
+      body.innerHTML = CCIMP.items.map((t, i) => {
+        const e = ccimpEff(t), w = [];
+        if (!e.course) w.push('គ្មានវគ្គ'); if (!e.start_date) w.push('គ្មានថ្ងៃចាប់ផ្តើម');
+        const k = String(t.cert_no || '').toLowerCase(); if (k) { if (live.has(k) || seen.has(k)) w.push('លេខស្ទួន'); seen.add(k); }
+        t._warn = w;
+        return `<tr class="${w.length ? 'bg-amber-50' : ''} ${t._on ? '' : 'opacity-50'}"><td class="p-2 text-center"><input type="checkbox" ${t._on ? 'checked' : ''} onchange="CCIMP.items[${i}]._on=this.checked;ccimpRender()"></td><td class="p-2 text-center text-slate-400">${t._row}</td>
+        <td class="p-2 min-w-[150px]"><input value="${esc(t.trainee)}" onchange="CCIMP.items[${i}].trainee=this.value.trim();ccimpRender()" class="${inp} font-bold"></td>
+        <td class="p-2"><select onchange="CCIMP.items[${i}].gender=this.value;ccimpRender()" class="${inp}"><option value="">—</option><option ${t.gender === 'ប្រុស' ? 'selected' : ''}>ប្រុស</option><option ${t.gender === 'ស្រី' ? 'selected' : ''}>ស្រី</option></select></td>
+        <td class="p-2 min-w-[140px]">${esc(t.unit)}</td><td class="p-2 min-w-[150px] ${t.course ? '' : 'text-slate-400'}">${esc(e.course)}</td><td class="p-2">${esc(e.location)}</td>
+        <td class="p-2 whitespace-nowrap">${esc(e.start_date ? formatDateDisplay(e.start_date) : '')}${e.end_date && e.end_date !== e.start_date ? ' → ' + esc(formatDateDisplay(e.end_date)) : ''}</td><td class="p-2">${esc(e.hours)}</td>
+        <td class="p-2 min-w-[140px]"><input value="${esc(t.cert_no)}" placeholder="${CCIMP.auto ? '(ស្វ័យប្រវត្តិ)' : ''}" onchange="CCIMP.items[${i}].cert_no=this.value.trim();ccimpRender()" class="${inp} font-mono"></td>
+        <td class="p-2 text-[11px] text-amber-700 min-w-[120px]">${w.map(esc).join(' • ')}</td></tr>`;
+      }).join('');
+      const on = CCIMP.items.filter(t => t._on).length;
+      document.getElementById('ccimp-count').textContent = 'ជ្រើស ' + on + ' / ' + CCIMP.items.length + ' ជួរ'; document.getElementById('ccimp-ok').disabled = !on;
+    }
+    function ccimpOpen(items, name) {
+      ccimpClose(); CCIMP.items = items; CCIMP.name = name; CCIMP.d = {}; CCIMP.auto = true; CCIMP.prefix = 'CT';
+      const d = document.createElement('div'); d.id = 'modal-cc-import'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-4';
+      const di = 'border border-slate-300 rounded-lg p-1.5 text-xs bg-white';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-7xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><div><h3 class="text-base font-bold text-slate-900">📥 ពិនិត្យមុន Import — ${esc(name)}</h3><p class="text-xs text-slate-500">ព័ត៌មានវគ្គខាងក្រោម បំពេញជួរដែលក្នុង file ទទេ។ <span id="ccimp-count" class="font-bold text-emerald-700"></span></p></div><button type="button" onclick="ccimpClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="grid grid-cols-2 md:grid-cols-7 gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs">
+          <input placeholder="ឈ្មោះវគ្គ (ពេល file គ្មាន)" oninput="ccimpDef('course',this.value.trim())" class="${di} md:col-span-2"><input placeholder="ទីកន្លែង" oninput="ccimpDef('location',this.value.trim())" class="${di}">
+          <input type="date" title="ចាប់ផ្តើម" onchange="ccimpDef('start_date',this.value)" class="${di}"><input type="date" title="បញ្ចប់" onchange="ccimpDef('end_date',this.value)" class="${di}"><input type="number" min="0" placeholder="ម៉ោង" oninput="ccimpDef('hours',this.value)" class="${di}">
+          <label class="flex items-center gap-1.5 font-bold text-slate-700"><input type="checkbox" checked onchange="CCIMP.auto=this.checked;ccimpRender()"> លេខស្វ័យប្រវត្តិ <input value="CT" title="កូដ" oninput="CCIMP.prefix=this.value.trim()" class="${di} w-14"></label></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr><th class="p-2">✓</th><th class="p-2">ជួរ</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">តួនាទី/អង្គភាព</th><th class="p-2">វគ្គ</th><th class="p-2">ទីកន្លែង</th><th class="p-2">កាលបរិច្ឆេទ</th><th class="p-2">ម៉ោង</th><th class="p-2">លេខវិញ្ញាបនបត្រ</th><th class="p-2">កំណត់សម្គាល់</th></tr></thead><tbody id="ccimp-body" class="divide-y divide-slate-100"></tbody></table></div>
+        <div class="flex justify-end gap-2"><button type="button" onclick="ccimpClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="ccimp-ok" onclick="ccimpCommit()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold disabled:opacity-40">✅ Import</button></div></div>`;
+      document.body.appendChild(d); ccimpRender();
+    }
+    async function ccimpCommit() {
+      const sel = CCIMP.items.filter(t => t._on); if (!sel.length) return;
+      if (sel.some(t => t._warn.some(w => w !== 'លេខស្ទួន') || !t.trainee)) return alert('⚠️ មានជួរគ្មានវគ្គ/ថ្ងៃចាប់ផ្តើម — សូមបំពេញខាងលើ ឬដោះធីកចេញ');
+      if (sel.some(t => t._warn.includes('លេខស្ទួន'))) return alert('⚠️ មានលេខវិញ្ញាបនបត្រស្ទួន — សូមកែ ឬដោះធីកចេញ');
+      const used = sel.map(t => t.cert_no).filter(Boolean);
+      const items = sel.map(t => { const e = ccimpEff(t); let num = t.cert_no; if (!num && CCIMP.auto) { num = courseCertCode(CCIMP.prefix, e.start_date, used); used.push(num); }
+        const h = parseFloat(e.hours); return { id: t.id, course: e.course, location: e.location || null, start_date: e.start_date, end_date: e.end_date || e.start_date, hours: Number.isFinite(h) ? h : null, trainee: t.trainee, gender: t.gender || null, unit: t.unit || null,
+          cert_no: num || '', note: '', created_by: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null }; });
+      const name = CCIMP.name; ccimpClose();
+      await persistMany('cert_courses', items); renderCourses(); updateStats();
+      showToast('បាន Import ' + items.length + ' នាក់!'); logActivity('Import Excel វគ្គ & វិញ្ញាបនបត្រ', name + ' (' + items.length + ')');
+    }
+    function handleImportCourses(e) {
+      const file = e.target.files[0]; if (!file) return;
+      if (!window.XLSX) { e.target.value = ''; return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true); }
+      if (!can('create')) { e.target.value = ''; return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true); }
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        try {
+          const isCsv = /\.csv$/i.test(file.name);
+          const wb = isCsv ? XLSX.read(new TextDecoder('utf-8').decode(new Uint8Array(evt.target.result)).replace(/^﻿/, ''), { type: 'string', raw: true }) : XLSX.read(new Uint8Array(evt.target.result), { type: 'array', cellDates: false });
+          const items = ccimpParse(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: false, defval: '', blankrows: false }));
+          if (!items) { alert('⚠️ រកមិនឃើញជួរក្បាលតារាង (ត្រូវមានជួរ «ឈ្មោះ»)។ សូមប្រើ «⬇️ គំរូ»។'); return; }
+          if (!items.length) { showToast('មិនរកឃើញទិន្នន័យទេ', true); return; }
+          ccimpOpen(items, file.name);
+        } catch (err) { console.warn(err); alert('⚠️ កំហុសក្នុងការអានហ្វាល!'); }
+        finally { e.target.value = ''; }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+    function ccImportTemplate() {
+      if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
+      const ws = XLSX.utils.json_to_sheet([{ 'ល.រ': 1, 'ឈ្មោះសិក្ខាកាម': 'សុខ ចាន់ណា', 'ភេទ': 'ស្រី', 'តួនាទី/អង្គភាព': 'គិលានុបដ្ឋាយិកា មន្ទីរពេទ្យ…', 'ឈ្មោះវគ្គ': 'វគ្គបណ្តុះបណ្តាល…', 'ទីកន្លែង': 'ភ្នំពេញ', 'ថ្ងៃចាប់ផ្តើម': '01/09/2026', 'ថ្ងៃបញ្ចប់': '05/09/2026', 'ម៉ោងសិក្សា': 40, 'លេខវិញ្ញាបនបត្រ': '(ទទេ = ស្វ័យប្រវត្តិ)' }]);
+      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Course'); XLSX.writeFile(wb, 'course_certificate_import_template.xlsx');
+    }
+
+    // ---------- Report វគ្គ (លម្អិត / សង្ខេប) ----------
+    const CCR = { mode: 'summary', group: 'course', f: {} };
+    const CCR_GROUPS = { course: ['វគ្គ', r => r.course || 'មិនបញ្ជាក់'], year: ['ឆ្នាំ', r => String(r.start_date || '').slice(0, 4) || 'មិនបញ្ជាក់'], month: ['ខែ', r => String(r.start_date || '').slice(0, 7) || 'មិនបញ្ជាក់'],
+      location: ['ទីកន្លែង', r => r.location || 'មិនបញ្ជាក់'], unit: ['អង្គភាព', r => r.unit || 'មិនបញ្ជាក់'], gender: ['ភេទ', r => r.gender || 'មិនបញ្ជាក់'] };
+    function ccrFiltered() {
+      const f = CCR.f, q = String(f.q || '').toLowerCase().trim();
+      return activeRows('cert_courses').filter(r => (!q || [r.trainee, r.unit, r.cert_no].some(v => String(v || '').toLowerCase().includes(q))) && (!f.course || r.course === f.course) && (!f.location || r.location === f.location) &&
+        (!f.year || String(r.start_date || '').slice(0, 4) === f.year) && (!f.gender || (f.gender === '-' ? !r.gender : r.gender === f.gender)) && (!f.from || (r.start_date && r.start_date >= f.from)) && (!f.to || (r.start_date && r.start_date <= f.to)))
+        .sort((a, b) => String(a.start_date || '').localeCompare(String(b.start_date || '')) || String(a.course || '').localeCompare(String(b.course || '')) || String(a.cert_no || '').localeCompare(String(b.cert_no || '')));
+    }
+    function ccrData() {
+      const rows = ccrFiltered();
+      if (CCR.mode === 'detail') return rows.map((r, i) => ({ 'ល.រ': i + 1, 'ឈ្មោះ': r.trainee, 'ភេទ': r.gender || '', 'តួនាទី/អង្គភាព': r.unit || '', 'វគ្គ': r.course, 'ទីកន្លែង': r.location || '', 'ពីថ្ងៃ': r.start_date ? formatDateDisplay(r.start_date) : '', 'ដល់ថ្ងៃ': r.end_date ? formatDateDisplay(r.end_date) : '', 'ម៉ោងសិក្សា': r.hours != null ? r.hours : '', 'លេខវិញ្ញាបនបត្រ': r.cert_no || '' }));
+      const [label, fn] = CCR_GROUPS[CCR.group], m = new Map();
+      rows.forEach(r => { const k = fn(r), o = m.get(k) || { n: 0, f: 0, m: 0, u: 0, c: 0 }; o.n++; r.gender === 'ស្រី' ? o.f++ : r.gender === 'ប្រុស' ? o.m++ : o.u++; if (r.cert_no) o.c++; m.set(k, o); });
+      let arr = [...m.entries()]; arr = ['year', 'month'].includes(CCR.group) ? arr.sort((a, b) => String(a[0]).localeCompare(String(b[0]))) : arr.sort((a, b) => b[1].n - a[1].n || String(a[0]).localeCompare(String(b[0])));
+      const out = arr.map(([k, o], i) => ({ 'ល.រ': i + 1, [label]: k, 'សិក្ខាកាមសរុប': o.n, 'ស្រី': o.f, 'ប្រុស': o.m, 'មិនបញ្ជាក់ភេទ': o.u, 'បានចេញលេខ': o.c, 'មិនទាន់មានលេខ': o.n - o.c }));
+      const cnt = fn2 => rows.filter(fn2).length;
+      out.push({ 'ល.រ': '', [label]: 'សរុបរួម', 'សិក្ខាកាមសរុប': rows.length, 'ស្រី': cnt(r => r.gender === 'ស្រី'), 'ប្រុស': cnt(r => r.gender === 'ប្រុស'), 'មិនបញ្ជាក់ភេទ': cnt(r => !r.gender), 'បានចេញលេខ': cnt(r => r.cert_no), 'មិនទាន់មានលេខ': cnt(r => !r.cert_no) });
+      return out;
+    }
+    function ccrTitle() { return 'របាយការណ៍វគ្គបណ្តុះបណ្តាល & វិញ្ញាបនបត្រ — ' + (CCR.mode === 'detail' ? 'លម្អិត' : 'សង្ខេបតាម' + CCR_GROUPS[CCR.group][0]); }
+    function ccrFilterText() { const f = CCR.f, p = []; if (f.course) p.push('វគ្គ៖ ' + f.course); if (f.location) p.push('ទីកន្លែង៖ ' + f.location); if (f.year) p.push('ឆ្នាំ៖ ' + f.year); if (f.gender) p.push('ភេទ៖ ' + (f.gender === '-' ? 'មិនបញ្ជាក់' : f.gender)); if (f.q) p.push('ស្វែងរក៖ ' + f.q); if (f.from || f.to) p.push('ថ្ងៃ៖ ' + (f.from ? formatDateDisplay(f.from) : '…') + ' → ' + (f.to ? formatDateDisplay(f.to) : '…')); return p.length ? p.join(' • ') : 'ទិន្នន័យទាំងអស់'; }
+    function ccrRead() { const g = id => document.getElementById('ccf-' + id)?.value || ''; CCR.f = { q: g('q'), course: g('course'), location: g('location'), year: g('year'), gender: g('gender'), from: g('from'), to: g('to') }; CCR.group = g('group') || CCR.group; }
+    function ccrTableHTML(data) {
+      if (!data.length) return '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>'; const keys = Object.keys(data[0]);
+      return `<table class="w-full text-xs text-left"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CCR.mode === 'summary' && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    function ccrSetMode(m) { CCR.mode = m; ccrRender(); }
+    function ccrRender() {
+      ccrRead(); const rows = ccrFiltered();
+      document.getElementById('ccr-count').textContent = 'រកឃើញ ' + toKhmerDigits(rows.length) + ' នាក់';
+      document.getElementById('ccr-result').innerHTML = ccrTableHTML(ccrData());
+      document.getElementById('ccr-group-wrap').classList.toggle('hidden', CCR.mode !== 'summary');
+      ['detail', 'summary'].forEach(m => { const b = document.getElementById('ccrtab-' + m); b.classList.toggle('bg-emerald-600', CCR.mode === m); b.classList.toggle('text-white', CCR.mode === m); b.classList.toggle('bg-slate-100', CCR.mode !== m); b.classList.toggle('text-slate-600', CCR.mode !== m); });
+    }
+    function ccrClose() { document.getElementById('modal-cc-report')?.remove(); }
+    function openCourseReport() {
+      ccrClose(); const all = activeRows('cert_courses'), uniq = k => [...new Set(all.map(t => t[k]).filter(Boolean))].sort(), years = [...new Set(all.map(r => String(r.start_date || '').slice(0, 4)).filter(Boolean))].sort().reverse();
+      const sel = (id, label, opts) => `<div><label class="block text-[10px] font-bold text-slate-600 mb-1">${label}</label><select id="ccf-${id}" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"><option value="">ទាំងអស់</option>${opts.map(o => Array.isArray(o) ? `<option value="${esc(o[0])}">${esc(o[1])}</option>` : `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>`;
+      const d = document.createElement('div'); d.id = 'modal-cc-report'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">🎓 Report — វគ្គបណ្តុះបណ្តាល & វិញ្ញាបនបត្រ</h3><button type="button" onclick="ccrClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
+          ${sel('course', 'វគ្គ', uniq('course'))}${sel('location', 'ទីកន្លែង', uniq('location'))}${sel('year', 'ឆ្នាំ', years)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ចាប់ផ្តើម ពី</label><input type="date" id="ccf-from" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="ccf-to" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div class="col-span-2"><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (ឈ្មោះ/អង្គភាព/លេខ)</label><input id="ccf-q" oninput="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div></div>
+        <div class="flex flex-wrap items-center gap-2 text-xs"><button id="ccrtab-detail" onclick="ccrSetMode('detail')" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📋 Detail Report</button><button id="ccrtab-summary" onclick="ccrSetMode('summary')" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">🧮 Summary Report</button>
+          <div id="ccr-group-wrap" class="flex items-center gap-2"><span class="font-bold text-slate-600">ដោយតាម៖</span><select id="ccf-group" onchange="ccrRender()" class="form-input-focus border border-slate-300 rounded-xl p-2 text-xs bg-white">${Object.entries(CCR_GROUPS).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div><span id="ccr-count" class="ml-auto font-bold text-emerald-700"></span></div>
+        <div id="ccr-result" class="overflow-auto border border-slate-200 rounded-xl flex-1 min-h-[200px]"></div>
+        <div class="flex flex-wrap justify-end gap-2"><button onclick="ccrExport('xlsx')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button><button onclick="ccrExport('csv')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">CSV</button><button onclick="ccrPrint(false)" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold">👁️ Print Preview</button><button onclick="ccrPrint(true)" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button></div></div>`;
+      document.body.appendChild(d); CCR.mode = 'summary'; document.getElementById('ccf-group').value = CCR.group; ccrRender();
+    }
+    function ccrExport(kind) {
+      ccrRead(); const data = ccrData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      if (kind === 'xlsx') { if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(data), CCR.mode === 'detail' ? 'Detail' : 'Summary'); XLSX.writeFile(wb, 'course_certificates_' + CCR.mode + '_' + todayISO() + '.xlsx'); }
+      else { const keys = Object.keys(data[0]); let csv = '﻿' + keys.map(csvCell).join(',') + '\n'; data.forEach(r => { csv += keys.map(k => csvCell(r[k])).join(',') + '\n'; }); downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'course_certificates_' + CCR.mode + '_' + todayISO() + '.csv'); }
+      showToast('បាន Export រួចរាល់');
+    }
+    function ccrPrint(auto) {
+      ccrRead(); const data = ccrData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      const keys = Object.keys(data[0]), now = new Date();
+      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CCR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(ccrTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}.bar{background:#ecfdf5;border-bottom:1px solid #6ee7b7;padding:8px;text-align:center;margin:-8px -8px 10px}.bar button{padding:6px 16px;border:0;border-radius:8px;background:#059669;color:#fff;font-weight:bold;cursor:pointer}@media print{.bar{display:none}}</style></head><body>${auto ? '' : '<div class="bar"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>'}<h2>${esc(ccrTitle())}</h2><p class="s">${esc(ccrFilterText())} — សរុប ${toKhmerDigits(ccrFiltered().length)} នាក់</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div>${auto ? '<script>setTimeout(function(){window.print()},700)<\/script>' : ''}</body></html>`);
+      win.document.close();
+    }
+
     // ---------- Import Excel សញ្ញាបត្រចាស់ ----------
     const CIMP_HEAD = [['num', /លេខកូដ|លេខសញ្ញាបត្រ|លេខវិញ្ញាបនបត្រ|^លេខ$|code|cert.*no|certificate\s*no/i], ['institution', /គ្រឹះស្ថាន|សាកលវិទ្យាល័យ|សាលា|institution|school|universit/i], ['major', /ជំនាញ|មុខវិជ្ជា|major|field/i],
       ['gender', /ភេទ|gender|sex/i], ['dob', /កំណើត|birth|dob/i], ['nationality', /សញ្ជាតិ|សញ្ចាតិ|nationality/i], ['grad_year', /ឆ្នាំបញ្ចប់|បញ្ចប់ការសិក្សា|graduat/i], ['signer', /ហត្ថលេខា|signer|signed/i],
@@ -4782,11 +5076,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (table === 'exams') return (r.major || '') + ' (' + (r.session || '') + ')';
       if (table === 'exam_tasks') return (r.title || '') + (r.session ? ' (' + r.session + ')' : '');
       if (table === 'certs') return (r.num || '') + ' — ' + (r.recipient || '');
+      if (table === 'cert_courses') return (r.trainee || '') + ' — ' + (r.course || '') + (r.cert_no ? ' (' + r.cert_no + ')' : '');
       if (table === 'report_notes') return (r.period || '') + ' / ' + (r.bureau || '');
       return String(r.id);
     }
     function rerenderTable(table) {
-      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts })[table]?.();
+      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts, cert_courses: renderCourses })[table]?.();
       updateStats(); renderNotifBadge();
     }
 
@@ -4960,6 +5255,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { k: 'storageQuotaMB', label: 'កូតា Storage (MB)', def: 1000, min: 100, max: 100000, hint: 'សម្រាប់គណនា % ក្នុង System Health (Free plan = 1000 MB)។' },
       { k: 'pageSize', label: 'ចំនួនជួរក្នុងមួយទំព័រ (លំនាំដើម)', def: 25, options: [10, 25, 50, 100], hint: 'ចំនួនជួរដំបូងសម្រាប់តារាងទាំងអស់។' },
       { k: 'certFormat', type: 'text', label: 'ទម្រង់លេខកូដសញ្ញាបត្រ', def: '{ប្រភេទ}-{ឆ្នាំ}-{លំដាប់}', hint: 'ប្រើ {ប្រភេទ} {ឆ្នាំ} {ខែ} {លំដាប់} ឧ. {ប្រភេទ}-{ឆ្នាំ}-{លំដាប់} → VN-2026-0001 (លំដាប់រាប់ដោយស្វ័យប្រវត្តិ)។' },
+      { k: 'courseCertFormat', type: 'text', label: 'ទម្រង់លេខវិញ្ញាបនបត្រវគ្គ', def: '{កូដ}-{ឆ្នាំ}-{លំដាប់}', hint: 'ប្រើ {កូដ} {ឆ្នាំ} {ខែ} {លំដាប់} ឧ. {កូដ}-{ឆ្នាំ}-{លំដាប់} → CT-2026-0001 (ឆ្នាំយកពីថ្ងៃចាប់ផ្តើមវគ្គ)។' },
       { k: 'verifyUrl', type: 'text', label: 'Link ទំព័រផ្ទៀងផ្ទាត់សាធារណៈ (ក្នុង QR)', def: '', hint: 'ទទេ = ប្រើ link គេហទំព័រនេះ (ឧ. https://hrdd-moh.github.io/dms/) ។ QR បន្ថែម ?verify=លេខកូដ។' }
     ];
     let sysSettings = {};
@@ -5078,7 +5374,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const ago = ms => { if (!ms) return 'មិនទាន់ Sync'; const s = Math.floor((now - ms) / 1000); return s < 60 ? s + ' វិនាទីមុន' : s < 3600 ? Math.floor(s / 60) + ' នាទីមុន' : Math.floor(s / 3600) + ' ម៉ោងមុន'; };
       const card = (t, body, tone) => `<div class="rounded-2xl border p-4 space-y-1.5 ${tone || 'border-slate-200 bg-white'}"><h4 class="font-bold text-slate-800 text-sm">${t}</h4>${body}</div>`;
       const row = (k, v) => `<div class="flex justify-between gap-3"><span class="text-slate-500">${k}</span><b class="text-slate-800 text-right">${v}</b></div>`;
-      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['certs', 'សញ្ញាបត្រ']].map(([t, k]) => row(k, activeRows(t).length)).join('');
+      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['certs', 'សញ្ញាបត្រ'], ['cert_courses', 'វគ្គ & វិញ្ញាបនបត្រ']].map(([t, k]) => row(k, activeRows(t).length)).join('');
       const deleted = DATA_TABLES.reduce((n, t) => n + store[t].filter(isDeleted).length, 0);
       el.innerHTML = `
         ${bOk ? '' : `<div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 flex flex-wrap items-center justify-between gap-3"><div><b class="text-amber-900">💾 ${bDays === null ? 'មិនទាន់មាន Backup' : 'Backup ចុងក្រោយ ' + bDays + ' ថ្ងៃមុន'}</b><p class="text-amber-800">ណែនាំ Backup យ៉ាងតិចម្តងក្នុង ${BACKUP_WARN_DAYS} ថ្ងៃ ហើយរក្សាទុកក្នុង Google Drive។</p></div><button onclick="backupEntireSystem(); renderSystemHealth()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold form-input-focus">📥 Backup ឥឡូវនេះ</button></div>`}
@@ -5340,7 +5636,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const strip = r => { const c = { ...r }; delete c._pending; if (c.driveLink) delete c.fileDataUrl; return c; };
       const full = { app: 'HRDD DMS', version: 'V2.5', exportedAt: nowISO(), exportedBy: currentUser?.username,
         users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
-        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip) };
+        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip) };
       downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
       try { localStorage.setItem('hrd_last_backup', nowISO()); } catch (e) { }
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
@@ -5353,7 +5649,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       let data;
       try { data = JSON.parse(await file.text()); } catch (err) { return alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ ឬខូច!'); }
       if (!data || typeof data !== 'object') return alert('⚠️ ទម្រង់ Backup មិនត្រឹមត្រូវ!');
-      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks };
+      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks, cert_courses: data.cert_courses };
       const clean = {};
       DATA_TABLES.forEach(t => {
         clean[t] = (Array.isArray(src[t]) ? src[t] : []).filter(r => r && r.id != null && !isNaN(Number(r.id))).map(r => {
