@@ -5102,6 +5102,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (/^\d{5}(\.\d+)?$/.test(v) && +v > 20000 && +v < 80000) { const d = new Date(Date.UTC(1899, 11, 30) + Math.floor(+v) * 86400000); return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0'); }
       const km = v.match(/(\d{1,2})\s*(?:ថ្ងៃទី)?\s*(?:ខែ)?\s*([\u1780-\u17FF]{2,})\s*(?:ឆ្នាំ\S*)?\s*(\d{4})/);
       if (km) { const mi = MONTHS_KH.findIndex(m => km[2].startsWith(m)); if (mi >= 0) { let y = +km[3]; if (y > 2400) y -= 543; if (impValidYMD(y, mi + 1, +km[1])) return y + '-' + String(mi + 1).padStart(2, '0') + '-' + String(+km[1]).padStart(2, '0'); } }
+      const sy = v.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2})$/); if (sy) { const r = impISO(sy[1], sy[2], sy[3]); if (r) return r; }
       const iso = v.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/); if (iso) return iso[1] + '-' + iso[2].padStart(2, '0') + '-' + iso[3].padStart(2, '0');
       const p = impParseDates(v).s; if (p) return p;
       const t = Date.parse(v + ' UTC'); if (Number.isFinite(t)) { const d = new Date(t); return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0'); }
@@ -5110,7 +5111,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function cimpDetect(rows) {
       for (let i = 0; i < Math.min(rows.length, 8); i++) {
         const cells = (rows[i] || []).map(impClean), map = {};
-        cells.forEach((c, idx) => { if (!c || /^ល\.?រ$/.test(c)) return; const hit = CIMP_HEAD.find(([k, re]) => map[k] == null && re.test(c)); if (hit) map[hit[0]] = idx; });
+        cells.forEach((c, idx) => { if (!c || /^ល\.?រ$/.test(c)) return; const c2 = c.replace(/\s+/g, ''), hit = CIMP_HEAD.find(([k, re]) => map[k] == null && (re.test(c) || re.test(c2))); if (hit) map[hit[0]] = idx; });
         if (map.recipient != null) return { start: i + 1, map };
       }
       return null;
@@ -5128,6 +5129,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         let status = g(r, 'status'); status = /ដកហូត|revok/i.test(status) ? 'ដកហូត' : /ជំនួស|replac/i.test(status) ? 'ជំនួស' : 'សកម្ម';
         const item = { _row: i + 1, _warn: w, _on: true, id: generateSafeId(), num, recipient, gender, dob, nationality: g(r, 'nationality'), type, date, major: g(r, 'major'), institution: g(r, 'institution'),
           grad_year: gy, signer: g(r, 'signer'), status, status_note: g(r, 'note'), course: g(r, 'course'), location: g(r, 'location'), hours: g(r, 'hours') };
+        if (!item.course && item.major) item.course = item.major; if (item.course && !item.major) item.major = item.course;
         if (num) { if (seen.has(num.toLowerCase())) { w.push('លេខកូដស្ទួន'); item._on = false; } seen.add(num.toLowerCase()); }
         if (!type) { w.push('គ្មានប្រភេទ'); item._on = false; } else if (!names.includes(type)) w.push('ប្រភេទមិនទាន់មានក្នុង Lists');
         if (!date) { w.push('គ្មានកាលបរិច្ឆេទ'); item._on = false; }
@@ -5187,7 +5189,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <td class="p-2">${esc(t.gender)}</td>
         <td class="p-2 min-w-[170px]"><select onchange="cimpSet(${i},'type',this.value)" class="${inp} ${t.type ? '' : 'border-red-400 bg-red-50'}">${certTypeOptions(t.type)}${t.type && !certTypeNames().includes(t.type) ? `<option value="${esc(t.type)}" selected>${esc(t.type)}</option>` : ''}</select></td>
         <td class="p-2"><input type="date" value="${esc(t.date)}" onchange="cimpSet(${i},'date',this.value)" class="${inp} ${t.date ? '' : 'border-red-400 bg-red-50'}"></td>
-        <td class="p-2 min-w-[120px]">${esc(t.major)}</td><td class="p-2 min-w-[130px]">${esc(t.institution)}</td><td class="p-2">${esc(t.grad_year)}</td><td class="p-2">${esc(t.status)}</td>
+        <td class="p-2 min-w-[220px]">${esc(t.course || t.major)}</td><td class="p-2 min-w-[130px]">${esc(t.institution)}</td><td class="p-2">${esc(t.grad_year)}</td><td class="p-2">${esc(t.status)}</td>
         <td class="p-2 text-[11px] text-amber-700 min-w-[140px]">${t._warn.map(esc).join(' • ')}</td></tr>`).join('');
       const on = CIMP.items.filter(t => t._on).length;
       document.getElementById('cimp-count').textContent = 'ជ្រើស ' + on + ' / ' + CIMP.items.length + ' ជួរ';
@@ -5199,7 +5201,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-7xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><div><h3 class="text-base font-bold text-slate-900">📥 ពិនិត្យមុន Import សញ្ញាបត្រ — ${esc(name)}</h3><p class="text-xs text-slate-500">ជួរពណ៌លឿង = ត្រូវពិនិត្យ។ លេខកូដទទេ = បង្កើតស្វ័យប្រវត្តិ។ ជួរគ្មានប្រភេទ/កាលបរិច្ឆេទ ត្រូវបំពេញមុន។ <span id="cimp-count" class="font-bold text-emerald-700"></span></p></div><button type="button" onclick="cimpClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
                 <div class="flex flex-wrap items-end gap-2 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 text-xs"><span class="font-bold text-emerald-800 self-center">ជួរគ្មានប្រភេទ/កាលបរិច្ឆេទ៖</span><div><label class="block font-bold text-slate-600 mb-0.5">ប្រភេទលំនាំដើម</label><select id="cimp-dtype" class="border border-slate-300 rounded-lg p-1.5 bg-white">${certTypeOptions('')}</select></div><div><label class="block font-bold text-slate-600 mb-0.5">ថ្ងៃចុះហត្ថលេខាលំនាំដើម</label><input type="date" id="cimp-ddate" class="border border-slate-300 rounded-lg p-1.5 bg-white"></div><button type="button" onclick="cimpApplyDefaults()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold">អនុវត្តលើជួរទទេ</button></div>
-        <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr><th class="p-2">✓</th><th class="p-2">ជួរ</th><th class="p-2">លេខកូដ</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">ប្រភេទ</th><th class="p-2">កាលបរិច្ឆេទ</th><th class="p-2">ជំនាញ</th><th class="p-2">គ្រឹះស្ថាន</th><th class="p-2">ឆ្នាំបញ្ចប់</th><th class="p-2">ស្ថានភាព</th><th class="p-2">កំណត់សម្គាល់</th></tr></thead><tbody id="cimp-body" class="divide-y divide-slate-100"></tbody></table></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr><th class="p-2">✓</th><th class="p-2">ជួរ</th><th class="p-2">លេខកូដ</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">ប្រភេទ</th><th class="p-2">កាលបរិច្ឆេទ</th><th class="p-2">ឈ្មោះវគ្គបណ្តុះបណ្តាល</th><th class="p-2">អង្គភាព</th><th class="p-2">ឆ្នាំបញ្ចប់</th><th class="p-2">ស្ថានភាព</th><th class="p-2">កំណត់សម្គាល់</th></tr></thead><tbody id="cimp-body" class="divide-y divide-slate-100"></tbody></table></div>
         <div class="flex justify-end gap-2"><button type="button" onclick="cimpClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="cimp-ok" onclick="cimpCommit()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold disabled:opacity-40">✅ Import</button></div></div>`;
       document.body.appendChild(d); cimpRender();
     }
