@@ -249,12 +249,13 @@
             <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shrink-0">⏳</div>
           </div>
           <div onclick="switchBureauTab(specialtyTabFor(activeBureauKey))" class="cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-blue-300 transition flex items-center justify-between">
-            <div>
+            <div id="stat-custom-main">
               <p class="text-xs text-slate-500 font-bold" id="stat-custom-label">ការងារជំនាញ</p>
               <h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-custom-val">0</h3>
               <span class="inline-block mt-1 text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md font-bold" data-i18n="card_spec_sub">ទិន្នន័យជាក់ស្តែង</span>
             </div>
             <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shrink-0" id="stat-custom-icon">🎯</div>
+            <div id="stat-custom-multi" class="hidden w-full grid grid-cols-2 gap-1"></div>
           </div>
         </div>
 
@@ -489,6 +490,12 @@
               <div id="cert-subbar" class="flex flex-wrap gap-2 text-sm font-bold"></div>
               <div id="cert-quick-panel"></div>
               <div id="cert-list-view" class="space-y-4">
+              <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-sm">
+                <div class="lg:col-span-2"><label class="block text-[11px] font-bold text-slate-600 mb-1">📚 ស្វែងរកតាមវគ្គបណ្តុះបណ្តាល</label><input id="filter-cert-course" list="filter-cert-course-list" autocomplete="off" oninput="onFilter('certs')" placeholder="ឈ្មោះវគ្គ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><datalist id="filter-cert-course-list"></datalist></div>
+                <div class="lg:col-span-1"><label class="block text-[11px] font-bold text-slate-600 mb-1">🧑 ឈ្មោះសិក្ខាកាម</label><input id="filter-cert-name" oninput="onFilter('certs')" placeholder="ឈ្មោះ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
+                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ចាប់ពីថ្ងៃ</label><input type="date" id="filter-cert-from" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
+                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><div class="flex gap-1.5"><input type="date" id="filter-cert-to" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><button type="button" onclick="certFilterReset()" title="សម្អាត" class="px-3 rounded-xl border border-slate-300 bg-white hover:bg-rose-50 font-bold">✕</button></div></div>
+              </div>
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
@@ -2846,10 +2853,57 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       activeTab = 'docs'; Object.keys(pager).forEach(key => pager[key].page = 1);
       renderBureauWorkspace();
     }
+    // ---------- ស្ថិតិសញ្ញាបត្រ (ការិយាល័យទី៣) + បង្ហាញលម្អិត ----------
+    let certMenuOpen = true;
+    function certPersonKey(c) { return String(c.recipient || '').trim() + '|' + (c.dob || ''); }
+    function certStatMetrics() {
+      const r = activeRows('certs'), persons = new Map(); r.forEach(c => { const k = certPersonKey(c); if (!persons.has(k)) persons.set(k, c); });
+      return { courses: new Set(r.map(c => c.course).filter(Boolean)).size, persons: persons.size, certs: r.length, female: [...persons.values()].filter(c => c.gender === 'ស្រី').length };
+    }
+    function renderCertStatCard() {
+      const g = id => document.getElementById(id), multi = g('stat-custom-multi'); if (!multi) return;
+      const on = activeBureauKey === 'bureau_3';
+      multi.classList.toggle('hidden', !on); g('stat-custom-main')?.classList.toggle('hidden', on); g('stat-custom-icon')?.classList.toggle('hidden', on);
+      if (!on) return;
+      const m = certStatMetrics(), tile = (k, ic, n, l) => `<button type="button" onclick="event.stopPropagation();certStatOpen('${k}')" class="text-left rounded-xl px-2.5 py-1.5 hover:bg-blue-50 transition form-input-focus"><div class="text-xl font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></button>`;
+      multi.innerHTML = tile('courses', '📚', m.courses, 'ចំនួនវគ្គបណ្តុះបណ្តាល') + tile('persons', '👥', m.persons, 'ចំនួនសិក្ខាកាម') + tile('certs', '📜', m.certs, 'សញ្ញាបត្របានចុះបញ្ជី') + tile('female', '👩', m.female, 'សិក្ខាកាមស្រី');
+    }
+    const CSD = { kind: '', course: '', q: '' };
+    function certStatOpen(kind, course) { CSD.kind = kind; CSD.course = course || ''; CSD.q = ''; certStatRender(); }
+    function certStatClose() { document.getElementById('modal-cert-stat')?.remove(); }
+    function certStatRender() {
+      let m = document.getElementById('modal-cert-stat');
+      if (!m) { m = document.createElement('div'); m.id = 'modal-cert-stat'; m.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-4'; document.body.appendChild(m); }
+      const all = activeRows('certs'), q = CSD.q.toLowerCase(), hit = c => !q || [c.num, c.recipient, c.course, c.institution].some(v => String(v || '').toLowerCase().includes(q));
+      let title = '', head = '', body = '', note = '';
+      const dedupe = rows => { const s = new Set(); return rows.filter(c => { const k = certPersonKey(c); if (s.has(k)) return false; s.add(k); return true; }); };
+      const range = rows => { const d = rows.map(c => c.start_date || c.date).filter(Boolean).sort(), e = rows.map(c => c.end_date || c.date).filter(Boolean).sort(); return d.length ? (d[0] + (e.length && e[e.length - 1] !== d[0] ? ' → ' + e[e.length - 1] : '')) : ''; };
+      const personRows = rows => rows.map(c => `<tr class="hover:bg-emerald-50"><td class="p-2 font-bold">${esc(c.recipient)}</td><td class="p-2">${esc(c.gender || '')}</td><td class="p-2">${esc(c.institution || '')}</td><td class="p-2">${toKhmerDigits(all.filter(x => certPersonKey(x) === certPersonKey(c)).length)}</td></tr>`).join('');
+      const certRows = rows => rows.map(c => `<tr class="hover:bg-emerald-50"><td class="p-2 font-mono font-bold text-emerald-800">${esc(c.num)}</td><td class="p-2 font-bold">${esc(c.recipient)}</td><td class="p-2">${esc(c.gender || '')}</td><td class="p-2">${esc(c.course || '')}</td><td class="p-2 font-mono">${esc(c.date || '')}</td><td class="p-2">${esc(c.institution || '')}</td></tr>`).join('');
+      const certHead = '<th class="p-2">លេខ</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">វគ្គ</th><th class="p-2">ថ្ងៃ</th><th class="p-2">អង្គភាព</th>', personHead = '<th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">អង្គភាព</th><th class="p-2">ចំនួនសញ្ញាបត្រ</th>';
+      let count = 0;
+      if (CSD.kind === 'courses' && !CSD.course) {
+        title = '📚 វគ្គបណ្តុះបណ្តាលទាំងអស់'; note = 'ចុចលើវគ្គ ដើម្បីមើលបញ្ជីសិក្ខាកាម';
+        const by = new Map(); all.forEach(c => { const k = c.course || '(គ្មានឈ្មោះវគ្គ)'; if (!by.has(k)) by.set(k, []); by.get(k).push(c); });
+        const list = [...by.entries()].filter(([k]) => !q || k.toLowerCase().includes(q)).sort((a, b) => b[1].length - a[1].length); count = list.length;
+        head = '<th class="p-2">វគ្គ</th><th class="p-2">សិក្ខាកាម</th><th class="p-2">ស្រី</th><th class="p-2">កាលបរិច្ឆេទ</th>';
+        body = list.map(([k, rows]) => `<tr class="hover:bg-emerald-50 cursor-pointer" data-c="${esc(k === '(គ្មានឈ្មោះវគ្គ)' ? '' : k)}" onclick="certStatOpen('courses_in', this.dataset.c)"><td class="p-2 font-bold text-emerald-800">${esc(k)} ›</td><td class="p-2">${toKhmerDigits(rows.length)}</td><td class="p-2">${toKhmerDigits(rows.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-2 font-mono">${esc(range(rows))}</td></tr>`).join('');
+      } else if (CSD.kind === 'courses_in' || (CSD.kind === 'courses' && CSD.course)) {
+        CSD.kind = 'courses_in'; const rows = all.filter(c => (c.course || '') === CSD.course && hit(c)); count = rows.length;
+        title = '📚 ' + (CSD.course || '(គ្មានឈ្មោះវគ្គ)'); note = 'សិក្ខាកាម ' + toKhmerDigits(rows.length) + ' នាក់ · ស្រី ' + toKhmerDigits(rows.filter(c => c.gender === 'ស្រី').length) + ' · ' + range(rows); head = certHead; body = certRows(rows.sort((a, b) => String(a.num).localeCompare(String(b.num), undefined, { numeric: true })));
+      } else if (CSD.kind === 'persons' || CSD.kind === 'female') {
+        let rows = dedupe(all).filter(hit); if (CSD.kind === 'female') rows = rows.filter(c => c.gender === 'ស្រី'); count = rows.length;
+        title = CSD.kind === 'female' ? '👩 សិក្ខាកាមស្រី' : '👥 សិក្ខាកាមទាំងអស់'; note = 'រាប់តាមឈ្មោះ + ថ្ងៃកំណើត (មិនរាប់ស្ទួន)'; head = personHead; body = personRows(rows);
+      } else { const rows = all.filter(hit); count = rows.length; title = '📜 សញ្ញាបត្របានចុះបញ្ជី'; note = ''; head = certHead; body = certRows(rows); }
+      m.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-3xl p-5 shadow-2xl flex flex-col max-h-[88vh] space-y-3"><div class="flex justify-between items-center gap-2 border-b border-slate-100 pb-3"><div class="flex items-center gap-2 min-w-0">${CSD.kind === 'courses_in' ? '<button type="button" onclick="certStatOpen(\'courses\')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm font-bold shrink-0">‹ ត្រឡប់</button>' : ''}<h3 class="text-base font-bold text-slate-900 truncate">${esc(title)}</h3></div><button type="button" onclick="certStatClose()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold shrink-0">✕</button></div>
+        <div class="flex flex-wrap items-center gap-2"><input id="csd-q" value="${esc(CSD.q)}" placeholder="🔍 ស្វែងរក…" oninput="CSD.q=this.value;certStatRender();var i=document.getElementById('csd-q');i.focus();i.setSelectionRange(i.value.length,i.value.length)" class="form-input-focus border border-slate-300 rounded-xl px-3 h-9 text-sm flex-1 min-w-[160px]"><span class="text-xs font-bold text-emerald-700">${toKhmerDigits(count)} ជួរ</span><span class="text-[11px] text-slate-500">${esc(note)}</span></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-sm text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr>${head}</tr></thead><tbody class="divide-y divide-slate-100">${body || '<tr><td colspan="6" class="p-6 text-center text-slate-400">គ្មានទិន្នន័យ</td></tr>'}</tbody></table></div></div>`;
+    }
+
     let examMenuOpen = false, certSub = '';
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់'], ['search', '🔎', 'ស្វែងរកវគ្គ / សិក្ខាកាម']];
-    function certSubGo(k) { certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'certs') certSub = ''; activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'certs') { if (activeTab === 'certs') { certMenuOpen = !certMenuOpen; renderBureauWorkspace(); return; } certMenuOpen = true; certSub = ''; } activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
     const BUREAU_DUTIES = {
@@ -2874,7 +2928,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!b.tabs.some(t => t.id === activeTab)) activeTab = 'docs';
       document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.sub || examMenuOpen || EXTASK_KINDS[activeTab]).map(t => {
         const on = t.id === activeTab;
-        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' ? '▾' : '▸'}</span>` : ''}</button>` + (t.id === 'certs' && activeTab === 'certs' ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
+        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
       }).join('');
       ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
@@ -2908,7 +2962,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         : k === 'bureau_2' ? ['វគ្គបណ្តុះបណ្តាល', 'Training Records', activeRows('trainings').length, '🌐']
         : k === 'bureau_3' ? ['សញ្ញាបត្របានចុះបញ្ជី', 'Registered Certificates', activeRows('certs').length, '📜']
         : ['ការងារជំនាញសរុប (៣ ការិយាល័យ)', 'Total Specialty Records', activeRows('exams').length + activeRows('trainings').length + activeRows('certs').length, '👑'];
-      set('stat-custom-label', appLang === 'en' ? cfg[1] : cfg[0]); set('stat-custom-val', cfg[2]); set('stat-custom-icon', cfg[3]);
+      set('stat-custom-label', appLang === 'en' ? cfg[1] : cfg[0]); set('stat-custom-val', cfg[2]); set('stat-custom-icon', cfg[3]); renderCertStatCard();
     }
 
     function renderSideForm() {
@@ -4462,10 +4516,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function certOpenFile(id) { const c = store.certs.find(x => x.id === id); if (!c || !c.file_link) return; const n = normalizeDocLink(c.file_link); window.open(n.ok ? n.url : c.file_link, '_blank', 'noopener'); }
 
     // ---------- តារាង ----------
+    function certFilterReset() { ['filter-cert-search', 'filter-cert-course', 'filter-cert-name', 'filter-cert-from', 'filter-cert-to', 'filter-cert-status'].forEach(i => { const e = document.getElementById(i); if (e) e.value = ''; }); onFilter('certs'); }
     function renderCerts() {
       const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
       const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim(), fs = document.getElementById('filter-cert-status')?.value || '';
-      const rows = sortRecords(activeRows('certs').filter(c => (!fs || (c.status || 'សកម្ម') === fs) && (!q || [c.num, c.recipient, c.type, c.major, c.institution, c.course].some(v => String(v || '').toLowerCase().includes(q)))));
+      const gv = id => (document.getElementById(id)?.value || '').toLowerCase().trim(), fc = gv('filter-cert-course'), fn = gv('filter-cert-name'), fd1 = gv('filter-cert-from'), fd2 = gv('filter-cert-to');
+      const dl = document.getElementById('filter-cert-course-list'); if (dl) { const cs = [...new Set(activeRows('certs').map(c => c.course).filter(Boolean))].sort().join('|'); if (dl.dataset.k !== cs) { dl.dataset.k = cs; dl.innerHTML = cs.split('|').filter(Boolean).map(v => `<option value="${esc(v)}">`).join(''); } }
+      const rows = sortRecords(activeRows('certs').filter(c => (!fs || (c.status || 'សកម្ម') === fs) && (!fc || String(c.course || '').toLowerCase().includes(fc)) && (!fn || String(c.recipient || '').toLowerCase().includes(fn)) && (!fd1 || String(c.start_date || c.date || '') >= fd1) && (!fd2 || String(c.start_date || c.date || '') <= fd2) && (!q || [c.num, c.recipient, c.type, c.major, c.institution, c.course].some(v => String(v || '').toLowerCase().includes(q)))));
       const pg = paginate('certs', rows);
       tbody.innerHTML = pg.total ? pg.rows.map(c => `<tr class="hover:bg-emerald-50 transition ${c.status && c.status !== 'សកម្ម' ? 'bg-rose-50/30' : ''}">
           <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${esc(c.num)}</td>
