@@ -490,12 +490,8 @@
               <div id="cert-subbar" class="flex flex-wrap gap-2 text-sm font-bold"></div>
               <div id="cert-quick-panel"></div>
               <div id="cert-list-view" class="space-y-4">
-              <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-sm">
-                <div class="lg:col-span-2"><label class="block text-[11px] font-bold text-slate-600 mb-1">📚 ស្វែងរកតាមវគ្គបណ្តុះបណ្តាល</label><input id="filter-cert-course" list="filter-cert-course-list" autocomplete="off" oninput="onFilter('certs')" placeholder="ឈ្មោះវគ្គ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><datalist id="filter-cert-course-list"></datalist></div>
-                <div class="lg:col-span-1"><label class="block text-[11px] font-bold text-slate-600 mb-1">🧑 ឈ្មោះសិក្ខាកាម</label><input id="filter-cert-name" oninput="onFilter('certs')" placeholder="ឈ្មោះ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
-                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ចាប់ពីថ្ងៃ</label><input type="date" id="filter-cert-from" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
-                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><div class="flex gap-1.5"><input type="date" id="filter-cert-to" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><button type="button" onclick="certFilterReset()" title="សម្អាត" class="px-3 rounded-xl border border-slate-300 bg-white hover:bg-rose-50 font-bold">✕</button></div></div>
-              </div>
+              <div id="cert-course-view" class="space-y-2"></div>
+              <div id="cert-rows-view" class="space-y-4">
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
@@ -505,6 +501,13 @@
                 </table>
               </div>
               <div id="pager-certs"></div>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-sm">
+                <div class="lg:col-span-2"><label class="block text-[11px] font-bold text-slate-600 mb-1">📚 ស្វែងរកតាមវគ្គបណ្តុះបណ្តាល</label><input id="filter-cert-course" list="filter-cert-course-list" autocomplete="off" oninput="onFilter('certs')" placeholder="ឈ្មោះវគ្គ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><datalist id="filter-cert-course-list"></datalist></div>
+                <div class="lg:col-span-1"><label class="block text-[11px] font-bold text-slate-600 mb-1">🧑 ឈ្មោះសិក្ខាកាម</label><input id="filter-cert-name" oninput="onFilter('certs')" placeholder="ឈ្មោះ…" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
+                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ចាប់ពីថ្ងៃ</label><input type="date" id="filter-cert-from" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
+                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><div class="flex gap-1.5"><input type="date" id="filter-cert-to" onchange="onFilter('certs')" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"><button type="button" onclick="certFilterReset()" title="សម្អាត" class="px-3 rounded-xl border border-slate-300 bg-white hover:bg-rose-50 font-bold">✕</button></div></div>
+              </div>
               </div>
             </div>
           </div>
@@ -2901,7 +2904,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
 
     let examMenuOpen = false, certSub = '';
-    const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់'], ['search', '🔎', 'ស្វែងរកវគ្គ / សិក្ខាកាម']];
+    const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
     function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'certs') { if (activeTab === 'certs') { certMenuOpen = !certMenuOpen; renderBureauWorkspace(); return; } certMenuOpen = true; certSub = ''; } activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
@@ -4516,13 +4519,27 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function certOpenFile(id) { const c = store.certs.find(x => x.id === id); if (!c || !c.file_link) return; const n = normalizeDocLink(c.file_link); window.open(n.ok ? n.url : c.file_link, '_blank', 'noopener'); }
 
     // ---------- តារាង ----------
-    function certFilterReset() { ['filter-cert-search', 'filter-cert-course', 'filter-cert-name', 'filter-cert-from', 'filter-cert-to', 'filter-cert-status'].forEach(i => { const e = document.getElementById(i); if (e) e.value = ''; }); onFilter('certs'); }
+    let certCourseSel = '';
+    function certPickCourse(c) { certCourseSel = c; const e = document.getElementById('filter-cert-course'); if (e) e.value = c; pager.certs.page = 1; renderCerts(); }
+    function certFilterReset() { certCourseSel = ''; ['filter-cert-search', 'filter-cert-course', 'filter-cert-name', 'filter-cert-from', 'filter-cert-to', 'filter-cert-status'].forEach(i => { const e = document.getElementById(i); if (e) e.value = ''; }); onFilter('certs'); }
     function renderCerts() {
       const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
       const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim(), fs = document.getElementById('filter-cert-status')?.value || '';
       const gv = id => (document.getElementById(id)?.value || '').toLowerCase().trim(), fc = gv('filter-cert-course'), fn = gv('filter-cert-name'), fd1 = gv('filter-cert-from'), fd2 = gv('filter-cert-to');
       const dl = document.getElementById('filter-cert-course-list'); if (dl) { const cs = [...new Set(activeRows('certs').map(c => c.course).filter(Boolean))].sort().join('|'); if (dl.dataset.k !== cs) { dl.dataset.k = cs; dl.innerHTML = cs.split('|').filter(Boolean).map(v => `<option value="${esc(v)}">`).join(''); } }
-      const rows = sortRecords(activeRows('certs').filter(c => (!fs || (c.status || 'សកម្ម') === fs) && (!fc || String(c.course || '').toLowerCase().includes(fc)) && (!fn || String(c.recipient || '').toLowerCase().includes(fn)) && (!fd1 || String(c.start_date || c.date || '') >= fd1) && (!fd2 || String(c.start_date || c.date || '') <= fd2) && (!q || [c.num, c.recipient, c.type, c.major, c.institution, c.course].some(v => String(v || '').toLowerCase().includes(q)))));
+      const rows = sortRecords(activeRows('certs').filter(c => (!fs || (c.status || 'សកម្ម') === fs) && (!fc || (certCourseSel ? String(c.course || '') === certCourseSel : String(c.course || '').toLowerCase().includes(fc))) && (!fn || String(c.recipient || '').toLowerCase().includes(fn)) && (!fd1 || String(c.start_date || c.date || '') >= fd1) && (!fd2 || String(c.start_date || c.date || '') <= fd2) && (!q || [c.num, c.recipient, c.type, c.major, c.institution, c.course].some(v => String(v || '').toLowerCase().includes(q)))));
+      const grouped = !certCourseSel && !fn && !fd1 && !fd2 && !q && !fs;
+      const cv = document.getElementById('cert-course-view'), rv = document.getElementById('cert-rows-view');
+      if (cv && rv) {
+        cv.classList.toggle('hidden', !grouped && !certCourseSel); rv.classList.toggle('hidden', grouped);
+        if (certCourseSel) cv.innerHTML = `<div class="flex items-center gap-2"><button type="button" onclick="certFilterReset()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm font-bold">‹ ត្រឡប់ទៅវគ្គទាំងអស់</button><span class="text-base font-bold text-emerald-800">📚 ${esc(certCourseSel)}</span></div>`;
+        else if (grouped) {
+          const by = new Map(); activeRows('certs').forEach(c => { const k = c.course || ''; if (fc && !k.toLowerCase().includes(fc)) return; if (!by.has(k)) by.set(k, []); by.get(k).push(c); });
+          const rng = rs => { const d = rs.map(c => c.start_date || c.date).filter(Boolean).sort(), e = rs.map(c => c.end_date || c.date).filter(Boolean).sort(); return d.length ? d[0] + (e[e.length - 1] && e[e.length - 1] !== d[0] ? ' → ' + e[e.length - 1] : '') : ''; };
+          const list = [...by.entries()].sort((a, b) => String(rng(b[1])).localeCompare(String(rng(a[1]))));
+          cv.innerHTML = `<div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs"><table class="w-full text-left text-sm"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3.5 w-12 text-center">ល.រ</th><th class="p-3.5 min-w-[220px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center">សិក្ខាកាម</th><th class="p-3.5 text-center">ស្រី</th><th class="p-3.5">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${list.map(([k, rs], i) => `<tr class="hover:bg-emerald-50 cursor-pointer" data-c="${esc(k)}" onclick="certPickCourse(this.dataset.c)"><td class="p-3.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3.5 text-base font-bold text-slate-900">${esc(k || '(គ្មានឈ្មោះវគ្គ)')}</td><td class="p-3.5 text-center font-bold text-emerald-700">${toKhmerDigits(rs.length)}</td><td class="p-3.5 text-center">${toKhmerDigits(rs.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-3.5 font-mono text-sm text-slate-700">${esc(rng(rs))}</td><td class="p-3.5 text-center"><span class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-bold">👁 មើលបញ្ជីឈ្មោះ</span></td></tr>`).join('') || '<tr><td colspan="6" class="p-8 text-center text-slate-400">មិនទាន់មានទិន្នន័យ</td></tr>'}</tbody></table></div>`;
+        }
+      }
       const pg = paginate('certs', rows);
       tbody.innerHTML = pg.total ? pg.rows.map(c => `<tr class="hover:bg-emerald-50 transition ${c.status && c.status !== 'សកម្ម' ? 'bg-rose-50/30' : ''}">
           <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${esc(c.num)}</td>
