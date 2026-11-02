@@ -5313,7 +5313,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const CR = { mode: 'detail', group: 'type', f: {} };
     const CR_GROUPS = {
       type: ['ប្រភេទសញ្ញាបត្រ', c => c.type || 'មិនបញ្ជាក់'], month: ['ខែ', c => String(c.date || '').slice(0, 7) || 'មិនបញ្ជាក់'], year: ['ឆ្នាំ', c => String(c.date || '').slice(0, 4) || 'មិនបញ្ជាក់'],
-      status: ['ស្ថានភាព', c => c.status || 'សកម្ម'], gender: ['ភេទ', c => c.gender || 'មិនបញ្ជាក់'], institution: ['គ្រឹះស្ថាន', c => c.institution || 'មិនបញ្ជាក់'],
+      status: ['ស្ថានភាព', c => c.status || 'សកម្ម'], gender: ['ភេទ', c => c.gender || 'មិនបញ្ជាក់'], institution: ['អង្គភាព', c => c.institution || 'មិនបញ្ជាក់'],
       major: ['ជំនាញ', c => c.major || 'មិនបញ្ជាក់'], nationality: ['សញ្ជាតិ', c => c.nationality || 'មិនបញ្ជាក់'], grad_year: ['ឆ្នាំបញ្ចប់', c => c.grad_year || 'មិនបញ្ជាក់'], course: ['វគ្គ', c => c.course || 'មិនបញ្ជាក់'], signer: ['ហត្ថលេខា', c => c.signer || 'មិនបញ្ជាក់']
     };
     function crFiltered() {
@@ -5342,16 +5342,22 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function crDetailRows(rows) {
       if (CR.mode === 'detail' && !CR.f.course) return crCourseList(rows);
       return rows.map((c, i) => ({ 'ល.រ': i + 1, 'លេខកូដ': c.num, 'ឈ្មោះ': c.recipient, 'ឈ្មោះឡាតាំង': c.recipient_latin || '', 'ភេទ': c.gender || '', 'ថ្ងៃកំណើត': c.dob ? formatDateDisplay(c.dob) : '', 'សញ្ជាតិ': c.nationality || '', 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date ? formatDateDisplay(c.date) : '',
-        'វគ្គបណ្តុះបណ្តាល': c.course || '', 'វគ្គ (ឡាតាំង)': c.course_latin || '', 'ម៉ោង/ក្រេឌីត': c.hours != null ? c.hours : '', 'គ្រឹះស្ថាន': c.institution || '', 'ឆ្នាំបញ្ចប់': c.grad_year || '', 'ហត្ថលេខា': c.signer || '', 'ស្ថានភាព': c.status || 'សកម្ម' }));
+        'វគ្គបណ្តុះបណ្តាល': c.course || '', 'វគ្គ (ឡាតាំង)': c.course_latin || '', 'ម៉ោង/ក្រេឌីត': c.hours != null ? c.hours : '', 'អង្គភាព': c.institution || '', 'ឆ្នាំបញ្ចប់': c.grad_year || '', 'ហត្ថលេខា': c.signer || '', 'ស្ថានភាព': c.status || 'សកម្ម' }));
     }
     function crSummaryRows(rows) {
-      const [label, fn] = CR_GROUPS[CR.group], m = new Map();
-      rows.forEach(c => { const k = fn(c), o = m.get(k) || { n: 0, f: 0, m: 0, u: 0, a: 0, r: 0, s: 0, h: 0 }; o.h = Math.max(o.h, parseFloat(c.hours) || 0); o.n++; c.gender === 'ស្រី' ? o.f++ : c.gender === 'ប្រុស' ? o.m++ : o.u++; const st = c.status || 'សកម្ម'; st === 'ដកហូត' ? o.r++ : st === 'ជំនួស' ? o.s++ : o.a++; m.set(k, o); });
+      const [label, fn] = CR_GROUPS[CR.group], m = new Map(), G = CR.group;
+      rows.forEach(c => { const k = fn(c); if (!m.has(k)) m.set(k, []); m.get(k).push(c); });
+      const hoursOf = rs => { const by = new Map(); rs.forEach(c => { const k = c.course || ''; by.set(k, Math.max(by.get(k) || 0, parseFloat(c.hours) || 0)); }); return [...by.values()].reduce((a, b) => a + b, 0); };
+      const yearsOf = rs => [...new Set(rs.map(c => String(c.date || '').slice(0, 4)).filter(Boolean))].sort().join(', ');
+      const line = (no, k, rs) => ({ 'ល.រ': no, [label]: k, 'សរុប': rs.length, 'ស្រី': rs.filter(c => c.gender === 'ស្រី').length, 'ប្រុស': rs.filter(c => c.gender === 'ប្រុស').length,
+        ...(G !== 'course' ? { 'វគ្គ': new Set(rs.map(c => c.course).filter(Boolean)).size } : {}),
+        ...(G !== 'institution' ? { 'អង្គភាព': new Set(rs.map(c => c.institution).filter(Boolean)).size } : {}),
+        ...(!['year', 'month'].includes(G) ? { 'ឆ្នាំ': yearsOf(rs) } : {}),
+        'ម៉ោង/ក្រេឌីត': hoursOf(rs) || '' });
       let arr = [...m.entries()];
-      arr = ['year', 'month', 'grad_year'].includes(CR.group) ? arr.sort((a, b) => String(a[0]).localeCompare(String(b[0]))) : arr.sort((a, b) => b[1].n - a[1].n || String(a[0]).localeCompare(String(b[0])));
-      const out = arr.map(([k, o], i) => ({ 'ល.រ': i + 1, [label]: k, 'សរុប': o.n, 'ស្រី': o.f, 'ប្រុស': o.m, 'មិនបញ្ជាក់ភេទ': o.u, 'សកម្ម': o.a, 'ដកហូត': o.r, 'ជំនួស': o.s, ...(CR.group === 'course' ? { 'ម៉ោង/ក្រេឌីត': o.h || '' } : {}) }));
-      const cnt = fn2 => rows.filter(fn2).length;
-      out.push({ 'ល.រ': '', [label]: 'សរុបរួម', 'សរុប': rows.length, 'ស្រី': cnt(c => c.gender === 'ស្រី'), 'ប្រុស': cnt(c => c.gender === 'ប្រុស'), 'មិនបញ្ជាក់ភេទ': cnt(c => !c.gender), 'សកម្ម': cnt(c => (c.status || 'សកម្ម') === 'សកម្ម'), 'ដកហូត': cnt(c => c.status === 'ដកហូត'), 'ជំនួស': cnt(c => c.status === 'ជំនួស'), ...(CR.group === 'course' ? { 'ម៉ោង/ក្រេឌីត': [...m.values()].reduce((a, o) => a + o.h, 0) || '' } : {}) });
+      arr = ['year', 'month', 'grad_year'].includes(G) ? arr.sort((a, b) => String(a[0]).localeCompare(String(b[0]))) : arr.sort((a, b) => b[1].length - a[1].length || String(a[0]).localeCompare(String(b[0])));
+      const out = arr.map(([k, rs], i) => line(i + 1, k, rs));
+      if (rows.length) out.push(line('', 'សរុបរួម', rows));
       return out;
     }
     function crFilterText() {
@@ -5391,7 +5397,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📜 Report — ចុះបញ្ជីសញ្ញាបត្រ</h3><button type="button" onclick="crClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
           ${sel('type', 'ប្រភេទ', [...new Set([...certTypeNames(), ...uniq('type')])]).replace('onchange="crRender()"', 'onchange="crCourseOptions();crRender()"')}${sel('year', 'ឆ្នាំ', years)}${sel('month', 'ខែ', Array.from({ length: 12 }, (_, i) => [String(i + 1).padStart(2, '0'), 'ខែ ' + (i + 1)]))}
-          ${sel('status', 'ស្ថានភាព', CERT_STATUS)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('institution', 'គ្រឹះស្ថាន', uniq('institution'))}
+          ${sel('status', 'ស្ថានភាព', CERT_STATUS)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('institution', 'អង្គភាព', uniq('institution'))}
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ថ្ងៃចេញ ពី</label><input type="date" id="crf-from" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="crf-to" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div class="col-span-2">${sel('course', 'វគ្គបណ្តុះបណ្តាល', [])}</div>
