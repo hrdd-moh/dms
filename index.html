@@ -3023,7 +3023,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const lb = (t, req) => `<label class="block text-xs mb-1 font-bold text-slate-700">${t}${req ? ' <span class="text-rose-500">*</span>' : ''}</label>`, ip = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50';
         container.innerHTML = `
           <form onsubmit="handleSaveCert(event)" class="space-y-3 text-sm font-medium">
-            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-xl text-xs font-bold"><button type="button" id="cert-mode-single" onclick="certSetMode('single')" class="py-2 rounded-lg bg-white text-emerald-700 shadow-2xs">👤 ${en ? 'One person' : 'ម្នាក់'}</button><button type="button" id="cert-mode-bulk" onclick="certSetMode('bulk')" class="py-2 rounded-lg text-slate-600">👥 ${en ? 'Many (one course)' : 'ច្រើននាក់ (១ វគ្គ)'}</button></div>
+            <button type="button" onclick="openCertBulk()" class="w-full py-3 rounded-xl border-2 border-dashed border-emerald-500 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-sm form-input-focus">👥 ${en ? 'Register many people (one course) — Excel-style table' : 'ចុះបញ្ជីច្រើននាក់ ១ វគ្គ (តារាងដូច Excel · Paste បាន)'}</button>
+            <div class="text-[11px] text-center text-slate-400 -mt-1">${en ? '— or one person below —' : '— ឬបញ្ចូលម្នាក់ខាងក្រោម —'}</div>
             <div>${lb(en ? 'Certificate Type' : 'ប្រភេទសញ្ញាបត្រ', 1)}<select id="cert-type" required onchange="certRefreshCode();certBulkHint()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${certTypeOptions('')}</select></div>
             <div>${lb(en ? 'Issue Date' : 'កាលបរិច្ឆេទ', 1)}<input type="date" id="cert-date" required value="${todayISO()}" onchange="certRefreshCode()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"></div>
             <div class="cert-single-only">${lb((en ? 'Certificate Code' : 'លេខកូដសញ្ញាបត្រ') + ' <span class="text-emerald-600 text-[10px] font-normal">(' + (en ? 'auto' : 'ស្វ័យប្រវត្តិ') + ')</span>', 1)}<div class="flex gap-1.5"><input type="text" id="cert-num" readonly class="form-input-focus flex-1 min-w-0 border border-slate-300 rounded-xl p-2.5 bg-emerald-50 font-mono font-bold"><button type="button" id="cert-manual-btn" onclick="certToggleManual()" title="${en ? 'Edit manually' : 'កែដោយដៃ'}" class="px-3 rounded-xl border border-slate-300 bg-white hover:bg-amber-50 form-input-focus">✏️</button></div></div>
@@ -4598,6 +4599,119 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
 
     // ---------- Save (ចុះបញ្ជីថ្មី) ----------
+    // ================= ចុះបញ្ជីច្រើននាក់ ១ វគ្គ — តារាងដូច Excel (paste បាន) =================
+    const CB = { rows: [] };
+    const cbBlank = () => ({ no: '', name: '', gender: '', unit: '', date: '' });
+    const cbVal = id => (document.getElementById(id)?.value || '').trim();
+    function cbSuggestStart() { let m = 0; store.certs.forEach(c => { if (/^\d+$/.test(String(c.num || '').trim())) m = Math.max(m, parseInt(c.num, 10)); }); return m + 1; }
+    function cbNumbers() {
+      const mode = cbVal('cb-mode'), type = cbVal('cb-type'), d = cbVal('cb-date') || todayISO(), pre = cbVal('cb-prefix');
+      const live = new Set(store.certs.map(c => String(c.num || '').toLowerCase())), used = CB.rows.filter(r => r.name && r.no).map(r => r.no), out = []; let n = parseInt(cbVal('cb-startno'), 10) || 1;
+      CB.rows.forEach(r => {
+        if (!r.name) { out.push(''); return; } if (r.no) { out.push(r.no); return; } let c = '';
+        if (mode === 'auto') { if (type) c = certCodeFor(type, r.date || d, used); }
+        else if (mode === 'start') { do { c = pre + String(n++); } while (used.some(u => u.toLowerCase() === c.toLowerCase()) || live.has(c.toLowerCase())); }
+        if (c) used.push(c); out.push(c);
+      });
+      return out;
+    }
+    function cbPreview() {
+      const nums = cbNumbers(), tb = document.getElementById('cb-body'); if (!tb) return;
+      [...tb.querySelectorAll('tr')].forEach((tr, i) => { const inp = tr.querySelector('[data-f="no"]'); if (inp) inp.placeholder = nums[i] || (CB.rows[i].name ? (cbVal('cb-mode') === 'manual' ? 'វាយលេខ' : 'ជ្រើសប្រភេទ') : ''); });
+      const n = CB.rows.filter(r => r.name).length, c = document.getElementById('cb-count'); if (c) c.textContent = n + ' នាក់';
+      const sw = document.getElementById('cb-start-wrap'), mode = cbVal('cb-mode'); if (sw) sw.classList.toggle('hidden', mode !== 'start');
+    }
+    function cbRender() {
+      const tb = document.getElementById('cb-body'); if (!tb) return;
+      const inp = 'w-full border border-slate-200 rounded-lg p-1.5 text-sm bg-white';
+      tb.innerHTML = CB.rows.map((r, i) => `<tr data-i="${i}"><td class="p-1 text-center text-slate-400 text-xs w-8">${i + 1}</td>
+        <td class="p-1 w-40"><input data-f="no" value="${esc(r.no)}" class="${inp} font-mono font-bold placeholder-emerald-500"></td>
+        <td class="p-1 min-w-[220px]"><input data-f="name" value="${esc(r.name)}" class="${inp} font-bold"></td>
+        <td class="p-1 w-24"><select data-f="gender" class="${inp}"><option value="">—</option><option ${r.gender === 'ប្រុស' ? 'selected' : ''}>ប្រុស</option><option ${r.gender === 'ស្រី' ? 'selected' : ''}>ស្រី</option></select></td>
+        <td class="p-1 min-w-[220px]"><input data-f="unit" value="${esc(r.unit)}" class="${inp}"></td>
+        <td class="p-1 w-40"><input type="date" data-f="date" value="${esc(r.date)}" class="${inp}"></td>
+        <td class="p-1 w-8 text-center"><button type="button" tabindex="-1" onclick="cbDel(${i})" class="text-slate-300 hover:text-rose-500">✕</button></td></tr>`).join('');
+      cbPreview();
+    }
+    function cbAdd(n) { for (let i = 0; i < n; i++) CB.rows.push(cbBlank()); cbRender(); }
+    function cbDel(i) { CB.rows.splice(i, 1); if (!CB.rows.length) CB.rows.push(cbBlank()); cbRender(); }
+    function cbInput(e) {
+      const el = e.target, tr = el.closest('tr'); if (!tr || !el.dataset.f) return; CB.rows[+tr.dataset.i][el.dataset.f] = el.value.trim();
+      if (el.dataset.f === 'name' || el.dataset.f === 'no') cbPreview();
+    }
+    function cbKey(e) {
+      if (e.key !== 'Enter' || !e.target.dataset.f) return; e.preventDefault();
+      const tr = e.target.closest('tr'), i = +tr.dataset.i, f = e.target.dataset.f;
+      if (i === CB.rows.length - 1) cbAdd(1);
+      document.querySelector(`#cb-body tr[data-i="${i + 1}"] [data-f="${f}"]`)?.focus();
+    }
+    const CB_DATE_RE = /^\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}$|^\d{4}-\d{2}-\d{2}$/;
+    function cbParsePaste(text) {
+      const lines = String(text).split(/\r?\n/).filter(l => l.trim()), out = []; let hdr = null;
+      const gnorm = (g, name) => /ស្រី|^f$/i.test(g) ? 'ស្រី' : /ប្រុស|^m$/i.test(g) ? 'ប្រុស' : (impGender(name) || '');
+      lines.forEach((l, li) => {
+        const cells = l.split('\t').map(impClean);
+        if (li === 0 && cells.some(c => /ឈ្មោះ|^name$/i.test(c)) && !cells.some(c => /^(ស្រី|ប្រុស)$/.test(c))) {
+          hdr = {}; cells.forEach((c, i) => { if (/^ល\.?រ$/.test(c)) return; if (/បញ្ជី|វិញ្ញាបនបត្រ|លេខ/.test(c) && hdr.no == null) hdr.no = i; else if (/ឈ្មោះ|^name$/i.test(c)) hdr.name = i; else if (/ភេទ|gender/i.test(c)) hdr.gender = i; else if (/អង្គភាព|unit/i.test(c)) hdr.unit = i; else if (/ថ្ងៃ|date/i.test(c)) hdr.date = i; }); return;
+        }
+        if (hdr && hdr.name != null) { const name = cells[hdr.name] || ''; if (name) out.push({ no: hdr.no != null ? (cells[hdr.no] || '') : '', name, gender: gnorm(cells[hdr.gender] || '', name), unit: cells[hdr.unit] || '', date: cimpDate(cells[hdr.date] || '') }); return; }
+        const isNum = c => /^\d+$/.test(c), ni = cells.findIndex(c => c && !isNum(c) && !/^(ស្រី|ប្រុស|[FMfm])$/.test(c) && !CB_DATE_RE.test(c)); if (ni < 0) return;
+        const pre = cells.slice(0, ni).filter(isNum), no = pre.length >= 2 ? pre[pre.length - 1] : (pre.length === 1 && cbVal('cb-mode') === 'manual' ? pre[0] : ''), name = cells[ni], rest = cells.slice(ni + 1);
+        const g = rest.find(c => /^(ស្រី|ប្រុស)$/.test(c)) || '', dt = rest.find(c => CB_DATE_RE.test(c)) || '', unit = rest.find(c => c && c !== g && c !== dt) || '';
+        out.push({ no, name, gender: gnorm(g, name), unit, date: cimpDate(dt) });
+      });
+      return out;
+    }
+    function cbPaste(e) {
+      const el = e.target; if (!el.dataset?.f) return; const text = (e.clipboardData || window.clipboardData).getData('text'); if (!/[\n\t]/.test(text.trim())) return;
+      e.preventDefault(); const rows = cbParsePaste(text); if (!rows.length) return;
+      let i = +el.closest('tr').dataset.i; rows.forEach(r => { if (i >= CB.rows.length) CB.rows.push(cbBlank()); CB.rows[i++] = r; });
+      cbRender(); showToast('បានបិទភ្ជាប់ ' + rows.length + ' ជួរ');
+    }
+    function cbClose() { document.getElementById('modal-cert-bulk')?.remove(); CB.rows = []; }
+    function openCertBulk() {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true);
+      cbClose(); CB.rows = Array.from({ length: 8 }, cbBlank);
+      const di = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 text-sm bg-white', lb = t => `<label class="block text-[10px] font-bold text-slate-600 mb-1">${t}</label>`;
+      const d = document.createElement('div'); d.id = 'modal-cert-bulk'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[95vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><div><h3 class="text-base font-bold text-slate-900">👥 ចុះបញ្ជីសញ្ញាបត្រ/វិញ្ញាបនបត្រ ច្រើននាក់ (១ វគ្គ)</h3><p class="text-xs text-slate-500">បំពេញព័ត៌មានវគ្គខាងលើម្តង រួច paste បញ្ជីពី Excel ចូលតារាង (ជួរ៖ ល.បញ្ជី · ឈ្មោះ · ភេទ · អង្គភាព · ថ្ងៃចុះហត្ថលេខា) ឬវាយ ហើយចុច Enter ដើម្បីបន្ថែមជួរ។</p></div><button type="button" onclick="cbClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
+          <div>${lb('ប្រភេទសញ្ញាបត្រ *')}<select id="cb-type" onchange="cbPreview()" class="${di}">${certTypeOptions('')}</select></div>
+          <div class="md:col-span-2">${lb('ឈ្មោះវគ្គ')}<input id="cb-course" list="cb-course-list" autocomplete="off" class="${di}"><datalist id="cb-course-list">${[...new Set(activeRows('certs').map(c => c.course).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('')}</datalist></div>
+          <div>${lb('ទីកន្លែងបណ្តុះបណ្តាល')}<input id="cb-loc" class="${di}"></div>
+          <div>${lb('ពីថ្ងៃ')}<input type="date" id="cb-start" class="${di}"></div>
+          <div>${lb('ដល់ថ្ងៃ')}<input type="date" id="cb-end" onchange="const x=document.getElementById('cb-date');if(x.dataset.t!=='1'){x.value=this.value;cbPreview()}" class="${di}"></div>
+          <div>${lb('ចំនួនម៉ោងសិក្សា')}<input type="number" id="cb-hours" min="0" step="0.5" class="${di}"></div>
+          <div>${lb('ថ្ងៃចុះហត្ថលេខា (លំនាំដើមគ្រប់ជួរ)')}<input type="date" id="cb-date" value="${todayISO()}" onchange="this.dataset.t='1';cbPreview()" class="${di}"></div>
+          <div>${lb('ហត្ថលេខា *')}<input id="cb-signer" value="ប្រធាននាយកដ្ឋាន" class="${di}"></div>
+          <div class="md:col-span-2">${lb('ការកំណត់លេខ')}<select id="cb-mode" onchange="if(this.value==='start'&&!document.getElementById('cb-startno').value)document.getElementById('cb-startno').value=cbSuggestStart();cbPreview()" class="${di}"><option value="start">🔢 ចាប់ពីលេខ… (បន្តលេខរៀង ឧ. 228, 229…)</option><option value="auto">⚙️ ស្វ័យប្រវត្តិតាមទម្រង់ (ឧ. VN-2026-0001)</option><option value="manual">✏️ ដោយដៃ (វាយក្នុងតារាង)</option></select></div>
+          <div id="cb-start-wrap" class="md:col-span-1 grid grid-cols-3 gap-1.5"><div class="col-span-1">${lb('កូដនាំមុខ')}<input id="cb-prefix" oninput="cbPreview()" placeholder="(ទទេ)" class="${di}"></div><div class="col-span-2">${lb('លេខចាប់ផ្តើម')}<input type="number" id="cb-startno" min="0" oninput="cbPreview()" class="${di} font-mono font-bold"></div></div>
+        </div>
+        <div class="flex items-center gap-2 text-xs"><button type="button" onclick="cbAdd(1)" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-slate-700">＋ ជួរ</button><button type="button" onclick="cbAdd(10)" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-slate-700">＋ ១០ ជួរ</button><button type="button" onclick="CB.rows=CB.rows.filter(r=>r.name);if(!CB.rows.length)CB.rows.push(cbBlank());cbRender()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-bold text-slate-700">🧹 លុបជួរទទេ</button><span id="cb-count" class="ml-auto font-bold text-emerald-700"></span></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl flex-1 min-h-[220px]"><table class="w-full text-left"><thead class="bg-slate-100 text-slate-700 text-xs sticky top-0 z-10"><tr><th class="p-2">#</th><th class="p-2">ល.បញ្ជី (លេខសញ្ញាបត្រ)</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">អង្គភាព</th><th class="p-2">ថ្ងៃចុះហត្ថលេខា</th><th></th></tr></thead><tbody id="cb-body" oninput="cbInput(event)" onchange="cbInput(event)" onkeydown="cbKey(event)" onpaste="cbPaste(event)"></tbody></table></div>
+        <div class="flex justify-end gap-2"><button type="button" onclick="cbClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="cb-save" onclick="cbSave()" class="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ រក្សាទុកទាំងអស់</button></div></div>`;
+      document.body.appendChild(d); document.getElementById('cb-mode').value = 'start'; document.getElementById('cb-startno').value = cbSuggestStart(); cbRender();
+      document.querySelector('#cb-body [data-f="name"]')?.focus();
+    }
+    async function cbSave() {
+      const type = cbVal('cb-type'); if (!type) return alert('⚠️ សូមជ្រើសរើសប្រភេទសញ្ញាបត្រជាមុន!');
+      if (!cbVal('cb-signer')) return alert('⚠️ សូមបញ្ចូលហត្ថលេខា!');
+      const cs = cbVal('cb-start'), ce = cbVal('cb-end'); if (cs && ce && ce < cs) return alert('⚠️ ថ្ងៃបញ្ចប់វគ្គត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      const named = CB.rows.map((r, i) => ({ r, i })).filter(x => x.r.name); if (!named.length) return alert('⚠️ សូមបញ្ចូលឈ្មោះយ៉ាងហោចណាស់ ១ នាក់!');
+      const nums = cbNumbers(), miss = named.filter(x => !nums[x.i]); if (miss.length) return alert('⚠️ ជួរទី ' + miss.slice(0, 5).map(x => x.i + 1).join(', ') + ' មិនទាន់មានលេខ — សូមវាយលេខ ឬប្តូរការកំណត់លេខ');
+      const live = new Set(store.certs.filter(c => !isDeleted(c)).map(c => String(c.num).toLowerCase())), seen = new Set(), dups = [];
+      named.forEach(x => { const k = nums[x.i].toLowerCase(); if (live.has(k) || seen.has(k)) dups.push(nums[x.i]); seen.add(k); });
+      if (dups.length) return alert('⚠️ លេខស្ទួន៖ ' + [...new Set(dups)].slice(0, 6).join(', '));
+      const hrs = parseFloat(cbVal('cb-hours')), d0 = cbVal('cb-date') || todayISO();
+      const rows = named.map(({ r, i }) => ({ id: generateSafeId(), num: nums[i], recipient: r.name, type, date: r.date || d0, signer: cbVal('cb-signer'), gender: r.gender || impGender(r.name) || null, dob: null, nationality: 'ខ្មែរ', major: null, institution: r.unit || null, grad_year: null,
+        course: cbVal('cb-course') || null, location: cbVal('cb-loc') || null, start_date: cs || null, end_date: ce || cs || null, hours: Number.isFinite(hrs) ? hrs : null, status: 'សកម្ម', status_note: '', file_name: '', file_size: '', file_link: '', created_at: nowISO(), deleted_at: null, deleted_by: null }));
+      const btn = document.getElementById('cb-save'); btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…';
+      const ok = await persistMany('certs', rows); const course = cbVal('cb-course') || type; cbClose(); renderCerts(); updateStats();
+      showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានចុះបញ្ជី') + ' ' + rows.length + ' នាក់ (' + rows[0].num + (rows.length > 1 ? ' → ' + rows[rows.length - 1].num : '') + ')', ok === false);
+      logActivity('ចុះបញ្ជីសញ្ញាបត្រច្រើននាក់', course + ' (' + rows.length + ' នាក់: ' + rows[0].num + ' → ' + rows[rows.length - 1].num + ')');
+    }
+
     let certBulk = false;
     function certSetMode(m) {
       certBulk = m === 'bulk';
@@ -4914,9 +5028,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
 
     // ---------- Import Excel សញ្ញាបត្រចាស់ ----------
-    const CIMP_HEAD = [['num', /លេខកូដ|លេខសញ្ញាបត្រ|លេខវិញ្ញាបនបត្រ|^លេខ$|code|cert.*no|certificate\s*no/i], ['institution', /គ្រឹះស្ថាន|សាកលវិទ្យាល័យ|សាលា|institution|school|universit/i], ['major', /ជំនាញ|មុខវិជ្ជា|major|field/i],
-      ['gender', /ភេទ|gender|sex/i], ['dob', /កំណើត|birth|dob/i], ['nationality', /សញ្ជាតិ|សញ្ចាតិ|nationality/i], ['grad_year', /ឆ្នាំបញ្ចប់|បញ្ចប់ការសិក្សា|graduat/i], ['signer', /ហត្ថលេខា|signer|signed/i],
-      ['status', /ស្ថានភាព|status/i], ['hours', /ម៉ោង|hour/i], ['location', /ទីកន្លែង|ទីតាំង|location|venue/i], ['course', /វគ្គ|course/i], ['type', /ប្រភេទ|type/i], ['date', /កាលបរិច្ឆេទ|ថ្ងៃចេញ|ថ្ងៃចុះ|date|issue/i], ['note', /ចំណាំ|មូលហេតុ|note|remark/i], ['recipient', /ឈ្មោះ|name|recipient/i]];
+    const CIMP_HEAD = [['num', /លេខកូដ|លេខសញ្ញាបត្រ|លេខវិញ្ញាបនបត្រ|បញ្ជី|^លេខ$|code|cert.*no|certificate\s*no/i], ['institution', /គ្រឹះស្ថាន|អង្គភាព|សាកលវិទ្យាល័យ|សាលា|institution|unit|school|universit/i], ['major', /ជំនាញ|មុខវិជ្ជា|major|field/i],
+      ['gender', /ភេទ|gender|sex/i], ['dob', /កំណើត|birth|dob/i], ['nationality', /សញ្ជាតិ|សញ្ចាតិ|nationality/i], ['grad_year', /ឆ្នាំបញ្ចប់|បញ្ចប់ការសិក្សា|graduat/i], ['signer', /^(?!.*ថ្ងៃ).*(ហត្ថលេខា|signer|signed)/i],
+      ['status', /ស្ថានភាព|status/i], ['hours', /ម៉ោង|hour/i], ['location', /ទីកន្លែង|ទីតាំង|location|venue/i], ['course', /វគ្គ|course/i], ['type', /ប្រភេទ|type/i], ['date', /កាលបរិច្ឆេទ|ថ្ងៃចេញ|ថ្ងៃចុះ|ថ្ងៃ.*ហត្ថលេខា|date|issue/i], ['note', /ចំណាំ|មូលហេតុ|note|remark/i], ['recipient', /ឈ្មោះ|name|recipient/i]];
     const CIMP = { items: [], name: '' };
     function cimpDate(v) {
       v = impClean(v); if (!v) return '';
