@@ -492,7 +492,7 @@
               <div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs max-h-[540px] overflow-y-auto">
                 <table class="w-full text-left text-sm resizable-table">
                   <thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap sticky top-0 z-10">
-                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_code">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[200px]" data-i18n="th_recipient">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_type">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center min-w-[110px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[200px]">ជំនាញ · គ្រឹះស្ថាន</th><th class="p-3.5 text-center min-w-[100px]">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[200px]" data-i18n="th_actions">សកម្មភាព</th></tr>
+                    <tr><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_code">លេខកូដសញ្ញាបត្រ</th><th class="p-3.5 min-w-[200px]" data-i18n="th_recipient">ឈ្មោះសាមីខ្លួន</th><th class="p-3.5 min-w-[160px]" data-i18n="th_cert_type">ប្រភេទសញ្ញាបត្រ</th><th class="p-3.5 text-center min-w-[110px]" data-i18n="th_date">កាលបរិច្ឆេទ</th><th class="p-3.5 min-w-[200px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center min-w-[100px]">ស្ថានភាព</th><th class="p-3.5 text-center min-w-[200px]" data-i18n="th_actions">សកម្មភាព</th></tr>
                   </thead>
                   <tbody id="certs-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
@@ -2846,8 +2846,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       activeTab = 'docs'; Object.keys(pager).forEach(key => pager[key].page = 1);
       renderBureauWorkspace();
     }
-    let examMenuOpen = false;
-    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    let examMenuOpen = false, certSub = '';
+    const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់'], ['search', '🔎', 'ស្វែងរកវគ្គ / សិក្ខាកាម']];
+    function certSubGo(k) { certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'certs') certSub = ''; activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
     const BUREAU_DUTIES = {
@@ -2872,7 +2874,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!b.tabs.some(t => t.id === activeTab)) activeTab = 'docs';
       document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.sub || examMenuOpen || EXTASK_KINDS[activeTab]).map(t => {
         const on = t.id === activeTab;
-        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}</button>`;
+        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' ? '▾' : '▸'}</span>` : ''}</button>` + (t.id === 'certs' && activeTab === 'certs' ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
       }).join('');
       ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
@@ -2919,7 +2921,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const hidePanel = ['tracking', 'reports', 'certs'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
-      if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') renderCertQuickPanel(); return; }
+      if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') { certViewApply(); if (certSub) renderCertQuickPanel(true); } return; }
       const en = appLang === 'en';
       const tgt = entryBureau();
       const targetBureauSelectHtml = activeTab === 'docs'
@@ -4467,10 +4469,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const pg = paginate('certs', rows);
       tbody.innerHTML = pg.total ? pg.rows.map(c => `<tr class="hover:bg-emerald-50 transition ${c.status && c.status !== 'សកម្ម' ? 'bg-rose-50/30' : ''}">
           <td class="p-3.5 font-mono font-bold text-emerald-800 text-sm whitespace-nowrap">${esc(c.num)}</td>
-          <td class="p-3.5 text-sm whitespace-nowrap"><div class="font-bold text-slate-900">${esc(c.recipient)}</div><div class="text-[11px] text-slate-500">${esc([c.gender, c.dob ? formatDateDisplay(c.dob) : '', c.nationality].filter(Boolean).join(' · '))}</div></td>
+          <td class="p-3.5 text-sm whitespace-nowrap"><div class="font-bold text-slate-900">${esc(c.recipient)}</div><div class="text-sm text-slate-600">${esc([c.gender, c.dob ? formatDateDisplay(c.dob) : '', c.nationality].filter(Boolean).join(' · '))}</div></td>
           <td class="p-3.5 text-slate-700 font-bold text-sm">${esc(c.type)}</td>
-          <td class="p-3.5 text-center font-mono text-xs text-slate-500 whitespace-nowrap">${esc(c.date)}</td>
-          <td class="p-3.5 text-sm"><div class="font-medium text-slate-800">${esc(c.course || c.major || '')}</div><div class="text-[11px] text-slate-500">${esc([c.course ? c.major : '', c.institution, c.grad_year, c.hours ? c.hours + ' ម៉ោង' : ''].filter(Boolean).join(' · '))}</div></td>
+          <td class="p-3.5 text-center font-mono text-sm text-slate-700 whitespace-nowrap">${esc(c.date)}</td>
+          <td class="p-3.5 text-base"><div class="font-medium text-slate-800">${esc(c.course || c.major || '')}</div></td>
           <td class="p-3.5 text-center">${certStatusBadge(c.status, c.status_note)}</td>
           <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button>${c.file_link ? ` <button onclick="certOpenFile(${c.id})" title="${esc(c.file_name || 'ឯកសារភ្ជាប់')}" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">📎</button>` : ''} <button onclick="certHistory(${c.id})" title="ប្រវត្តិ" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">🕘</button> ${editBtn('certs', c.id)}${deleteBtn('certs', c.id)}</td>
         </tr>`).join('') : emptyRow(7);
@@ -4644,26 +4646,23 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       cbRender(); showToast('បានបិទភ្ជាប់ ' + rows.length + ' ជួរ');
     }
     // ---------- ផ្ទាំង «ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស» នៅក្នុង Tab ចុះបញ្ជីសញ្ញាបត្រ ----------
-    let certQuickTab = 'bulk', certQuickOpen = true, certView = 'quick';
+    let certQuickTab = 'bulk', certQuickOpen = true;
     const CQ_IN = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white text-sm', CQ_LB = (t, r) => `<label class="block text-[11px] mb-1 font-bold text-slate-700">${t}${r ? ' <span class="text-rose-500">*</span>' : ''}</label>`;
     function renderCertQuickPanel(force) {
       const el = document.getElementById('cert-quick-panel'); if (!el) return;
       certViewApply();
       if (el.dataset.ready === '1' && !force) { certRefreshTypeOptions(); return; }
       el.dataset.ready = '1';
-      const tabs = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់ (១ វគ្គ)'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់'], ['search', '🔎', 'ស្វែងរក វគ្គ / សិក្ខាកាម']];
-      el.innerHTML = `<div class="rounded-2xl border border-emerald-200 overflow-hidden bg-emerald-50/30">
-        <div class="bg-emerald-600 text-white px-4 py-2.5 font-bold text-sm">📜 ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស</div>
-        ${certQuickOpen ? `<div class="p-3 space-y-3"><div class="flex flex-wrap gap-2 text-xs font-bold">${tabs.map(([k, ic, l]) => `<button type="button" onclick="certQuickTabSet('${k}')" class="px-3.5 py-2 rounded-xl ${certQuickTab === k ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-emerald-50'}">${ic} ${l}</button>`).join('')}</div><div id="cert-quick-body"></div></div>` : ''}</div>`;
-      if (certQuickOpen) certQuickBody();
+      const cur = CERT_SUBS.find(s => s[0] === certQuickTab) || CERT_SUBS[0];
+      el.innerHTML = `<div class="rounded-2xl border border-emerald-200 overflow-hidden bg-emerald-50/30"><div class="bg-emerald-600 text-white px-4 py-2.5 font-bold text-sm">📜 ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស — ${cur[1]} ${cur[2]}</div><div class="p-3"><div id="cert-quick-body"></div></div></div>`;
+      certQuickBody();
     }
     function certQuickToggle() { certQuickOpen = !certQuickOpen; renderCertQuickPanel(true); }
-    function certQuickTabSet(t) { certQuickTab = t; certQuickOpen = true; certView = 'quick'; certViewApply(); renderCertQuickPanel(true); }
-    function certViewSet(v) { certView = v; certViewApply(); if (v === 'quick') renderCertQuickPanel(true); }
+    function certQuickTabSet(t) { certSubGo(t); }
     function certViewApply() {
-      const q = certView === 'quick', g = id => document.getElementById(id);
-      if (!g('cert-subbar')) return;
-      g('cert-subbar').innerHTML = [['quick', '📜 ចុះបញ្ជីលេខសញ្ញាបត្ររហ័ស'], ['list', '📋 បញ្ជីសញ្ញាបត្រ']].map(([k, l]) => `<button type="button" onclick="certViewSet('${k}')" class="px-4 py-2 rounded-xl ${certView === k ? 'bg-emerald-600 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-emerald-50'}">${l}</button>`).join('');
+      const q = certSub !== '', g = id => document.getElementById(id);
+      if (!g('cert-quick-panel')) return;
+      g('cert-subbar').innerHTML = '';
       g('cert-quick-panel').classList.toggle('hidden', !q); g('cert-list-view').classList.toggle('hidden', q); g('cert-toolbar').classList.toggle('hidden', q);
     }
     function openCertBulk() { certQuickTabSet('bulk'); }
