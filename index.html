@@ -5323,7 +5323,24 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         (!f.month || String(c.date || '').slice(5, 7) === f.month) && (!f.from || (c.date && c.date >= f.from)) && (!f.to || (c.date && c.date <= f.to)))
         .sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')) || String(a.num || '').localeCompare(String(b.num || '')));
     }
+    function crCourseOptions() {
+      const s = document.getElementById('crf-course'); if (!s) return;
+      const ty = document.getElementById('crf-type')?.value || '', cur = s.value;
+      const list = [...new Set(activeRows('certs').filter(c => !ty || c.type === ty).map(c => c.course).filter(Boolean))].sort();
+      s.innerHTML = list.length ? '<option value="">ទាំងអស់ (' + toKhmerDigits(list.length) + ' វគ្គ)</option>' + list.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('') : '<option value="">— គ្មានវគ្គ —</option>';
+      s.value = list.includes(cur) ? cur : '';
+    }
+    function crCourseList(rows) {
+      const by = new Map(); rows.forEach(c => { const k = c.course || '(គ្មានឈ្មោះវគ្គ)'; if (!by.has(k)) by.set(k, []); by.get(k).push(c); });
+      const rng = rs => { const d = rs.map(c => c.start_date || c.date).filter(Boolean).sort(), e = rs.map(c => c.end_date || c.date).filter(Boolean).sort(); return d.length ? formatDateDisplay(d[0]) + (e[e.length - 1] !== d[0] ? ' → ' + formatDateDisplay(e[e.length - 1]) : '') : ''; };
+      const hrs = rs => Math.max(0, ...rs.map(r => parseFloat(r.hours)).filter(Number.isFinite));
+      const list = [...by.entries()].sort((a, b) => String((b[1].map(c => c.date).sort().pop()) || '').localeCompare(String((a[1].map(c => c.date).sort().pop()) || '')));
+      const out = list.map(([k, rs], i) => ({ 'ល.រ': i + 1, 'វគ្គបណ្តុះបណ្តាល': k, 'វគ្គ (ឡាតាំង)': (rs.find(c => c.course_latin) || {}).course_latin || '', 'ប្រភេទ': [...new Set(rs.map(c => c.type).filter(Boolean))].join(', '), 'សិក្ខាកាម': rs.length, 'ស្រី': rs.filter(c => c.gender === 'ស្រី').length, 'ប្រុស': rs.filter(c => c.gender === 'ប្រុស').length, 'ម៉ោង/ក្រេឌីត': hrs(rs) || '', 'កាលបរិច្ឆេទ': rng(rs) }));
+      if (out.length) out.push({ 'ល.រ': '', 'វគ្គបណ្តុះបណ្តាល': 'សរុបរួម ' + toKhmerDigits(list.length) + ' វគ្គ', 'វគ្គ (ឡាតាំង)': '', 'ប្រភេទ': '', 'សិក្ខាកាម': rows.length, 'ស្រី': rows.filter(c => c.gender === 'ស្រី').length, 'ប្រុស': rows.filter(c => c.gender === 'ប្រុស').length, 'ម៉ោង/ក្រេឌីត': list.reduce((a, [, rs]) => a + hrs(rs), 0) || '', 'កាលបរិច្ឆេទ': '' });
+      return out;
+    }
     function crDetailRows(rows) {
+      if (CR.mode === 'detail' && !CR.f.course) return crCourseList(rows);
       return rows.map((c, i) => ({ 'ល.រ': i + 1, 'លេខកូដ': c.num, 'ឈ្មោះ': c.recipient, 'ឈ្មោះឡាតាំង': c.recipient_latin || '', 'ភេទ': c.gender || '', 'ថ្ងៃកំណើត': c.dob ? formatDateDisplay(c.dob) : '', 'សញ្ជាតិ': c.nationality || '', 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date ? formatDateDisplay(c.date) : '',
         'វគ្គបណ្តុះបណ្តាល': c.course || '', 'វគ្គ (ឡាតាំង)': c.course_latin || '', 'ម៉ោង/ក្រេឌីត': c.hours != null ? c.hours : '', 'គ្រឹះស្ថាន': c.institution || '', 'ឆ្នាំបញ្ចប់': c.grad_year || '', 'ហត្ថលេខា': c.signer || '', 'ស្ថានភាព': c.status || 'សកម្ម' }));
     }
@@ -5343,12 +5360,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (f.year) p.push('ឆ្នាំ៖ ' + f.year); if (f.month) p.push('ខែ៖ ' + f.month); if (f.q) p.push('ស្វែងរក៖ ' + f.q); if (f.from || f.to) p.push('ថ្ងៃ៖ ' + (f.from ? formatDateDisplay(f.from) : '…') + ' → ' + (f.to ? formatDateDisplay(f.to) : '…'));
       return p.length ? p.join(' • ') : 'ទិន្នន័យទាំងអស់';
     }
-    function crTitle() { return 'របាយការណ៍ចុះបញ្ជីសញ្ញាបត្រ — ' + (CR.mode === 'detail' ? 'លម្អិត' : 'សង្ខេបតាម' + CR_GROUPS[CR.group][0]); }
+    function crTitle() { return 'របាយការណ៍ចុះបញ្ជីសញ្ញាបត្រ — ' + (CR.mode === 'detail' ? (CR.f.course ? 'បញ្ជីសិក្ខាកាម៖ ' + CR.f.course : 'បញ្ជីវគ្គបណ្តុះបណ្តាល') : 'សង្ខេបតាម' + CR_GROUPS[CR.group][0]); }
     function crData() { const rows = crFiltered(); return CR.mode === 'detail' ? crDetailRows(rows) : crSummaryRows(rows); }
     function crTableHTML(data, cls) {
       if (!data.length) return '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>';
       const keys = Object.keys(data[0]);
-      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CR.mode === 'summary' && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${i === data.length - 1 && r['ល.រ'] === '' ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
     }
     function crRead() {
       const g = id => document.getElementById('crf-' + id)?.value || '';
@@ -5359,7 +5376,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function crRender() {
       crRead();
       const rows = crFiltered(), data = CR.mode === 'detail' ? crDetailRows(rows) : crSummaryRows(rows);
-      document.getElementById('cr-count').textContent = 'រកឃើញ ' + toKhmerDigits(rows.length) + ' កំណត់ត្រា';
+      document.getElementById('cr-count').textContent = CR.mode === 'detail' && !CR.f.course ? 'រកឃើញ ' + toKhmerDigits(new Set(rows.map(c => c.course || '')).size) + ' វគ្គ · ' + toKhmerDigits(rows.length) + ' នាក់' : 'រកឃើញ ' + toKhmerDigits(rows.length) + ' នាក់';
       document.getElementById('cr-result').innerHTML = crTableHTML(data);
       document.getElementById('cr-group-wrap').classList.toggle('hidden', CR.mode !== 'summary');
       ['detail', 'summary'].forEach(m => { const b = document.getElementById('crtab-' + m); b.classList.toggle('bg-emerald-600', CR.mode === m); b.classList.toggle('text-white', CR.mode === m); b.classList.toggle('bg-slate-100', CR.mode !== m); b.classList.toggle('text-slate-600', CR.mode !== m); });
@@ -5373,12 +5390,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📜 Report — ចុះបញ្ជីសញ្ញាបត្រ</h3><button type="button" onclick="crClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
-          ${sel('type', 'ប្រភេទ', [...new Set([...certTypeNames(), ...uniq('type')])])}${sel('year', 'ឆ្នាំ', years)}${sel('month', 'ខែ', Array.from({ length: 12 }, (_, i) => [String(i + 1).padStart(2, '0'), 'ខែ ' + (i + 1)]))}
+          ${sel('type', 'ប្រភេទ', [...new Set([...certTypeNames(), ...uniq('type')])]).replace('onchange="crRender()"', 'onchange="crCourseOptions();crRender()"')}${sel('year', 'ឆ្នាំ', years)}${sel('month', 'ខែ', Array.from({ length: 12 }, (_, i) => [String(i + 1).padStart(2, '0'), 'ខែ ' + (i + 1)]))}
           ${sel('status', 'ស្ថានភាព', CERT_STATUS)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('institution', 'គ្រឹះស្ថាន', uniq('institution'))}
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ថ្ងៃចេញ ពី</label><input type="date" id="crf-from" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="crf-to" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
-          <div class="col-span-2">${sel('course', 'វគ្គបណ្តុះបណ្តាល', uniq('course'))}</div>
-          <div class="col-span-2 md:col-span-5"><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (លេខ/ឈ្មោះ/វគ្គបណ្តុះបណ្តាល/គ្រឹះស្ថាន)</label><input id="crf-q" oninput="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div>
+          <div class="col-span-2">${sel('course', 'វគ្គបណ្តុះបណ្តាល', [])}</div>
+          
         </div>
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <button id="crtab-detail" onclick="crSetMode('detail')" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">📋 Detail Report</button>
@@ -5389,7 +5406,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div id="cr-result" class="overflow-auto border border-slate-200 rounded-xl flex-1 min-h-[200px]"></div>
         <div class="flex flex-wrap justify-end gap-2"><button onclick="crExport('xlsx')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Excel</button><button onclick="crExport('csv')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">CSV</button><button onclick="crPrint(false)" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold">👁️ Print Preview</button><button onclick="crPrint(true)" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold">🖨️ Print / PDF</button></div></div>`;
       document.body.appendChild(d);
-      CR.mode = 'detail'; document.getElementById('crf-group').value = CR.group; crRender();
+      CR.mode = 'detail'; document.getElementById('crf-group').value = CR.group; crCourseOptions(); crRender();
     }
     function crExport(kind) {
       crRead(); const data = crData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
@@ -5407,7 +5424,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function crPrint(auto) {
       crRead(); const data = crData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
       const keys = Object.keys(data[0]), now = new Date();
-      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${CR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${i === data.length - 1 && r['ល.រ'] === '' ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
       win.document.write(`<html><head><meta charset="utf-8"><title>${esc(crTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}.bar{position:sticky;top:0;background:#ecfdf5;border-bottom:1px solid #6ee7b7;padding:8px;text-align:center;margin:-8px -8px 10px}.bar button{padding:6px 16px;border:0;border-radius:8px;background:#059669;color:#fff;font-weight:bold;cursor:pointer}@media print{.bar{display:none}}</style></head><body>${auto ? '' : '<div class="bar"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>'}<h2>${esc(crTitle())}</h2><p class="s">${esc(crFilterText())} — សរុប ${toKhmerDigits(crFiltered().length)} កំណត់ត្រា</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div>${auto ? '<script>setTimeout(function(){window.print()},700)<\/script>' : ''}</body></html>`);
       win.document.close();
