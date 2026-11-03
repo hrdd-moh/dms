@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.6 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.6.1 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -53,7 +53,8 @@
     #app-sidebar.collapsed .sidebar-text,
     #app-sidebar.collapsed .sidebar-section-label,
     #app-sidebar.collapsed #sidebar-bureau-box { display: none !important; }
-    #app-sidebar .sidebar-nav-btn, #app-sidebar #active-bureau-select { font-weight: 700 !important; }
+    #app-sidebar .sidebar-nav-btn, #app-sidebar #active-bureau-select { font-weight: 800 !important; font-size: 16px !important; line-height: 1.45 !important; }
+    #app-sidebar .sidebar-nav-btn.pl-8 { font-size: 15px !important; }
     #cert-course-view tbody td, #cert-course-view tfoot td, #cert-course-view tbody td div { font-weight: 400 !important; }
     #app-sidebar.collapsed .sidebar-nav-btn { justify-content: center; padding-left: 0.5rem; padding-right: 0.5rem; }
 
@@ -89,7 +90,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.6</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.6.1</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -147,7 +148,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.4.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4.6.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -529,7 +530,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.4.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4.6.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -685,7 +686,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.6</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.6.1</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -697,7 +698,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.6 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.6.1 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -894,7 +895,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.6</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.6.1</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -3153,6 +3154,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function setPageSize(key, s) { pager[key].size = Number(s) || DEFAULT_PAGE_SIZE; pager[key].page = 1; RENDERERS[key](); }
     function onFilter(key) { pager[key].page = 1; RENDERERS[key](); }
     function emptyRow(cols, msg) { return `<tr><td colspan="${cols}" class="p-6 text-center text-slate-400">${esc(msg || tStr('no_data'))}</td></tr>`; }
+    function noDelBtn() { return ` <button type="button" title="គ្មានសិទ្ធិលុប" onclick="event.stopPropagation();showToast('គ្មានសិទ្ធិលុប — សូមឱ្យ Admin ផ្តល់សិទ្ធិ «លុប» ក្នុង User Management ឬប្រើ ✏️ ដើម្បីកែ', true)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-bold text-slate-400 cursor-not-allowed">🗑</button>`; }
     function deleteBtn(table, id) { return can('delete') ? `<button onclick="softDelete('${table}', ${id})" class="text-rose-600 hover:text-rose-800 font-bold text-xs ml-2 form-input-focus">${esc(tStr('btn_delete'))}</button>` : ''; }
 
     // ---------------- 12. TABLE RENDERERS ----------------
@@ -4617,7 +4619,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           const by = new Map(); base.forEach(c => { const k = c.course || ''; if (q && !cm(c) && !pm(c)) return; if (!by.has(k)) by.set(k, []); by.get(k).push(c); });
           const rng = rs => { const d = rs.map(c => c.start_date || c.date).filter(Boolean).sort(), e = rs.map(c => c.end_date || c.date).filter(Boolean).sort(); return d.length ? d[0] + (e[e.length - 1] && e[e.length - 1] !== d[0] ? ' → ' + e[e.length - 1] : '') : ''; };
           const list = [...by.entries()].sort((a, b) => String(rng(b[1])).localeCompare(String(rng(a[1]))));
-          cv.innerHTML = `<div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs"><table class="w-full text-left text-sm resizable-table"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3.5 w-12 text-center">ល.រ</th><th class="p-3.5 min-w-[220px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center">សិក្ខាកាម</th><th class="p-3.5 text-center">ស្រី</th><th class="p-3.5 text-center">ម៉ោង / ក្រេឌីត</th><th class="p-3.5">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${list.map(([k, rs], i) => `<tr class="hover:bg-emerald-50 cursor-pointer" data-c="${esc(k)}" onclick="certPickCourse(this.dataset.c)"><td class="p-3.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3.5 text-base font-bold text-slate-900">${esc(k || '(គ្មានឈ្មោះវគ្គ)')}${(rs.find(c => c.course_latin) || {}).course_latin ? `<div class="text-sm font-normal text-slate-500">${esc(rs.find(c => c.course_latin).course_latin)}</div>` : ''}</td><td class="p-3.5 text-center font-bold text-emerald-700">${toKhmerDigits(rs.length)}</td><td class="p-3.5 text-center">${toKhmerDigits(rs.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-3.5 text-center font-bold text-indigo-700">${certCourseHours(rs) ? toKhmerDigits(certCourseHours(rs)) : '—'}</td><td class="p-3.5 font-mono text-sm text-slate-700">${esc(rng(rs))}</td><td class="p-3.5 text-center"><span class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-bold">👁 មើល</span> <button type="button" title="បោះពុម្ព / PDF" onclick="event.stopPropagation();certCoursePrint(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50 text-xs font-bold">🖨 PDF</button>${can('edit') ? ` <button type="button" title="កែវគ្គ" onclick="event.stopPropagation();certCourseEdit(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-amber-50 text-xs font-bold">✏️</button>` : ''}${can('delete') ? ` <button type="button" title="លុបវគ្គ" onclick="event.stopPropagation();certCourseDelete(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600">🗑</button>` : ''}</td></tr>`).join('') || '<tr><td colspan="7" class="p-8 text-center text-slate-400">មិនទាន់មានទិន្នន័យ</td></tr>'}</tbody><tfoot class="bg-emerald-50/70 font-bold text-emerald-900 border-t border-emerald-100"><tr><td class="p-3.5"></td><td class="p-3.5">សរុប៖ ${toKhmerDigits(list.length)} វគ្គ</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.length, 0))}</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.filter(c => c.gender === 'ស្រី').length, 0))}</td><td class="p-3.5 text-center text-indigo-700">${toKhmerDigits(list.reduce((a, [, rs]) => a + certCourseHours(rs), 0))}</td><td class="p-3.5"></td><td class="p-3.5"></td></tr></tfoot></table></div>`; initResizableTables();
+          cv.innerHTML = `<div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs"><table class="w-full text-left text-sm resizable-table"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3.5 w-12 text-center">ល.រ</th><th class="p-3.5 min-w-[220px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center">សិក្ខាកាម</th><th class="p-3.5 text-center">ស្រី</th><th class="p-3.5 text-center">ម៉ោង / ក្រេឌីត</th><th class="p-3.5">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${list.map(([k, rs], i) => `<tr class="hover:bg-emerald-50 cursor-pointer" data-c="${esc(k)}" onclick="certPickCourse(this.dataset.c)"><td class="p-3.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3.5 text-base font-bold text-slate-900">${esc(k || '(គ្មានឈ្មោះវគ្គ)')}${(rs.find(c => c.course_latin) || {}).course_latin ? `<div class="text-sm font-normal text-slate-500">${esc(rs.find(c => c.course_latin).course_latin)}</div>` : ''}</td><td class="p-3.5 text-center font-bold text-emerald-700">${toKhmerDigits(rs.length)}</td><td class="p-3.5 text-center">${toKhmerDigits(rs.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-3.5 text-center font-bold text-indigo-700">${certCourseHours(rs) ? toKhmerDigits(certCourseHours(rs)) : '—'}</td><td class="p-3.5 font-mono text-sm text-slate-700">${esc(rng(rs))}</td><td class="p-3.5 text-center"><span class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-bold">👁 មើល</span> <button type="button" title="បោះពុម្ព / PDF" onclick="event.stopPropagation();certCoursePrint(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50 text-xs font-bold">🖨 PDF</button>${can('edit') ? ` <button type="button" title="កែវគ្គ" onclick="event.stopPropagation();certCourseEdit(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-amber-50 text-xs font-bold">✏️</button>` : ''}${can('delete') ? ` <button type="button" title="លុបវគ្គ" onclick="event.stopPropagation();certCourseDelete(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600">🗑</button>` : noDelBtn()}</td></tr>`).join('') || '<tr><td colspan="7" class="p-8 text-center text-slate-400">មិនទាន់មានទិន្នន័យ</td></tr>'}</tbody><tfoot class="bg-emerald-50/70 font-bold text-emerald-900 border-t border-emerald-100"><tr><td class="p-3.5"></td><td class="p-3.5">សរុប៖ ${toKhmerDigits(list.length)} វគ្គ</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.length, 0))}</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.filter(c => c.gender === 'ស្រី').length, 0))}</td><td class="p-3.5 text-center text-indigo-700">${toKhmerDigits(list.reduce((a, [, rs]) => a + certCourseHours(rs), 0))}</td><td class="p-3.5"></td><td class="p-3.5"></td></tr></tfoot></table></div>`; initResizableTables();
         }
       }
       const pg = paginate('certs', rows);
@@ -4633,7 +4635,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <td class="p-3.5 text-center font-mono text-sm text-slate-700 whitespace-nowrap">${esc(c.date)}</td>
           <td class="p-3.5 text-base"><div class="font-medium text-slate-800">${esc(c.course || c.major || '')}</div>${c.course_latin ? `<div class="text-sm text-slate-500">${esc(c.course_latin)}</div>` : ''}</td>`}
           <td class="p-3.5 text-center">${certStatusBadge(c.status, c.status_note)}</td>
-          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button>${c.file_link ? ` <button onclick="certOpenFile(${c.id})" title="${esc(c.file_name || 'ឯកសារភ្ជាប់')}" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">📎</button>` : ''} ${editBtn('certs', c.id)}${deleteBtn('certs', c.id)}</td>
+          <td class="p-3.5 text-center whitespace-nowrap"><button onclick="printCertificateSheet(${c.id})" class="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 font-bold transition form-input-focus shadow-2xs">${esc(tStr('btn_print'))}</button>${c.file_link ? ` <button onclick="certOpenFile(${c.id})" title="${esc(c.file_name || 'ឯកសារភ្ជាប់')}" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-emerald-50 form-input-focus">📎</button>` : ''} ${editBtn('certs', c.id)}${can('delete') ? deleteBtn('certs', c.id) : noDelBtn()}</td>
         </tr>`).join('') : emptyRow(slim ? 7 : 9);
       renderPager('certs', pg);
     }
@@ -5931,7 +5933,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.4.6') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.4.6.1') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
         </div>`;
