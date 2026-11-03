@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.5.1 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.4.6 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -84,12 +84,12 @@
         <div class="h-20 px-4 border-b border-slate-100 flex items-center justify-between gap-2.5 shrink-0">
           <div class="flex items-center gap-3 min-w-0">
             <div class="h-14 w-14 min-w-[56px] rounded-2xl border border-emerald-600/25 p-0.5 flex items-center justify-center bg-emerald-50/40 shadow-2xs shrink-0 overflow-hidden">
-              <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain scale-105">
+              <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain scale-105">
             </div>
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
-                <span class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.5.1</span>
+                <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.4.6</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -147,7 +147,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.4.5.1 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.4.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -159,7 +159,7 @@
       <header id="app-header" class="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 flex items-center justify-between gap-3 shrink-0 z-20">
         <div class="flex items-center gap-3 min-w-0">
           <div class="h-12 w-12 rounded-xl border border-emerald-600/20 p-0.5 flex lg:hidden items-center justify-center bg-emerald-50 shrink-0 overflow-hidden">
-            <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
+            <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
           </div>
           <div class="truncate">
             <div class="flex items-center gap-2">
@@ -529,7 +529,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.4.5.1 <span class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.4.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -682,11 +682,11 @@
   <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-title" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl space-y-4 text-center">
       <div class="w-24 h-24 rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center mx-auto bg-white shadow-xs overflow-hidden">
-        <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
+        <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.5.1</h3>
-        <p class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - MoH</p>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.4.6</h3>
+        <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
         <div><label class="block text-xs font-bold text-slate-700 mb-1">ឈ្មោះគណនី (Username)</label><input type="text" id="login-username" required autocomplete="username" lang="en" autocapitalize="none" spellcheck="false" oninput="latinOnly(this)" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/50" placeholder="username (a-z, 0-9)"></div>
@@ -697,7 +697,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.5.1 Khun Ratanak (HRDD - MoH) All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.4.6 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -894,7 +894,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.5.1</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.4.6</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -922,11 +922,11 @@
         <div class="flex justify-between items-start border-b pb-4">
           <div class="flex items-center gap-3">
             <div class="h-16 w-16 min-w-[64px] rounded-2xl border border-emerald-600/30 p-1 flex items-center justify-center bg-white shadow-xs overflow-hidden">
-              <img src="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
+              <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="h-full w-full object-contain">
             </div>
             <div class="leading-tight">
-              <h4 class="font-bold text-xs sm:text-sm text-slate-900">ក្រសួងសុខាភិបាល</h4>
-              <p class="text-xs text-slate-700 font-semibold">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</p>
+              <h4 data-org="min" class="font-bold text-xs sm:text-sm text-slate-900">ក្រសួងសុខាភិបាល</h4>
+              <p data-org="dept" class="text-xs text-slate-700 font-semibold">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</p>
               <p class="text-[11px] text-emerald-800 font-medium">ការិយាល័យបណ្តុះបណ្តាលបន្ត</p>
             </div>
           </div>
@@ -3361,7 +3361,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up ដើម្បី Print', true);
       win.document.write(`<html><head><meta charset="utf-8"><title>${esc(rptTitle(r))}</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet"><style>body{font-family:'Battambang',sans-serif;padding:28px;color:#0f172a}.font-moul{font-family:'Moul',cursive}table{border-collapse:collapse}@media print{body{padding:10px}}</style></head><body>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
-          <div style="font-size:13px;line-height:1.7"><div class="font-moul">ក្រសួងសុខាភិបាល</div><div class="font-moul">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div><div>${esc(bn)}</div></div>
+          <div style="font-size:13px;line-height:1.7"><div class="font-moul">${esc(org().min)}</div><div class="font-moul">${esc(org().dept)}</div><div>${esc(bn)}</div></div>
           <div style="text-align:center;font-size:13px;line-height:1.7"><div class="font-moul">ព្រះរាជាណាចក្រកម្ពុជា</div><div class="font-moul">ជាតិ សាសនា ព្រះមហាក្សត្រ</div></div></div>
         ${el.innerHTML}
         <div style="display:flex;justify-content:space-between;margin-top:40px;font-size:13px"><div style="text-align:center">អ្នកត្រួតពិនិត្យ<br><br><br><br>.....................</div><div style="text-align:center">រៀបចំដោយ៖ ${esc(currentUser?.fullname || '')}<br>ថ្ងៃទី ${new Date().getDate()} ខែ ${MONTHS_KH[new Date().getMonth()]} ឆ្នាំ ${new Date().getFullYear()}<br><br><br>.....................</div></div>
@@ -3686,7 +3686,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
               : `<div style="display:flex;margin:2px 0;padding-left:${b.lvl * 24}px;text-align:justify"><span style="flex:0 0 ${b.lvl ? 16 : 26}px">${mark(b)}</span><span style="flex:1">${esc(fx(b.t))}</span></div>`).join('');
       return `<div id="rpt-doc" style="font-family:'Battambang',sans-serif;font-size:13px;line-height:1.75;color:#0f172a;background:#fff;max-width:820px;margin:0 auto;padding:28px 32px">
         <div style="text-align:center"><div style="font-family:'Moul',cursive">ព្រះរាជាណាចក្រកម្ពុជា</div><div style="font-family:'Moul',cursive">ជាតិ សាសនា ព្រះមហាក្សត្រ</div></div>
-        <div style="margin-top:6px;font-family:'Moul',cursive;line-height:1.9"><div>ក្រសួងសុខាភិបាល</div><div>អគ្គនាយកដ្ឋានបច្ចេកទេសសុខាភិបាល</div><div>នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div></div>
+        <div style="margin-top:6px;font-family:'Moul',cursive;line-height:1.9">${[org().min, org().gen, org().dept].filter(Boolean).map(t => '<div>' + esc(t) + '</div>').join('')}</div>
         <div style="text-align:center;margin-top:18px;font-family:'Moul',cursive;line-height:1.9"><div>${esc(fx(T.l1))}</div><div>${esc(T.l2)}</div><div>${esc(T.l3)}</div></div>
         ${body}</div>`;
     }
@@ -3714,7 +3714,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const P = [];
       P.push(dPara(dRun('ព្រះរាជាណាចក្រកម្ពុជា', { font: MUOL }), { jc: 'center', after: 0 }));
       P.push(dPara(dRun('ជាតិ សាសនា ព្រះមហាក្សត្រ', { font: MUOL }), { jc: 'center', after: 120 }));
-      ['ក្រសួងសុខាភិបាល', 'អគ្គនាយកដ្ឋានបច្ចេកទេសសុខាភិបាល', 'នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស'].forEach(t => P.push(dPara(dRun(t, { font: MUOL }), { after: 0 })));
+      [org().min, org().gen, org().dept].filter(Boolean).forEach(t => P.push(dPara(dRun(t, { font: MUOL }), { after: 0 })));
       P.push(dPara('', { after: 120 }));
       [T.l1, T.l2, T.l3].forEach(t => P.push(dPara(dRun(fx(t), { font: MUOL, sz: 26 }), { jc: 'center', after: 0 })));
       P.push(dPara('', { after: 120 }));
@@ -4156,7 +4156,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         bodyEl.innerHTML = `
           <div id="doc-printable-sheet" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 max-w-2xl w-full space-y-5 text-slate-800">
             <div class="flex justify-between items-start border-b border-slate-200 pb-4">
-              <div><h4 class="font-bold text-sm text-slate-900">ក្រសួងសុខាភិបាល</h4><p class="text-xs text-slate-600 font-semibold">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</p><p class="text-xs text-emerald-700 font-bold mt-0.5">${esc(bName)}</p></div>
+              <div><h4 class="font-bold text-sm text-slate-900">${esc(org().min)}</h4><p class="text-xs text-slate-600 font-semibold">${esc(org().dept)}</p><p class="text-xs text-emerald-700 font-bold mt-0.5">${esc(bName)}</p></div>
               <div class="text-right"><h4 class="font-moul text-xs text-slate-900">ព្រះរាជាណាចក្រកម្ពុជា</h4><p class="text-xs font-semibold text-slate-700">ជាតិ សាសនា ព្រះមហាក្សត្រ</p></div>
             </div>
             <div class="text-center py-2"><span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">សលាកបត្រសម្គាល់ឯកសារឌីជីថល (Document Summary Sheet)</span><h2 class="text-lg font-bold text-slate-900 mt-3">${esc(doc.title)}</h2></div>
@@ -4674,7 +4674,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <style>body{font-family:'Battambang',sans-serif;padding:40px;text-align:center;border:6px double #059669;margin:20px;position:relative}.qr{position:absolute;left:50px;bottom:40px;text-align:center;font-size:10px;color:#444;width:150px}.qr svg{border:6px solid #fff;outline:1px solid #ddd}.warn{background:#fee2e2;color:#991b1b;border:2px solid #991b1b;padding:6px;font-weight:bold;margin-bottom:12px}.info{display:inline-block;text-align:left;font-size:14px;margin-top:6px}.info td{padding:2px 10px}</style></head><body>
         ${st !== 'សកម្ម' ? `<div class="warn">⚠ សញ្ញាបត្រនេះមានស្ថានភាព៖ ${esc(st)}${c.status_note ? ' (' + esc(c.status_note) + ')' : ''}</div>` : ''}
         <h3 style="font-family:'Moul',cursive;">ព្រះរាជាណាចក្រកម្ពុជា<br>ជាតិ សាសនា ព្រះមហាក្សត្រ</h3>
-        <h4>ក្រសួងសុខាភិបាល - នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</h4>
+        <h4>${esc(org().min)} - ${esc(org().dept)}</h4>
         <h1 style="color:#065f46;margin-top:30px;">វិញ្ញាបនបត្របញ្ជាក់ការចុះបញ្ជី</h1>
         <p style="font-size:18px;">សូមបញ្ជាក់ថា៖ <strong>${esc(c.recipient)}</strong></p>${c.recipient_latin ? `<p style="font-size:17px;letter-spacing:1.5px;margin-top:-8px"><strong>${esc(c.recipient_latin)}</strong></p>` : ''}
         ${info.length ? `<table class="info">${info.map(([k, v]) => `<tr><td>${esc(k)}៖</td><td><strong>${esc(v)}</strong></td></tr>`).join('')}</table>` : ''}
@@ -4705,7 +4705,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const d = document.createElement('div'); d.id = 'verify-page';
       d.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#ecfdf5;overflow:auto;font-family:Battambang,"Noto Sans Khmer","Khmer OS Siemreap",sans-serif;color:#0f172a';
       d.innerHTML = `<div style="max-width:480px;margin:0 auto;padding:24px 16px">
-        <div style="text-align:center;margin-bottom:16px"><div style="font-size:13px;color:#065f46;font-weight:bold">ក្រសួងសុខាភិបាល</div><div style="font-size:12px;color:#475569">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស</div><h1 style="font-size:20px;margin:10px 0 0;color:#065f46">ផ្ទៀងផ្ទាត់សញ្ញាបត្រ</h1></div>
+        <div style="text-align:center;margin-bottom:16px"><div style="font-size:13px;color:#065f46;font-weight:bold">${esc(org().min)}</div><div style="font-size:12px;color:#475569">${esc(org().dept)}</div><h1 style="font-size:20px;margin:10px 0 0;color:#065f46">ផ្ទៀងផ្ទាត់សញ្ញាបត្រ</h1></div>
         <form id="vf" style="display:flex;gap:8px;margin-bottom:16px"><input id="vcode" placeholder="បញ្ចូលលេខកូដសញ្ញាបត្រ" style="flex:1;padding:10px 12px;border:1px solid #94a3b8;border-radius:12px;font-size:14px" value=""><button style="padding:10px 16px;border:0;border-radius:12px;background:#059669;color:#fff;font-weight:bold;font-size:14px">ពិនិត្យ</button></form>
         <div id="vres"></div>
         <p style="font-size:11px;color:#64748b;text-align:center;margin-top:24px;line-height:1.6">ទំព័រនេះបង្ហាញតែព័ត៌មានជាសាធារណៈដែលចាំបាច់សម្រាប់ផ្ទៀងផ្ទាត់ប៉ុណ្ណោះ (ឈ្មោះ ប្រភេទ កាលបរិច្ឆេទ ស្ថានភាព)។</p></div>`;
@@ -5653,19 +5653,66 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { k: 'pageSize', label: 'ចំនួនជួរក្នុងមួយទំព័រ (លំនាំដើម)', def: 25, options: [10, 25, 50, 100], hint: 'ចំនួនជួរដំបូងសម្រាប់តារាងទាំងអស់។' },
       { k: 'certFormat', type: 'text', label: 'ទម្រង់លេខកូដសញ្ញាបត្រ', def: '{ប្រភេទ}-{ឆ្នាំ}-{លំដាប់}', hint: 'ប្រើ {ប្រភេទ} {ឆ្នាំ} {ខែ} {លំដាប់} ឧ. {ប្រភេទ}-{ឆ្នាំ}-{លំដាប់} → VN-2026-0001 (លំដាប់រាប់ដោយស្វ័យប្រវត្តិ)។' },
       { k: 'courseCertFormat', type: 'text', label: 'ទម្រង់លេខវិញ្ញាបនបត្រវគ្គ', def: '{កូដ}-{ឆ្នាំ}-{លំដាប់}', hint: 'ប្រើ {កូដ} {ឆ្នាំ} {ខែ} {លំដាប់} ឧ. {កូដ}-{ឆ្នាំ}-{លំដាប់} → CT-2026-0001 (ឆ្នាំយកពីថ្ងៃចាប់ផ្តើមវគ្គ)។' },
-      { k: 'verifyUrl', type: 'text', label: 'Link ទំព័រផ្ទៀងផ្ទាត់សាធារណៈ (ក្នុង QR)', def: '', hint: 'ទទេ = ប្រើ link គេហទំព័រនេះ (ឧ. https://hrdd-moh.github.io/dms/) ។ QR បន្ថែម ?verify=លេខកូដ។' }
+      { k: 'verifyUrl', type: 'text', label: 'Link ទំព័រផ្ទៀងផ្ទាត់សាធារណៈ (ក្នុង QR)', def: '', hint: 'ទទេ = ប្រើ link គេហទំព័រនេះ (ឧ. https://hrdd-moh.github.io/dms/) ។ QR បន្ថែម ?verify=លេខកូដ។' },
+      // [EXT:org] ព័ត៌មានស្ថាប័ន — ត្រូវបានអានតាម org() ក្នុងកន្លែងបោះពុម្ព/ក្បាលលិខិត/ម៉ឺនុយ
+      { k: 'orgMin', org: true, type: 'text', label: 'ឈ្មោះក្រសួង/ស្ថាប័ន (ខ្មែរ)', def: 'ក្រសួងសុខាភិបាល', hint: 'បង្ហាញក្នុងម៉ឺនុយ និងក្បាលលិខិត/របាយការណ៍។' },
+      { k: 'orgMinEn', org: true, type: 'text', label: 'ឈ្មោះក្រសួង/ស្ថាប័ន (English)', def: 'Ministry of Health', hint: 'ប្រើពេលប្តូរភាសា English។' },
+      { k: 'orgDept', org: true, type: 'text', label: 'ឈ្មោះនាយកដ្ឋាន/អង្គភាព (ខ្មែរ)', def: 'នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស', hint: 'បន្ទាត់ក្រោមឈ្មោះស្ថាប័ន។' },
+      { k: 'orgDeptEn', org: true, type: 'text', label: 'ឈ្មោះនាយកដ្ឋាន/អង្គភាព (English)', def: 'Department of Human Resource Development', hint: '' },
+      { k: 'orgGen', org: true, type: 'text', empty: true, label: 'បន្ទាត់បន្ថែមក្នុងក្បាលរបាយការណ៍ផ្លូវការ', def: 'អគ្គនាយកដ្ឋានបច្ចេកទេសសុខាភិបាល', hint: 'ឧ. អគ្គនាយកដ្ឋាន។ ទុកទទេ = មិនបង្ហាញ។' },
+      { k: 'orgApp', org: true, type: 'text', label: 'ឈ្មោះប្រព័ន្ធ (App)', def: 'HRDD DMS', hint: 'បង្ហាញក្បែរ Logo និងចំណងជើង tab។' },
+      { k: 'orgCredit', org: true, type: 'text', label: 'ឈ្មោះក្នុង Footer (© ...)', def: 'Khun Ratanak (HRDD - MoH)', hint: 'ឈ្មោះអ្នកអភិវឌ្ឍ/ម្ចាស់ប្រព័ន្ធ។' },
+      { k: 'orgLogo', org: true, type: 'text', logo: true, label: 'Logo', def: '', hint: '' }
     ];
     let sysSettings = {};
     function setting(k) {
       const d = SETTINGS_DEFS.find(x => x.k === k); if (!d) return undefined;
       const raw = sysSettings[k]; const v = Number(raw);
-      if (d.type === 'text') return (raw == null || String(raw).trim() === '') ? d.def : String(raw).trim();
+      if (d.type === 'text') { if (d.empty && raw != null) return String(raw).trim(); return (raw == null || String(raw).trim() === '') ? d.def : String(raw).trim(); }
       if (raw == null || raw === '' || !Number.isFinite(v)) return d.def;
       if (d.options) return d.options.includes(v) ? v : d.def;
       return Math.min(d.max, Math.max(d.min, Math.round(v)));
     }
     function maxFileMB() { return setting('maxFileMB'); }
+    function org() { return { min: setting('orgMin'), minEn: setting('orgMinEn'), dept: setting('orgDept'), deptEn: setting('orgDeptEn'), gen: setting('orgGen'), app: setting('orgApp'), credit: setting('orgCredit'), logo: setting('orgLogo') }; }
+    const ORG_DEFAULT_LOGO = 'Logo MOH_Ok_Background.png';
+    function applyOrg() {
+      const o = org();
+      I18N_DICT.km.ministry_name = o.min; I18N_DICT.km.footer_dept = o.dept + ' - ' + o.min;
+      I18N_DICT.en.ministry_name = o.minEn; I18N_DICT.en.footer_dept = o.deptEn + ' - ' + o.minEn;
+      const val = { app: o.app, credit: o.credit, min: o.min, dept: o.dept, deptmin: o.dept + ' - ' + o.min };
+      document.querySelectorAll('[data-org]').forEach(el => { const v = val[el.dataset.org]; if (v != null) el.textContent = v; });
+      document.querySelectorAll('img[data-org-logo]').forEach(el => { const want = o.logo || el.dataset.def || ORG_DEFAULT_LOGO; if (el.getAttribute('src') !== want) el.src = want; });
+      const pt = document.getElementById('page-title'); if (pt) pt.textContent = pt.textContent.replace(/ - .*$/, '') + ' - ' + o.app + ' ' + o.min;
+      try { applyTranslations(); } catch (e) { }
+    }
+    // Logo៖ បង្រួមទៅ ≤256px (PNG) ដើម្បីរក្សាក្នុង Settings (Sync) ស្រាល
+    function orgLogoPick(inp) {
+      const f = inp.files && inp.files[0]; if (!f) return;
+      if (!/^image\//.test(f.type)) { inp.value = ''; return showToast('សូមជ្រើសរើសឯកសាររូបភាព', true); }
+      if (f.size > 4 * 1048576) { inp.value = ''; return showToast('រូបធំពេក (អតិបរមា 4MB)', true); }
+      const rd = new FileReader();
+      rd.onload = () => {
+        const im = new Image();
+        im.onload = () => {
+          let max = 256, url = '';
+          for (let i = 0; i < 3; i++) {
+            const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(im.width * k)); c.height = Math.max(1, Math.round(im.height * k));
+            c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); url = c.toDataURL('image/png');
+            if (url.length < 250000) break; max = Math.round(max * 0.7);
+          }
+          if (url.length >= 250000) return showToast('Logo ស្មុគស្មាញពេក សូមប្រើរូបសាមញ្ញជាង', true);
+          const v = document.getElementById('org-logo-val'), p = document.getElementById('org-logo-prev'); if (v) v.value = url; if (p) p.src = url;
+          showToast('បានជ្រើស Logo — ចុច «រក្សាទុកការកំណត់»');
+        };
+        im.onerror = () => showToast('មិនអាចអានរូបនេះបានទេ', true); im.src = rd.result;
+      };
+      rd.readAsDataURL(f);
+    }
+    function orgLogoClear() { const v = document.getElementById('org-logo-val'), p = document.getElementById('org-logo-prev'); if (v) v.value = ''; if (p) p.src = ORG_DEFAULT_LOGO; showToast('ប្រើ Logo លំនាំដើម — ចុច «រក្សាទុកការកំណត់»'); }
     function applySettings() {
+      try { applyOrg(); } catch (e) { console.warn('applyOrg', e); }
       const mx = setting('maxFileMB');
       MAX_FILE_SIZE = mx * 1048576;
       SUPA_MAX_SIZE = Math.min(setting('driveThresholdMB'), mx) * 1048576;
@@ -5687,8 +5734,24 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const inp = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
       el.innerHTML = `
         <form onsubmit="saveSystemSettings(event)" class="space-y-4">
+          <div class="rounded-2xl border border-emerald-200 bg-emerald-50/30 p-4 space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm">🏛️ ព័ត៌មានស្ថាប័ន (ឈ្មោះ · Logo · ក្បាលលិខិត)</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${SETTINGS_DEFS.filter(d => d.org && !d.logo).map(d => `<div class="rounded-xl border border-slate-200 bg-white p-3 space-y-1"><label class="block font-bold text-slate-800">${esc(d.label)}</label><input data-sk="${d.k}" data-st="text" type="text" value="${esc(setting(d.k))}" placeholder="${esc(d.def || '')}" class="${inp}">${d.hint ? `<p class="text-[11px] text-slate-500">${esc(d.hint)}</p>` : ''}</div>`).join('')}
+              <div class="rounded-xl border border-slate-200 bg-white p-3 space-y-2 md:col-span-2">
+                <label class="block font-bold text-slate-800">Logo</label>
+                <div class="flex flex-wrap items-center gap-3">
+                  <img id="org-logo-prev" src="${esc(setting('orgLogo') || ORG_DEFAULT_LOGO)}" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Logo&background=059669&color=fff'" class="h-16 w-16 object-contain border border-slate-200 rounded-xl bg-white p-1">
+                  <input type="hidden" id="org-logo-val" data-sk="orgLogo" data-st="text" value="${esc(setting('orgLogo'))}">
+                  <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="orgLogoPick(this)" class="text-xs">
+                  <button type="button" onclick="orgLogoClear()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold form-input-focus">✕ Logo លំនាំដើម</button>
+                </div>
+                <p class="text-[11px] text-slate-500">ណែនាំ PNG ផ្ទៃថ្លា រាងការ៉េ។ ប្រព័ន្ធបង្រួមទៅ ≤256px ដោយស្វ័យប្រវត្តិ ហើយ Sync ទៅគ្រប់ឧបករណ៍។ ក្រោយប្តូរ សូមចុច «រក្សាទុកការកំណត់» ។</p>
+              </div>
+            </div>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            ${SETTINGS_DEFS.map(d => {
+            ${SETTINGS_DEFS.filter(d => !d.org).map(d => {
               const v = setting(d.k), changed = v !== d.def;
               const ctl = d.type === 'text'
                 ? `<input data-sk="${d.k}" data-st="text" type="text" value="${esc(v)}" placeholder="${esc(d.def || 'ស្វ័យប្រវត្តិ')}" class="${inp}">`
@@ -5704,7 +5767,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             <button type="button" onclick="resetSystemSettings()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold form-input-focus">↺ ត្រឡប់លំនាំដើម</button>
             <button type="submit" id="btn-save-sysset" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-xs form-input-focus">💾 រក្សាទុកការកំណត់</button>
           </div>
-          <p class="text-[11px] text-slate-500">ការកំណត់ទាំងនេះអនុវត្តចំពោះមន្ត្រីទាំងអស់ (Sync តាម Cloud) ។ ឈ្មោះក្រសួង/នាយកដ្ឋានលើក្បាលលិខិត នឹងបន្ថែមនៅកំណែក្រោយ។</p>
+          <p class="text-[11px] text-slate-500">ការកំណត់ទាំងនេះអនុវត្តចំពោះមន្ត្រីទាំងអស់ (Sync តាម Cloud) ។ ព័ត៌មានស្ថាប័នខាងលើប្រើក្នុងម៉ឺនុយ ក្បាលលិខិត និងរបាយការណ៍ទាំងអស់។</p>
         </form>`;
     }
     async function commitSettings(next, note) {
@@ -5712,7 +5775,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       sysSettings = next; applySettings();
       await localDB.app_lists.put({ key: SETTINGS_KEY, items: sysSettings }).catch(() => { });
       const ok = await pushSettings();
-      const changes = SETTINGS_DEFS.filter(d => String(before[d.k] ?? d.def) !== String(next[d.k] ?? d.def)).map(d => d.label + ': ' + (before[d.k] ?? d.def) + ' → ' + (next[d.k] ?? d.def));
+      const changes = SETTINGS_DEFS.filter(d => String(before[d.k] ?? d.def) !== String(next[d.k] ?? d.def)).map(d => d.logo ? d.label + ': ប្តូរ' : d.label + ': ' + (before[d.k] ?? d.def) + ' → ' + (next[d.k] ?? d.def));
       logActivity('ប្តូរ System Settings', note || changes.join('; ') || 'គ្មានការផ្លាស់ប្តូរ');
       renderSystemSettings(); rerenderAllPaged();
       showToast(ok ? 'បានរក្សាទុកការកំណត់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — នឹង Sync ពេលមានអ៊ីនធឺណិត', !ok);
@@ -5868,7 +5931,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.4.5.1') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.4.6') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
         </div>`;
