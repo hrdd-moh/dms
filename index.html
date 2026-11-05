@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.7.6 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.8.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -90,7 +90,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.7.6</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.8.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -152,7 +152,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.7.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.8.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -417,6 +417,8 @@
                   <select id="filter-exam-year" onchange="onFilter('exams')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់ឆ្នាំ</option></select>
                   <select id="filter-exam-inst" onchange="onFilter('exams')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white max-w-[170px]"><option value="all">គ្រប់គ្រឹះស្ថាន</option></select>
                   <input type="text" id="filter-exam-search" oninput="onFilter('exams')" placeholder="🔍 ស្វែងរកជំនាញ ឬសម័យប្រឡង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-56">
+                  <button type="button" onclick="ebOpen()" class="perm-upload-el px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold">👥 បញ្ចូលច្រើន / 📥 Import</button>
+                  <button type="button" onclick="examExportExcel()" class="perm-download-el px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 border border-slate-200 text-xs font-bold">📤 Excel</button>
                   <button type="button" onclick="openExamReport()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Report</button>
                 </div>
               </div>
@@ -429,6 +431,20 @@
                 </table>
               </div>
               <div id="pager-exams"></div>
+            </div>
+
+            <!-- TAB: EXAM TRACKER (V3.8.0 ផ្ទាំងតាមដានសម័យប្រឡង — ការិយាល័យទី១) -->
+            <div id="section-ex_track" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <div><h3 class="text-base font-bold text-slate-900">📡 ផ្ទាំងតាមដានសម័យប្រឡង</h3><p class="text-[11px] text-slate-500 font-bold">ការងាររៀបចំ (ឯកសារ · បញ្ជីឈ្មោះ · ប្លង់តុ · ផ្សេងៗ) ភ្ជាប់នឹងសម័យប្រឡង តាមឈ្មោះ «សម័យប្រឡង» ដូចគ្នា</p></div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <select id="filter-extrack-year" onchange="renderExTrack()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់ឆ្នាំ</option></select>
+                  <select id="filter-extrack-status" onchange="renderExTrack()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់ស្ថានភាព</option><option>មិនទាន់ដល់ថ្ងៃ</option><option>កំពុងប្រឡង</option><option>រង់ចាំលទ្ធផល</option><option>មានលទ្ធផល</option><option>មិនស្គាល់ថ្ងៃ</option><option value="attn">⚠️ ត្រូវការយកចិត្តទុកដាក់</option></select>
+                  <input type="text" id="filter-extrack-search" oninput="renderExTrack()" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-48">
+                </div>
+              </div>
+              <div id="extrack-tiles" class="grid grid-cols-2 md:grid-cols-5 gap-3"></div>
+              <div id="extrack-table" class="border border-slate-200 rounded-2xl overflow-auto max-h-[560px]"></div>
             </div>
 
             <!-- TAB: EVENTS (សិក្ខាសាលា & ប្រជុំ — ការិយាល័យទី២) -->
@@ -578,7 +594,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.7.6 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.8.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -734,7 +750,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.7.6</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.8.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -746,7 +762,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.7.6 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.8.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -943,7 +959,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.7.6</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.8.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2253,7 +2269,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency', sub: true }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing', sub: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others', sub: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency', sub: true }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing', sub: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others', sub: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
@@ -2964,9 +2980,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:certs:stat] Card ស្ថិតិ + Modal លម្អិត៖ ថែម metric ក្នុង certStatRender (ឧ. តាមខែ/ភេទ/វគ្គ ជាក្រាហ្វ)
     function renderCertStatCard() {
       const g = id => document.getElementById(id), multi = g('stat-custom-multi'); if (!multi) return;
-      const on = activeBureauKey === 'bureau_3' || activeBureauKey === 'bureau_2';
+      const on = activeBureauKey === 'bureau_3' || activeBureauKey === 'bureau_2' || activeBureauKey === 'bureau_1';
       multi.classList.toggle('hidden', !on); g('stat-custom-main')?.classList.toggle('hidden', on); g('stat-custom-icon')?.classList.toggle('hidden', on);
       if (!on) return;
+      if (activeBureauKey === 'bureau_1') {
+        const m = exTrackMetrics(), tl = (ic, n, l) => `<button type="button" onclick="event.stopPropagation();exTrackGo()" class="text-left rounded-xl px-2.5 py-1.5 hover:bg-blue-50 transition form-input-focus"><div class="text-xl font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></button>`;
+        multi.innerHTML = tl('🎓', m.exams, 'សម័យប្រឡង') + tl('👥', m.candidates, 'បេក្ខជនសរុប') + tl('✅', m.rate == null ? '—' : m.rate + '%', '% ជាប់សរុប') + tl('⏳', m.upcoming, 'ប្រឡងក្នុង ៣០ ថ្ងៃ');
+        return;
+      }
       if (activeBureauKey === 'bureau_2') {
         const t = trainStatMetrics(), tl = (k, ic, n, l) => `<button type="button" onclick="event.stopPropagation();trainStatOpen('${k}')" class="text-left rounded-xl px-2.5 py-1.5 hover:bg-blue-50 transition form-input-focus"><div class="text-xl font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></button>`;
         multi.innerHTML = tl('courses', '📚', t.courses, 'ចំនួនវគ្គ') + tl('persons', '👥', t.persons, 'ចំនួនសិក្ខាកាម') + tl('female', '👩', t.female + ' (' + (t.persons ? Math.round(t.female / t.persons * 100) : 0) + '%)', 'សិក្ខាកាមស្រី') + tl('running', '🟢', t.running, 'វគ្គកំពុងរៀនឥឡូវ');
@@ -3011,7 +3032,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:certs:sub] Sub-menu ថ្មីក្រោម «ចុះបញ្ជីសញ្ញាបត្រ» → ថែមក្នុង CERT_SUBS + ករណីក្នុង certSubGo/renderCerts (ឧ. ភ្ជាប់រូបជាច្រើន, បោះពុម្ពជាក្រុម)
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'training') { if (activeTab === 'training') { trainMenuOpen = !trainMenuOpen; renderBureauWorkspace(); return; } trainMenuOpen = true; trainScopeSel = 'Domestic'; }
+    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId] && tId !== 'ex_track') examMenuOpen = false; if (tId === 'training') { if (activeTab === 'training') { trainMenuOpen = !trainMenuOpen; renderBureauWorkspace(); return; } trainMenuOpen = true; trainScopeSel = 'Domestic'; }
       if (tId === 'certs') { if (activeTab === 'certs') { certMenuOpen = !certMenuOpen; renderBureauWorkspace(); return; } certMenuOpen = true; certSub = ''; } activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
@@ -3039,7 +3060,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const on = t.id === activeTab || (t.id === 'training' && (activeTab === 'events' || activeTab === 'trainentry'));
         return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'training' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(activeTab === 'training' || activeTab === 'events' || activeTab === 'trainentry') && trainMenuOpen ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + trainSubNavHTML(t) + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
       }).join('');
-      ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'trainentry', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      ['docs', 'dispatch', 'exams', 'ex_track', 'examtasks', 'training', 'trainentry', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
@@ -3049,7 +3070,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!currentUser) return;
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
-      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); }
+      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
@@ -3081,7 +3102,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
       const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8');
-      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
+      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry', 'ex_track'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
       if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') { certViewApply(); if (certSub) renderCertQuickPanel(true); } return; }
@@ -3212,7 +3233,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const pager = {};
     ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'workshops', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
     const RENDERERS = {
-      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => renderExams(), exam_tasks: () => renderExamTasks(), trainings: () => renderTrainingList(), workshops: () => renderEvents(),
+      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => { renderExams(); renderExTrack(); }, exam_tasks: () => { renderExamTasks(); renderExTrack(); }, trainings: () => renderTrainingList(), workshops: () => renderEvents(),
       certs: () => renderCerts(), courses: () => renderCourses(), logs: () => renderLogsTable(), recycle: () => renderRecycleBin()
     };
     function paginate(key, rows) {
@@ -4255,6 +4276,186 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'exams_' + ER.mode + '_' + todayISO() + '.csv'); showToast('បាន Export CSV');
     }
 
+    // [EXT:exams:v380] បញ្ចូលច្រើន + Import · ការពារស្ទួន · Export · ផ្ទាំងតាមដានសម័យ
+    function examListRows() {
+      const q = (document.getElementById('filter-exam-search')?.value || '').toLowerCase().trim();
+      const fT = document.getElementById('filter-exam-type')?.value || 'all', fY = document.getElementById('filter-exam-year')?.value || 'all', fI = document.getElementById('filter-exam-inst')?.value || 'all';
+      return sortRecords(activeRows('exams').filter(e => (fT === 'all' || e.type === fT) && (fY === 'all' || exYear(e) === fY) && (fI === 'all' || e.institution === fI) && (!q || [e.major, e.session, e.type, e.institution].some(v => String(v || '').toLowerCase().includes(q)))));
+    }
+    function examExportExcel() {
+      const rows = examListRows(); if (!rows.length) return showToast('មិនមានទិន្នន័យ', true);
+      if (!xlsxBook([{ name: 'សម័យប្រឡង', rows: erDetailRows(rows) }, { name: 'សង្ខេបតាមគ្រឹះស្ថាន', rows: erSummaryRows(rows, 'institution') }, { name: 'សង្ខេបតាមឆ្នាំ', rows: erSummaryRows(rows, 'year') }], 'ប្រឡង_' + todayISO() + '.xlsx')) return;
+      showToast('បាន Export Excel (' + rows.length + ' សម័យ)');
+    }
+    const exNorm = v => String(v == null ? '' : v).replace(/\s+/g, '').toLowerCase();
+    function exDupKey(e) { return [exNorm(e.major), exNorm(e.type), exNorm(e.session), exNorm(e.institution), String(e.start_date || '').slice(0, 10)].join('|'); }
+    function exDupKeys() { const m = new Set(); activeRows('exams').forEach(e => m.add(exDupKey(e))); return m; }
+
+    // ----- បញ្ចូលច្រើនជួរ (តារាង paste ពី Excel) + Import Excel/CSV ចូលតារាងដើម្បីពិនិត្យមុនរក្សាទុក
+    const EB = { rows: [] };
+    const ebBlank = () => ({ major: '', c: '', p: '', f: '', a: '', session: '', inst: '', date: '', type: '' });
+    const EB_ORDER = ['major', 'c', 'p', 'f', 'a', 'session', 'inst', 'date', 'type'];
+    const ebVal = id => (document.getElementById(id)?.value || '').trim();
+    function ebClose() { document.getElementById('modal-exam-bulk')?.remove(); EB.rows = []; }
+    function ebOpen(rows) {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true);
+      document.getElementById('modal-exam-bulk')?.remove(); EB.rows = Array.isArray(rows) && rows.length ? rows : Array.from({ length: 8 }, ebBlank);
+      const L = t => `<label class="block text-[11px] font-bold text-slate-600 mb-1">${t}</label>`, I = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      const d = document.createElement('div'); d.id = 'modal-exam-bulk'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">👥 បញ្ចូលសម័យប្រឡងច្រើនជួរ / 📥 Import</h3><button type="button" onclick="ebClose()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div>
+        <div class="overflow-y-auto space-y-3 pr-1">
+        <p class="text-[11px] text-slate-500">ប្រអប់ខាងលើជាតម្លៃលំនាំដើម (ប្រើពេលក្រឡាក្នុងជួរទទេ)។ Paste ពី Excel តាមលំដាប់៖ ជំនាញ · បេក្ខជន · ជាប់ · ធ្លាក់ · អវត្តមាន · សម័យ · គ្រឹះស្ថាន · ថ្ងៃ · ប្រភេទ — ឬចុច «Import file» (ស្គាល់ក្បាលជួរស្វ័យប្រវត្តិ)។ មិនទាន់មានលទ្ធផល = ទុកទទេ។</p>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5">
+          <div>${L('ប្រភេទប្រឡង')}<select id="eb-type" class="${I}">${EXAM_TYPES.map(t => `<option>${esc(t)}</option>`).join('')}</select></div>
+          <div>${L('សម័យប្រឡង *')}<input id="eb-session" class="${I}" placeholder="ឧ. លើកទី១ ២០២៦"></div>
+          <div>${L('គ្រឹះស្ថាន')}<input id="eb-inst" list="eb-inst-list" class="${I}"><datalist id="eb-inst-list">${[...new Set(activeRows('exams').map(e => e.institution).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('')}</datalist></div>
+          <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="eb-date" class="${I}"></div>
+          <div>${L('ស្ថានភាព')}<input id="eb-status" class="${I}" value="កំពុងរៀបចំ"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs"><button type="button" onclick="ebAdd(1)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ជួរ</button><button type="button" onclick="ebAdd(10)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ១០ ជួរ</button>
+          <label class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold cursor-pointer">📥 Import file (xlsx/csv)<input type="file" id="eb-file" accept=".xlsx,.xls,.csv" class="hidden" onchange="ebImportFile(event)"></label><span id="eb-count" class="ml-auto font-bold text-emerald-700"></span></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl max-h-[380px] bg-white"><table class="w-full text-left"><thead class="bg-slate-100 text-slate-700 text-xs sticky top-0 z-10"><tr><th class="p-2">#</th><th class="p-2 min-w-[180px]">ជំនាញ *</th><th class="p-2 w-24">បេក្ខជន</th><th class="p-2 w-20">ជាប់</th><th class="p-2 w-20">ធ្លាក់</th><th class="p-2 w-24">អវត្តមាន</th><th class="p-2 min-w-[120px]">សម័យ</th><th class="p-2 min-w-[150px]">គ្រឹះស្ថាន</th><th class="p-2 min-w-[130px]">ថ្ងៃប្រឡង</th><th class="p-2 min-w-[130px]">ប្រភេទ</th><th></th></tr></thead><tbody id="eb-body" oninput="ebInput(event)" onchange="ebInput(event)" onkeydown="ebKey(event)" onpaste="ebPaste(event)"></tbody></table></div>
+        </div>
+        <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="ebClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="eb-save" onclick="ebSave()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ រក្សាទុកទាំងអស់</button></div></div>`;
+      document.body.appendChild(d); ebRender();
+    }
+    function ebRender() {
+      const tb = document.getElementById('eb-body'); if (!tb) return;
+      const inp = 'w-full border border-slate-200 rounded-lg p-1.5 text-sm bg-white', num = inp + ' text-center';
+      tb.innerHTML = EB.rows.map((r, i) => `<tr data-i="${i}"><td class="p-1 text-center text-slate-400 text-xs w-8">${i + 1}</td>
+        <td class="p-1"><input data-f="major" value="${esc(r.major)}" class="${inp} font-bold"></td>
+        <td class="p-1"><input data-f="c" type="number" min="0" value="${esc(r.c)}" class="${num}"></td><td class="p-1"><input data-f="p" type="number" min="0" value="${esc(r.p)}" class="${num}"></td>
+        <td class="p-1"><input data-f="f" type="number" min="0" value="${esc(r.f)}" class="${num}"></td><td class="p-1"><input data-f="a" type="number" min="0" value="${esc(r.a)}" class="${num}"></td>
+        <td class="p-1"><input data-f="session" value="${esc(r.session)}" class="${inp}"></td><td class="p-1"><input data-f="inst" value="${esc(r.inst)}" class="${inp}"></td>
+        <td class="p-1"><input data-f="date" type="date" value="${esc(r.date)}" class="${inp}"></td>
+        <td class="p-1"><select data-f="type" class="${inp}"><option value="">— លំនាំដើម —</option>${EXAM_TYPES.map(t => `<option ${r.type === t ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></td>
+        <td class="p-1 w-8 text-center"><button type="button" tabindex="-1" onclick="ebDel(${i})" class="text-slate-300 hover:text-rose-500">✕</button></td></tr>`).join('');
+      ebCount();
+    }
+    function ebCount() { const c = document.getElementById('eb-count'); if (c) c.textContent = toKhmerDigits(EB.rows.filter(r => String(r.major).trim()).length) + ' ជួរ'; }
+    function ebAdd(n) { for (let i = 0; i < n; i++) EB.rows.push(ebBlank()); ebRender(); }
+    function ebDel(i) { EB.rows.splice(i, 1); if (!EB.rows.length) EB.rows.push(ebBlank()); ebRender(); }
+    function ebInput(e) { const el = e.target, tr = el.closest('tr'); if (!tr || !el.dataset.f) return; EB.rows[+tr.dataset.i][el.dataset.f] = el.value.trim(); if (el.dataset.f === 'major') ebCount(); }
+    function ebKey(e) {
+      if (e.key !== 'Enter' || !e.target.dataset.f) return; e.preventDefault();
+      const tr = e.target.closest('tr'), i = +tr.dataset.i, f = e.target.dataset.f;
+      if (i + 1 >= EB.rows.length) { EB.rows.push(ebBlank()); ebRender(); }
+      document.querySelector(`#eb-body tr[data-i="${i + 1}"] [data-f="${f}"]`)?.focus();
+    }
+    // ក្បាលជួរ → ទីតាំងជួរឈរ (ស្គាល់ខ្មែរ/អង់គ្លេស)
+    function ebHeaderMap(r) {
+      const m = {};
+      r.forEach((h, i) => { const x = String(h == null ? '' : h).toLowerCase().replace(/\s+/g, ''), set = k => { if (m[k] == null) m[k] = i; };
+        if (/ជំនាញ|ឯកទេស|major|specialty|មុខវិជ្ជា/.test(x)) set('major'); else if (/សម័យ|session/.test(x)) set('session'); else if (/គ្រឹះស្ថាន|សាកល|សាលា|institution|school|university/.test(x)) set('inst');
+        else if (/ប្រភេទ|type/.test(x)) set('type'); else if (/ថ្ងៃ|កាលបរិច្ឆេទ|date/.test(x)) set('date'); else if (/បេក្ខជន|candidate|សរុប|total/.test(x)) set('c');
+        else if (/ជាប់|pass/.test(x)) set('p'); else if (/ធ្លាក់|fail/.test(x)) set('f'); else if (/អវត្តមាន|absent/.test(x)) set('a'); });
+      return m;
+    }
+    function ebNum(v) { const x = normalizeKhmerDigits(String(v == null ? '' : v)).replace(/[^\d.]/g, ''); return x === '' ? '' : String(Math.round(Number(x))); }
+    function ebType(v) { const x = String(v || ''); return /ចេញ|exit/i.test(x) ? EXAM_TYPES.find(t => t.includes('ចេញ')) : /ចូល|entrance|entry/i.test(x) ? EXAM_TYPES.find(t => t === 'ប្រឡងចូល') : /ផ្ទៃក្នុង|internal/i.test(x) ? EXAM_TYPES.find(t => t.includes('ផ្ទៃក្នុង')) : ''; }
+    // បំលែងតារាង (array of arrays) → ជួរ EB
+    function ebParseRows(rows) {
+      let hdr = -1, map = null;
+      for (let i = 0; i < Math.min(rows.length, 6); i++) { const m = ebHeaderMap(rows[i] || []); if (Object.keys(m).length >= 2 && m.major != null) { hdr = i; map = m; break; } }
+      if (!map) { map = {}; EB_ORDER.forEach((k, i) => { map[k] = i; }); }
+      const out = [];
+      for (let i = hdr + 1; i < rows.length; i++) {
+        const r = rows[i] || [], g = k => map[k] == null ? '' : r[map[k]];
+        const major = String(g('major') == null ? '' : g('major')).trim(); if (!major) continue;
+        const dr = String(g('date') == null ? '' : g('date')).trim(), dt = !dr ? null : /^\d{4}-\d{2}-\d{2}/.test(dr) ? dr.slice(0, 10) : impParseDates(dr).s;
+        out.push({ major, c: ebNum(g('c')), p: ebNum(g('p')), f: ebNum(g('f')), a: ebNum(g('a')), session: String(g('session') || '').trim(), inst: String(g('inst') || '').trim(), date: dt || '', type: ebType(g('type')) });
+      }
+      return out;
+    }
+    function ebPaste(e) {
+      const el = e.target, tr = el.closest('tr'); if (!tr || !el.dataset.f) return;
+      const txt = (e.clipboardData || window.clipboardData).getData('text'); if (!/[\t\n]/.test(txt.trim())) return;
+      e.preventDefault(); const lines = txt.replace(/\r/g, '').split('\n').filter(l => l.trim()).map(l => l.split('\t'));
+      const parsed = ebParseRows(lines); let i = +tr.dataset.i;
+      parsed.forEach(p => { while (!EB.rows[i]) EB.rows.push(ebBlank()); EB.rows[i] = p; i++; });
+      ebRender();
+    }
+    function ebImportFile(e) {
+      const file = e.target.files[0]; if (!file) return;
+      if (!window.XLSX) { e.target.value = ''; return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true); }
+      const reader = new FileReader();
+      reader.onload = evt => {
+        try {
+          const isCsv = /\.csv$/i.test(file.name);
+          const wb = isCsv ? XLSX.read(new TextDecoder('utf-8').decode(new Uint8Array(evt.target.result)).replace(/^﻿/, ''), { type: 'string', raw: true }) : XLSX.read(new Uint8Array(evt.target.result), { type: 'array', cellDates: false });
+          const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: false, defval: '', blankrows: false });
+          const parsed = ebParseRows(rows); if (!parsed.length) return showToast('មិនរកឃើញជួរប្រឡងក្នុង file', true);
+          EB.rows = EB.rows.filter(r => String(r.major).trim()).concat(parsed); ebRender(); showToast('អាន ' + parsed.length + ' ជួរ — សូមពិនិត្យមុនរក្សាទុក');
+        } catch (err) { console.warn(err); alert('⚠️ កំហុសក្នុងការអាន file!'); } finally { e.target.value = ''; }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+    async function ebSave() {
+      const D = { type: ebVal('eb-type'), session: ebVal('eb-session'), inst: ebVal('eb-inst'), date: ebVal('eb-date'), status: ebVal('eb-status') || 'កំពុងរៀបចំ' };
+      const named = EB.rows.filter(r => String(r.major).trim()); if (!named.length) return alert('⚠️ សូមបញ្ចូលជំនាញយ៉ាងហោចណាស់ ១ ជួរ!');
+      const nz = v => (v === '' || v == null) ? null : Math.max(0, Number(v) || 0);
+      const recs = named.map(r => ({ id: generateSafeId(), major: r.major.trim(), type: r.type || D.type, session: r.session || D.session, candidates: Number(r.c) || 0, status: D.status, institution: r.inst || D.inst || null,
+        start_date: r.date || D.date || null, end_date: null, passed: nz(r.p), failed: nz(r.f), absent: nz(r.a), created_at: nowISO(), deleted_at: null, deleted_by: null }));
+      const noSess = recs.filter(r => !r.session).length; if (noSess) return alert('⚠️ មាន ' + noSess + ' ជួរ គ្មានសម័យប្រឡង — សូមបំពេញ «សម័យប្រឡង» លំនាំដើម ឬក្នុងជួរ');
+      const over = recs.filter(r => exNums(r).over).length;
+      if (over && !confirm('⚠️ មាន ' + over + ' ជួរ ដែលជាប់+ធ្លាក់+អវត្តមាន លើសបេក្ខជន។ បន្តរក្សាទុក?')) return;
+      const keys = exDupKeys(), seen = new Set(), use = [], dups = [];
+      recs.forEach(r => { const k = exDupKey(r); if (keys.has(k) || seen.has(k)) dups.push(r); else use.push(r); seen.add(k); });
+      if (dups.length && !confirm('⚠️ មាន ' + dups.length + ' ជួរស្ទួន (ជំនាញ + ប្រភេទ + សម័យ + គ្រឹះស្ថាន + ថ្ងៃ ដូចគ្នា)៖ ' + dups.slice(0, 3).map(r => r.major).join(', ') + (dups.length > 3 ? '…' : '') + '\n\nOK = រំលងជួរស្ទួន ហើយរក្សាទុកជួរដែលនៅសល់\nCancel = ត្រឡប់ទៅកែ')) return;
+      if (!use.length) return showToast('គ្មានជួរថ្មីត្រូវរក្សាទុក (ស្ទួនទាំងអស់)', true);
+      const btn = document.getElementById('eb-save'); if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; }
+      const ok = await persistMany('exams', use); ebClose(); renderExams(); renderExTrack(); updateStats();
+      showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានចុះបញ្ជី') + ' ' + use.length + ' សម័យ' + (dups.length ? ' (រំលងស្ទួន ' + dups.length + ')' : ''), ok === false);
+      logActivity('បញ្ចូលសម័យប្រឡងច្រើនជួរ', use.length + ' ជួរ');
+    }
+
+    // ----- ផ្ទាំងតាមដានសម័យប្រឡង (ភ្ជាប់ការងាររៀបចំ តាមឈ្មោះសម័យ)
+    const EX_TRACK_KINDS = [['docs', 'ex_docs', '📑', 'ឯកសារ'], ['names', 'ex_names', '👥', 'បញ្ជីឈ្មោះ'], ['seats', 'ex_seats', '🪑', 'ប្លង់តុ'], ['other', 'ex_other', '🧩', 'ផ្សេងៗ']];
+    const EX_STATUS_CLS = { 'មិនទាន់ដល់ថ្ងៃ': 'bg-sky-100 text-sky-800', 'កំពុងប្រឡង': 'bg-emerald-100 text-emerald-800', 'រង់ចាំលទ្ធផល': 'bg-amber-100 text-amber-800', 'មានលទ្ធផល': 'bg-slate-100 text-slate-600', 'មិនស្គាល់ថ្ងៃ': 'bg-rose-100 text-rose-700' };
+    function exStatusAuto(e) {
+      const st = String(e.start_date || '').slice(0, 10), en = String(e.end_date || '').slice(0, 10) || st, today = todayISO(); if (!st) return 'មិនស្គាល់ថ្ងៃ';
+      if (st > today) return 'មិនទាន់ដល់ថ្ងៃ'; if (en >= today) return 'កំពុងប្រឡង'; return exNums(e).hasRes ? 'មានលទ្ធផល' : 'រង់ចាំលទ្ធផល';
+    }
+    function exDaysTo(e) { const st = String(e.start_date || '').slice(0, 10); return st ? Math.round((new Date(st + 'T00:00:00Z') - new Date(todayISO() + 'T00:00:00Z')) / 864e5) : null; }
+    function exTasksFor(e) { const k = exNorm(e.session); return k ? activeRows('exam_tasks').filter(t => !EXTASK_SUBS[t.kind] && exNorm(t.session) === k) : []; }
+    function exProgress(e) { const ts = exTasksFor(e); return EX_TRACK_KINDS.map(([kind, tab, ic, l]) => { const a = ts.filter(t => t.kind === kind); return { kind, tab, ic, l, total: a.length, done: a.filter(t => t.status === 'រួចរាល់').length }; }); }
+    // ប្រឡងក្នុង ១៤ ថ្ងៃខាងមុខ ដែលឯកសារ/បញ្ជីឈ្មោះ/ប្លង់តុ មិនទាន់មាន ឬមិនទាន់រួច
+    function exNeedsAttention(e) { const d = exDaysTo(e); if (d == null || d < 0 || d > 14) return false; return exProgress(e).some(p => ['docs', 'names', 'seats'].includes(p.kind) && (p.total === 0 || p.done < p.total)); }
+    function exTrackMetrics() {
+      const ex = activeRows('exams'), today = todayISO(); let p = 0, f = 0;
+      ex.forEach(e => { const n = exNums(e); p += n.p; f += n.f; });
+      return { exams: ex.length, candidates: ex.reduce((a, e) => a + (Number(e.candidates) || 0), 0), rate: (p + f) > 0 ? Math.round(p / (p + f) * 1000) / 10 : null,
+        upcoming: ex.filter(e => { const d = exDaysTo(e); return d != null && d >= 0 && d <= 30; }).length, ongoing: ex.filter(e => exStatusAuto(e) === 'កំពុងប្រឡង').length,
+        waiting: ex.filter(e => exStatusAuto(e) === 'រង់ចាំលទ្ធផល').length, attention: ex.filter(exNeedsAttention).length,
+        late: activeRows('exam_tasks').filter(t => !EXTASK_SUBS[t.kind] && t.due_date && t.status !== 'រួចរាល់' && String(t.due_date).slice(0, 10) < today).length };
+    }
+    function exTrackGo() { examMenuOpen = true; activeTab = 'ex_track'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function exTrackOpen(tab, session) {
+      examMenuOpen = true; activeTab = tab; renderBureauWorkspace();
+      const el = document.getElementById('filter-extask-search'); if (el) el.value = session || ''; renderExamTasks();
+    }
+    function renderExTrack() {
+      const tiles = document.getElementById('extrack-tiles'), tbl = document.getElementById('extrack-table'); if (!tiles || !tbl) return;
+      const all = activeRows('exams'), ySel = document.getElementById('filter-extrack-year');
+      if (ySel) { const cur = ySel.value || 'all', ys = [...new Set(all.map(exYear))].sort().reverse(); ySel.innerHTML = '<option value="all">គ្រប់ឆ្នាំ</option>' + ys.map(y => `<option ${y === cur ? 'selected' : ''}>${esc(y)}</option>`).join(''); if (cur !== 'all' && !ys.includes(cur)) ySel.value = 'all'; }
+      const m = exTrackMetrics(), tile = (ic, n, l, cls) => `<div class="rounded-2xl border border-slate-200 ${cls || 'bg-slate-50'} px-3 py-2"><div class="text-xl font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></div>`;
+      tiles.innerHTML = tile('🎓', m.exams, 'សម័យ/ជួរប្រឡងសរុប') + tile('⏳', m.upcoming, 'ប្រឡងក្នុង ៣០ ថ្ងៃ', 'bg-sky-50') + tile('📝', m.waiting, 'រង់ចាំលទ្ធផល', 'bg-amber-50') + tile('⚠️', m.attention, 'ត្រូវការយកចិត្តទុកដាក់ (≤១៤ថ្ងៃ)', m.attention ? 'bg-rose-50' : 'bg-slate-50') + tile('⏰', m.late, 'ការងាររៀបចំហួសកំណត់', m.late ? 'bg-rose-50' : 'bg-slate-50');
+      const fy = ySel?.value || 'all', fs = document.getElementById('filter-extrack-status')?.value || 'all', q = (document.getElementById('filter-extrack-search')?.value || '').toLowerCase().trim();
+      const rows = all.filter(e => (fy === 'all' || exYear(e) === fy) && (fs === 'all' || (fs === 'attn' ? exNeedsAttention(e) : exStatusAuto(e) === fs)) && (!q || [e.major, e.session, e.institution, e.type].some(v => String(v || '').toLowerCase().includes(q))))
+        .sort((a, b) => String(b.start_date || '').localeCompare(String(a.start_date || '')));
+      if (!rows.length) { tbl.innerHTML = '<p class="p-6 text-center text-slate-400">មិនមានសម័យប្រឡង</p>'; return; }
+      tbl.innerHTML = `<table class="w-full text-sm text-left"><thead class="bg-emerald-50/90 text-emerald-900 font-bold sticky top-0 z-10 whitespace-nowrap"><tr><th class="p-3">ជំនាញ</th><th class="p-3">សម័យ · គ្រឹះស្ថាន</th><th class="p-3 text-center">ថ្ងៃប្រឡង</th><th class="p-3 text-center">បេក្ខជន</th><th class="p-3 text-center">ស្ថានភាព</th><th class="p-3">ដំណើរការរៀបចំ (ចុចដើម្បីបើក)</th></tr></thead><tbody class="divide-y divide-slate-100">${rows.slice(0, 300).map(e => {
+        const st = exStatusAuto(e), d = exDaysTo(e), attn = exNeedsAttention(e), n = exNums(e);
+        const chips = exProgress(e).map(p => { const cls = p.total === 0 ? 'bg-slate-50 text-slate-400 border-slate-200' : p.done === p.total ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200';
+          return `<button type="button" data-s="${esc(e.session || '')}" onclick="exTrackOpen('${p.tab}', this.dataset.s)" title="${p.l}: រួច ${p.done} / ${p.total}" class="px-2 py-1 rounded-lg border text-xs font-bold ${cls}">${p.ic} ${p.total ? toKhmerDigits(p.done) + '/' + toKhmerDigits(p.total) : '—'}</button>`; }).join(' ');
+        return `<tr class="hover:bg-emerald-50 ${attn ? 'bg-rose-50/40' : ''}"><td class="p-3 font-bold text-slate-900">${esc(e.major)}<div class="text-[10px] font-normal text-slate-400">${esc(e.type || '')}</div></td>
+          <td class="p-3 text-xs font-bold text-slate-600">${esc(e.session || '-')}<div class="text-[10px] font-normal text-slate-400">${esc(e.institution || '')}</div></td>
+          <td class="p-3 text-center font-mono text-xs whitespace-nowrap">${esc(String(e.start_date || '-').slice(0, 10))}${d != null && d >= 0 ? `<div class="text-[10px] ${d <= 14 ? 'text-rose-600 font-bold' : 'text-slate-400'}">ក្នុង ${toKhmerDigits(d)} ថ្ងៃ</div>` : ''}</td>
+          <td class="p-3 text-center font-bold">${toKhmerDigits(n.c)}${n.rate != null ? `<div class="text-[10px] text-emerald-700">ជាប់ ${n.rate}%</div>` : ''}</td>
+          <td class="p-3 text-center whitespace-nowrap"><span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${EX_STATUS_CLS[st]}">${st}</span>${attn ? '<div class="text-[10px] text-rose-600 font-bold mt-0.5">⚠️ ត្រូវរៀបចំ</div>' : ''}</td>
+          <td class="p-3 whitespace-nowrap">${chips}</td></tr>`; }).join('')}</tbody></table>`;
+    }
     function renderExams() {
       const tbody = document.getElementById('exams-table-body'); if (!tbody) return;
       const q = (document.getElementById('filter-exam-search')?.value || '').toLowerCase().trim();
@@ -4265,8 +4466,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         el.innerHTML = `<option value="all">${all}</option>` + vals.map(v => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(v)}</option>`).join('');
         if (cur !== 'all' && !vals.includes(cur)) el.value = 'all';
       });
-      const fT = document.getElementById('filter-exam-type')?.value || 'all', fY = document.getElementById('filter-exam-year')?.value || 'all', fI = document.getElementById('filter-exam-inst')?.value || 'all';
-      const rows = sortRecords(allEx.filter(e => (fT === 'all' || e.type === fT) && (fY === 'all' || exYear(e) === fY) && (fI === 'all' || e.institution === fI) && (!q || [e.major, e.session, e.type, e.institution].some(v => String(v || '').toLowerCase().includes(q)))));
+      const rows = examListRows();
       const pg = paginate('exams', rows);
       tbody.innerHTML = pg.total ? pg.rows.map(e => `<tr class="hover:bg-emerald-50 transition">
           <td class="p-3.5 whitespace-nowrap"><span class="inline-block px-3 py-1 rounded-md text-xs font-bold ${String(e.type || '').includes('ចេញ') ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${esc(e.type)}</span></td>
@@ -5082,7 +5282,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         start_date: document.getElementById('exam-start').value || null, end_date: document.getElementById('exam-end').value || null,
         passed: examNum('exam-passed'), failed: examNum('exam-failed'), absent: examNum('exam-absent'), created_at: nowISO(), deleted_at: null, deleted_by: null };
       if (rec.start_date && rec.end_date && rec.end_date < rec.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
-      const ok = await persist('exams', rec); renderExams(); updateStats();
+      if (exDupKeys().has(exDupKey(rec)) && !confirm('⚠️ មានសម័យប្រឡងដូចគ្នានេះរួចហើយ (ជំនាញ + ប្រភេទ + សម័យ + គ្រឹះស្ថាន + ថ្ងៃ)។\n\nចង់រក្សាទុកស្ទួនដែរឬទេ?')) return;
+      const ok = await persist('exams', rec); renderExams(); renderExTrack(); updateStats();
       showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាសម័យប្រឡង', rec.major); e.target.reset();
     }
@@ -6907,7 +7108,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.7.6') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.8.0') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           ${qualityCardHTML()}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
