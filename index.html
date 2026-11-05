@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.8.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.10.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -90,7 +90,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.8.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.10.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -152,7 +152,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.8.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.10.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -433,6 +433,20 @@
               <div id="pager-exams"></div>
             </div>
 
+            <!-- TAB: SEAT PLANS (V3.10.0 ប្លង់តុ — ម៉ឺនុយរង «ប្រឡងចូល» / «ប្រឡងចេញ») -->
+            <div id="section-seatplans" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                <div><h3 id="seat-title" class="text-base font-bold text-slate-900">🪑 ប្លង់តុ</h3><p class="text-[11px] text-slate-500 font-bold">បង្កើតប្លង់ច្រើនបន្ទប់ក្នុង Form តែមួយ (ទម្រង់ N · M · Z · X) → កែដៃ → PDF ទុកក្នុងសម័យ · បោះពុម្ព · Excel · Report</p></div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <select id="filter-seat-session" onchange="renderSeatPlans()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់សម័យ</option></select>
+                  <input type="text" id="filter-seat-search" oninput="renderSeatPlans()" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-44">
+                  <button type="button" onclick="spReport()" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">📊 Report សង្ខេប</button>
+                  <button type="button" onclick="spForm()" class="perm-upload-el px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">➕ បង្កើតប្លង់</button>
+                </div>
+              </div>
+              <div id="seat-plans-table" class="border border-slate-200 rounded-2xl overflow-auto max-h-[620px]"></div>
+            </div>
+
             <!-- TAB: EXAM TRACKER (V3.8.0 ផ្ទាំងតាមដានសម័យប្រឡង — ការិយាល័យទី១) -->
             <div id="section-ex_track" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
@@ -594,7 +608,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.8.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.10.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -750,7 +764,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.8.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.10.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -762,7 +776,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.8.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.10.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -959,7 +973,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.8.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.10.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1952,8 +1966,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // ទង់ជាតិ SVG (Windows មិនបង្ហាញ emoji ទង់ជាតិ → ឃើញជាអក្សរ KH)
     const FLAG_KH = '<svg viewBox="0 0 30 20" width="22" height="15" style="display:inline-block;vertical-align:-3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12)" aria-label="ខ្មែរ"><rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.2" width="12" height="1.4"/><rect x="10.5" y="10.8" width="9" height="1.5"/><path d="M12 10.8V8.4l1-1.5 1 1.5v2.4zM14.2 10.8V5.8l.8-2.4.8 2.4v5zM16.2 10.8V8.4l1-1.5 1 1.5v2.4z"/></g></svg>';
     const FLAG_EN = '<svg viewBox="0 0 60 30" width="24" height="15" style="display:inline-block;vertical-align:-3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12)" aria-label="English"><clipPath id="ukc"><path d="M30 15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>';
-    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks', 'cert_courses', 'workshops'];
-    const OPTIONAL_TABLES = ['exam_tasks', 'cert_courses', 'workshops'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
+    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks', 'cert_courses', 'workshops', 'seat_plans'];
+    const OPTIONAL_TABLES = ['exam_tasks', 'cert_courses', 'workshops', 'seat_plans'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
     const EXTASK_KINDS = {
       ex_docs: { kind: 'docs', icon: '📑', kh: 'ការរៀបចំឯកសារ', en: 'Document Prep', qty: 'ចំនួនឯកសារ', ph: 'ឧ. រៀបចំសំណុំឯកសារប្រឡង' },
       ex_names: { kind: 'names', icon: '👥', kh: 'ការរៀបចំបញ្ជីឈ្មោះ', en: 'Name Lists', qty: 'ចំនួនបេក្ខជន', ph: 'ឧ. បញ្ជីឈ្មោះបេក្ខជនប្រឡង' },
@@ -1988,7 +2002,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const STAGE_DONE = 'បញ្ចប់រួចរាល់';
     const STAGES = ['រដ្ឋបាលទទួល', 'កំពុងពិនិត្យបច្ចេកទេស', 'រង់ចាំចំណារ/ហត្ថលេខា', 'បញ្ចប់រួចរាល់'];
     const LOCATIONS = ['ការិយាល័យសាមី', 'ប្រធាននាយកដ្ឋាន (DHRD)', 'អគ្គនាយកដ្ឋានសុខាភិបាល', 'ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី', 'ទីស្តីការគណៈរដ្ឋមន្ត្រី', 'ក្រសួងមុខងារសាធារណៈ'];
-    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', cert_courses: '🎓 វគ្គ & វិញ្ញាបនបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', workshops: '🎤 សិក្ខាសាលា & ប្រជុំ', users: '👤 គណនី' };
+    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', cert_courses: '🎓 វគ្គ & វិញ្ញាបនបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', workshops: '🎤 សិក្ខាសាលា & ប្រជុំ', seat_plans: '🪑 ប្លង់តុបន្ទប់ប្រឡង', users: '👤 គណនី' };
 
     function toggleSysMenu(force) {
       const box = document.getElementById('sys-menu-items'), ar = document.getElementById('sys-menu-arrow'), b = document.getElementById('sys-menu-toggle');
@@ -2196,6 +2210,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       exam_tasks: 'id, kind, session, status, assignee',
       cert_courses: 'id, course, cert_no, start_date, trainee',
       workshops: 'id, kind, scope, start_date, title',
+      seat_plans: 'id, session, room, is_tpl',
       countries: 'code, kh, en',
       users: 'id, username',
       logs: 'id, time, user, action',
@@ -2203,7 +2218,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     };
     function makeLocalDB(name, memory) {
       const d = (window.Dexie && !memory) ? new Dexie(name) : new MemoryDB();
-      d.version(7).stores(LOCAL_SCHEMA);
+      d.version(8).stores(LOCAL_SCHEMA);
       return d;
     }
     let localDB = makeLocalDB('DHRD_DB_V4');
@@ -2236,7 +2251,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
     ];
 
-    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [], workshops: [] };
+    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [], workshops: [], seat_plans: [] };
     let countriesData = [...defaultCountries];
     let usersData = [];
     let auditLogs = [];
@@ -2265,11 +2280,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       all: { id: 'all', name: 'ការិយាល័យទាំង ៣ (All Bureaus Overview)', nameEn: 'All 3 Bureaus (Master Overview)', shortName: 'ការិយាល័យទាំង ៣', shortNameEn: 'All 3 Bureaus',
         desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' },
-          { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
+          { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
           { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
@@ -3028,7 +3043,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-sm text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr>${head}</tr></thead><tbody class="divide-y divide-slate-100">${body || '<tr><td colspan="6" class="p-6 text-center text-slate-400">គ្មានទិន្នន័យ</td></tr>'}</tbody></table></div></div>`;
     }
 
-    let examMenuOpen = false, certSub = ''; const EXAM_SUBS = ['ex_track', 'ex_docs', 'ex_names', 'ex_seats'];
+    let examMenuOpen = false, certSub = ''; const SEAT_PLAN_TABS = ['ex_seat_in', 'ex_seat_out'], SEAT_TABS = ['ex_seats'].concat(SEAT_PLAN_TABS), EXAM_SUBS = ['ex_track', 'ex_docs', 'ex_names'].concat(SEAT_TABS);
     // [EXT:certs:sub] Sub-menu ថ្មីក្រោម «ចុះបញ្ជីសញ្ញាបត្រ» → ថែមក្នុង CERT_SUBS + ករណីក្នុង certSubGo/renderCerts (ឧ. ភ្ជាប់រូបជាច្រើន, បោះពុម្ពជាក្រុម)
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -3056,12 +3071,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const s2 = document.getElementById('mobile-bureau-select'); if (s2) s2.value = activeBureauKey;
       document.getElementById('stat-bureau-badge').innerText = appLang === 'en' ? b.shortNameEn : b.shortName;
       if (!b.tabs.some(t => t.id === activeTab)) activeTab = 'docs';
-      document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.hidden && (!t.sub || examMenuOpen || EXAM_SUBS.includes(activeTab))).map(t => {
+      document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.hidden && (!t.sub || examMenuOpen || EXAM_SUBS.includes(activeTab)) && (!t.sub2 || SEAT_TABS.includes(activeTab))).map(t => {
         const on = t.id === activeTab || (t.id === 'training' && (activeTab === 'events' || activeTab === 'trainentry'));
-        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'training' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(activeTab === 'training' || activeTab === 'events' || activeTab === 'trainentry') && trainMenuOpen ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + trainSubNavHTML(t) + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
+        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub2 ? 'pl-12 pr-3.5 py-1.5' : t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'ex_seats' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${SEAT_TABS.includes(activeTab) ? '▾' : '▸'}</span>` : ''}${t.id === 'training' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(activeTab === 'training' || activeTab === 'events' || activeTab === 'trainentry') && trainMenuOpen ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + trainSubNavHTML(t) + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
       }).join('');
-      ['docs', 'dispatch', 'exams', 'ex_track', 'examtasks', 'training', 'trainentry', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
-      document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
+      ['docs', 'dispatch', 'exams', 'ex_track', 'examtasks', 'seatplans', 'training', 'trainentry', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      document.getElementById('section-' + (SEAT_PLAN_TABS.includes(activeTab) ? 'seatplans' : EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
     }
@@ -3070,7 +3085,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!currentUser) return;
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
-      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); }
+      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
@@ -3102,7 +3117,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
       const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8');
-      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry', 'ex_track'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
+      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry', 'ex_track'].includes(activeTab) || SEAT_PLAN_TABS.includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
       if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') { certViewApply(); if (certSub) renderCertQuickPanel(true); } return; }
@@ -3231,9 +3246,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     // ---------------- 11. PAGINATION ----------------
     const pager = {};
-    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'workshops', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
+    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'workshops', 'seat_plans', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
     const RENDERERS = {
-      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => { renderExams(); renderExTrack(); }, exam_tasks: () => { renderExamTasks(); renderExTrack(); }, trainings: () => renderTrainingList(), workshops: () => renderEvents(),
+      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => { renderExams(); renderExTrack(); }, exam_tasks: () => { renderExamTasks(); renderExTrack(); }, trainings: () => renderTrainingList(), workshops: () => renderEvents(), seat_plans: () => { renderSeatPlans(); renderExTrack(); },
       certs: () => renderCerts(), courses: () => renderCourses(), logs: () => renderLogsTable(), recycle: () => renderRecycleBin()
     };
     function paginate(key, rows) {
@@ -4419,9 +4434,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function exDaysTo(e) { const st = String(e.start_date || '').slice(0, 10); return st ? Math.round((new Date(st + 'T00:00:00Z') - new Date(todayISO() + 'T00:00:00Z')) / 864e5) : null; }
     function exTasksFor(e) { const k = exNorm(e.session); return k ? activeRows('exam_tasks').filter(t => !EXTASK_SUBS[t.kind] && exNorm(t.session) === k) : []; }
-    function exProgress(e) { const ts = exTasksFor(e); return EX_TRACK_KINDS.map(([kind, tab, ic, l]) => { const a = ts.filter(t => t.kind === kind); return { kind, tab, ic, l, total: a.length, done: a.filter(t => t.status === 'រួចរាល់').length }; }); }
+    function exProgress(e) { const ts = exTasksFor(e); return EX_TRACK_KINDS.map(([kind, tab, ic, l]) => { const a = ts.filter(t => t.kind === kind); return { kind, tab, ic, l, total: a.length, done: a.filter(t => t.status === 'រួចរាល់').length, plans: kind === 'seats' ? spPlansFor(e).length : 0 }; }); }
     // ប្រឡងក្នុង ១៤ ថ្ងៃខាងមុខ ដែលឯកសារ/បញ្ជីឈ្មោះ/ប្លង់តុ មិនទាន់មាន ឬមិនទាន់រួច
-    function exNeedsAttention(e) { const d = exDaysTo(e); if (d == null || d < 0 || d > 14) return false; return exProgress(e).some(p => ['docs', 'names', 'seats'].includes(p.kind) && (p.total === 0 || p.done < p.total)); }
+    function exNeedsAttention(e) { const d = exDaysTo(e); if (d == null || d < 0 || d > 14) return false; return exProgress(e).some(p => ['docs', 'names', 'seats'].includes(p.kind) && ((p.kind === 'seats' && p.plans > 0) ? (p.total > 0 && p.done < p.total) : (p.total === 0 || p.done < p.total))); }
     function exTrackMetrics() {
       const ex = activeRows('exams'), today = todayISO(); let p = 0, f = 0;
       ex.forEach(e => { const n = exNums(e); p += n.p; f += n.f; });
@@ -4447,8 +4462,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!rows.length) { tbl.innerHTML = '<p class="p-6 text-center text-slate-400">មិនមានសម័យប្រឡង</p>'; return; }
       tbl.innerHTML = `<table class="w-full text-sm text-left"><thead class="bg-emerald-50/90 text-emerald-900 font-bold sticky top-0 z-10 whitespace-nowrap"><tr><th class="p-3">ជំនាញ</th><th class="p-3">សម័យ · គ្រឹះស្ថាន</th><th class="p-3 text-center">ថ្ងៃប្រឡង</th><th class="p-3 text-center">បេក្ខជន</th><th class="p-3 text-center">ស្ថានភាព</th><th class="p-3">ដំណើរការរៀបចំ (ចុចដើម្បីបើក)</th></tr></thead><tbody class="divide-y divide-slate-100">${rows.slice(0, 300).map(e => {
         const st = exStatusAuto(e), d = exDaysTo(e), attn = exNeedsAttention(e), n = exNums(e);
-        const chips = exProgress(e).map(p => { const cls = p.total === 0 ? 'bg-slate-50 text-slate-400 border-slate-200' : p.done === p.total ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200';
-          return `<button type="button" data-s="${esc(e.session || '')}" onclick="exTrackOpen('${p.tab}', this.dataset.s)" title="${p.l}: រួច ${p.done} / ${p.total}" class="px-2 py-1 rounded-lg border text-xs font-bold ${cls}">${p.ic} ${p.total ? toKhmerDigits(p.done) + '/' + toKhmerDigits(p.total) : '—'}</button>`; }).join(' ');
+        const chips = exProgress(e).map(p => { const okc = p.plans > 0 && (p.total === 0 || p.done === p.total), cls = okc ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : p.total === 0 ? 'bg-slate-50 text-slate-400 border-slate-200' : p.done === p.total ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200';
+          const go = p.plans > 0 ? 'seatPlansGo(this.dataset.s)' : `exTrackOpen('${p.tab}', this.dataset.s)`;
+          return `<button type="button" data-s="${esc(e.session || '')}" onclick="${go}" title="${p.l}: រួច ${p.done} / ${p.total}${p.plans ? ' · ប្លង់ ' + p.plans + ' បន្ទប់' : ''}" class="px-2 py-1 rounded-lg border text-xs font-bold ${cls}">${p.ic} ${p.total ? toKhmerDigits(p.done) + '/' + toKhmerDigits(p.total) : (p.plans ? '' : '—')}${p.plans ? ' ' + toKhmerDigits(p.plans) + ' បន្ទប់' : ''}</button>`; }).join(' ');
         return `<tr class="hover:bg-emerald-50 ${attn ? 'bg-rose-50/40' : ''}"><td class="p-3 font-bold text-slate-900">${esc(e.major)}<div class="text-[10px] font-normal text-slate-400">${esc(e.type || '')}</div></td>
           <td class="p-3 text-xs font-bold text-slate-600">${esc(e.session || '-')}<div class="text-[10px] font-normal text-slate-400">${esc(e.institution || '')}</div></td>
           <td class="p-3 text-center font-mono text-xs whitespace-nowrap">${esc(String(e.start_date || '-').slice(0, 10))}${d != null && d >= 0 ? `<div class="text-[10px] ${d <= 14 ? 'text-rose-600 font-bold' : 'text-slate-400'}">ក្នុង ${toKhmerDigits(d)} ថ្ងៃ</div>` : ''}</td>
@@ -4456,6 +4472,519 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <td class="p-3 text-center whitespace-nowrap"><span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${EX_STATUS_CLS[st]}">${st}</span>${attn ? '<div class="text-[10px] text-rose-600 font-bold mt-0.5">⚠️ ត្រូវរៀបចំ</div>' : ''}</td>
           <td class="p-3 whitespace-nowrap">${chips}</td></tr>`; }).join('')}</tbody></table>`;
     }
+    // [EXT:seats:v3100] ប្លង់តុបន្ទប់ប្រឡង (ប្រឡងចូល / ប្រឡងចេញ)៖ Form ច្រើនបន្ទប់ → template (Excel ឬបង្កើតតាមច្បាប់ N·M·Z·X) → កែដៃ → PDF ទុកក្នុងសម័យ + Report សង្ខេប
+    // template៖ s[n-1] = លេខក្រឡា (ជួរ×ឈរ+ឈរ) របស់បេក្ខជនទី n · part>0 = Excel មានតែ part តុ · gen = បង្កើតតាមច្បាប់ (⚙️) មិនមែនពី Excel
+    const SEAT_TPL = [{"c":4,"r":5,"p":"X","s":[0,5,10,15,3,6,9,12,4,14,19,7,13,16,8,18,11,17,1,2],"part":0,"v":1},{"c":4,"r":5,"p":"Z","s":[0,1,2,3,6,9,12,13,14,15,4,5,7,10,16,17,18,19,8,11],"part":0,"v":1},{"c":4,"r":6,"p":"N","s":[20,16,12,8,4,0,5,10,15,11,7,3,21,17,13,9,1,14,19,22,18,6,2,23],"part":0,"v":1},{"c":4,"r":6,"p":"Z","s":[0,1,2,3,6,9,12,13,14,15,4,5,7,10,16,17,18,19,8,11,20,21,22,23],"part":0,"v":1},{"c":6,"r":4,"p":"X","s":[0,7,14,21,5,10,15,20,1,8,22,4,9,19,6,13,11,16,12,23,18,17,2,3],"part":0,"v":1},{"c":6,"r":4,"p":"Z","s":[0,1,2,3,4,5,10,15,20,21,22,23,6,7,8,9,11,16,17,12,13,14,18,19],"part":0,"v":1},{"c":5,"r":5,"p":"N","s":[20,15,10,5,0,6,12,18,24,19,14,9,4,21,16,11,1,7,13,8,3,22,17,2,23],"part":0,"v":1},{"c":5,"r":5,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,9,13,21,1,7,19,3,15,2,14,22,10],"part":0,"v":1},{"c":5,"r":6,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,29,9,13,21,25,10,22,28,14,26,1,7,19,3,15,27,2],"part":0,"v":1},{"c":5,"r":6,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,29,9,13,21,25,10,22,28,14,26,15,27,19,1,7,3,2],"part":0,"v":2},{"c":5,"r":6,"p":"Z","s":[0,1,2,3,4,8,12,16,20,21,22,23,24,5,6,7,9,13,17,25,26,27,28,29,10,11,14,18,19,15],"part":0,"v":1},{"c":6,"r":5,"p":"X","s":[0,7,14,21,28,5,10,15,20,25,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,11,26,12,17],"part":0,"v":1},{"c":6,"r":5,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,26,27,28,29,6,7,8,9,11,16,21,22,23,12,13,14,17,18,19,24],"part":0,"v":1},{"c":5,"r":7,"p":"V","s":[0,6,12,8,4,5,11,17,13,9,10,16,22,18,14,15,21,27,23,19,20,26,32,28,24,25,31,33,29,1,7,3,30,34,2],"part":0,"v":1},{"c":5,"r":7,"p":"Z","s":[0,1,2,3,4,8,12,16,20,21,22,23,24,5,6,7,9,13,17,25,26,27,28,29,10,11,14,18,30,31,32,33,34,15,19],"part":0,"v":1},{"c":7,"r":5,"p":"X","s":[0,8,16,24,32,6,12,18,30,1,9,17,25,33,5,11,23,29,2,10,26,34,4,22,28,3,19,27,7,15,31,13,14,20,21],"part":0,"v":1},{"c":7,"r":5,"p":"Z","s":[0,1,2,3,4,5,6,12,18,24,30,31,32,33,34,7,8,9,10,11,13,19,25,26,27,14,15,16,17,20,21,22,23,28,29],"part":0,"v":1},{"c":6,"r":6,"p":"X","s":[0,7,14,21,28,35,5,10,15,20,25,30,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,34,11,26,31,12,33,17,32],"part":0,"v":1},{"c":6,"r":6,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,27,28,29,12,13,14,17,22,23,18,19,24],"part":35,"v":1},{"c":6,"r":7,"p":"M","s":[36,30,24,18,12,6,0,7,14,15,10,5,11,17,23,29,35,41,37,31,25,19,13,1,8,9,4,16,22,28,34,40,38,32,26,20,2,39,33,27,21,3],"part":0,"v":1},{"c":6,"r":7,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,22,27,28,29,18,19,23,24],"part":0,"v":1},{"c":6,"r":8,"p":"M","s":[42,36,30,24,18,12,6,0,7,14,15,10,5,11,17,23,29,35,41,47,43,37,31,25,19,13,1,8,9,4,16,22,28,34,40,46,44,38,32,26,20,2,45,39,33,27,21,3],"part":0,"v":1},{"c":6,"r":8,"p":"X","s":[0,7,14,21,28,35,5,10,15,20,25,30,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,34,41,11,26,31,36,12,33,40,47,17,32,37,42,38,45,39,44,43,46],"part":0,"v":1},{"c":6,"r":8,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,18,19,22,23,28,43,44,45,46,47,24,27,29,42],"part":0,"v":1},{"c":6,"r":8,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,22,27,42,43,44,45,46,47,18,19,23,28,29,24],"part":0,"v":2},{"c":8,"r":6,"p":"M","s":[40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,41,33,25,17,1,10,19,20,13,6,22,30,38,46,42,34,26,2,11,4,12,36,44,43,35,3,45,37,29,5],"part":0,"v":1},{"c":8,"r":6,"p":"M","s":[40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,41,33,25,17,1,10,19,20,13,6,22,30,38,46,42,34,26,2,11,12,5,29,37,45,43,35,3,44,36,4],"part":0,"v":2},{"c":8,"r":6,"p":"X","s":[0,9,18,27,36,45,7,14,21,28,35,42,1,10,19,37,46,6,13,20,34,41,2,11,29,38,47,5,12,26,33,40,3,30,39,4,25,32,8,17,44,15,22,43,16,23,24,31],"part":45,"v":1},{"c":8,"r":6,"p":"Z","s":[0,1,2,3,4,5,6,7,14,21,28,35,42,43,44,45,46,47,8,9,10,11,12,13,15,22,29,36,37,38,39,16,17,18,19,20,23,30,31,24,25,26,27,34,41,32,33,40],"part":0,"v":1},{"c":8,"r":7,"p":"M","s":[48,40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,55,49,41,33,25,17,1,10,19,20,13,6,22,30,38,46,54,50,42,34,26,2,11,12,5,29,37,45,53,51,43,35,3,4,36,44,52],"part":0,"v":1},{"c":8,"r":7,"p":"Z","s":[0,1,2,3,4,5,6,7,14,21,28,35,42,49,50,51,52,53,54,55,8,9,10,11,12,13,15,22,29,36,43,44,45,46,47,16,17,18,19,20,23,30,37,38,39,24,25,26,27,31,32,33,34,40,41,48],"part":0,"v":1}];
+    const SP_PATS = ['N', 'M', 'Z', 'X'], SP_DIMS = [4, 5, 6, 7, 8];
+    const SP = { rooms: [], plan: null, sel: -1, dirty: false, kind: 'out' };
+    const SP_KIND = { in: { kh: 'ប្រឡងចូល', sub: 'ជំនាញ', ic: '🎓' }, out: { kh: 'ប្រឡងចេញ', sub: 'មុខវិជ្ជា', ic: '📝' } };
+    const spT = v => String(v == null ? '' : v).trim();
+    const spCapOf = (c, r, x) => c * r + (x ? 1 : 0);
+    const spKind = () => activeTab === 'ex_seat_in' ? 'in' : 'out';
+    const spKindName = k => (SP_KIND[k] || SP_KIND.out).kh;
+    // ---------- បង្កើតលំដាប់លេខតុតាមច្បាប់ (សម្រាប់ទំហំដែលគ្មាន Excel) — ស្ទ្រូកសំខាន់ត្រូវនឹង Excel · កន្ទុយបំពេញតាមលំដាប់ធម្មតា (កែដៃបាន)
+    function spGenSeq(C, R, p) {
+      const used = new Set(), s = [], add = (r, c) => { if (r < 0 || r >= R || c < 0 || c >= C) return; const i = r * C + c; if (!used.has(i)) { used.add(i); s.push(i); } };
+      const rowMajor = () => { for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) add(r, c); };
+      const colUp = () => { for (let c = 1; c < C; c++) for (let r = R - 1; r >= 0; r--) add(r, c); };
+      if (p === 'Z') {
+        for (let c = 0; c < C; c++) add(0, c);
+        let r = 1, c = C - 2; while (r < R - 1 && c > 0) { add(r, c); r++; c--; }
+        for (let k = Math.max(c, 0); k < C; k++) add(Math.min(r, R - 1), k);
+        rowMajor();
+      } else if (p === 'N') {
+        for (let r = R - 1; r >= 0; r--) add(r, 0);
+        let r = 1, c = 1; while (c < C - 1 && r < R - 1) { add(r, c); r++; c++; }
+        for (let k = Math.min(r, R - 1); k >= 0; k--) add(k, C - 1);
+        colUp();
+      } else if (p === 'M') {
+        for (let r = R - 1; r >= 0; r--) add(r, 0);
+        const m = Math.ceil(C / 2) - 1;
+        for (let c = 1; c <= m; c++) add(c, c);
+        for (let c = m + 1; c < C; c++) add(C - 1 - c, c);
+        for (let r = 1; r < R; r++) add(r, C - 1);
+        colUp();
+      } else {
+        const main = d => { for (let r = 0; r < R; r++) add(r, r + d); }, anti = d => { for (let r = 0; r < R; r++) add(r, C - 1 - r + d); };
+        main(0); anti(0);
+        const upper = C > R || (C === R && C % 2 === 0), K = C + R;
+        for (let k = 1; k < K; k++) { if (upper) { main(k); anti(-k); } else { main(-k); anti(k); } }
+        for (let k = 1; k < K; k++) { if (upper) { main(-k); anti(k); } else { main(k); anti(-k); } }
+        rowMajor();
+      }
+      return s;
+    }
+    let _spGenCache = null;
+    function spGenTpls() {
+      if (_spGenCache) return _spGenCache; const have = new Set(SEAT_TPL.map(t => t.c + 'x' + t.r + t.p)); _spGenCache = [];
+      for (const c of SP_DIMS) for (const r of SP_DIMS) for (const p of SP_PATS) if (!have.has(c + 'x' + r + p)) _spGenCache.push({ c, r, p, v: 1, part: 0, gen: true, s: spGenSeq(c, r, p), key: 'g' + c + 'x' + r + p });
+      return _spGenCache;
+    }
+    function spCustomTpls() { return activeRows('seat_plans').filter(p => Number(p.is_tpl) === 1).map(p => ({ c: Number(p.ncols), r: Number(p.nrows), p: '★', v: 0, s: safeJSON(p.layout, []), part: 0, custom: true, name: p.room || '', rid: p.id })); }
+    function spAllTpls() { return SEAT_TPL.map((t, i) => ({ ...t, key: 'b' + i })).concat(spGenTpls(), spCustomTpls().map(t => ({ ...t, key: 'c' + t.rid }))); }
+    const SP_ORD = ['N', 'M', 'Z', 'X', 'V', '★'];
+    function spTplsFor(c, r) { return spAllTpls().filter(t => t.c === c && t.r === r).sort((a, b) => (SP_ORD.indexOf(a.p) - SP_ORD.indexOf(b.p)) || (a.v - b.v)); }
+    // អក្សរបញ្ជាក់លំនាំដើម ឧ. «6x6 Z»
+    function spTplLabel(t, all) {
+      if (t.custom) return t.c + 'x' + t.r + ' ★ ' + (t.name || 'ផ្ទាល់ខ្លួន');
+      const multi = (all || spAllTpls()).filter(x => !x.custom && x.c === t.c && x.r === t.r && x.p === t.p).length > 1;
+      return t.c + 'x' + t.r + ' ' + t.p + (multi ? ' (' + t.v + ')' : '');
+    }
+    function spPatText(t, all) {
+      if (t.custom) return '★ ' + (t.name || 'ផ្ទាល់ខ្លួន');
+      const multi = all.filter(x => !x.custom && x.c === t.c && x.r === t.r && x.p === t.p).length > 1;
+      return t.p + (multi ? ' (' + t.v + ')' : '') + (t.gen ? ' ⚙️' : t.part ? ' ⚠️' : ' ✔');
+    }
+    function spSizeOptions(c, r) { return SP_DIMS.flatMap(cc => SP_DIMS.map(rr => `<option value="${cc},${rr}" ${cc === c && rr === r ? 'selected' : ''}>${cc}x${rr}</option>`)).join(''); }
+    function spPatOptions(c, r, sel) { const all = spAllTpls(); return spTplsFor(c, r).map(t => `<option value="${t.key}" ${t.key === sel ? 'selected' : ''}>${esc(spPatText(t, all))}</option>`).join(''); }
+    function spPickKey(c, r, letter) { const l = spTplsFor(c, r); return (l.find(t => t.p === letter) || l[0]).key; }
+    function spTplOptions(sel) {
+      const all = spAllTpls();
+      return SP_DIMS.flatMap(c => SP_DIMS.map(r => `<optgroup label="${c}x${r}">${spTplsFor(c, r).map(t => `<option value="${t.key}" ${t.key === sel ? 'selected' : ''}>${esc(c + 'x' + r + ' · ' + spPatText(t, all))}</option>`).join('')}</optgroup>`)).join('');
+    }
+    function spLay(t, cands, extra) {
+      const N = t.c * t.r, cells = Array(N + (extra ? 1 : 0)).fill('');
+      cands.forEach((cd, i) => { if (i < N) cells[t.s[i]] = String(cd.no); else if (extra && i === N) cells[N] = String(cd.no); });
+      return cells;
+    }
+    const spPlanCands = p => { const a = safeJSON(p.cands, []); return Array.isArray(a) ? a : []; };
+    const spPlanCells = p => { const a = safeJSON(p.cells, []); return Array.isArray(a) ? a : []; };
+    const spPatOf = p => p.pattern || ((String(p.tpl || '').match(/[NMZXV★]/) || [''])[0]);
+    // បេក្ខជនជិតគ្នា (ឆ្វេង-ស្តាំ / លើ-ក្រោម) ជំនាញ/សាលាដូចគ្នា (ប្រើបានពេលមានទិន្នន័យជំនាញ)
+    function spConflicts(c, r, cells, cands) {
+      const map = new Map(); cands.forEach(cd => map.set(String(cd.no), cd)); const N = c * r, bad = new Set();
+      const key = i => { const cd = map.get(String(cells[i])); return cd ? spT(cd.major).toLowerCase().replace(/\s+/g, '') : ''; };
+      for (let i = 0; i < N; i++) {
+        if (!cells[i] || !key(i)) continue;
+        if ((i % c) < c - 1 && key(i) === key(i + 1)) { bad.add(i); bad.add(i + 1); }
+        if (i + c < N && key(i) === key(i + c)) { bad.add(i); bad.add(i + c); }
+      }
+      return bad;
+    }
+    // លេខបេក្ខជនបន្តបន្ទាប់ពីលេខចាប់ផ្តើម (រក្សា 0 ខាងមុខ ឧ. 03693 → 03694)
+    function spNums(start, n) {
+      const m = /^(.*?)(\d+)$/.exec(spT(normalizeKhmerDigits(start))); if (!m || !(n > 0)) return m && n === 0 ? [] : null;
+      const w = m[2].length, base = Number(m[2]); return Array.from({ length: n }, (_, i) => m[1] + String(base + i).padStart(w, '0'));
+    }
+    const spNext = (start, n) => { const a = spNums(start, (Number(n) || 0) + 1); return a ? a[a.length - 1] : ''; };
+    const spPlans = () => activeRows('seat_plans').filter(p => !Number(p.is_tpl));
+    const spFiles = () => activeRows('seat_plans').filter(p => Number(p.is_tpl) === 2);
+    const spPlansKind = k => spPlans().filter(p => !p.kind || p.kind === k);
+    const spByRoom = (a, b) => String(a.room).localeCompare(String(b.room), 'en', { numeric: true });
+    function spPlansFor(e) { const k = exNorm(e.session); return k ? spPlans().filter(p => exNorm(p.session) === k) : []; }
+    function spRec(o) {
+      return { id: generateSafeId(), session: '', room: '', subject: '', center: '', exam_date: null, tpl: '', ncols: 0, nrows: 0, extra: 0, layout: '[]', cands: '[]', cells: '[]', is_tpl: 0, kind: '', start_no: '', pattern: '', file_name: '', file_link: '',
+        created_by: currentUser?.username || 'user', created_at: nowISO(), deleted_at: null, deleted_by: null, ...o };
+    }
+
+    // ---------- ទំព័របញ្ជីប្លង់ (ប្រឡងចូល / ប្រឡងចេញ)
+    function seatGoKind(kind) { activeTab = kind === 'in' ? 'ex_seat_in' : 'ex_seat_out'; examMenuOpen = true; renderBureauWorkspace(); }
+    function seatPlansGo(session) {
+      const k = exNorm(session), pl = spPlans().find(p => exNorm(p.session) === k && p.kind), ex = activeRows('exams').find(e => exNorm(e.session) === k);
+      seatGoKind(pl ? pl.kind : (ex && ex.type === 'ប្រឡងចូល' ? 'in' : 'out'));
+      const el = document.getElementById('filter-seat-session'); if (el && session) { el.value = [...el.options].some(o => o.value === session) ? session : 'all'; } renderSeatPlans();
+    }
+    function renderSeatPlans() {
+      const tbl = document.getElementById('seat-plans-table'); if (!tbl) return;
+      const kind = spKind(), K = SP_KIND[kind];
+      const ti = document.getElementById('seat-title'); if (ti) ti.textContent = '🪑 ប្លង់តុ — ' + K.kh;
+      const all = spPlansKind(kind), sel = document.getElementById('filter-seat-session');
+      if (sel) { const cur = sel.value || 'all', ss = [...new Set(all.map(p => p.session || ''))].sort(); sel.innerHTML = '<option value="all">គ្រប់សម័យ</option>' + ss.map(s => `<option value="${esc(s)}" ${s === cur ? 'selected' : ''}>${esc(s || '(គ្មានសម័យ)')}</option>`).join(''); if (cur !== 'all' && !ss.includes(cur)) sel.value = 'all'; }
+      const fs = sel?.value || 'all', q = (document.getElementById('filter-seat-search')?.value || '').toLowerCase().trim();
+      const rows = all.filter(p => (fs === 'all' || (p.session || '') === fs) && (!q || [p.room, p.subject, p.session, p.center].some(v => String(v || '').toLowerCase().includes(q))));
+      if (!rows.length) { tbl.innerHTML = '<p class="p-8 text-center text-slate-400">មិនទាន់មានប្លង់' + K.kh + ' — ចុច «➕ បង្កើតប្លង់»</p>'; return; }
+      const by = new Map(); rows.forEach(p => { const k = p.session || ''; if (!by.has(k)) by.set(k, []); by.get(k).push(p); });
+      const del = p => can('delete') ? `<button type="button" onclick="softDelete('seat_plans', ${p.id})" class="text-rose-600 hover:text-rose-800 font-bold text-xs ml-1">លុប</button>` : '';
+      const files = spFiles();
+      const B = 'px-2 py-0.5 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50';
+      tbl.innerHTML = `<table class="w-full text-sm text-left"><thead class="bg-emerald-50/90 text-emerald-900 font-bold sticky top-0 z-10 whitespace-nowrap"><tr><th class="p-3">បន្ទប់</th><th class="p-3">${K.sub}</th><th class="p-3 text-center">ទំហំ / ទម្រង់</th><th class="p-3 text-center">លេខតុ</th><th class="p-3 text-center">បេក្ខជន / ចំណុះ</th><th class="p-3 text-center">ថ្ងៃប្រឡង</th><th class="p-3 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100">${[...by.entries()].map(([s, ps]) => {
+        ps.sort(spByRoom); const tot = ps.reduce((a, p) => a + spPlanCands(p).length, 0);
+        const fl = files.filter(f => exNorm(f.session) === exNorm(s) && (!f.kind || f.kind === kind));
+        const head = `<tr class="bg-slate-50"><td colspan="7" class="p-2.5 text-xs font-bold text-slate-700"><span class="mr-2">📅 ${esc(s || '(គ្មានសម័យ)')} · ${toKhmerDigits(ps.length)} បន្ទប់ · ${toKhmerDigits(tot)} នាក់</span>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'pdf')" class="${B}">📄 PDF រួម (ទុកក្នុងសម័យ)</button>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'report')" class="${B}">📊 Report</button>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'plan')" class="${B}">🖨️ ប្លង់</button>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'labels')" class="${B}">🏷️ ស្លាកតុ</button>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'list')" class="${B}">📋 បញ្ជីហត្ថលេខា</button>
+          <button type="button" data-s="${esc(s)}" onclick="spSessionAct(this,'xlsx')" class="${B}">📤 Excel</button></td></tr>
+          ${fl.length ? `<tr class="bg-emerald-50/40"><td colspan="7" class="p-2 text-[11px] font-bold text-emerald-800">📎 ឯកសារ PDF ក្នុងសម័យ៖ ${fl.map(f => `<span class="inline-flex items-center gap-1 mr-2 px-2 py-0.5 rounded-lg bg-white border border-emerald-200"><button type="button" onclick="spOpenFile(${f.id})" class="hover:underline">${esc(f.file_name || f.room || 'PDF')}</button>${can('delete') ? `<button type="button" onclick="softDelete('seat_plans', ${f.id})" class="text-rose-500 hover:text-rose-700">✕</button>` : ''}</span>`).join('')}</td></tr>` : ''}`;
+        return head + ps.map(p => {
+          const cs = spPlanCands(p), cap = spCapOf(Number(p.ncols), Number(p.nrows), Number(p.extra)), bad = spConflicts(Number(p.ncols), Number(p.nrows), spPlanCells(p), cs).size, nums = cs.length ? cs[0].no + (cs.length > 1 ? ' – ' + cs[cs.length - 1].no : '') : '';
+          return `<tr class="hover:bg-emerald-50"><td class="p-3 font-bold text-slate-900">${esc(p.room || '-')}</td><td class="p-3 text-xs font-bold text-slate-600">${esc(p.subject || '-')}</td>
+            <td class="p-3 text-center text-xs font-bold whitespace-nowrap">${esc(p.tpl || '')}</td>
+            <td class="p-3 text-center text-xs font-mono whitespace-nowrap">${esc(nums)}</td>
+            <td class="p-3 text-center font-bold">${toKhmerDigits(cs.length)} / ${toKhmerDigits(cap)}${bad ? `<div class="text-[10px] text-amber-600">⚠️ ជិតគ្នាជំនាញដូចគ្នា ${toKhmerDigits(bad)} តុ</div>` : ''}</td>
+            <td class="p-3 text-center font-mono text-xs whitespace-nowrap">${esc(String(p.exam_date || '-').slice(0, 10))}</td>
+            <td class="p-3 text-center whitespace-nowrap"><button type="button" onclick="spOpen(${p.id})" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs font-bold">${can('edit') ? '✏️ បើក/កែ' : '👁 មើល'}</button>
+              <button type="button" onclick="spPdfRooms([${p.id}])" title="PDF បន្ទប់នេះ (ទុកក្នុងសម័យ)" class="px-2 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs">📄</button>
+              <button type="button" onclick="spPrint([${p.id}],'plan')" title="បោះពុម្ពប្លង់" class="px-2 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs">🖨️</button>
+              <button type="button" onclick="spPrint([${p.id}],'labels')" title="ស្លាកតុ" class="px-2 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs">🏷️</button>
+              <button type="button" onclick="spPrint([${p.id}],'list')" title="បញ្ជីហត្ថលេខា" class="px-2 py-1 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50 text-xs">📋</button>${del(p)}</td></tr>`;
+        }).join('');
+      }).join('')}</tbody></table>`;
+    }
+    function spSessionAct(btn, act) {
+      const s = btn.dataset.s, kind = spKind(), ps = spPlansKind(kind).filter(p => (p.session || '') === s).sort(spByRoom), ids = ps.map(p => p.id);
+      if (act === 'xlsx') spExportExcel(ids); else if (act === 'pdf') spPdfRooms(ids); else if (act === 'report') spReport(s); else spPrint(ids, act);
+    }
+    function spOpenFile(id) { const f = store.seat_plans.find(x => x.id === id); if (!f || !f.file_link) return; const n = normalizeDocLink(f.file_link); window.open(n.ok ? n.url : f.file_link, '_blank', 'noopener'); }
+
+    // ---------- Form បង្កើតប្លង់ (ច្រើនបន្ទប់ក្នុង Form តែមួយ)
+    const spBlankRoom = prev => {
+      const t = prev ? spAllTpls().find(x => x.key === prev.key) : null, c = t ? t.c : 6, r = t ? t.r : 6;
+      return { room: '', n: '', start: '', auto: true, c, r, key: t ? t.key : spPickKey(6, 6, 'Z'), extra: false, label: '', ledit: false };
+    };
+    const spRoomTpl = rm => spAllTpls().find(t => t.key === rm.key);
+    const spRoomCap = rm => { const t = spRoomTpl(rm); return t ? spCapOf(t.c, t.r, rm.extra) : 0; };
+    const spRoomLabel = rm => { const t = spRoomTpl(rm); return t ? spTplLabel(t) + (rm.extra ? ' +1' : '') : ''; };
+    function spFormClose() { document.getElementById('modal-seat-wiz')?.remove(); }
+    function spForm() {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true);
+      spFormClose(); const kind = spKind(), K = SP_KIND[kind]; SP.kind = kind; SP.rooms = [spBlankRoom(null)];
+      const L = t => `<label class="block text-[11px] font-bold text-slate-600 mb-1">${t}</label>`, I = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      const exs = activeRows('exams').filter(e => e.type === K.kh), sess = [...new Set((exs.length ? exs : activeRows('exams')).map(e => e.session).concat(activeRows('exam_tasks').map(t => t.session)).filter(Boolean))];
+      const last = spPlansKind(kind).slice(-1)[0] || {};
+      const d = document.createElement('div'); d.id = 'modal-seat-wiz'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">${K.ic} បង្កើតប្លង់តុ — ${K.kh}</h3><button type="button" onclick="spFormClose()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div>
+        <div class="overflow-y-auto space-y-3 pr-1">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+          <div>${L('សម័យប្រឡង *')}<input id="sf-session" list="sf-sess-list" oninput="spFormSession()" class="${I}" placeholder="ឈ្មោះសម័យ"><datalist id="sf-sess-list">${sess.map(s => `<option value="${esc(s)}">`).join('')}</datalist></div>
+          <div>${L(K.sub)}<input id="sf-subject" class="${I}"></div>
+          <div>${L('មណ្ឌលប្រឡង')}<input id="sf-center" class="${I}" value="${esc(last.center || '')}"></div>
+          <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="sf-date" class="${I}"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2"><h4 class="text-sm font-bold text-slate-800">បន្ទប់</h4><button type="button" onclick="spFormAddRoom()" class="px-3 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-xs font-bold">＋ បន្ទប់</button><span id="sf-sum" class="ml-auto text-xs font-bold"></span></div>
+        <div class="overflow-x-auto border border-slate-200 rounded-2xl"><table class="w-full text-sm"><thead class="bg-slate-50 text-[11px] text-slate-600 font-bold"><tr><th class="p-2">#</th><th class="p-2 text-left">បន្ទប់លេខ</th><th class="p-2">ចំនួនបេក្ខជន</th><th class="p-2">លេខតុពី</th><th class="p-2">ទំហំ (ឈរxជួរ)</th><th class="p-2">ទម្រង់ N·M·Z·X</th><th class="p-2" title="តុបន្ថែម ១">+១</th><th class="p-2">ចំណុះ</th><th class="p-2 text-left">អក្សរបញ្ជាក់ (កែបាន)</th><th class="p-2"></th></tr></thead><tbody id="sf-rooms" oninput="spFormInput(event)" onchange="spFormInput(event)"></tbody></table></div>
+        <p class="text-[11px] text-slate-500 font-bold">✔ = ពី Excel របស់អ្នក · ⚙️ = បង្កើតតាមច្បាប់ (សូមពិនិត្យ — កែដៃក្រោយបង្កើតបាន) · «លេខតុពី» នៃបន្ទប់បន្ទាប់ បន្តស្វ័យប្រវត្តិពីបន្ទប់មុន (កែបាន)។</p>
+        </div>
+        <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="spFormClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="sf-save" onclick="spFormSave()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ បង្កើតប្លង់</button></div></div>`;
+      document.body.appendChild(d); spFormRender();
+    }
+    function spFormAddRoom() { const p = SP.rooms[SP.rooms.length - 1]; const rm = spBlankRoom(p); SP.rooms.push(rm); spFormRender(); document.querySelector('#sf-rooms tr:last-child [data-f=room]')?.focus(); }
+    function spFormDelRoom(i) { SP.rooms.splice(i, 1); if (!SP.rooms.length) SP.rooms.push(spBlankRoom(null)); spFormRender(); }
+    function spFormChain() { SP.rooms.forEach((rm, i) => { if (i > 0 && rm.auto) { const p = SP.rooms[i - 1]; rm.start = p.start ? spNext(p.start, p.n) : ''; } }); }
+    function spFormRender() {
+      const tb = document.getElementById('sf-rooms'); if (!tb) return; spFormChain();
+      const inp = 'border border-slate-200 rounded-lg p-1.5 text-sm bg-white', all = spAllTpls();
+      SP.rooms.forEach(rm => { if (!all.some(t => t.key === rm.key)) rm.key = spPickKey(rm.c, rm.r, 'Z'); if (!rm.ledit) rm.label = spRoomLabel(rm); });
+      tb.innerHTML = SP.rooms.map((rm, i) => `<tr data-i="${i}" class="border-t border-slate-100"><td class="p-1 text-center text-xs text-slate-400">${i + 1}</td>
+        <td class="p-1"><input data-f="room" value="${esc(rm.room)}" class="${inp} w-24 font-bold" placeholder="R១"></td>
+        <td class="p-1"><input data-f="n" type="number" min="0" value="${esc(rm.n)}" class="${inp} w-20 text-center"></td>
+        <td class="p-1"><input data-f="start" value="${esc(rm.start)}" class="${inp} w-28 font-mono text-center" placeholder="03693"></td>
+        <td class="p-1"><select data-f="size" class="${inp}">${spSizeOptions(rm.c, rm.r)}</select></td>
+        <td class="p-1"><select data-f="key" class="${inp}">${spPatOptions(rm.c, rm.r, rm.key)}</select></td>
+        <td class="p-1 text-center"><input type="checkbox" data-f="extra" ${rm.extra ? 'checked' : ''}></td>
+        <td class="p-1 text-center font-bold sf-cap">${toKhmerDigits(spRoomCap(rm))}</td>
+        <td class="p-1"><input data-f="label" value="${esc(rm.label)}" class="${inp} w-28 text-center font-bold"></td>
+        <td class="p-1 w-8 text-center"><button type="button" tabindex="-1" onclick="spFormDelRoom(${i})" class="text-slate-300 hover:text-rose-500">✕</button></td></tr>`).join('');
+      spFormSum();
+    }
+    function spFormSum() {
+      const tot = SP.rooms.reduce((a, r) => a + (Number(r.n) || 0), 0), cap = SP.rooms.reduce((a, r) => a + spRoomCap(r), 0), s = document.getElementById('sf-sum'); if (!s) return;
+      const ex = activeRows('exams').find(e => exNorm(e.session) === exNorm(document.getElementById('sf-session')?.value) && Number(e.candidates) > 0);
+      s.textContent = 'បន្ទប់ ' + toKhmerDigits(SP.rooms.length) + ' · បេក្ខជន ' + toKhmerDigits(tot) + ' · ចំណុះ ' + toKhmerDigits(cap) + (ex ? ' · សម័យមាន ' + toKhmerDigits(ex.candidates) + ' នាក់' : '');
+      s.className = 'ml-auto text-xs font-bold ' + (ex && Number(ex.candidates) !== tot ? 'text-amber-600' : 'text-emerald-700');
+    }
+    function spFormSession() {
+      const v = document.getElementById('sf-session')?.value, ex = activeRows('exams').find(e => exNorm(e.session) === exNorm(v)); spFormSum(); if (!ex) return;
+      const sub = document.getElementById('sf-subject'), dt = document.getElementById('sf-date');
+      if (sub && !sub.value && SP.kind === 'in') sub.value = ex.major || ''; if (dt && !dt.value && ex.start_date) dt.value = String(ex.start_date).slice(0, 10);
+    }
+    function spFormSync() {
+      spFormChain();
+      document.querySelectorAll('#sf-rooms tr').forEach((tr, i) => { const rm = SP.rooms[i]; if (!rm) return; const st = tr.querySelector('[data-f=start]'); if (st && document.activeElement !== st) st.value = rm.start; });
+      spFormSum();
+    }
+    function spFormInput(e) {
+      const el = e.target, tr = el.closest('tr'); if (!tr || !el.dataset.f) return; const rm = SP.rooms[+tr.dataset.i], f = el.dataset.f;
+      if (f === 'size') { const [c, r] = el.value.split(',').map(Number), old = spRoomTpl(rm); rm.c = c; rm.r = r; rm.key = spPickKey(c, r, old ? old.p : 'Z'); rm.ledit = false; return spFormRender(); }
+      if (f === 'key') { rm.key = el.value; rm.ledit = false; return spFormRender(); }
+      if (f === 'extra') { rm.extra = el.checked; rm.ledit = false; return spFormRender(); }
+      if (f === 'label') { rm.label = el.value; rm.ledit = true; return; }
+      if (f === 'start') { rm.start = el.value; rm.auto = false; } else if (f === 'n') rm.n = el.value; else rm.room = el.value;
+      spFormSync();
+    }
+    async function spFormSave() {
+      if (!can('create')) return;
+      const f = { session: spT(document.getElementById('sf-session').value), subject: spT(document.getElementById('sf-subject').value), center: spT(document.getElementById('sf-center').value), date: document.getElementById('sf-date').value || null }, kind = SP.kind;
+      if (!f.session) return alert('⚠️ សូមបញ្ចូលសម័យប្រឡង!');
+      const rooms = SP.rooms.filter(r => spT(r.room) || Number(r.n) > 0 || spT(r.start)); if (!rooms.length) return alert('⚠️ សូមបញ្ចូលបន្ទប់!');
+      const T = spAllTpls(), all = new Set(); const built = [];
+      for (const r of rooms) {
+        if (!spT(r.room)) return alert('⚠️ មានបន្ទប់ដែលមិនទាន់មានលេខបន្ទប់!');
+        const n = Math.floor(Number(r.n) || 0), cap = spRoomCap(r); if (n <= 0) return alert('⚠️ បន្ទប់ ' + r.room + ' មិនទាន់មានចំនួនបេក្ខជន!');
+        if (n > cap) return alert('⚠️ បន្ទប់ ' + r.room + ' មាន ' + n + ' នាក់ លើសចំណុះ ' + cap + ' តុ — សូមប្តូរទំហំ/ទម្រង់ ឬធីក «+១»');
+        const nums = spNums(r.start, n); if (!nums) return alert('⚠️ បន្ទប់ ' + r.room + '៖ «លេខតុពី» ត្រូវមានលេខ (ឧ. 03693)');
+        const dup = nums.find(x => all.has(x)); if (dup) return alert('⚠️ លេខបេក្ខជន ' + dup + ' ស្ទួនគ្នារវាងបន្ទប់ — សូមកែ «លេខតុពី»');
+        nums.forEach(x => all.add(x)); built.push({ r, n, nums });
+      }
+      const names = rooms.map(r => exNorm(r.room)); if (new Set(names).size < names.length) return alert('⚠️ មានលេខបន្ទប់ស្ទួនគ្នា!');
+      const exist = spPlansKind(kind).filter(p => exNorm(p.session) === exNorm(f.session)).map(p => exNorm(p.room));
+      if (rooms.some(r => exist.includes(exNorm(r.room))) && !confirm('⚠️ មានបន្ទប់ក្នុងសម័យនេះរួចហើយ ដែលមានលេខដូចគ្នា។ បន្តបង្កើតស្ទួន?')) return;
+      const recs = built.map(({ r, n, nums }) => {
+        const t = T.find(x => x.key === r.key), x = r.extra ? 1 : 0, cs = nums.map(no => ({ no }));
+        return spRec({ session: f.session, room: spT(r.room), subject: f.subject, center: f.center, exam_date: f.date, kind, start_no: nums[0], pattern: t.p, tpl: spT(r.label) || spRoomLabel(r), ncols: t.c, nrows: t.r, extra: x,
+          layout: JSON.stringify(t.s), cands: JSON.stringify(cs), cells: JSON.stringify(spLay(t, cs, x)) });
+      });
+      const btn = document.getElementById('sf-save'); if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; }
+      const ok = await persistMany('seat_plans', recs); spFormClose(); seatGoKind(kind); renderExTrack();
+      showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានបង្កើតប្លង់') + ' ' + recs.length + ' បន្ទប់', ok === false);
+      logActivity('បង្កើតប្លង់តុ ' + spKindName(kind), f.session + ' · ' + recs.length + ' បន្ទប់ · ' + all.size + ' នាក់');
+    }
+
+    // ---------- កែប្លង់ម្នាក់ៗ (ប្តូរតុ · ទំហំ · អក្សរបញ្ជាក់)
+    function spEditClose() { document.getElementById('modal-seat-edit')?.remove(); SP.plan = null; }
+    function spOpen(id) {
+      const p = store.seat_plans.find(x => x.id === id); if (!p) return;
+      SP.plan = { ...p, ncols: Number(p.ncols), nrows: Number(p.nrows), extra: Number(p.extra) || 0, cells: spPlanCells(p).map(String), candList: spPlanCands(p), layout: safeJSON(p.layout, []) }; SP.sel = -1; SP.dirty = false;
+      document.getElementById('modal-seat-edit')?.remove(); const ed = can('edit'), K = SP_KIND[p.kind] || SP_KIND.out;
+      const L = t => `<label class="block text-[11px] font-bold text-slate-600 mb-1">${t}</label>`, I = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      const d = document.createElement('div'); d.id = 'modal-seat-edit'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-5xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">🪑 ប្លង់តុ ${p.kind ? '(' + K.kh + ') ' : ''}— បន្ទប់ <span id="se-title"></span></h3><button type="button" onclick="spEditClose()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div>
+        <div class="overflow-y-auto space-y-3 pr-1">
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5">
+            <div>${L('បន្ទប់លេខ')}<input id="se-room" class="${I}" value="${esc(SP.plan.room)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L('សម័យ')}<input id="se-session" class="${I}" value="${esc(SP.plan.session)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L(K.sub)}<input id="se-subject" class="${I}" value="${esc(SP.plan.subject)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L('មណ្ឌល')}<input id="se-center" class="${I}" value="${esc(SP.plan.center)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="se-date" class="${I}" value="${esc(String(SP.plan.exam_date || '').slice(0, 10))}" ${ed ? '' : 'disabled'}></div>
+            <div>${L('អក្សរបញ្ជាក់ (ឧ. 6x6 Z)')}<input id="se-label" class="${I} font-bold" value="${esc(SP.plan.tpl)}" ${ed ? '' : 'disabled'}></div>
+          </div>
+          ${ed ? `<div class="flex flex-wrap items-center gap-2 text-xs"><label class="font-bold text-slate-600">ប្តូរទំហំ/ទម្រង់៖</label><select id="se-tpl" onchange="spEditTpl(this.value)" class="border border-slate-300 rounded-lg p-1.5 bg-white"><option value="">— រក្សាបច្ចុប្បន្ន (${esc(SP.plan.tpl)}) —</option>${spTplOptions('')}</select>
+            <label class="font-bold text-slate-600"><input type="checkbox" id="se-extra" ${SP.plan.extra ? 'checked' : ''} onchange="spEditExtra(this.checked)"> +១ តុបន្ថែម</label>
+            <span class="text-slate-500">ចុចតុមួយ រួចចុចតុមួយទៀត ដើម្បីប្តូរទីតាំង (ឬផ្លាស់ទៅតុទំនេរ)</span></div>` : ''}
+          <div id="se-warn" class="text-xs font-bold text-amber-700"></div>
+          <div id="se-grid" class="overflow-auto"></div>
+        </div>
+        <div class="flex flex-wrap justify-between gap-2 pt-1">
+          <div class="flex flex-wrap gap-2"><button type="button" onclick="spEditPdf()" class="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">📄 PDF</button><button type="button" onclick="spEditPrint('plan')" class="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">🖨️ ប្លង់</button><button type="button" onclick="spEditPrint('labels')" class="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">🏷️ ស្លាកតុ</button><button type="button" onclick="spEditPrint('list')" class="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">📋 បញ្ជី</button>${ed ? '<button type="button" onclick="spSaveAsTpl()" class="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">★ រក្សាទុកជា template</button>' : ''}</div>
+          <div class="flex gap-2"><button type="button" onclick="spEditClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បិទ</button>${ed ? '<button type="button" id="se-save" onclick="spEditSave()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ រក្សាទុក</button>' : ''}</div>
+        </div></div>`;
+      document.body.appendChild(d); spEditGrid();
+    }
+    function spEditGrid() {
+      const p = SP.plan; if (!p) return; const C = p.ncols, R = p.nrows, N = C * R, map = new Map(); p.candList.forEach(c => map.set(String(c.no), c));
+      const bad = spConflicts(C, R, p.cells, p.candList);
+      const cell = i => { const no = p.cells[i] || '', cd = map.get(String(no)), sel = SP.sel === i;
+        return `<button type="button" ${can('edit') ? `onclick="spCell(${i})"` : ''} title="${esc(cd ? [cd.name, cd.major].filter(Boolean).join(' · ') : '')}" class="h-14 rounded-lg border-2 text-base font-extrabold ${sel ? 'border-emerald-600 ring-2 ring-emerald-300' : bad.has(i) ? 'border-amber-400 bg-amber-50' : 'border-slate-300 bg-white'} ${no ? '' : 'bg-slate-100 text-slate-300'}">${no ? esc(no) : '✕'}${cd && cd.name ? `<div class="text-[9px] font-normal text-slate-500 truncate px-1">${esc(cd.name)}</div>` : ''}</button>`; };
+      let h = ''; if (p.extra) h += `<div class="flex justify-end mb-2"><div class="w-28">${cell(N)}</div></div>`;
+      h += `<div class="grid gap-2" style="grid-template-columns:repeat(${C},minmax(78px,1fr))">${Array.from({ length: N }, (_, i) => cell(i)).join('')}</div>`;
+      document.getElementById('se-grid').innerHTML = h;
+      document.getElementById('se-title').textContent = (document.getElementById('se-room')?.value || p.room) + ' · ' + C + 'x' + R + ' · ' + toKhmerDigits(p.candList.length) + ' នាក់';
+      document.getElementById('se-warn').textContent = bad.size ? '⚠️ មាន ' + bad.size + ' តុ ដែលជិតគ្នាមកពីជំនាញ/សាលាដូចគ្នា (ពណ៌លឿង) — អាចប្តូរតុដោយដៃ' : '';
+    }
+    function spCell(i) {
+      const p = SP.plan; if (!p || !can('edit')) return;
+      if (SP.sel < 0) { SP.sel = i; return spEditGrid(); }
+      if (SP.sel !== i) { const a = SP.sel; [p.cells[a], p.cells[i]] = [p.cells[i] || '', p.cells[a] || '']; SP.dirty = true; }
+      SP.sel = -1; spEditGrid();
+    }
+    function spEditTpl(key) {
+      const p = SP.plan; if (!key || !p) return; const t = spAllTpls().find(x => x.key === key); if (!t) return;
+      if (p.candList.length > spCapOf(t.c, t.r, p.extra)) { document.getElementById('se-tpl').value = ''; return alert('⚠️ ទំហំនេះមិនល្មមនឹង ' + p.candList.length + ' នាក់ — សូមជ្រើសទំហំធំជាង ឬធីក «+១ តុ»'); }
+      if (SP.dirty && !confirm('ការប្តូរតុដោយដៃនឹងបាត់ ហើយរៀបឡើងវិញតាម template។ បន្ត?')) { document.getElementById('se-tpl').value = ''; return; }
+      p.ncols = t.c; p.nrows = t.r; p.layout = t.s.slice(); p.pattern = t.p; p.tpl = spTplLabel(t) + (p.extra ? ' +1' : ''); p.cells = spLay(t, p.candList, p.extra); SP.sel = -1; SP.dirty = true;
+      const lb = document.getElementById('se-label'); if (lb) lb.value = p.tpl; document.getElementById('se-tpl').value = ''; spEditGrid();
+    }
+    function spEditExtra(on) {
+      const p = SP.plan, N = p.ncols * p.nrows; if (!p) return;
+      if (on) { p.extra = 1; p.cells[N] = p.cells[N] || ''; }
+      else { if (p.cells[N]) { document.getElementById('se-extra').checked = true; return alert('⚠️ តុបន្ថែមមានបេក្ខជននៅ — សូមប្តូរគាត់ទៅតុផ្សេងសិន'); } p.extra = 0; p.cells.length = N; }
+      const lb = document.getElementById('se-label'); if (lb) { const v = lb.value.replace(/\s*\+1$/, ''); lb.value = on ? v + ' +1' : v; }
+      SP.sel = -1; SP.dirty = true; spEditGrid();
+    }
+    function spEditPatch() {
+      const p = SP.plan;
+      return { room: spT(document.getElementById('se-room').value), session: spT(document.getElementById('se-session').value), subject: spT(document.getElementById('se-subject').value), center: spT(document.getElementById('se-center').value), exam_date: document.getElementById('se-date').value || null,
+        tpl: spT(document.getElementById('se-label').value) || p.tpl, pattern: p.pattern || '', ncols: p.ncols, nrows: p.nrows, extra: p.extra, layout: JSON.stringify(p.layout), cells: JSON.stringify(p.cells) };
+    }
+    async function spEditSave() {
+      if (!can('edit') || !SP.plan) return; const patch = spEditPatch(); if (!patch.room) return alert('⚠️ សូមបញ្ចូលលេខបន្ទប់!'); if (!patch.session) return alert('⚠️ សូមបញ្ចូលសម័យ!');
+      if (spPlans().some(x => x.id !== SP.plan.id && exNorm(x.session) === exNorm(patch.session) && exNorm(x.room) === exNorm(patch.room) && (x.kind || '') === (SP.plan.kind || '')) && !confirm('⚠️ មានបន្ទប់ដូចគ្នាក្នុងសម័យនេះរួចហើយ។ រក្សាទុកស្ទួន?')) return;
+      const rec = store.seat_plans.find(x => x.id === SP.plan.id); if (!rec) return; Object.assign(rec, patch);
+      const ok = await persist('seat_plans', rec); spEditClose(); renderSeatPlans(); renderExTrack();
+      showToast(ok ? 'បានរក្សាទុកប្លង់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok); logActivity('កែប្លង់តុ', rec.session + ' · ' + rec.room);
+    }
+    async function spSaveAsTpl() {
+      const p = SP.plan; if (!p || !can('create')) return; const N = p.ncols * p.nrows;
+      const name = spT(prompt('ឈ្មោះ template (ឧ. X ផ្ទាល់ខ្លួន):', 'ផ្ទាល់ខ្លួន')); if (!name) return;
+      const seq = [], used = new Set();
+      for (let i = 0; i < N; i++) { const cd = p.candList[i]; const idx = cd ? p.cells.findIndex((v, k) => k < N && String(v) === String(cd.no)) : -1; if (idx >= 0 && !used.has(idx)) { seq.push(idx); used.add(idx); } else seq.push(-1); }
+      const free = []; for (let i = 0; i < N; i++) if (!used.has(i)) free.push(i); for (let i = 0; i < N; i++) if (seq[i] < 0) seq[i] = free.shift();
+      const rec = spRec({ room: name, ncols: p.ncols, nrows: p.nrows, layout: JSON.stringify(seq), is_tpl: 1, pattern: '★' });
+      const ok = await persist('seat_plans', rec); showToast(ok ? 'បានរក្សាទុក template «' + name + '»' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok); logActivity('រក្សាទុក template ប្លង់តុ', name);
+    }
+    function spEditSyncRec() {
+      if (!SP.plan) return true; if (can('edit') && SP.dirty) { const patch = spEditPatch(), rec = store.seat_plans.find(x => x.id === SP.plan.id); if (rec) { if (!confirm('ប្លង់មានការកែដែលមិនទាន់រក្សាទុក។ រក្សាទុកមុន?')) return false; Object.assign(rec, patch); persist('seat_plans', rec); SP.dirty = false; renderSeatPlans(); } }
+      return true;
+    }
+    function spEditPrint(mode) { if (!SP.plan || !spEditSyncRec()) return; spPrint([SP.plan.id], mode); }
+    function spEditPdf() { if (!SP.plan || !spEditSyncRec()) return; spPdfRooms([SP.plan.id]); }
+
+    // ---------- ទំព័របោះពុម្ព (ប្លង់ · ស្លាក · បញ្ជី)
+    function spInfo(p) {
+      const cs = spPlanCands(p), K = SP_KIND[p.kind] || null;
+      return { room: p.room || '', n: cs.length, subject: p.subject || '', subL: K ? K.sub : 'មុខវិជ្ជា', kind: K ? K.kh : '', center: p.center || '', date: p.exam_date ? toKhmerDigits(khDateRange(String(p.exam_date).slice(0, 10))) : '', cs };
+    }
+    const spMeta = i => `<div class="meta">${i.kind ? `<div><b>ប្រភេទ៖</b> ${esc(i.kind)}</div>` : ''}<div><b>បន្ទប់លេខ៖</b> ${esc(i.room)}</div><div><b>ចំនួនបេក្ខជន៖</b> ${esc(toKhmerDigits(i.n))}</div><div><b>${i.subL}៖</b> ${esc(i.subject)}</div><div><b>មណ្ឌល៖</b> ${esc(i.center)}</div><div><b>ថ្ងៃប្រឡង៖</b> ${esc(i.date)}</div></div>`;
+    function spPlanPage(p) {
+      const i = spInfo(p), C = Number(p.ncols), R = Number(p.nrows), N = C * R, cells = spPlanCells(p);
+      const rowsH = Array.from({ length: R }, (_, r) => '<tr>' + Array.from({ length: C }, (_, c) => { const v = cells[r * C + c] || ''; return `<td class="${v ? '' : 'x'}">${esc(v)}</td>`; }).join('') + '</tr>').join('');
+      return `<section class="pg"><h1>ប្លង់តុ</h1>${spMeta(i)}
+        ${Number(p.extra) ? `<div class="xr"><span class="seat ${cells[N] ? '' : 'x'}">${esc(cells[N] || '')}</span></div>` : ''}<table class="grid">${rowsH}</table><div class="foot">${esc(p.tpl || (C + 'x' + R))}</div></section>`;
+    }
+    function spLabelsPage(p) {
+      const i = spInfo(p), cells = spPlanCells(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
+      return `<section class="pg"><div class="labs">${i.cs.filter(c => pos.has(String(c.no))).map(c => `<div class="lab"><div class="ln">${esc(c.no)}</div><div class="lr">បន្ទប់ ${esc(i.room)}</div>${c.name ? `<div class="ls">${esc(c.name)}</div>` : ''}${c.major ? `<div class="lm">${esc(c.major)}</div>` : ''}<div class="lf">${esc([i.subject, i.center, i.date].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></section>`;
+    }
+    function spListPage(p) {
+      const i = spInfo(p), C = Number(p.ncols), cells = spPlanCells(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
+      return `<section class="pg"><h1>បញ្ជីហត្ថលេខាបេក្ខជន</h1>${spMeta(i)}
+        <table class="lst"><thead><tr><th>ល.រ</th><th>លេខបេក្ខជន</th><th>ឈ្មោះ</th><th>ជំនាញ/សាលា</th><th>តុ (ជួរ·ឈរ)</th><th>ហត្ថលេខា</th></tr></thead><tbody>${i.cs.map((c, k) => { const q = pos.get(String(c.no)); const pt = q == null ? '' : (q >= C * Number(p.nrows) ? 'បន្ថែម' : (Math.floor(q / C) + 1) + '·' + (q % C + 1)); return `<tr><td>${k + 1}</td><td><b>${esc(c.no)}</b></td><td>${esc(c.name || '')}</td><td>${esc(c.major || '')}</td><td>${pt}</td><td></td></tr>`; }).join('')}</tbody></table></section>`;
+    }
+    const SP_CSS = `body{font-family:'Noto Sans Khmer','Khmer OS','Khmer UI','Leelawadee UI',sans-serif;margin:0;color:#000}.pg{page-break-after:always;padding:0}.pg:last-child{page-break-after:auto}h1{text-align:center;font-size:26px;margin:0 0 8px}.meta{font-size:15px;line-height:1.7;margin-bottom:10px}.meta b{display:inline-block;min-width:110px}
+      .grid{border-collapse:separate;border-spacing:10px;margin:0 auto}.grid td{width:2.5cm;height:1.5cm;border:1.5px solid #000;text-align:center;font-size:22px;font-weight:700;padding:0}.x{background:linear-gradient(to top right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px))}
+      .xr{text-align:right;margin-right:12px}.seat{display:inline-block;width:2.5cm;height:1.5cm;line-height:1.5cm;border:1.5px solid #000;text-align:center;font-size:22px;font-weight:700}.foot{font-size:12px;margin-top:6px}
+      .labs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lab{border:1.5px dashed #444;border-radius:6px;padding:6px 8px;height:3.6cm;box-sizing:border-box;overflow:hidden;break-inside:avoid}.ln{font-size:30px;font-weight:800;line-height:1.1}.lr{font-size:13px;font-weight:700}.ls{font-size:13px}.lm{font-size:12px;color:#333}.lf{font-size:10px;color:#444;margin-top:2px}
+      .lst{width:100%;border-collapse:collapse;font-size:13px}.lst th,.lst td{border:1px solid #000;padding:5px 6px}.lst th{background:#eee}.lst td:last-child{width:3.5cm}.rk{display:flex;gap:10px;margin:8px 0 12px;flex-wrap:wrap}.rk div{border:1.5px solid #000;border-radius:6px;padding:6px 12px;text-align:center;font-size:12px}.rk b{display:block;font-size:22px}.tr td{font-weight:800;background:#f3f3f3}`;
+    function spPrint(ids, mode) {
+      const plans = ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean); if (!plans.length) return showToast('មិនមានប្លង់', true);
+      const pages = plans.map(mode === 'plan' ? spPlanPage : mode === 'labels' ? spLabelsPage : spListPage).join('');
+      const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
+      win.document.write(`<html><head><meta charset="utf-8"><title>ប្លង់តុ</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>@page{size:A4 ${mode === 'plan' ? 'landscape' : 'portrait'};margin:10mm}${SP_CSS}</style></head><body>${pages}<script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
+      win.document.close();
+    }
+    function spExportExcel(ids) {
+      const plans = ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean); if (!plans.length) return showToast('មិនមានប្លង់', true);
+      const sum = [], all = [], grids = [];
+      plans.forEach(p => {
+        const C = Number(p.ncols), R = Number(p.nrows), N = C * R, cells = spPlanCells(p), cs = spPlanCands(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
+        sum.push({ 'ប្រភេទ': p.kind ? spKindName(p.kind) : '', 'សម័យ': p.session || '', 'បន្ទប់': p.room || '', 'មុខវិជ្ជា/ជំនាញ': p.subject || '', 'មណ្ឌល': p.center || '', 'ថ្ងៃប្រឡង': String(p.exam_date || '').slice(0, 10), 'ទំហំ (ឈរ×ជួរ)': C + 'x' + R + (Number(p.extra) ? '+1' : ''), 'ទម្រង់': p.tpl || '', 'លេខតុពី': cs[0] ? cs[0].no : '', 'រហូតដល់': cs.length ? cs[cs.length - 1].no : '', 'បេក្ខជន': cs.length, 'ចំណុះតុ': spCapOf(C, R, Number(p.extra)) });
+        cs.forEach(c => { const q = pos.get(String(c.no)); all.push({ 'សម័យ': p.session || '', 'បន្ទប់': p.room || '', 'លេខបេក្ខជន': c.no, 'ឈ្មោះ': c.name || '', 'ជំនាញ/សាលា': c.major || '', 'ជួរ': q == null ? '' : (q >= N ? 'បន្ថែម' : Math.floor(q / C) + 1), 'ឈរ': q == null || q >= N ? '' : q % C + 1 }); });
+        const g = Array.from({ length: R }, (_, r) => { const o = { 'ជួរ': r + 1 }; for (let c = 0; c < C; c++) o['ឈរ ' + (c + 1)] = cells[r * C + c] || '✕'; return o; });
+        if (Number(p.extra)) g.push({ 'ជួរ': 'តុបន្ថែម', 'ឈរ 1': cells[N] || '✕' });
+        grids.push({ name: 'ប្លង់ ' + (p.room || p.id), rows: g });
+      });
+      if (!xlsxBook([{ name: 'សង្ខេប', rows: sum }, { name: 'បេក្ខជន', rows: all }].concat(grids.slice(0, 40)), 'ប្លង់តុ_' + todayISO() + '.xlsx')) return;
+      showToast('បាន Export Excel (' + plans.length + ' បន្ទប់)'); logActivity('Export ប្លង់តុ', plans.length + ' បន្ទប់');
+    }
+
+    // ---------- PDF (html2canvas + jsPDF — បង្ហាញអក្សរខ្មែរបានត្រឹមត្រូវ) → Download + ទុកក្នុងប្រព័ន្ធតាមសម័យ
+    const SP_LIBS = { h2c: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', pdf: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js' };
+    function spLoadScript(url) { return new Promise((res, rej) => { const s = document.createElement('script'); s.src = url; s.onload = res; s.onerror = () => rej(new Error('load ' + url)); document.head.appendChild(s); }); }
+    async function spPdfLibs() { if (!window.html2canvas) await spLoadScript(SP_LIBS.h2c); if (!(window.jspdf && window.jspdf.jsPDF)) await spLoadScript(SP_LIBS.pdf); }
+    async function spRenderPdf(pages, orient) {
+      await spPdfLibs();
+      const W = orient === 'landscape' ? 1123 : 794, ifr = document.createElement('iframe'); ifr.setAttribute('aria-hidden', 'true');
+      ifr.style.cssText = 'position:fixed;left:-20000px;top:0;border:0;width:' + W + 'px;height:1000px;opacity:0;pointer-events:none';
+      document.body.appendChild(ifr);
+      try {
+        const d = ifr.contentDocument; d.open();
+        d.write('<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>' + SP_CSS + 'body{margin:0;padding:20px;width:' + (W - 40) + 'px;background:#fff}.pg{page-break-after:auto}</style></head><body>' + pages.join('') + '</body></html>'); d.close();
+        await Promise.race([d.fonts.ready, new Promise(r => setTimeout(r, 4000))]); await new Promise(r => setTimeout(r, 250));
+        const pdf = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: 'a4' }), pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight(), mg = 8;
+        let first = true;
+        for (const sec of [...d.querySelectorAll('.pg')]) {
+          const cv = await window.html2canvas(sec, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
+          const iw = pw - mg * 2, k = iw / cv.width, sliceH = Math.floor((ph - mg * 2) / k);
+          for (let y = 0; y < cv.height; y += sliceH) {
+            const h = Math.min(sliceH, cv.height - y), part = document.createElement('canvas'); part.width = cv.width; part.height = h;
+            part.getContext('2d').drawImage(cv, 0, y, cv.width, h, 0, 0, cv.width, h);
+            if (!first) pdf.addPage(); first = false; pdf.addImage(part.toDataURL('image/jpeg', 0.92), 'JPEG', mg, mg, iw, h * k);
+          }
+        }
+        return pdf.output('blob');
+      } finally { ifr.remove(); }
+    }
+    const spSafeName = s => String(s || '').replace(/[\\/:*?"<>|]+/g, '_').trim();
+    // ទុក PDF ក្នុងប្រព័ន្ធ (Supabase Storage · >ដែនកំណត់ → Google Drive) ជា record ភ្ជាប់នឹងសម័យ · កែឯកសារដដែល (សម័យ+ប្រភេទ+ឈ្មោះ) = ជំនួសតំណ
+    async function spStorePdf(blob, fileName, session, kind, title) {
+      let link = '';
+      try {
+        if (navigator.onLine !== false) {
+          if (blob.size > SUPA_MAX_SIZE) { const b64 = await fileToBase64(blob); link = await uploadToDrive({ name: fileName, type: 'application/pdf', base64: b64 }); }
+          if (!link && db) { const r = await uploadWithRetry('seatplans/' + generateSafeId() + '.pdf', blob, 'application/pdf'); if (r.ok) link = r.url; }
+        }
+      } catch (e) { console.warn('PDF store:', e); }
+      if (!link) return false;
+      const old = spFiles().find(f => exNorm(f.session) === exNorm(session) && (f.kind || '') === (kind || '') && f.room === title);
+      if (old) { Object.assign(old, { file_name: fileName, file_link: link, created_at: nowISO() }); await persist('seat_plans', old); }
+      else await persist('seat_plans', spRec({ session, kind: kind || '', room: title, tpl: 'pdf', is_tpl: 2, file_name: fileName, file_link: link }));
+      return true;
+    }
+    async function spDeliverPdf(pages, orient, fileName, session, kind, title) {
+      showToast('⏳ កំពុងបង្កើត PDF…');
+      let blob; try { blob = await spRenderPdf(pages, orient); } catch (e) { console.warn(e); return showToast('មិនអាចបង្កើត PDF (ត្រូវការអ៊ីនធឺណិតដើម្បីផ្ទុក library) — សូមប្រើ 🖨️ បោះពុម្ព → Save as PDF', true); }
+      downloadBlob(blob, fileName);
+      const ok = await spStorePdf(blob, fileName, session, kind, title);
+      showToast(ok ? 'បាន Download និងទុក PDF ក្នុងសម័យ «' + session + '»' : 'បាន Download PDF — មិនទាន់ទុកក្នុងប្រព័ន្ធបាន (Offline ឬ Upload បរាជ័យ)', !ok);
+      logActivity('PDF ប្លង់តុ', fileName); renderSeatPlans();
+    }
+    async function spPdfRooms(ids) {
+      const plans = ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean).sort((a, b) => spByRoom(a, b)); if (!plans.length) return showToast('មិនមានប្លង់', true);
+      const p0 = plans[0], one = plans.length === 1, session = p0.session || '', kind = p0.kind || spKind(), title = one ? 'បន្ទប់ ' + p0.room : 'ប្លង់រួមទាំងសម័យ';
+      const fileName = spSafeName('ប្លង់តុ_' + spKindName(kind) + '_' + session + '_' + (one ? 'បន្ទប់' + p0.room : 'រួម')) + '.pdf';
+      await spDeliverPdf(plans.map(spPlanPage), 'landscape', fileName, session, kind, title);
+    }
+
+    // ---------- Report សង្ខេបតាមសម័យ
+    function spReportData(kind, session) {
+      let ps = spPlansKind(kind); if (session != null) ps = ps.filter(p => (p.session || '') === session);
+      const rooms = ps.slice().sort((a, b) => String(a.session).localeCompare(String(b.session)) || spByRoom(a, b)).map(p => {
+        const cs = spPlanCands(p), cap = spCapOf(Number(p.ncols), Number(p.nrows), Number(p.extra));
+        return { session: p.session || '', room: p.room || '', subject: p.subject || '', center: p.center || '', date: String(p.exam_date || '').slice(0, 10), size: Number(p.ncols) + 'x' + Number(p.nrows), pat: spPatOf(p), label: p.tpl || '', start: cs[0] ? cs[0].no : '', end: cs.length ? cs[cs.length - 1].no : '', n: cs.length, cap, empty: cap - cs.length };
+      });
+      const sum = a => a.reduce((x, r) => x + r.n, 0), cap = a => a.reduce((x, r) => x + r.cap, 0);
+      const group = (fn) => { const m = new Map(); rooms.forEach(r => { const k = fn(r); if (!m.has(k)) m.set(k, { k, rooms: 0, n: 0, cap: 0 }); const g = m.get(k); g.rooms++; g.n += r.n; g.cap += r.cap; }); return [...m.values()]; };
+      return { kind, session, rooms, total: { rooms: rooms.length, n: sum(rooms), cap: cap(rooms), empty: cap(rooms) - sum(rooms) }, sessions: group(r => r.session || '(គ្មានសម័យ)'), sizes: group(r => r.size + (r.pat ? ' ' + r.pat : '')) };
+    }
+    function spReport(session) {
+      const kind = spKind(), D = spReportData(kind, session);
+      if (!D.rooms.length) return showToast('មិនមានប្លង់សម្រាប់ Report', true);
+      document.getElementById('modal-seat-rpt')?.remove();
+      const tile = (ic, n, l) => `<div class="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-center"><div class="text-xl font-extrabold text-slate-800">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></div>`;
+      const th = (...a) => a.map(x => `<th class="p-2.5 ${x[1] || ''}">${x[0]}</th>`).join('');
+      const d = document.createElement('div'); d.id = 'modal-seat-rpt'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
+      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-4xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📊 Report ប្លង់តុ — ${spKindName(kind)}${session != null ? ' · ' + esc(session || '(គ្មានសម័យ)') : ' (គ្រប់សម័យ)'}</h3><button type="button" onclick="document.getElementById('modal-seat-rpt').remove()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div>
+        <div class="overflow-y-auto space-y-3 pr-1">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">${tile('🚪', D.total.rooms, 'បន្ទប់')}${tile('👥', D.total.n, 'បេក្ខជនសរុប')}${tile('🪑', D.total.cap, 'តុសរុប')}${tile('⬜', D.total.empty, 'តុទំនេរ')}</div>
+          ${session == null ? `<div class="border border-slate-200 rounded-2xl overflow-auto"><table class="w-full text-sm"><thead class="bg-emerald-50 text-emerald-900 text-xs font-bold"><tr>${th(['សម័យ', 'text-left'], ['បន្ទប់'], ['បេក្ខជន'], ['តុ'], ['ទំនេរ'])}</tr></thead><tbody class="divide-y divide-slate-100">${D.sessions.map(g => `<tr><td class="p-2.5 font-bold">${esc(g.k)}</td><td class="p-2.5 text-center">${toKhmerDigits(g.rooms)}</td><td class="p-2.5 text-center font-bold">${toKhmerDigits(g.n)}</td><td class="p-2.5 text-center">${toKhmerDigits(g.cap)}</td><td class="p-2.5 text-center">${toKhmerDigits(g.cap - g.n)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+          <div class="border border-slate-200 rounded-2xl overflow-auto"><table class="w-full text-sm"><thead class="bg-emerald-50 text-emerald-900 text-xs font-bold"><tr>${th(['បន្ទប់', 'text-left'], [SP_KIND[kind].sub, 'text-left'], ['ទម្រង់'], ['លេខតុ'], ['បេក្ខជន'], ['តុ'], ['ទំនេរ'])}</tr></thead><tbody class="divide-y divide-slate-100">${D.rooms.map(r => `<tr><td class="p-2.5 font-bold">${esc(r.room)}</td><td class="p-2.5 text-xs">${esc(r.subject)}</td><td class="p-2.5 text-center text-xs font-bold">${esc(r.label || r.size)}</td><td class="p-2.5 text-center text-xs font-mono">${esc(r.start)}${r.n > 1 ? ' – ' + esc(r.end) : ''}</td><td class="p-2.5 text-center font-bold">${toKhmerDigits(r.n)}</td><td class="p-2.5 text-center">${toKhmerDigits(r.cap)}</td><td class="p-2.5 text-center">${toKhmerDigits(r.empty)}</td></tr>`).join('')}
+            <tr class="bg-slate-50 font-extrabold"><td class="p-2.5" colspan="4">សរុប</td><td class="p-2.5 text-center">${toKhmerDigits(D.total.n)}</td><td class="p-2.5 text-center">${toKhmerDigits(D.total.cap)}</td><td class="p-2.5 text-center">${toKhmerDigits(D.total.empty)}</td></tr></tbody></table></div>
+          <div class="text-xs font-bold text-slate-600">ទំហំ/ទម្រង់ដែលប្រើ៖ ${D.sizes.map(g => `<span class="inline-block mr-2 px-2 py-0.5 rounded-lg bg-slate-100">${esc(g.k)} × ${toKhmerDigits(g.rooms)} បន្ទប់</span>`).join('')}</div>
+        </div>
+        <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="spReportExcel(${session == null ? 'null' : 'this.dataset.s'})" data-s="${esc(session || '')}" class="px-4 py-2 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-sm font-bold">📤 Excel</button><button type="button" onclick="spReportPdf(${session == null ? 'null' : 'this.dataset.s'})" data-s="${esc(session || '')}" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">📄 PDF${session != null ? ' (ទុកក្នុងសម័យ)' : ''}</button></div></div>`;
+      document.body.appendChild(d);
+    }
+    function spReportExcel(session) {
+      const kind = spKind(), D = spReportData(kind, session), K = spKindName(kind);
+      const sess = D.sessions.map(g => ({ 'ប្រភេទ': K, 'សម័យ': g.k, 'បន្ទប់': g.rooms, 'បេក្ខជន': g.n, 'តុ': g.cap, 'តុទំនេរ': g.cap - g.n }));
+      sess.push({ 'ប្រភេទ': K, 'សម័យ': 'សរុប', 'បន្ទប់': D.total.rooms, 'បេក្ខជន': D.total.n, 'តុ': D.total.cap, 'តុទំនេរ': D.total.empty });
+      const rooms = D.rooms.map(r => ({ 'សម័យ': r.session, 'បន្ទប់': r.room, [SP_KIND[kind].sub]: r.subject, 'មណ្ឌល': r.center, 'ថ្ងៃប្រឡង': r.date, 'ទម្រង់': r.label || r.size, 'លេខតុពី': r.start, 'រហូតដល់': r.end, 'បេក្ខជន': r.n, 'តុ': r.cap, 'តុទំនេរ': r.empty }));
+      const sizes = D.sizes.map(g => ({ 'ទំហំ/ទម្រង់': g.k, 'បន្ទប់': g.rooms, 'បេក្ខជន': g.n, 'តុ': g.cap }));
+      if (!xlsxBook([{ name: 'សង្ខេប', rows: sess }, { name: 'តាមបន្ទប់', rows: rooms }, { name: 'តាមទម្រង់', rows: sizes }], spSafeName('Report_ប្លង់តុ_' + K + (session ? '_' + session : '')) + '_' + todayISO() + '.xlsx')) return;
+      showToast('បាន Export Excel Report'); logActivity('Export Report ប្លង់តុ', K + (session ? ' · ' + session : ''));
+    }
+    function spReportPage(D) {
+      const K = spKindName(D.kind), sub = SP_KIND[D.kind].sub;
+      return `<section class="pg"><h1>Report ប្លង់តុ — ${esc(K)}</h1><div class="meta"><div><b>សម័យ៖</b> ${esc(D.session == null ? 'គ្រប់សម័យ' : D.session)}</div><div><b>កាលបរិច្ឆេទ៖</b> ${esc(toKhmerDigits(todayISO()))}</div></div>
+        <div class="rk"><div><b>${toKhmerDigits(D.total.rooms)}</b>បន្ទប់</div><div><b>${toKhmerDigits(D.total.n)}</b>បេក្ខជន</div><div><b>${toKhmerDigits(D.total.cap)}</b>តុសរុប</div><div><b>${toKhmerDigits(D.total.empty)}</b>តុទំនេរ</div></div>
+        <table class="lst"><thead><tr><th>បន្ទប់</th><th>${sub}</th><th>ទម្រង់</th><th>លេខតុ</th><th>បេក្ខជន</th><th>តុ</th><th>ទំនេរ</th></tr></thead><tbody>${D.rooms.map(r => `<tr><td><b>${esc(r.room)}</b></td><td>${esc(r.subject)}</td><td>${esc(r.label || r.size)}</td><td>${esc(r.start)}${r.n > 1 ? ' – ' + esc(r.end) : ''}</td><td>${toKhmerDigits(r.n)}</td><td>${toKhmerDigits(r.cap)}</td><td>${toKhmerDigits(r.empty)}</td></tr>`).join('')}
+        <tr class="tr"><td colspan="4">សរុប</td><td>${toKhmerDigits(D.total.n)}</td><td>${toKhmerDigits(D.total.cap)}</td><td>${toKhmerDigits(D.total.empty)}</td></tr></tbody></table>
+        <p style="font-size:13px;margin-top:10px"><b>ទំហំ/ទម្រង់ដែលប្រើ៖</b> ${D.sizes.map(g => esc(g.k) + ' × ' + toKhmerDigits(g.rooms) + ' បន្ទប់').join(' · ')}</p></section>`;
+    }
+    async function spReportPdf(session) {
+      const kind = spKind(), D = spReportData(kind, session), K = spKindName(kind);
+      const fileName = spSafeName('Report_ប្លង់តុ_' + K + (session != null ? '_' + (session || 'គ្មានសម័យ') : '_គ្រប់សម័យ')) + '.pdf';
+      if (session == null) {   // គ្រប់សម័យ៖ Download តែប៉ុណ្ណោះ (មិនភ្ជាប់សម័យណាមួយ)
+        showToast('⏳ កំពុងបង្កើត PDF…'); try { downloadBlob(await spRenderPdf([spReportPage(D)], 'portrait'), fileName); showToast('បាន Download Report PDF'); } catch (e) { showToast('មិនអាចបង្កើត PDF — សូមភ្ជាប់អ៊ីនធឺណិត', true); } return;
+      }
+      await spDeliverPdf([spReportPage(D)], 'portrait', fileName, session, kind, 'Report សង្ខេប');
+    }
+
     function renderExams() {
       const tbody = document.getElementById('exams-table-body'); if (!tbody) return;
       const q = (document.getElementById('filter-exam-search')?.value || '').toLowerCase().trim();
@@ -6568,6 +7097,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (table === 'docs') return (r.code || '') + ' — ' + (r.title || '');
       if (table === 'trainings') return (r.trainee || '') + ' — ' + (r.course || '');
       if (table === 'workshops') return (r.kind || '') + ' — ' + (r.title || '');
+      if (table === 'seat_plans') return (r.is_tpl ? 'template ' : '') + (r.session || '') + ' — ' + (r.room || '');
       if (table === 'dispatches') return (r.code || '') + ' — ' + (r.title || '');
       if (table === 'exams') return (r.major || '') + ' (' + (r.session || '') + ')';
       if (table === 'exam_tasks') return (r.title || '') + (r.session ? ' (' + r.session + ')' : '');
@@ -6577,7 +7107,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return String(r.id);
     }
     function rerenderTable(table) {
-      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts, cert_courses: renderCourses, workshops: renderEvents })[table]?.();
+      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts, cert_courses: renderCourses, workshops: renderEvents, seat_plans: renderSeatPlans })[table]?.();
       updateStats(); renderNotifBadge();
     }
 
@@ -6908,7 +7438,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       report_notes: ['id', 'bureau', 'period', 'nums', 'deleted_at', 'deleted_by', 'updated_at'],
       exam_tasks: ['id', 'kind', 'title', 'due_date', 'status', 'deleted_at', 'deleted_by', 'updated_at'],
       workshops: ['id', 'title', 'kind', 'scope', 'start_date', 'end_date', 'location', 'country', 'organizer', 'attendees', 'female', 'note', 'file_name', 'file_size', 'file_link', 'deleted_at', 'deleted_by', 'updated_at'],
-      cert_courses: ['id', 'course', 'trainee', 'cert_no', 'deleted_at', 'deleted_by', 'updated_at']
+      cert_courses: ['id', 'course', 'trainee', 'cert_no', 'deleted_at', 'deleted_by', 'updated_at'],
+      seat_plans: ['id', 'session', 'room', 'subject', 'center', 'exam_date', 'tpl', 'ncols', 'nrows', 'extra', 'layout', 'cands', 'cells', 'is_tpl', 'kind', 'start_no', 'pattern', 'file_name', 'file_link', 'deleted_at', 'deleted_by', 'updated_at']
     };
     const schemaState = { at: 0, running: false, res: null, error: '' };
     function schemaColType(c) {
@@ -7099,7 +7630,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const ago = ms => { if (!ms) return 'មិនទាន់ Sync'; const s = Math.floor((now - ms) / 1000); return s < 60 ? s + ' វិនាទីមុន' : s < 3600 ? Math.floor(s / 60) + ' នាទីមុន' : Math.floor(s / 3600) + ' ម៉ោងមុន'; };
       const card = (t, body, tone) => `<div class="rounded-2xl border p-4 space-y-1.5 ${tone || 'border-slate-200 bg-white'}"><h4 class="font-bold text-slate-800 text-sm">${t}</h4>${body}</div>`;
       const row = (k, v) => `<div class="flex justify-between gap-3"><span class="text-slate-500">${k}</span><b class="text-slate-800 text-right">${v}</b></div>`;
-      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['workshops', 'សិក្ខាសាលា & ប្រជុំ'], ['certs', 'សញ្ញាបត្រ'], ['cert_courses', 'វគ្គ & វិញ្ញាបនបត្រ']].filter(([t]) => t !== 'cert_courses' || activeRows(t).length).map(([t, k]) => row(k, activeRows(t).length)).join('');
+      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['workshops', 'សិក្ខាសាលា & ប្រជុំ'], ['seat_plans', 'ប្លង់តុបន្ទប់ប្រឡង'], ['certs', 'សញ្ញាបត្រ'], ['cert_courses', 'វគ្គ & វិញ្ញាបនបត្រ']].filter(([t]) => t !== 'cert_courses' || activeRows(t).length).map(([t, k]) => row(k, activeRows(t).length)).join('');
       const deleted = DATA_TABLES.reduce((n, t) => n + store[t].filter(isDeleted).length, 0);
       el.innerHTML = `
         ${bOk ? '' : `<div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 flex flex-wrap items-center justify-between gap-3"><div><b class="text-amber-900">💾 ${bDays === null ? 'មិនទាន់មាន Backup' : 'Backup ចុងក្រោយ ' + bDays + ' ថ្ងៃមុន'}</b><p class="text-amber-800">ណែនាំ Backup យ៉ាងតិចម្តងក្នុង ${BACKUP_WARN_DAYS} ថ្ងៃ ហើយរក្សាទុកក្នុង Google Drive។</p></div><button onclick="backupEntireSystem(); renderSystemHealth()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold form-input-focus">📥 Backup ឥឡូវនេះ</button></div>`}
@@ -7108,7 +7639,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.8.0') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.10.0') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           ${qualityCardHTML()}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
@@ -7366,7 +7897,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const strip = r => { const c = { ...r }; delete c._pending; if (c.driveLink) delete c.fileDataUrl; return c; };
       const full = { app: 'HRDD DMS', version: 'V2.5', exportedAt: nowISO(), exportedBy: currentUser?.username,
         users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
-        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip) };
+        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip), seat_plans: store.seat_plans.map(strip) };
       downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
       try { localStorage.setItem('hrd_last_backup', nowISO()); } catch (e) { }
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
@@ -7379,7 +7910,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       let data;
       try { data = JSON.parse(await file.text()); } catch (err) { return alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ ឬខូច!'); }
       if (!data || typeof data !== 'object') return alert('⚠️ ទម្រង់ Backup មិនត្រឹមត្រូវ!');
-      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks, cert_courses: data.cert_courses, workshops: data.workshops };
+      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks, cert_courses: data.cert_courses, workshops: data.workshops, seat_plans: data.seat_plans };
       const clean = {};
       DATA_TABLES.forEach(t => {
         clean[t] = (Array.isArray(src[t]) ? src[t] : []).filter(r => r && r.id != null && !isNaN(Number(r.id))).map(r => {
