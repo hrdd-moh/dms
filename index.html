@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.7.4 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.7.5 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -90,7 +90,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.7.4</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.7.5</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -152,7 +152,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.7.4 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.7.5 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -477,9 +477,9 @@
               <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div class="min-w-0"><h3 class="text-base font-bold text-slate-900" data-i18n="sec_train_title">🌐 របាយការណ៍វគ្គបណ្តុះបណ្តាលបន្ត</h3></div>
                 <div class="flex items-center gap-2 flex-nowrap shrink-0">
-                  <input type="file" id="import-excel-file" onchange="handleImportExcel(event)" class="hidden" accept=".xlsx, .xls, .csv">
-                  <button onclick="document.getElementById('import-excel-file').click()" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📥</span> Import From Excel</button>
-                  <button onclick="tbOpen()" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">👥</span> ចុះបញ្ជីច្រើននាក់</button>
+                  <button onclick="trainEntryGo('Domestic')" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">➕</span> បញ្ចូលក្នុងប្រទេស</button>
+                  <button onclick="trainEntryGo('International')" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">➕</span> បញ្ចូលក្រៅប្រទេស</button>
+                  <button onclick="trainEntryGo('Online')" class="perm-upload-el h-9 px-3 whitespace-nowrap bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">➕</span> Online / ផ្សេងៗ</button>
                   <div class="relative perm-download-el">
                     <button onclick="toggleExportMenu(event)" class="h-9 px-3 whitespace-nowrap bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 border border-slate-200 rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 form-input-focus"><span class="tb-ico">📤</span> Export ▾</button>
                     <div id="export-menu" class="hidden absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-sm font-bold">
@@ -491,6 +491,8 @@
                   <button onclick="openTrainReport()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center justify-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">📊</span> Report</button>
                 </div>
               </div>
+              <div id="train-scope-cards" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+              <div id="train-scope-tabs" class="flex flex-wrap items-center gap-2 text-sm font-bold"></div>
               <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-sm">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   <div class="col-span-2"><input type="text" id="filter-training-search" oninput="onFilter('trainings')" placeholder="🔍 ស្វែងរកឈ្មោះ/វគ្គ..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"></div>
@@ -499,7 +501,7 @@
                   <div><select id="filter-training-status" onchange="onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">គ្រប់ស្ថានភាព</option><option value="កំពុងរៀន">🟢 កំពុងរៀន</option><option value="មិនទាន់ចាប់ផ្តើម">🕓 មិនទាន់ចាប់ផ្តើម</option><option value="បានបញ្ចប់">✅ បានបញ្ចប់</option><option value="មិនស្គាល់ថ្ងៃ">❔ មិនមានថ្ងៃ</option></select></div>
                   <div><select id="filter-training-order" onchange="onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="name">ឈ្មោះសិក្ខាកាម (A-Z)</option><option value="country">ប្រទេស (Location)</option><option value="duration">រយៈពេល</option><option value="newest">ថ្មីបំផុតមុន</option></select></div>
                 
-                  <div><select id="filter-training-scope" onchange="trainScopeSel = this.value === 'all' ? '' : this.value; onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">ក្នុង + ក្រៅប្រទេស</option><option value="Domestic">ក្នុងប្រទេស</option><option value="International">ក្រៅប្រទេស</option></select></div>
+                  
                   <div><select id="filter-training-year" onchange="onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">ឆ្នាំទាំងអស់</option></select></div>
                   <div><select id="filter-training-gender" onchange="onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">ភេទទាំងអស់</option><option value="ស្រី">ស្រី</option><option value="ប្រុស">ប្រុស</option><option value="-">មិនបញ្ជាក់ភេទ</option></select></div>
                   <div><select id="filter-training-level" onchange="onFilter('trainings')" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-medium"><option value="all">គ្រប់កម្រិត</option><option value="វគ្គខ្លី">វគ្គខ្លី</option><option value="បរិញ្ញាបត្រជាន់ខ្ពស់">បរិញ្ញាបត្រជាន់ខ្ពស់</option><option value="បណ្ឌិត">បណ្ឌិត</option><option value="ផ្សេងៗ">ផ្សេងៗ</option><option value="-">មិនបញ្ជាក់កម្រិត</option></select></div>
@@ -519,6 +521,9 @@
               <div id="training-course-view" class="hidden border border-slate-200 rounded-2xl overflow-auto max-h-[540px]"></div>
               <div id="pager-trainings"></div>
             </div>
+
+            <!-- TAB: TRAINING ENTRY (V3.7.5) -->
+            <div id="section-trainentry" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden"></div>
 
             <!-- TAB: CERTS -->
             <div id="section-certs" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
@@ -575,7 +580,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.7.4 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.7.5 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -731,7 +736,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.7.4</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.7.5</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -743,7 +748,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.7.4 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.7.5 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -940,7 +945,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.7.4</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.7.5</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2253,7 +2258,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency', sub: true }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing', sub: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others', sub: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
@@ -3008,7 +3013,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:certs:sub] Sub-menu ថ្មីក្រោម «ចុះបញ្ជីសញ្ញាបត្រ» → ថែមក្នុង CERT_SUBS + ករណីក្នុង certSubGo/renderCerts (ឧ. ភ្ជាប់រូបជាច្រើន, បោះពុម្ពជាក្រុម)
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'training') { if (activeTab === 'training') { trainMenuOpen = !trainMenuOpen; renderBureauWorkspace(); return; } trainMenuOpen = true; trainScopeSel = ''; }
+    function switchBureauTab(tId) { if (tId === 'exams') examMenuOpen = (activeTab === 'exams') ? !examMenuOpen : true; else if (!EXTASK_KINDS[tId]) examMenuOpen = false; if (tId === 'training') { if (activeTab === 'training') { trainMenuOpen = !trainMenuOpen; renderBureauWorkspace(); return; } trainMenuOpen = true; trainScopeSel = 'Domestic'; }
       if (tId === 'certs') { if (activeTab === 'certs') { certMenuOpen = !certMenuOpen; renderBureauWorkspace(); return; } certMenuOpen = true; certSub = ''; } activeTab = tId; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 
@@ -3033,10 +3038,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.getElementById('stat-bureau-badge').innerText = appLang === 'en' ? b.shortNameEn : b.shortName;
       if (!b.tabs.some(t => t.id === activeTab)) activeTab = 'docs';
       document.getElementById('bureau-tabs-nav').innerHTML = b.tabs.filter(t => !t.hidden && (!t.sub || examMenuOpen || EXTASK_KINDS[activeTab])).map(t => {
-        const on = t.id === activeTab || (t.id === 'training' && activeTab === 'events');
-        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'training' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(activeTab === 'training' || activeTab === 'events') && trainMenuOpen ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + trainSubNavHTML(t) + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
+        const on = t.id === activeTab || (t.id === 'training' && (activeTab === 'events' || activeTab === 'trainentry'));
+        return `<button onclick="switchBureauTab('${t.id}')" class="sidebar-nav-btn w-full flex items-center gap-3 ${t.sub ? 'pl-8 pr-3.5 py-2' : 'px-3.5 py-2.5'} rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="${t.sub ? 'text-base' : 'text-lg'} shrink-0">${t.icon}</span><span class="sidebar-text truncate">${esc(appLang === 'en' ? (t.labelEn || t.label) : t.label)}</span>${t.id === 'exams' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(examMenuOpen || EXTASK_KINDS[activeTab]) ? '▾' : '▸'}</span>` : ''}${t.id === 'training' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${(activeTab === 'training' || activeTab === 'events' || activeTab === 'trainentry') && trainMenuOpen ? '▾' : '▸'}</span>` : ''}${t.id === 'certs' ? `<span class="sidebar-text ml-auto text-[10px] opacity-70">${activeTab === 'certs' && certMenuOpen ? '▾' : '▸'}</span>` : ''}</button>` + trainSubNavHTML(t) + (t.id === 'certs' && activeTab === 'certs' && certMenuOpen ? `<button onclick="certSubGo('')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === '' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">📋</span><span class="sidebar-text truncate">បញ្ជីសញ្ញាបត្រ</span></button>` + CERT_SUBS.map(([k, ic, l]) => `<button onclick="certSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${certSub === k ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`).join('') : '');
       }).join('');
-      ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
+      ['docs', 'dispatch', 'exams', 'examtasks', 'training', 'trainentry', 'events', 'certs', 'courses', 'tracking', 'reports'].forEach(sec => document.getElementById('section-' + sec)?.classList.add('hidden'));
       document.getElementById('section-' + (EXTASK_KINDS[activeTab] ? 'examtasks' : activeTab))?.classList.remove('hidden');
       renderSideForm();
       renderTablesAndStatsOnly();
@@ -3047,7 +3052,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
       if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); }
-      if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); }
+      if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
     }
@@ -3078,7 +3083,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
       const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8');
-      const hidePanel = ['tracking', 'reports', 'certs'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
+      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry'].includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
       if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') { certViewApply(); if (certSub) renderCertQuickPanel(true); } return; }
@@ -3113,24 +3118,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         return;
       }
 
-      if (activeTab === 'training') {
-        container.innerHTML = `
-          <form id="form-quick-training" onsubmit="handleSaveTraining(event)" class="space-y-3.5 text-sm font-medium">
-            <div class="grid grid-cols-3 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Title' : 'ពាក្យនាំមុខ'}</label><select id="train-title" onchange="onTrainTitle(this.value)" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="">—</option>${getList('titles').map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></div><div class="col-span-2"><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Trainee Name *' : 'ឈ្មោះសិក្ខាកាម *'}</label><input type="text" id="train-trainee" required placeholder="ឧ. នង មុន្នីពេជ្យ" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div></div>
-            <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Gender' : 'ភេទ'}</label><select id="train-gender" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— មិនបញ្ជាក់ —</option><option value="ប្រុស">ប្រុស</option><option value="ស្រី">ស្រី</option></select></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Level' : 'ថ្នាក់ / កម្រិត'}</label><select id="train-level" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— តាមរយៈពេល —</option>${LEVELS.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('')}</select></div></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Role & Organization *' : 'តួនាទី និងអង្គភាព *'}</label><input type="text" id="train-unit" required placeholder="ឧ. មន្ទីរពេទ្យកាល់ម៉ែត" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Training Course *' : 'វគ្គសិក្សា *'}</label><input type="text" id="train-course" required placeholder="ឈ្មោះវគ្គសិក្សា..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
-            <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Duration *' : 'រយៈពេល *'}</label><input type="text" id="train-duration" required placeholder="6M, 1A..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Scope' : 'ប្រភេទ'}</label><select id="train-scope-input" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"><option value="International">✈️ ក្រៅប្រទេស</option><option value="Domestic">ក្នុងប្រទេស</option></select></div></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Country *' : 'ប្រទេស (Location) *'}</label><select id="train-country-select" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-bold"></select></div>
-            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើម</label><input type="date" id="train-date-start" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់ <span class="font-normal text-slate-400">(ស្រេចចិត្ត)</span></label><input type="date" id="train-date-end" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Sponsor *' : 'ដៃគូឧបត្ថម្ភ (Sponsor) *'}</label><input type="text" id="train-sponsor-input" required list="sponsor-list" autocomplete="off" placeholder="ឧ. ទីភ្នាក់ងារជប៉ុន, សាមីខ្លួន..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"><datalist id="sponsor-list">${sponsorOptions()}</datalist></div>
-            <div><label class="block text-xs font-bold text-slate-700 mb-1">📎 ${en ? 'Attachment (PDF/JPG)' : 'ឯកសារភ្ជាប់ (លិខិតបង្គាប់ការ PDF/រូប) — ស្រេចចិត្ត'}</label><input type="file" id="train-file" accept=".pdf,.png,.jpg,.jpeg" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-xs"></div>
-            <button type="submit" id="btn-save-training" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Record / រក្សាទុក</span></button>
-          </form>`;
-        populateCountryDropdowns();
-        const tsc = document.getElementById('train-scope-input'); if (tsc && trainScopeSel) tsc.value = trainScopeSel;
-        if (trainScopeSel === 'Domestic') { const tcs = document.getElementById('train-country-select'), kh = countriesData.map(x => x.kh).find(x => /កម្ពុជា/.test(x)); if (tcs && kh) tcs.value = kh; }
-      } else if (activeTab === 'events') {
+      if (activeTab === 'events') {
         container.innerHTML = eventFormHTML(en); evScopeChange();
       } else if (activeTab === 'dispatch') {
         container.innerHTML = `
@@ -3728,11 +3716,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           const noG = tr.filter(t => !t.gender).length;
           if (noG) warn.add(`សិក្ខាកាម ${noG} នាក់មិនទាន់បញ្ជាក់ភេទ (ស្រី) — ចុច ✏️ ក្នុងតារាងបណ្តុះបណ្តាល`);
           const fem = a => a.filter(t => t.gender === 'ស្រី').length;
-          const dom = tr.filter(t => t.scope === 'Domestic'), intl = tr.filter(t => t.scope !== 'Domestic');
+          const dom = tr.filter(t => trainScopeOf(t) === 'Domestic'), intl = tr.filter(t => trainScopeOf(t) === 'International'), onl = tr.filter(t => trainScopeOf(t) === 'Online');
+          if (onl.length) warn.add(`មាន Online/ផ្សេងៗ ${onl.length} នាក់ — បង្ហាញជាបន្ទាត់ដាច់ដោយឡែក បន្ទាប់ពី «ក្នុងប្រទេស»`);
           const domS = dom.filter(t => !trainIsLong(t)), domL = dom.filter(trainIsLong);
           const inS = intl.filter(t => !trainIsLong(t)), inL = intl.filter(trainIsLong);
           if (hasNum(nums.reply_cnt)) res.push(NI(`ពិនិត្យ និងរៀបចំឯកសារឆ្លើយតបចំពោះការស្នើសុំបើកវគ្គបណ្តុះបណ្តាលផ្សេងៗ៖ ${c2(nums.reply_cnt)}នាក់`));
           res.push(NI(`ការបណ្តុះបណ្តាលក្នុងប្រទេស៖ ${c2(dom.length)}នាក់`, [NI(`រយៈពេលតិចជាង 6ខែ៖ ${c2(domS.length)}នាក់`), NI(`រយៈពេលចាប់ពី 6ខែឡើង៖ ${c2(domL.length)}នាក់`)]));
+          if (onl.length) res.push(NI(`ការបណ្តុះបណ្តាល Online/ផ្សេងៗ៖ ${c2(onl.length)}នាក់ (ស្រី.${c2(fem(onl))}នាក់)`));
           const byCountry = arr => tally(arr, t => t.country).map(([c, n]) => { const f = fem(arr.filter(t => (String(t.country || '-').trim() || '-') === c)); return `${c2(n)}នាក់(ស្រី.${c2(f)}នាក់) ទៅ${toCountry(c)}`; });
           let sTxt = `រយៈពេលតិចជាង 6ខែ៖ មានចំនួន៖ ${c2(inS.length)}នាក់ (ស្រី.${c2(fem(inS))}នាក់)`;
           if (inS.length) sTxt += ` ដែលបានទៅចូលរួមប្រជុំ សិក្ខាសាលា និងវគ្គបណ្តុះបណ្តាលខ្លីៗ មាន៖ ` + byCountry(inS).join(', ') + '។';
@@ -3914,7 +3904,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // ---------- GENERIC RECORD EDITOR (trainings / exams / certs) ----------
     const REC_FIELDS = {
       trainings: [['trainee', 'ឈ្មោះសិក្ខាកាម', 'text'], ['gender', 'ភេទ', 'select', ['', 'ប្រុស', 'ស្រី']], ['unit', 'តួនាទី និងអង្គភាព', 'text'], ['course', 'វគ្គសិក្សា', 'text'],
-        ['level', 'ថ្នាក់ / កម្រិត', 'select', ['', ...LEVELS]], ['duration', 'រយៈពេល', 'text'], ['scope', 'ប្រភេទ', 'select', [['International', '✈️ ក្រៅប្រទេស'], ['Domestic', 'ក្នុងប្រទេស']]],
+        ['level', 'ថ្នាក់ / កម្រិត', 'select', ['', ...LEVELS]], ['duration', 'រយៈពេល', 'text'], ['scope', 'ប្រភេទ (ក្នុងប្រទេស=កម្ពុជា)', 'select', [['Domestic', 'ក្នុងប្រទេស'], ['International', 'ក្រៅប្រទេស'], ['Online', 'Online / ផ្សេងៗ']]],
         ['start_date', 'ថ្ងៃចាប់ផ្តើម', 'date'], ['end_date', 'ថ្ងៃបញ្ចប់', 'date'], ['country', 'ប្រទេស', 'country'], ['sponsor', 'ដៃគូឧបត្ថម្ភ', 'text'], ['_file', 'ឯកសារ/រូបភាពភ្ជាប់ (ជ្រើសថ្មីដើម្បីជំនួស)', 'file']],
       exams: [['major', 'ជំនាញ / ថ្នាក់ / មុខវិជ្ជា', 'text'], ['type', 'ប្រភេទប្រឡង', 'select', EXAM_TYPES], ['session', 'សម័យប្រឡង (ឧ. លើកទី១)', 'text'], ['institution', 'គ្រឹះស្ថាន', 'text'],
         ['start_date', 'ថ្ងៃប្រឡង (ចាប់ផ្តើម)', 'date'], ['end_date', 'ថ្ងៃប្រឡង (បញ្ចប់)', 'date'], ['candidates', 'បេក្ខជនសរុប', 'number'],
@@ -3973,10 +3963,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (table === 'certs' || table === 'trainings' || table === 'workshops') { const fi = document.querySelector('#rec-edit-body [data-rk-file]'); if (fi && fi.files[0]) { const up = await uploadCertFile(fi.files[0], id, table); if (!up) return alert('⚠️ ឯកសារភ្ជាប់មិនបានឡើង — សូមព្យាយាមម្តងទៀត'); Object.assign(next, up); } }
       if (table === 'workshops' && next.female != null && next.attendees != null && next.female > next.attendees) return alert('⚠️ ចំនួនស្រីមិនអាចលើសចំនួនអ្នកចូលរួមសរុបទេ!');
       if ((table === 'trainings' || table === 'workshops') && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      if (table === 'trainings') { if (next.scope === 'Domestic' && next.country && !isKhCountry(next.country)) return alert('⚠️ «ក្នុងប្រទេស» ត្រូវតែជាប្រទេសកម្ពុជា — សូមប្តូរប្រទេស ឬប្រភេទ (ក្រៅប្រទេស / Online)'); if (next.scope === 'International' && isKhCountry(next.country)) return alert('⚠️ «ក្រៅប្រទេស» មិនអាចជាប្រទេសកម្ពុជាទេ — សូមប្តូរប្រទេស ឬប្រភេទ'); }
       if (table === 'exams' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       if (table === 'exam_tasks' && next.link) { const n = normalizeDocLink(next.link); if (!n.ok) return alert('⚠️ ' + n.msg); next.link = n.url; }
       const before = { ...rec }, changes = [];
       Object.keys(next).forEach(k => { const o = before[k] == null ? '' : before[k], n = next[k] == null ? '' : next[k]; if (String(o) !== String(n)) changes.push(k + ': ' + (o === '' ? '∅' : o) + ' → ' + (n === '' ? '∅' : n)); rec[k] = next[k]; });
+      if (table === 'trainings') rec.scope = trainScopeOf(rec);
       if (table === 'trainings') rec.dates = (next.start_date && next.end_date) ? formatDateDisplay(next.start_date) + '-' + formatDateDisplay(next.end_date) : (next.start_date ? formatDateDisplay(next.start_date) : '');
       if (!changes.length) { closeRecEdit(); return showToast('មិនមានការផ្លាស់ប្តូរ'); }
       const ok = await persist(table, rec);
@@ -4292,7 +4284,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       renderPager('exams', pg);
     }
 
-    function getFilteredTrainingData() {
+    function getFilteredTrainingData(ignoreScope) {
       const q = (document.getElementById('filter-training-search')?.value || '').toLowerCase().trim();
       const country = document.getElementById('filter-training-country')?.value || 'all';
       const sponsor = document.getElementById('filter-training-sponsor')?.value || 'all';
@@ -4305,7 +4297,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         (!dFrom || (trainStart(t) && trainStart(t) >= dFrom)) && (!dTo || (trainStart(t) && trainStart(t) <= dTo)) &&
         (!q || [t.trainee, t.course, t.unit].some(v => String(v || '').toLowerCase().includes(q))) &&
         (country === 'all' || t.country === country) && (sponsor === 'all' || t.sponsor === sponsor) && (stF === 'all' || trainStatus(t) === stF) &&
-        (!trainScopeSel || (t.scope === 'Domestic' ? 'Domestic' : 'International') === trainScopeSel));
+        (ignoreScope || !trainScopeSel || trainScopeOf(t) === trainScopeSel));
       if (orderBy === 'newest') return sortRecords(rows);
       return rows.sort((a, b) => {
         if (orderBy === 'country') return String(a.country || '').localeCompare(String(b.country || ''));
@@ -4329,24 +4321,80 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function trainOpenFile(id) { const t = store.trainings.find(x => x.id === id); if (!t || !t.file_link) return; const n = normalizeDocLink(t.file_link); window.open(n.ok ? n.url : t.file_link, '_blank', 'noopener'); }
 
+
+
+    // ទម្រង់បញ្ចូល ១ នាក់ (ប្រើក្នុងទំព័របញ្ចូល) — ប្រភេទត្រូវបានចាក់សោតាមទំព័រ
+    function trainCountryField(scope, en) {
+      const lbl = c => `<label class="block text-xs font-bold text-slate-700 mb-1">${c}</label>`;
+      if (scope === 'Domestic') return `<div>${lbl(en ? 'Country' : 'ប្រទេស (ទីកន្លែងសិក្សា)')}<div class="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-100 text-sm font-bold text-slate-700">${FLAG_KH} ${esc(khCountryName())} 🔒</div><input type="hidden" id="train-country-select" value="${esc(khCountryName())}"></div>`;
+      return `<div>${lbl(scope === 'Online' ? (en ? 'Partner country *' : 'ប្រទេសភាគីដៃគូ *') : (en ? 'Country *' : 'ប្រទេស (Location) *'))}<select id="train-country-select" data-scope="${scope}" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white font-bold"></select></div>`;
+    }
+    function trainFormHTML(scope, en) {
+      return `<form id="form-quick-training" onsubmit="handleSaveTraining(event)" class="space-y-3.5 text-sm font-medium">
+            <div class="grid grid-cols-3 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Title' : 'ពាក្យនាំមុខ'}</label><select id="train-title" onchange="onTrainTitle(this.value)" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white"><option value="">—</option>${getList('titles').map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></div><div class="col-span-2"><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Trainee Name *' : 'ឈ្មោះសិក្ខាកាម *'}</label><input type="text" id="train-trainee" required placeholder="ឧ. នង មុន្នីពេជ្យ" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div></div>
+            <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Gender' : 'ភេទ'}</label><select id="train-gender" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— មិនបញ្ជាក់ —</option><option value="ប្រុស">ប្រុស</option><option value="ស្រី">ស្រី</option></select></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Level' : 'ថ្នាក់ / កម្រិត'}</label><select id="train-level" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white"><option value="">— តាមរយៈពេល —</option>${LEVELS.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('')}</select></div></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Role & Organization *' : 'តួនាទី និងអង្គភាព *'}</label><input type="text" id="train-unit" required placeholder="ឧ. មន្ទីរពេទ្យកាល់ម៉ែត" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Training Course *' : 'វគ្គសិក្សា *'}</label><input type="text" id="train-course" required placeholder="ឈ្មោះវគ្គសិក្សា..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"></div>
+            <div class="grid grid-cols-2 gap-2.5"><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Duration *' : 'រយៈពេល *'}</label><input type="text" id="train-duration" required placeholder="6M, 1A..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-slate-50/50"></div><div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Type' : 'ប្រភេទ'}</label><div class="w-full border border-slate-200 rounded-xl p-2 bg-slate-100 text-sm font-bold text-slate-700">${scopeIco(scope)} ${esc(SCOPE_LABEL[scope])} 🔒</div><input type="hidden" id="train-scope-input" value="${scope}"></div></div>
+            ${trainCountryField(scope, en)}
+            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើម</label><input type="date" id="train-date-start" required class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់ <span class="font-normal text-slate-400">(ស្រេចចិត្ត)</span></label><input type="date" id="train-date-end" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">${en ? 'Sponsor *' : 'ដៃគូឧបត្ថម្ភ (Sponsor) *'}</label><input type="text" id="train-sponsor-input" required list="sponsor-list" autocomplete="off" placeholder="ឧ. ទីភ្នាក់ងារជប៉ុន, សាមីខ្លួន..." class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50/50"><datalist id="sponsor-list">${sponsorOptions()}</datalist></div>
+            <div><label class="block text-xs font-bold text-slate-700 mb-1">📎 ${en ? 'Attachment (PDF/JPG)' : 'ឯកសារភ្ជាប់ (លិខិតបង្គាប់ការ PDF/រូប) — ស្រេចចិត្ត'}</label><input type="file" id="train-file" accept=".pdf,.png,.jpg,.jpeg" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-xs"></div>
+            <button type="submit" id="btn-save-training" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Record / រក្សាទុក</span></button>
+          </form>`;
+    }
+
+    // [EXT:scope] V3.7.5 ប្រភេទបណ្តុះបណ្តាល ៣៖ ក្នុងប្រទេស / ក្រៅប្រទេស / Online-ផ្សេងៗ (ដាច់ពីគ្នា ក្នុងការបញ្ចូល បញ្ជី Report Excel)
+    // ក្នុងប្រទេស = រៀននៅកម្ពុជា (រួមទាំងសិក្ខាកាមបរទេស · វគ្គរៀបចំដោយជាតិ) · ក្រៅប្រទេស = រៀននៅប្រទេសផ្សេង · Online = Online ជាមួយភាគីបរទេស/ករណីផ្សេងៗ
+    const SCOPE_KEYS = ['Domestic', 'International', 'Online'];
+    const SCOPE_LABEL = { Domestic: 'ក្នុងប្រទេស', International: 'ក្រៅប្រទេស', Online: 'Online / ផ្សេងៗ' };
+    const SCOPE_SHEET = { Domestic: 'ក្នុងប្រទេស', International: 'ក្រៅប្រទេស', Online: 'Online-ផ្សេងៗ' };
+    const SCOPE_TONE = { Domestic: ['bg-emerald-50 text-emerald-900 border-emerald-200', 'bg-emerald-600 hover:bg-emerald-700'], International: ['bg-sky-50 text-sky-900 border-sky-200', 'bg-sky-600 hover:bg-sky-700'], Online: ['bg-violet-50 text-violet-900 border-violet-200', 'bg-violet-600 hover:bg-violet-700'] };
+    const SCOPE_HINT = {
+      Domestic: 'រៀននៅប្រទេសកម្ពុជា — រួមទាំងសិក្ខាកាមជាជនបរទេស និងវគ្គដែលរៀបចំដោយជាតិ។ ប្រទេសត្រូវបានកំណត់ជា «កម្ពុជា» ស្វ័យប្រវត្តិ។',
+      International: 'ទៅរៀននៅប្រទេសផ្សេង (មិនមែនកម្ពុជា) — សូមជ្រើសប្រទេសដែលទៅរៀន។',
+      Online: 'រៀន Online ជាមួយភាគីបរទេស ឬករណីផ្សេងៗ ដែលមិនចូលក្នុង/ក្រៅប្រទេសច្បាស់លាស់ — ជ្រើសប្រទេសភាគីដៃគូ។'
+    };
+    function scopeIco(sc) { return sc === 'Domestic' ? FLAG_KH : sc === 'International' ? '✈️' : '💻'; }
+    function isKhCountry(c) { return /កម្ពុជា|cambodia/i.test(String(c || '')); }
+    function khCountryName() { return (typeof countriesData !== 'undefined' && countriesData.map(x => x.kh).find(x => /កម្ពុជា/.test(x))) || 'កម្ពុជា'; }
+    // ប្រភេទប្រសិទ្ធភាព៖ Online (កំណត់ច្បាស់) › តាមប្រទេស (កម្ពុជា=ក្នុង, ផ្សេង=ក្រៅ) › តម្លៃដែលរក្សាទុក › ក្រៅប្រទេស
+    function trainScopeOf(t) {
+      if (!t) return 'International';
+      if (t.scope === 'Online') return 'Online';
+      if (t.country && String(t.country).trim() && String(t.country).trim() !== '-') return isKhCountry(t.country) ? 'Domestic' : 'International';
+      return t.scope === 'Domestic' ? 'Domestic' : 'International';
+    }
+    function trainRowsBy(sc) { return activeRows('trainings').filter(t => !sc || trainScopeOf(t) === sc); }
+    // ទិន្នន័យចាស់៖ កំណត់ scope ស្វ័យប្រវត្តិតាមប្រទេស (កម្ពុជា→ក្នុង, ផ្សេង→ក្រៅ) — រក្សាទុកតែម្តងរាល់ពេលរកឃើញមិនត្រូវគ្នា
+    async function trainScopeSync() {
+      if (typeof can !== 'function' || !can('edit')) return;
+      const bad = (store.trainings || []).filter(t => !isDeleted(t) && t.scope !== trainScopeOf(t));
+      if (!bad.length) return;
+      bad.forEach(t => { t.scope = trainScopeOf(t); });
+      await persistMany('trainings', bad);
+      showToast('កំណត់ ក្នុង/ក្រៅប្រទេស ស្វ័យប្រវត្តិតាមប្រទេស ' + bad.length + ' កំណត់ត្រា');
+      logActivity('កំណត់ប្រភេទ ក្នុង/ក្រៅប្រទេស ស្វ័យប្រវត្តិ', bad.length + ' កំណត់ត្រា');
+    }
+
     const TB = { rows: [] };
     const tbBlank = () => ({ name: '', gender: '', unit: '', file: null });
     const tbVal = id => (document.getElementById(id)?.value || '').trim();
-    function tbClose() { document.getElementById('modal-train-bulk')?.remove(); TB.rows = []; }
-    function tbOpen() {
+    function tbClose() { TB.rows = []; trainScopeSel = trainEntry.scope; trainSubGo(''); }
+    function tbOpen(sc) { trainEntryGo(sc || trainScopeSel || 'Domestic', 'bulk'); }
+    function tbMount(scope) {
       if (!can('create')) return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true);
-      document.getElementById('modal-train-bulk')?.remove(); TB.rows = Array.from({ length: 8 }, tbBlank);
+      scope = scope || trainEntry.scope; TB.rows = Array.from({ length: 8 }, tbBlank); TB.all = null;
       const L = (t, r) => `<label class="block text-[11px] font-bold text-slate-600 mb-1">${t}${r ? ' <span class="text-rose-500">*</span>' : ''}</label>`, I = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-sm';
-      const d = document.createElement('div'); d.id = 'modal-train-bulk'; d.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-3';
-      d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-5xl p-5 shadow-2xl flex flex-col max-h-[92vh] space-y-3">
-        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">👥 ចុះបញ្ជីសិក្ខាកាមច្រើននាក់ក្នុង ១ វគ្គ</h3><button type="button" onclick="tbClose()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div>
-        <div class="overflow-y-auto space-y-3 pr-1">
+      const host = document.getElementById('te-host'); if (!host) return;
+      host.innerHTML = `<div class="space-y-3">
+        <div class="space-y-3">
         <p class="text-[11px] text-slate-500">បំពេញព័ត៌មានវគ្គម្តង រួច paste បញ្ជីពី Excel (ឈ្មោះ · ភេទ · តួនាទី/អង្គភាព) ចូលតារាង។ ម្នាក់អាចមានច្រើនវគ្គ — ប្រព័ន្ធព្រមានតែពេល ឈ្មោះ + វគ្គ + ថ្ងៃចាប់ផ្តើម ដូចគ្នា។</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           <div class="md:col-span-2">${L('ឈ្មោះវគ្គ', 1)}<input id="tb-course" autocomplete="off" list="tb-course-list" class="${I}"><datalist id="tb-course-list">${[...new Set(activeRows('trainings').map(t => t.course).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('')}</datalist></div>
           <div>${L('រយៈពេល (6M, 1A, 10D…)', 1)}<input id="tb-duration" class="${I}" placeholder="6M, 1A..."></div>
-          <div>${L('ប្រភេទ')}<select id="tb-scope" class="${I}"><option value="International">✈️ ក្រៅប្រទេស</option><option value="Domestic">ក្នុងប្រទេស</option></select></div>
-          <div>${L('ប្រទេស', 1)}<select id="tb-country" class="${I}"><option value="">— ជ្រើស —</option>${countriesData.map(c => `<option value="${esc(c.kh)}">${esc(c.kh)}</option>`).join('')}</select></div>
+          <div>${L('ប្រភេទ')}<div class="${I} font-bold bg-slate-100">${scopeIco(scope)} ${esc(SCOPE_LABEL[scope])} 🔒</div><input type="hidden" id="tb-scope" value="${scope}"></div>
+          <div>${L(scope === 'Online' ? 'ប្រទេសភាគីដៃគូ' : 'ប្រទេស', 1)}${scope === 'Domestic' ? `<div class="${I} font-bold bg-slate-100">${FLAG_KH} ${esc(khCountryName())} 🔒</div><input type="hidden" id="tb-country" value="${esc(khCountryName())}">` : `<select id="tb-country" class="${I}"><option value="">— ជ្រើស —</option>${countriesData.filter(c => scope === 'Online' || !isKhCountry(c.kh)).map(c => `<option value="${esc(c.kh)}">${esc(c.kh)}</option>`).join('')}</select>`}</div>
           <div>${L('ដៃគូឧបត្ថម្ភ', 1)}<input id="tb-sponsor" list="sponsor-list" autocomplete="off" class="${I}"></div>
           <div>${L('ថ្នាក់ / កម្រិត (ទុកទទេ = កំណត់ស្វ័យប្រវត្តិ)')}<select id="tb-level" class="${I}"><option value="">— ស្វ័យប្រវត្តិ —</option>${LEVELS.map(v => `<option>${esc(v)}</option>`).join('')}</select></div>
           <div class="grid grid-cols-2 gap-1.5"><div>${L('ចាប់ផ្តើម', 1)}<input type="date" id="tb-start" class="${I}"></div><div>${L('បញ្ចប់ (ស្រេចចិត្ត)')}<input type="date" id="tb-end" class="${I}"></div></div>
@@ -4359,8 +4407,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="overflow-auto border border-slate-200 rounded-xl max-h-[340px] bg-white"><table class="w-full text-left"><thead class="bg-slate-100 text-slate-700 text-xs sticky top-0 z-10"><tr><th class="p-2">#</th><th class="p-2 min-w-[220px]">ឈ្មោះ</th><th class="p-2 w-24">ភេទ</th><th class="p-2 min-w-[260px]">តួនាទី / អង្គភាព</th><th class="p-2 min-w-[190px]">📎 PDF/រូប</th><th></th></tr></thead><tbody id="tb-body" oninput="tbInput(event)" onchange="tbInput(event)" onkeydown="tbKey(event)" onpaste="tbPaste(event)"></tbody></table></div>
         </div>
         <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="tbClose()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold">បោះបង់</button><button type="button" id="tb-save" onclick="tbSave()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ រក្សាទុកទាំងអស់</button></div></div>`;
-      document.body.appendChild(d); tbRender();
-      if (trainScopeSel) { document.getElementById('tb-scope').value = trainScopeSel; if (trainScopeSel === 'Domestic') { const kh = countriesData.map(x => x.kh).find(x => /កម្ពុជា/.test(x)); if (kh) document.getElementById('tb-country').value = kh; } }
+      tbRender();
     }
     TB.all = null;
     function tbAllFile(f) {
@@ -4415,13 +4462,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     async function tbSave() {
       const course = tbVal('tb-course'), duration = tbVal('tb-duration'), start = tbVal('tb-start'), end = tbVal('tb-end'), country = tbVal('tb-country'), sponsor = tbVal('tb-sponsor');
       if (!course || !duration || !country || !sponsor || !start) return alert('⚠️ សូមបំពេញ៖ ឈ្មោះវគ្គ / រយៈពេល / ប្រទេស / ដៃគូឧបត្ថម្ភ / ថ្ងៃចាប់ផ្តើម');
+      if (trainEntry.scope === 'International' && isKhCountry(country)) return alert('⚠️ «ក្រៅប្រទេស» មិនអាចជាប្រទេសកម្ពុជាទេ — សូមប្រើ «បញ្ចូលក្នុងប្រទេស»');
       if (end && end < start) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       const named = TB.rows.filter(r => r.name.trim()); if (!named.length) return alert('⚠️ សូមបញ្ចូលឈ្មោះយ៉ាងហោចណាស់ ១ នាក់!');
       const keys = trainDupKeys(), seen = new Set(), dups = [], use = [];
       named.forEach(r => { const k = trainDupKey(r.name, course, start); if (keys.has(k) || seen.has(k)) dups.push(r); else use.push(r); seen.add(k); });
       if (dups.length && !confirm('⚠️ មាន ' + dups.length + ' ជួរស្ទួន (ឈ្មោះ + វគ្គ + ថ្ងៃចាប់ផ្តើមដូចគ្នា)៖ ' + dups.slice(0, 3).map(r => r.name).join(', ') + (dups.length > 3 ? '…' : '') + '\n\nOK = រំលងជួរស្ទួន ហើយរក្សាទុកជួរដែលនៅសល់\nCancel = ត្រឡប់ទៅកែ')) return;
       if (!use.length) return showToast('គ្មានជួរថ្មីត្រូវរក្សាទុក (ស្ទួនទាំងអស់)', true);
-      const scope = tbVal('tb-scope') || 'International', level = tbVal('tb-level') || impLevel(course, start, end || null, duration) || null;
+      const scope = tbVal('tb-scope') || trainEntry.scope, level = tbVal('tb-level') || impLevel(course, start, end || null, duration) || null;
       const dates = end ? formatDateDisplay(start) + '-' + formatDateDisplay(end) : formatDateDisplay(start);
       const recs = use.map(r => ({ id: generateSafeId(), trainee: r.name.trim(), unit: r.unit || '', course, duration, scope, dates, country, sponsor, gender: r.gender || impGender(r.name) || null, level, start_date: start, end_date: end || null,
         file_name: '', file_size: '', file_link: '', created_at: nowISO(), deleted_at: null, deleted_by: null }));
@@ -4436,7 +4484,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       }
       if (upFail) alert('⚠️ Upload file មិនបាន ' + upFail + ' — សិក្ខាកាមនៅតែត្រូវបានចុះបញ្ជី។ អ្នកអាចភ្ជាប់តាមក្រោយតាម ✏️ កែសម្រួល។');
       btn.textContent = '⏳ កំពុងរក្សាទុក…';
-      const ok = await persistMany('trainings', recs); tbClose(); renderTrainingList(); updateStats();
+      const ok = await persistMany('trainings', recs); TB.rows = []; trainScopeSel = scope; trainSubGo(''); updateStats();
       showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានចុះបញ្ជី') + ' ' + recs.length + ' នាក់' + (dups.length ? ' (រំលងស្ទួន ' + dups.length + ')' : ''), ok === false);
       logActivity('ចុះបញ្ជីសិក្ខាកាមច្រើននាក់', course + ' (' + recs.length + ' នាក់)');
     }
@@ -4444,15 +4492,51 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:events] ការិយាល័យទី២៖ ម៉ឺនុយរងក្រោម «បណ្តុះបណ្តាលបន្ត» (ក្នុងប្រទេស / ក្រៅប្រទេស / សិក្ខាសាលា & ប្រជុំ)
     // ក្នុង/ក្រៅប្រទេស = តារាង trainings ដដែល ត្រងតាម scope; សិក្ខាសាលា & ប្រជុំ = តារាងថ្មី workshops
     let trainMenuOpen = false, trainScopeSel = '';
-    const TRAIN_SUBS = [['', '🌐', 'បណ្តុះបណ្តាល ក្នុង និងក្រៅប្រទេស'], ['events', '🎤', 'សិក្ខាសាលា & ប្រជុំ']];
+
+    // ---------- ទំព័របញ្ចូលថ្មី (ប្រភេទចាក់សោ) ----------
+    function renderTrainEntry() {
+      const box = document.getElementById('section-trainentry'); if (!box || activeTab !== 'trainentry') return;
+      const sc = trainEntry.scope, md = trainEntry.mode, key = sc + '|' + md; if (trainEntry.built === key) return; trainEntry.built = key;
+      const en = appLang === 'en', tone = SCOPE_TONE[sc];
+      if (!can('create')) { box.innerHTML = `<div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold text-center">${esc(tStr('no_create_perm'))}</div>`; return; }
+      const mb = (m, ic, t) => `<button type="button" onclick="trainEntryMode('${m}')" class="px-4 py-2 rounded-xl text-sm font-bold ${md === m ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${ic} ${t}</button>`;
+      box.innerHTML = `<div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div class="min-w-0"><h3 class="text-base font-bold text-slate-900">➕ បញ្ចូលការបណ្តុះបណ្តាល <span class="inline-block px-3 py-1 rounded-xl border text-sm ${tone[0]}">${scopeIco(sc)} ${esc(SCOPE_LABEL[sc])} 🔒</span></h3><p class="text-xs text-slate-500 mt-1">${esc(SCOPE_HINT[sc])}</p></div>
+          <button type="button" onclick="trainScopeSel='${sc}';trainSubGo('')" class="px-4 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-sm font-bold text-slate-700">← ត្រឡប់ទៅបញ្ជី ${esc(SCOPE_LABEL[sc])}</button></div>
+        <div class="flex flex-wrap items-center gap-2">${mb('single', '👤', 'បញ្ចូល ១ នាក់')}${mb('bulk', '👥', 'ច្រើននាក់ក្នុង ១ វគ្គ')}${mb('import', '📥', 'Import Excel / CSV')}</div>
+        <div id="te-host"></div>`;
+      const host = document.getElementById('te-host');
+      if (md === 'single') {
+        host.innerHTML = `<div class="max-w-2xl">${trainFormHTML(sc, en)}</div>`; populateCountryDropdowns();
+      } else if (md === 'bulk') tbMount(sc);
+      else host.innerHTML = `<div class="max-w-2xl p-6 border-2 border-dashed ${tone[2] || 'border-slate-300'} rounded-2xl text-center space-y-3 bg-slate-50">
+          <p class="text-sm font-bold text-slate-700">ជ្រើស file Excel / CSV បញ្ជីសិក្ខាកាម</p>
+          <p class="text-xs text-slate-500">ជួរទាំងអស់នឹងត្រូវកំណត់ជា <b>${esc(SCOPE_LABEL[sc])}</b> ${sc === 'Domestic' ? '(ប្រទេសកំណត់ជាកម្ពុជា)' : sc === 'International' ? '(ជួរដែលប្រទេសជាកម្ពុជា/មិនស្គាល់ នឹងត្រូវបិទជម្រើសរង់ចាំពិនិត្យ)' : ''} · អ្នកនឹងឃើញការពិនិត្យមុនរក្សាទុក។</p>
+          <label class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl ${tone[1]} text-white text-sm font-bold cursor-pointer">📥 ជ្រើស file<input type="file" id="te-import-file" accept=".xlsx,.xls,.csv" class="hidden" onchange="trainImportPick(event)"></label></div>`;
+    }
+    const TRAIN_SUBS = [['', '📋', 'បញ្ជី & ស្ថិតិ ក្នុង/ក្រៅ'], ['in', FLAG_KH, 'បញ្ចូលក្នុងប្រទេស'], ['out', '✈️', 'បញ្ចូលក្រៅប្រទេស'], ['onl', '💻', 'បញ្ចូល Online / ផ្សេងៗ'], ['events', '🎤', 'សិក្ខាសាលា & ប្រជុំ']];
+    const TE_KEY = { in: 'Domestic', out: 'International', onl: 'Online' };
+    const trainEntry = { scope: 'Domestic', mode: 'single', built: '' };
+    let impForce = '';
     function trainSubGo(k) {
       trainMenuOpen = true;
-      if (k === 'events') activeTab = 'events'; else { activeTab = 'training'; pager.trainings.page = 1; }
+      if (k === 'events') activeTab = 'events';
+      else if (TE_KEY[k]) { activeTab = 'trainentry'; trainEntry.scope = TE_KEY[k]; trainEntry.mode = 'single'; trainEntry.built = ''; impForce = TE_KEY[k]; }
+      else { activeTab = 'training'; pager.trainings.page = 1; }
       renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    // ប៊ូតុង «បញ្ចូល…» ក្នុងទំព័របញ្ជី → បើកទំព័របញ្ចូលថ្មី (ប្រភេទត្រូវបានចាក់សោ)
+    function trainEntryGo(sc, mode) {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបញ្ចូលទិន្នន័យ', true);
+      trainMenuOpen = true; activeTab = 'trainentry'; trainEntry.scope = SCOPE_KEYS.includes(sc) ? sc : 'Domestic'; trainEntry.mode = mode || 'single'; trainEntry.built = ''; impForce = trainEntry.scope;
+      renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function trainEntryMode(m) { trainEntry.mode = m; trainEntry.built = ''; renderTrainEntry(); }
+    function trainScopeTab(k) { trainScopeSel = k || ''; pager.trainings.page = 1; renderTrainingList(); }
+    function trainImportPick(e) { impForce = trainEntry.scope; handleImportExcel(e); }
     function trainSubNavHTML(t) {
-      if (t.id !== 'training' || !trainMenuOpen || !(activeTab === 'training' || activeTab === 'events')) return '';
-      return TRAIN_SUBS.map(([k, ic, l]) => { const on = k === 'events' ? activeTab === 'events' : activeTab === 'training';
+      if (t.id !== 'training' || !trainMenuOpen || !(activeTab === 'training' || activeTab === 'events' || activeTab === 'trainentry')) return '';
+      return TRAIN_SUBS.map(([k, ic, l]) => { const on = k === 'events' ? activeTab === 'events' : TE_KEY[k] ? (activeTab === 'trainentry' && trainEntry.scope === TE_KEY[k]) : activeTab === 'training';
         return `<button onclick="trainSubGo('${k}')" class="sidebar-nav-btn w-full flex items-center gap-3 pl-8 pr-3.5 py-2 rounded-xl text-xs font-bold transition form-input-focus ${on ? 'bg-emerald-100 text-emerald-800' : 'text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'}"><span class="text-base shrink-0">${ic}</span><span class="sidebar-text truncate">${l}</span></button>`; }).join('');
     }
     const EVENT_KINDS = ['សិក្ខាសាលា', 'សន្និសីទ', 'សន្និបាត', 'ប្រជុំ', 'វេទិកា', 'ផ្សេងៗ'];
@@ -4536,8 +4620,19 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const TRAIN_STATUS_CLS = { 'កំពុងរៀន': 'bg-emerald-100 text-emerald-800', 'មិនទាន់ចាប់ផ្តើម': 'bg-sky-100 text-sky-800', 'បានបញ្ចប់': 'bg-slate-100 text-slate-600', 'មិនស្គាល់ថ្ងៃ': 'bg-amber-100 text-amber-800' };
     function trainBadge(t) { const x = trainStatus(t); return `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${TRAIN_STATUS_CLS[x]}">${x}</span>`; }
     let trainView = 'person';
+
+    // ២-៣ Card ស្ថិតិដាច់ពីគ្នា (ក្នុង / ក្រៅ / Online) + Tab
+    function renderTrainScopeCards() {
+      const box = document.getElementById('train-scope-cards'), tabs = document.getElementById('train-scope-tabs'); if (!box || !tabs) return;
+      const CL = { Domestic: 'border-emerald-200 bg-emerald-50/60', International: 'border-sky-200 bg-sky-50/60', Online: 'border-violet-200 bg-violet-50/60' };
+      const tile = (sc, k, ic, n, l) => `<button type="button" onclick="event.stopPropagation();trainStatOpen('${k}','${sc}')" class="text-left rounded-xl px-2 py-1 hover:bg-white/80 transition form-input-focus"><div class="text-lg font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></button>`;
+      box.innerHTML = SCOPE_KEYS.map(sc => { const m = trainStatMetrics(sc), on = trainScopeSel === sc;
+        return `<div onclick="trainScopeTab('${sc}')" data-card="${sc}" class="cursor-pointer rounded-2xl border p-3 ${CL[sc]} ${on ? 'ring-2 ring-emerald-500' : ''}"><div class="flex items-center justify-between mb-1.5"><span class="font-bold text-slate-800 text-sm">${scopeIco(sc)} ${esc(SCOPE_LABEL[sc])}</span><span class="text-[10px] font-bold ${on ? 'text-emerald-700' : 'text-slate-400'}">${on ? '● កំពុងមើល' : 'ចុចដើម្បីមើល'}</span></div><div class="grid grid-cols-4 gap-1">${tile(sc, 'courses', '📚', m.courses, 'វគ្គ')}${tile(sc, 'persons', '👥', m.persons, 'សិក្ខាកាម')}${tile(sc, 'female', '👩', m.female + (m.persons ? ' (' + Math.round(m.female / m.persons * 100) + '%)' : ''), 'ស្រី')}${tile(sc, 'running', '🟢', m.running, 'កំពុងរៀន')}</div></div>`; }).join('');
+      const tb = (k, label, n) => { const on = (trainScopeSel || '') === k; return `<button type="button" data-tab="${k}" onclick="trainScopeTab('${k}')" class="px-4 py-2 rounded-xl ${on ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${label} <span class="${on ? 'text-emerald-100' : 'text-slate-400'}">${toKhmerDigits(n)}</span></button>`; };
+      tabs.innerHTML = SCOPE_KEYS.map(sc => tb(sc, scopeIco(sc) + ' ' + esc(SCOPE_LABEL[sc]), trainRowsBy(sc).length)).join('') + tb('', '📊 ទាំងអស់ (បង្ហាញលាយ)', activeRows('trainings').length);
+    }
     function trainFilterReset() {
-      trainScopeSel = ''; ['search', 'country', 'sponsor', 'status', 'scope', 'year', 'gender', 'level'].forEach(k => { const el = document.getElementById('filter-training-' + k); if (el) el.value = (k === 'search') ? '' : 'all'; });
+      ['search', 'country', 'sponsor', 'status', 'year', 'gender', 'level'].forEach(k => { const el = document.getElementById('filter-training-' + k); if (el) el.value = (k === 'search') ? '' : 'all'; });
       ['from', 'to'].forEach(k => { const el = document.getElementById('filter-training-' + k); if (el) el.value = ''; });
       const o = document.getElementById('filter-training-order'); if (o) o.value = 'name'; pager.trainings.page = 1; renderTrainingList();
     }
@@ -4557,19 +4652,20 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       trainStatClose(); trainView = 'person';
       const inp = document.getElementById('filter-training-search'); if (inp) inp.value = c; pager.trainings.page = 1; renderTrainingList();
     }
-    function trainStatMetrics() {
-      const r = activeRows('trainings'), g = trainGroups(r);
+    function trainStatMetrics(sc) {
+      const r = trainRowsBy(sc), g = trainGroups(r);
       return { courses: g.length, persons: r.length, female: r.filter(t => t.gender === 'ស្រី').length, running: g.filter(x => x.status === 'កំពុងរៀន').length, countries: new Set(r.map(t => t.country).filter(Boolean)).size };
     }
     function trainStatClose() { document.getElementById('modal-train-stat')?.remove(); }
-    function trainStatOpen(kind) {
-      trainStatClose(); const r = activeRows('trainings'); let title = '', body = '', note = '';
+    function trainStatOpen(kind, sc) {
+      trainStatClose(); const r = trainRowsBy(sc); let title = '', body = '', note = '';
       const trs = rows => rows.map(t => `<tr class="hover:bg-emerald-50"><td class="p-2 font-bold">${esc(t.trainee)}</td><td class="p-2">${esc(t.gender || '')}</td><td class="p-2">${esc(t.unit || '')}</td><td class="p-2">${esc(t.course || '')}</td><td class="p-2">${trainBadge(t)}</td></tr>`).join('');
       const personTbl = rows => `<table class="w-full text-sm text-left"><thead class="bg-slate-100 sticky top-0"><tr><th class="p-2">ឈ្មោះ</th><th class="p-2">ភេទ</th><th class="p-2">អង្គភាព</th><th class="p-2">វគ្គ</th><th class="p-2">ស្ថានភាព</th></tr></thead><tbody class="divide-y divide-slate-100">${trs(rows.slice(0, 500))}</tbody></table>`;
       if (kind === 'courses') { title = '📚 វគ្គទាំងអស់'; body = trainGroupTable(trainGroups(r), true); }
       else if (kind === 'running') { title = '🟢 វគ្គកំពុងរៀនឥឡូវ'; body = trainGroupTable(trainGroups(r).filter(x => x.status === 'កំពុងរៀន'), true); }
       else if (kind === 'female') { title = '👩 សិក្ខាកាមស្រី'; body = personTbl(r.filter(t => t.gender === 'ស្រី')); }
       else { title = '👥 សិក្ខាកាមទាំងអស់'; body = personTbl(r); }
+      if (sc) title = scopeIco(sc) + ' ' + SCOPE_LABEL[sc] + ' — ' + title;
       const m = document.createElement('div'); m.id = 'modal-train-stat'; m.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[80] flex items-center justify-center p-4';
       m.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-4xl p-5 shadow-2xl flex flex-col max-h-[88vh] space-y-3"><div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">${title}</h3><button type="button" onclick="trainStatClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-500 font-bold">✕</button></div><div class="overflow-auto border border-slate-200 rounded-xl">${body}</div></div>`;
       document.body.appendChild(m);
@@ -4577,7 +4673,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     function renderTrainingList() {
       const tbody = document.getElementById('training-table-body'); if (!tbody) return;
-      const th3 = document.querySelector('#section-training [data-i18n="sec_train_title"]'); if (th3 && appLang === 'km') th3.innerHTML = trainScopeSel === 'Domestic' ? FLAG_KH + ' ការបណ្តុះបណ្តាលក្នុងប្រទេស' : trainScopeSel === 'International' ? '✈️ ការបណ្តុះបណ្តាលក្រៅប្រទេស' : esc(I18N_DICT.km.sec_train_title);
+      const th3 = document.querySelector('#section-training [data-i18n="sec_train_title"]'); if (th3 && appLang === 'km') th3.innerHTML = trainScopeSel ? scopeIco(trainScopeSel) + ' ការបណ្តុះបណ្តាល ' + esc(SCOPE_LABEL[trainScopeSel]) : esc(I18N_DICT.km.sec_train_title);
       populateCountryDropdowns();
       const sponsorSel = document.getElementById('filter-training-sponsor');
       if (sponsorSel) {
@@ -4585,7 +4681,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const sponsors = [...new Set(activeRows('trainings').map(t => t.sponsor).filter(Boolean))].sort();
         sponsorSel.innerHTML = `<option value="all">${appLang === 'en' ? 'All Sponsors' : 'អ្នកឧបត្ថម្ភទាំងអស់'}</option>` + sponsors.map(s => `<option value="${esc(s)}" ${s === cur ? 'selected' : ''}>${esc(s)}</option>`).join('');
       }
-      const scSel = document.getElementById('filter-training-scope'); if (scSel) scSel.value = trainScopeSel || 'all';
+      renderTrainScopeCards();
       const yearSel = document.getElementById('filter-training-year');
       if (yearSel) { const cur = yearSel.value, ys = [...new Set(activeRows('trainings').map(t => (trainStart(t) || '').slice(0, 4)).filter(Boolean))].sort().reverse();
         yearSel.innerHTML = '<option value="all">' + (appLang === 'en' ? 'All Years' : 'ឆ្នាំទាំងអស់') + '</option>' + ys.map(y => `<option value="${y}" ${y === cur ? 'selected' : ''}>${y}</option>`).join(''); }
@@ -4604,7 +4700,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <td class="p-3.5 text-center text-xs whitespace-nowrap ${t.gender ? 'text-slate-700 font-bold' : 'text-slate-300'}">${esc(t.gender || '—')} · ${esc(t.level || '—')}</td>
           <td class="p-3.5 text-center font-bold text-slate-700 text-sm whitespace-nowrap">${esc(t.duration)}</td>
           <td class="p-3.5 text-center font-mono text-xs text-slate-600 whitespace-nowrap">${esc(t.dates)}<div class="mt-1">${trainBadge(t)}</div></td>
-          <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap"><span class="inline-block px-3 py-1 bg-slate-100 rounded-md">${esc(t.country)}</span></td>
+          <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap"><span class="inline-block px-3 py-1 bg-slate-100 rounded-md">${trainScopeSel ? '' : scopeIco(trainScopeOf(t)) + ' '}${esc(t.country)}</span></td>
           <td class="p-3.5 text-slate-700 text-sm whitespace-nowrap">${esc(t.sponsor)}</td>
           <td class="p-3.5 text-center whitespace-nowrap">${t.file_link ? `<button onclick="trainOpenFile(${t.id})" class="px-2.5 py-1 rounded-lg border border-sky-200 bg-sky-50 hover:bg-sky-100 text-xs font-bold text-sky-700" title="${esc(t.file_name || 'ឯកសារភ្ជាប់')}">📎</button> ` : ''}${editBtn('trainings', t.id)}${deleteBtn('trainings', t.id) || (can('edit') ? '' : '<span class="text-slate-300">-</span>')}</td>
         </tr>`).join('') : emptyRow(10);
@@ -4887,6 +4983,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const btn = document.getElementById('btn-save-training');
       const dStart = document.getElementById('train-date-start').value, dEnd = document.getElementById('train-date-end').value;
       if (dEnd && dEnd < dStart) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      const scIn = document.getElementById('train-scope-input').value, ctIn = document.getElementById('train-country-select').value;
+      if (scIn === 'International' && isKhCountry(ctIn)) return alert('⚠️ «ក្រៅប្រទេស» មិនអាចជាប្រទេសកម្ពុជាទេ — សូមប្រើ «បញ្ចូលក្នុងប្រទេស»');
       btn.disabled = true;
       const rec = { id: generateSafeId(), trainee: ((document.getElementById('train-title')?.value || '') ? document.getElementById('train-title').value + '.' : '') + document.getElementById('train-trainee').value.trim(), unit: document.getElementById('train-unit').value.trim(),
         course: document.getElementById('train-course').value.trim(), duration: document.getElementById('train-duration').value.trim(), scope: document.getElementById('train-scope-input').value,
@@ -4899,7 +4997,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       renderTrainingList(); updateStats();
       showToast(ok ? 'អ្នកបានបញ្ចូលរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok);
       logActivity('កត់ត្រាវគ្គបណ្តុះបណ្តាល', rec.trainee);
-      e.target.reset(); populateCountryDropdowns(); flashSaved(btn, 'Submit Record / រក្សាទុក');
+      e.target.reset(); populateCountryDropdowns(); flashSaved(btn, 'Submit Record / រក្សាទុក'); document.getElementById('train-trainee')?.focus();
     }
 
     async function handleSaveDispatch(e) {
@@ -6725,7 +6823,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { id: 'train_nounit', table: 'trainings', label: 'បណ្តុះបណ្តាល គ្មានអង្គភាព', test: t => !String(t.unit || '').trim() },
       { id: 'train_nodate', table: 'trainings', label: 'បណ្តុះបណ្តាល គ្មានថ្ងៃចាប់ផ្តើម', test: t => !trainRange(t)[0] },
       { id: 'train_nosponsor', table: 'trainings', label: 'បណ្តុះបណ្តាល គ្មានដៃគូឧបត្ថម្ភ', test: t => !String(t.sponsor || '').trim() },
-      { id: 'train_noscope', table: 'trainings', label: 'បណ្តុះបណ្តាល មិនបានកំណត់ ក្នុង/ក្រៅប្រទេស', test: t => !t.scope },
+      { id: 'train_noscope', table: 'trainings', label: 'បណ្តុះបណ្តាល ប្រភេទ (ក្នុង/ក្រៅ) មិនត្រូវនឹងប្រទេស', test: t => t.scope !== trainScopeOf(t) },
       { id: 'train_dup', table: 'trainings', label: 'បណ្តុះបណ្តាល ស្ទួន (ឈ្មោះ + វគ្គ + ថ្ងៃចាប់ផ្តើម)', rows: () => trainDupRows() },
       { id: 'train_badrange', table: 'trainings', label: 'បណ្តុះបណ្តាល ថ្ងៃបញ្ចប់មុនថ្ងៃចាប់ផ្តើម', test: t => { const [a, b] = trainRange(t); return a && b && b < a; } },
       { id: 'doc_nofile', table: 'docs', label: 'ឯកសារ គ្មាន file/link', test: d => !d.driveLink && !d.fileDataUrl && !d.fileName },
@@ -6805,7 +6903,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.7.4') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.7.5') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           ${qualityCardHTML()}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
@@ -7048,7 +7146,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function populateCountryDropdowns() {
       const formSel = document.getElementById('train-country-select'), filterSel = document.getElementById('filter-training-country');
-      if (formSel) { const cur = formSel.value; formSel.innerHTML = `<option value="">-- ${appLang === 'en' ? 'Select Country' : 'ជ្រើសរើសប្រទេស'} --</option>` + countriesData.map(c => `<option value="${esc(c.kh)}" ${c.kh === cur ? 'selected' : ''}>${esc(c.kh)} (${esc(c.en)})</option>`).join(''); }
+      if (formSel && formSel.tagName === 'SELECT') { const cur = formSel.value, noKh = formSel.dataset.scope === 'International'; formSel.innerHTML = `<option value="">-- ${appLang === 'en' ? 'Select Country' : 'ជ្រើសរើសប្រទេស'} --</option>` + countriesData.filter(c => !(noKh && isKhCountry(c.kh))).map(c => `<option value="${esc(c.kh)}" ${c.kh === cur ? 'selected' : ''}>${esc(c.kh)} (${esc(c.en)})</option>`).join(''); }
       if (filterSel) { const cur = filterSel.value; filterSel.innerHTML = `<option value="all">${appLang === 'en' ? 'All Countries' : 'ប្រទេសទាំងអស់'}</option>` + countriesData.map(c => `<option value="${esc(c.kh)}" ${c.kh === cur ? 'selected' : ''}>${esc(c.kh)}</option>`).join(''); }
     }
     function renderFilesSystemList() {
@@ -7218,13 +7316,17 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const duration = impDurationText(g(r, 'duration'), dt.s, dt.e);
         const course = impClean(g(r, 'course'));
         let level = impClean(g(r, 'level')); if (!LEVELS.includes(level)) level = impLevel(course, dt.s, dt.e, duration);
-        let scope = /ក្នុង|domestic/i.test(impClean(g(r, 'scope'))) ? 'Domestic' : (impClean(g(r, 'scope')) ? 'International' : (cKh === 'កម្ពុជា' ? 'Domestic' : 'International'));
+        let scope = impForce || (/ក្នុង|domestic/i.test(impClean(g(r, 'scope'))) ? 'Domestic' : (impClean(g(r, 'scope')) ? 'International' : (isKhCountry(cKh) ? 'Domestic' : 'International')));
+        if (impForce === 'Domestic') { if (cKh && !isKhCountry(cKh)) warn.push('ប្រទេស «' + cKh + '» ត្រូវបានកំណត់ជា ' + khCountryName() + ' (ក្នុងប្រទេស)'); cKh = khCountryName(); }
+        const offScope = impForce === 'International' && (!cKh || isKhCountry(cKh));
+        if (offScope) warn.push('ប្រទេសជាកម្ពុជា/មិនស្គាល់ — មិនសមនឹង «ក្រៅប្រទេស» (បិទជម្រើស)');
         sp.names.forEach(nm => {
           const w = warn.slice(); let gender = impClean(g(r, 'gender')); gender = /ស្រី|^f/i.test(gender) ? 'ស្រី' : /ប្រុស|^m/i.test(gender) ? 'ប្រុស' : impGender(nm);
           if (!gender) w.push('គ្មានភេទ');
           if (!level) w.push('កំណត់កម្រិត');
           const item = { _row: i + 1, _warn: w, _on: true, id: generateSafeId(), trainee: impClean(nm), gender, unit: impClean(g(r, 'unit')), course, level, duration,
             start_date: dt.s, end_date: dt.e, dates: dt.s ? (formatDateDisplay(dt.s) + '-' + formatDateDisplay(dt.e || '')) : impClean(g(r, 'dates')), country: cKh, sponsor, scope };
+          if (offScope) item._on = false;
           if (existing.some(t => t.trainee === item.trainee && (t.start_date || '') === (item.start_date || '') && t.course === item.course)) { item._warn.push('ស្ទួនក្នុងប្រព័ន្ធ'); item._on = false; }
           out.push(item);
         });
@@ -7243,7 +7345,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <td class="p-2"><select onchange="impSet(${i},'level',this.value)" class="border border-slate-200 rounded p-1 ${t.level ? '' : 'border-red-400 bg-red-50'}">${opt(LEVELS, t.level, true)}</select></td>
         <td class="p-2 whitespace-nowrap">${esc(t.duration)}</td><td class="p-2 whitespace-nowrap">${esc(t.dates)}</td>
         <td class="p-2">${esc(t.country)}</td>
-        <td class="p-2"><select onchange="impSet(${i},'scope',this.value)" class="border border-slate-200 rounded p-1">${opt([['International', 'ក្រៅប្រទេស'], ['Domestic', 'ក្នុងប្រទេស']], t.scope)}</select></td>
+        <td class="p-2 whitespace-nowrap font-bold">${esc(SCOPE_LABEL[t.scope] || t.scope)}</td>
         <td class="p-2 text-[11px] text-amber-700 min-w-[160px]">${t._warn.map(esc).join(' • ')}</td></tr>`).join('');
       const on = IMP.items.filter(t => t._on).length;
       document.getElementById('imp-count').textContent = 'ជ្រើស ' + on + ' / ' + IMP.items.length + ' ជួរ';
@@ -7270,7 +7372,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         gender: t.gender || null, level: t.level || null, start_date: t.start_date || null, end_date: t.end_date || null, created_at: nowISO(), deleted_at: null, deleted_by: null }));
       const name = IMP.name; impClose();
       await persistMany('trainings', items);
-      renderTrainingList(); updateStats();
+      trainScopeSel = (items[0] && items[0].scope) || trainScopeSel; trainSubGo(''); updateStats();
       showToast('បាន Import ចំនួន ' + items.length + ' ទិន្នន័យ!'); logActivity('Import Excel', name + ' (' + items.length + ')');
     }
     function handleImportExcel(e) {
@@ -7408,7 +7510,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const TR = { mode: 'detail', group: 'country', f: {} };
     const TR_GROUPS = {
       country: ['ប្រទេស', t => t.country || '-'], sponsor: ['អ្នកឧបត្ថម្ភ', t => t.sponsor || '-'], level: ['កម្រិត', t => t.level || 'មិនបញ្ជាក់'],
-      gender: ['ភេទ', t => t.gender || 'មិនបញ្ជាក់'], scope: ['ក្នុង/ក្រៅប្រទេស', t => t.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស'],
+      gender: ['ភេទ', t => t.gender || 'មិនបញ្ជាក់'], scope: ['ក្នុង/ក្រៅប្រទេស', t => SCOPE_LABEL[trainScopeOf(t)]],
       term: ['វគ្គខ្លី/វគ្គវែង', t => trainIsLong(t) ? 'វគ្គវែង' : 'វគ្គខ្លី'], year: ['ឆ្នាំ', t => (trainStart(t) || '').slice(0, 4) || 'មិនបញ្ជាក់'],
       month: ['ខែ', t => (trainStart(t) || '').slice(0, 7) || 'មិនបញ្ជាក់'], unit: ['អង្គភាព', t => t.unit || '-'], status: ['ស្ថានភាព', t => trainStatus(t)], course: ['វគ្គសិក្សា', t => t.course || '-']
     };
@@ -7417,7 +7519,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return activeRows('trainings').filter(t => {
         const st = trainStart(t);
         return (!q || [t.trainee, t.course, t.unit].some(v => String(v || '').toLowerCase().includes(q))) &&
-          (!f.scope || (t.scope === 'Domestic' ? 'Domestic' : 'International') === f.scope) && (!f.country || t.country === f.country) && (!f.sponsor || t.sponsor === f.sponsor) &&
+          (!f.scope || trainScopeOf(t) === f.scope) && (!f.country || t.country === f.country) && (!f.sponsor || t.sponsor === f.sponsor) &&
           (!f.gender || (f.gender === '-' ? !t.gender : t.gender === f.gender)) && (!f.level || (f.level === '-' ? !t.level : t.level === f.level)) &&
           (!f.term || (f.term === 'long') === trainIsLong(t)) && (!f.title || String(t.trainee || '').startsWith(f.title + '.') || String(t.trainee || '').startsWith(f.title + ' ')) &&
           (!f.status || trainStatus(t) === f.status) && (!f.year || (st || '').slice(0, 4) === f.year) && (!f.course || t.course === f.course) &&
@@ -7425,7 +7527,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       }).sort((a, b) => String(trainStart(a) || '').localeCompare(String(trainStart(b) || '')) || String(a.trainee || '').localeCompare(String(b.trainee || '')));
     }
     function trDetailRows(rows) {
-      return rows.map((t, i) => { const [s, e] = trainRange(t); return { 'ល.រ': i + 1, 'ឈ្មោះ': t.trainee, 'ភេទ': t.gender || '', 'តួនាទី និងអង្គភាព': t.unit, 'កម្មវិធី/វគ្គសិក្សា': t.course, 'កម្រិត': t.level || '', 'រយៈពេល': t.duration, 'ថ្ងៃចាប់ផ្តើម': s ? formatDateDisplay(s) : '', 'ថ្ងៃបញ្ចប់': e ? formatDateDisplay(e) : '', 'ប្រទេស': t.country, 'ឧបត្ថម្ភ': t.sponsor, 'ប្រភេទ': t.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស', 'ស្ថានភាព': trainStatus(t) }; });
+      return rows.map((t, i) => { const [s, e] = trainRange(t); return { 'ល.រ': i + 1, 'ឈ្មោះ': t.trainee, 'ភេទ': t.gender || '', 'តួនាទី និងអង្គភាព': t.unit, 'កម្មវិធី/វគ្គសិក្សា': t.course, 'កម្រិត': t.level || '', 'រយៈពេល': t.duration, 'ថ្ងៃចាប់ផ្តើម': s ? formatDateDisplay(s) : '', 'ថ្ងៃបញ្ចប់': e ? formatDateDisplay(e) : '', 'ប្រទេស': t.country, 'ឧបត្ថម្ភ': t.sponsor, 'ប្រភេទ': SCOPE_LABEL[trainScopeOf(t)], 'ស្ថានភាព': trainStatus(t) }; });
     }
     function trSummaryRows(rows) {
       const [label, fn] = TR_GROUPS[TR.group], m = new Map();
@@ -7438,16 +7540,16 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function trFilterText() {
       const f = TR.f, p = [];
-      if (f.scope) p.push(f.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស'); if (f.country) p.push('ប្រទេស៖ ' + f.country); if (f.sponsor) p.push('អ្នកឧបត្ថម្ភ៖ ' + f.sponsor);
+      if (f.scope) p.push(SCOPE_LABEL[f.scope]); if (f.country) p.push('ប្រទេស៖ ' + f.country); if (f.sponsor) p.push('អ្នកឧបត្ថម្ភ៖ ' + f.sponsor);
       if (f.gender) p.push('ភេទ៖ ' + (f.gender === '-' ? 'មិនបញ្ជាក់' : f.gender)); if (f.level) p.push('កម្រិត៖ ' + (f.level === '-' ? 'មិនបញ្ជាក់' : f.level)); if (f.term) p.push(f.term === 'long' ? 'វគ្គវែង' : 'វគ្គខ្លី');
       if (f.title) p.push('Title៖ ' + f.title); if (f.status) p.push('ស្ថានភាព៖ ' + f.status); if (f.year) p.push('ឆ្នាំ៖ ' + f.year); if (f.course) p.push('វគ្គ៖ ' + f.course); if (f.q) p.push('ស្វែងរក៖ ' + f.q); if (f.from || f.to) p.push('ថ្ងៃចាប់ផ្តើម៖ ' + (f.from ? formatDateDisplay(f.from) : '…') + ' → ' + (f.to ? formatDateDisplay(f.to) : '…'));
       return p.length ? p.join(' • ') : 'ទិន្នន័យទាំងអស់';
     }
     function trTitle() { return 'របាយការណ៍ទិន្នន័យបណ្តុះបណ្តាលបន្ត — ' + (TR.mode === 'detail' ? 'លម្អិត' : 'សង្ខេបតាម' + TR_GROUPS[TR.group][0]); }
-    function trTableHTML(data, cls) {
+    function trTableHTML(data, cls, forceTot) {
       if (!data.length) return '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>';
       const keys = Object.keys(data[0]);
-      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${TR.mode === 'summary' && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      return `<table class="${cls || 'w-full text-xs text-left'}"><thead><tr>${keys.map(k => `<th class="p-2 border border-slate-300 bg-slate-100 whitespace-nowrap">${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${(forceTot || TR.mode === 'summary') && i === data.length - 1 ? 'font-bold bg-emerald-50' : ''}">${keys.map(k => `<td class="p-2 border border-slate-200 ${typeof r[k] === 'number' || k === 'ល.រ' ? 'text-center' : ''}">${esc(typeof r[k] === 'number' ? toKhmerDigits(r[k]) : (k === 'ល.រ' && r[k] !== '' ? toKhmerDigits(r[k]) : r[k]))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
     }
     function trRead() {
       const g = id => document.getElementById('trf-' + id)?.value || '';
@@ -7455,11 +7557,28 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       TR.group = g('group') || TR.group;
     }
     function trSetMode(m) { TR.mode = m; trRender(); }
+
+    // V3.7.5 Report ចែកជាផ្នែក (ក្នុង / ក្រៅ / Online) — ផ្នែកនីមួយៗមាន Detail ឬ Summary + សរុបប្រៀបធៀប
+    function trSections(rows) {
+      const by = {}; rows.forEach(t => { const k = trainScopeOf(t); (by[k] = by[k] || []).push(t); });
+      return SCOPE_KEYS.filter(k => (by[k] || []).length).map(k => ({ scope: k, label: SCOPE_LABEL[k], rows: by[k], data: TR.mode === 'detail' ? trDetailRows(by[k]) : trSummaryRows(by[k]) }));
+    }
+    function trOverview(rows) {
+      const line = (label, r) => ({ 'ប្រភេទ': label, 'វគ្គ': trainGroups(r).length, 'សិក្ខាកាម': r.length, 'ស្រី': r.filter(t => t.gender === 'ស្រី').length, 'ប្រុស': r.filter(t => t.gender === 'ប្រុស').length, 'មិនបញ្ជាក់ភេទ': r.filter(t => !t.gender).length });
+      const out = SCOPE_KEYS.map(k => line(SCOPE_LABEL[k], rows.filter(t => trainScopeOf(t) === k)));
+      out.push(line('សរុបរួម', rows)); return out;
+    }
+    function trSectionHead(sec) {
+      const f = sec.rows.filter(t => t.gender === 'ស្រី').length;
+      return `<div class="px-3 py-2 border font-bold flex flex-wrap justify-between gap-2 sticky left-0 ${SCOPE_TONE[sec.scope][0]}"><span>${scopeIco(sec.scope)} ${esc(sec.label)}</span><span class="text-xs">${toKhmerDigits(sec.rows.length)} កំណត់ត្រា · ស្រី ${toKhmerDigits(f)} · វគ្គ ${toKhmerDigits(trainGroups(sec.rows).length)}</span></div>`;
+    }
     function trRender() {
       trRead();
-      const rows = trFiltered(), data = TR.mode === 'detail' ? trDetailRows(rows) : trSummaryRows(rows);
+      const rows = trFiltered(), secs = trSections(rows);
       document.getElementById('tr-count').textContent = 'រកឃើញ ' + toKhmerDigits(rows.length) + ' កំណត់ត្រា';
-      document.getElementById('tr-result').innerHTML = (TR.charts ? trChartsHTML(rows) : '') + trTableHTML(data);
+      document.getElementById('tr-result').innerHTML = (TR.charts ? trChartsHTML(rows) : '') +
+        (secs.length ? (TR.f.scope ? '' : `<div class="p-2"><div class="font-bold text-slate-700 text-xs mb-1">📊 សរុបប្រៀបធៀប ក្នុង / ក្រៅ / Online</div>${trTableHTML(trOverview(rows), 'w-full text-xs text-left', true)}</div>`) +
+          secs.map(sec => `<div data-sec="${sec.scope}" class="p-2">${trSectionHead(sec)}${trTableHTML(sec.data)}</div>`).join('') : '<p class="p-6 text-center text-slate-400">មិនមានទិន្នន័យ</p>');
       document.getElementById('tr-group-wrap').classList.toggle('hidden', TR.mode !== 'summary');
       ['detail', 'summary'].forEach(m => { const b = document.getElementById('trtab-' + m); b.classList.toggle('bg-emerald-600', TR.mode === m); b.classList.toggle('text-white', TR.mode === m); b.classList.toggle('bg-slate-100', TR.mode !== m); b.classList.toggle('text-slate-600', TR.mode !== m); });
     }
@@ -7472,7 +7591,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-5 shadow-2xl flex flex-col max-h-[94vh] space-y-3">
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📊 Report — បណ្តុះបណ្តាលបន្ត</h3><button type="button" onclick="trClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
-          ${sel('scope', 'ក្នុង/ក្រៅប្រទេស', [['International', 'ក្រៅប្រទេស'], ['Domestic', 'ក្នុងប្រទេស']])}${sel('country', 'ប្រទេស', uniq('country'))}${sel('sponsor', 'អ្នកឧបត្ថម្ភ', uniq('sponsor'))}
+          ${sel('scope', 'ក្នុង/ក្រៅប្រទេស (ទាំងអស់ = ចែក ២-៣ ផ្នែក)', [['Domestic', 'ក្នុងប្រទេស'], ['International', 'ក្រៅប្រទេស'], ['Online', 'Online / ផ្សេងៗ']])}${sel('country', 'ប្រទេស', uniq('country'))}${sel('sponsor', 'អ្នកឧបត្ថម្ភ', uniq('sponsor'))}
           ${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('level', 'កម្រិត', [...LEVELS, ['-', 'មិនបញ្ជាក់']])}
           ${sel('term', 'រយៈពេល', [['short', 'វគ្គខ្លី'], ['long', 'វគ្គវែង']])}${sel('title', 'Title', getList('titles'))}${sel('status', 'ស្ថានភាព', ['មិនទាន់ចាប់ផ្តើម', 'កំពុងរៀន', 'បានបញ្ចប់', 'មិនស្គាល់ថ្ងៃ'])}${sel('year', 'ឆ្នាំ (ចាប់ផ្តើម)', [...new Set(all.map(t => (trainStart(t) || '').slice(0, 4)).filter(Boolean))].sort().reverse())}${sel('course', 'វគ្គសិក្សា', uniq('course'))}
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ចាប់ផ្តើម ពី</label><input type="date" id="trf-from" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
@@ -7490,16 +7609,16 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.body.appendChild(d);
       TR.mode = 'detail'; document.getElementById('trf-group').value = TR.group; trRender();
     }
-    function trCurrentData() { const rows = trFiltered(); return TR.mode === 'detail' ? trDetailRows(rows) : trSummaryRows(rows); }
+
     function trExport(kind) {
-      trRead(); const data = trCurrentData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
+      trRead(); const rows = trFiltered(), secs = trSections(rows); if (!secs.length) return showToast('មិនមានទិន្នន័យ', true);
       if (kind === 'xlsx') {
-        if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
-        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(data), TR.mode === 'detail' ? 'Detail' : 'Summary');
-        XLSX.writeFile(wb, 'training_' + TR.mode + '_' + todayISO() + '.xlsx');
+        const sheets = []; if (!TR.f.scope) sheets.push({ name: 'សរុបប្រៀបធៀប', rows: trOverview(rows) });
+        secs.forEach(sec => sheets.push({ name: SCOPE_SHEET[sec.scope], rows: sec.data }));
+        if (!xlsxBook(sheets, 'training_' + TR.mode + '_' + todayISO() + '.xlsx')) return;
       } else {
-        const keys = Object.keys(data[0]); let csv = '﻿' + keys.map(csvCell).join(',') + '\n';
-        data.forEach(r => { csv += keys.map(k => csvCell(r[k])).join(',') + '\n'; });
+        let csv = '\uFEFF';
+        secs.forEach(sec => { const keys = Object.keys(sec.data[0]); csv += csvCell(sec.label + ' (' + sec.rows.length + ')') + '\n' + keys.map(csvCell).join(',') + '\n'; sec.data.forEach(r => { csv += keys.map(k => csvCell(r[k])).join(',') + '\n'; }); csv += '\n'; });
         downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'training_' + TR.mode + '_' + todayISO() + '.csv');
       }
       showToast('បាន Export រួចរាល់');
@@ -7512,23 +7631,26 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         kitBox('ប្រទេសកំពូល', svgBars(tally(rows, t => t.country || KIT_NONE).slice(0, 10), { color: KIT_COLORS[2] })),
         kitBox('អង្គភាពកំពូល', svgBars(tally(rows, t => t.unit || KIT_NONE).slice(0, 10), { color: KIT_COLORS[1] }))]);
     }
-    // Excel ពេញ: សង្ខេប + លម្អិត + តាមអង្គភាព + តាមប្រទេស + តាមវគ្គ + ១ sheet/វគ្គ
+
+    // Excel ពេញ: សរុបប្រៀបធៀប + (លម្អិត/សង្ខេប ក្នុង/ក្រៅ/Online ដាច់ពីគ្នា) + តាមអង្គភាព + តាមប្រទេស + តាមវគ្គ + ១ sheet/វគ្គ
     function trExportBook() {
       trRead(); const rows = trFiltered(); if (!rows.length) return showToast('មិនមានទិន្នន័យ', true);
       const cs = kitCourseSheets(rows, t => t.course, rs => trDetailRows(rs));
-      const sheets = [{ name: 'សង្ខេប', rows: trSummaryRows(rows) }, { name: 'លម្អិត', rows: trDetailRows(rows) },
-        { name: 'តាមអង្គភាព', rows: unitMatrix(rows, t => t.unit, t => t.gender) }, { name: 'តាមប្រទេស', rows: unitMatrix(rows, t => t.country, t => t.gender, 'ប្រទេស') },
-        { name: 'តាមវគ្គ', rows: unitMatrix(rows, t => t.course, t => t.gender, 'វគ្គ') }, ...cs.sheets];
+      const sheets = [{ name: 'សរុបប្រៀបធៀប', rows: trOverview(rows) }];
+      SCOPE_KEYS.forEach(k => { const rs = rows.filter(t => trainScopeOf(t) === k); if (!rs.length) return;
+        sheets.push({ name: 'លម្អិត ' + SCOPE_SHEET[k], rows: trDetailRows(rs) }, { name: 'សង្ខេប ' + SCOPE_SHEET[k], rows: trSummaryRows(rs) }); });
+      sheets.push({ name: 'តាមអង្គភាព', rows: unitMatrix(rows, t => t.unit, t => t.gender) }, { name: 'តាមប្រទេស', rows: unitMatrix(rows, t => t.country, t => t.gender, 'ប្រទេស') },
+        { name: 'តាមវគ្គ', rows: unitMatrix(rows, t => t.course, t => t.gender, 'វគ្គ') }, ...cs.sheets);
       if (!xlsxBook(sheets, 'training_full_' + todayISO() + '.xlsx')) return;
       showToast(cs.cut ? 'Export រួច — Sheet វគ្គបានតែ ' + KIT_MAX_COURSE_SHEETS + ' ដំបូង ពី ' + cs.total + ' វគ្គ' : 'បាន Export ' + sheets.length + ' sheet', cs.cut);
       logActivity('Export Excel ពេញ', 'បណ្តុះបណ្តាល ' + rows.length + ' កំណត់ត្រា');
     }
     function trPrint() {
-      trRead(); const data = trCurrentData(); if (!data.length) return showToast('មិនមានទិន្នន័យ', true);
-      const keys = Object.keys(data[0]), now = new Date();
-      const tbl = `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${TR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      trRead(); const rows = trFiltered(), secs = trSections(rows); if (!secs.length) return showToast('មិនមានទិន្នន័យ', true);
+      const now = new Date(), T = data => { const keys = Object.keys(data[0]); return `<table><thead><tr>${keys.map(k => `<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>${data.map((r, i) => `<tr class="${TR.mode === 'summary' && i === data.length - 1 ? 'tot' : ''}">${keys.map(k => `<td class="${typeof r[k] === 'number' || k === 'ល.រ' ? 'c' : ''}">${esc(typeof r[k] === 'number' || (k === 'ល.រ' && r[k] !== '') ? toKhmerDigits(r[k]) : r[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`; };
+      const tbl = (TR.f.scope ? '' : '<h3>សរុបប្រៀបធៀប ក្នុង / ក្រៅ / Online</h3>' + T(trOverview(rows)).replace('<tr class="">', '<tr>')) + secs.map(sec => `<h3>${esc(sec.label)} — ${toKhmerDigits(sec.rows.length)} កំណត់ត្រា</h3>${T(sec.data)}`).join('');
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
-      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(trTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}</style></head><body><h2>${esc(trTitle())}</h2><p class="s">${esc(trFilterText())} — សរុប ${toKhmerDigits(trFiltered().length)} កំណត់ត្រា</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div><script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
+      win.document.write(`<html><head><meta charset="utf-8"><title>${esc(trTitle())}</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:12mm}body{font-family:'Khmer OS Siemreap','Noto Sans Khmer',sans-serif;font-size:11px;color:#111}h2{text-align:center;margin:0 0 4px;font-size:15px}h3{margin:14px 0 4px;font-size:12px}p.s{text-align:center;margin:0 0 10px;color:#444}table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:4px 6px;vertical-align:top}th{background:#eee}td.c{text-align:center}tr.tot td{font-weight:bold;background:#f0f8f0}.f{margin-top:14px;text-align:right}</style></head><body><h2>${esc(trTitle())}</h2><p class="s">${esc(trFilterText())} — សរុប ${toKhmerDigits(rows.length)} កំណត់ត្រា</p>${tbl}<div class="f">រាជធានីភ្នំពេញ, ថ្ងៃទី${toKhmerDigits(now.getDate())} ខែ${toKhmerDigits(now.getMonth() + 1)} ឆ្នាំ${toKhmerDigits(now.getFullYear())}</div><script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
       win.document.close();
     }
     function toggleExportMenu(ev) { ev.stopPropagation(); document.getElementById('export-menu')?.classList.toggle('hidden'); }
@@ -7541,15 +7663,17 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8;' }), 'dhrd_docs_' + todayISO() + '.csv');
       showToast('បាន Export CSV (' + rows.length + ' ជួរ)');
     }
-    function trainExportRows() {
-      return getFilteredTrainingData().map((t, i) => { const [s, e] = trainRange(t); return { "ល.រ": i + 1, "ឈ្មោះ": t.trainee, "ភេទ": t.gender || '', "តួនាទី និងអង្គភាព": t.unit, "កម្មវិធី ឬឈ្មោះវគ្គសិក្សា": t.course, "កម្រិត": t.level || '', "រយៈពេល": t.duration, "ថ្ងៃចាប់ផ្តើម": s ? formatDateDisplay(s) : '', "ថ្ងៃបញ្ចប់": e ? formatDateDisplay(e) : '', "ប្រទេស": t.country, "ឧបត្ថម្ភ": t.sponsor, "ប្រភេទ": t.scope === 'Domestic' ? 'ក្នុងប្រទេស' : 'ក្រៅប្រទេស' }; });
+    function trainExportRows(rows) {
+      return (rows || getFilteredTrainingData(true)).map((t, i) => { const [s, e] = trainRange(t); return { "ល.រ": i + 1, "ឈ្មោះ": t.trainee, "ភេទ": t.gender || '', "តួនាទី និងអង្គភាព": t.unit, "កម្មវិធី ឬឈ្មោះវគ្គសិក្សា": t.course, "កម្រិត": t.level || '', "រយៈពេល": t.duration, "ថ្ងៃចាប់ផ្តើម": s ? formatDateDisplay(s) : '', "ថ្ងៃបញ្ចប់": e ? formatDateDisplay(e) : '', "ប្រទេស": t.country, "ឧបត្ថម្ភ": t.sponsor, "ប្រភេទ": SCOPE_LABEL[trainScopeOf(t)] }; });
     }
     function exportTrainingExcel() {
       if (!window.XLSX) return showToast('Library Excel (XLSX) មិនទាន់ផ្ទុកបានទេ', true);
-      const ws = XLSX.utils.json_to_sheet(trainExportRows()); const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "វគ្គបណ្តុះបណ្តាលបន្ត");
-      XLSX.writeFile(wb, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + todayISO() + '.xlsx');
-      showToast('បាន Export Excel ជោគជ័យ!');
+      const all = getFilteredTrainingData(true); if (!all.length) return showToast('មិនមានទិន្នន័យ', true);
+      // ១ sheet ក្នុងប្រទេស · ១ sheet ក្រៅប្រទេស · (Online/ផ្សេងៗ) + សរុបប្រៀបធៀប
+      const sheets = [{ name: 'សរុបប្រៀបធៀប', rows: trOverview(all) }];
+      SCOPE_KEYS.forEach(k => { const rs = all.filter(t => trainScopeOf(t) === k); if (rs.length) sheets.push({ name: SCOPE_SHEET[k], rows: trainExportRows(rs) }); });
+      if (!xlsxBook(sheets, 'របាយការណ៍_វគ្គបណ្តុះបណ្តាលបន្ត_' + todayISO() + '.xlsx')) return;
+      showToast('បាន Export Excel ជោគជ័យ! (' + (sheets.length - 1) + ' sheet ដាច់ពីគ្នា)');
     }
     function exportTrainingCSV() {
       const rows = trainExportRows(), keys = rows.length ? Object.keys(rows[0]) : ['ល.រ', 'ឈ្មោះ', 'ភេទ', 'តួនាទី និងអង្គភាព', 'កម្មវិធី ឬឈ្មោះវគ្គសិក្សា', 'កម្រិត', 'រយៈពេល', 'ថ្ងៃចាប់ផ្តើម', 'ថ្ងៃបញ្ចប់', 'ប្រទេស', 'ឧបត្ថម្ភ', 'ប្រភេទ'];
