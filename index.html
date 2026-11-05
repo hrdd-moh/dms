@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.6.2 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.6.5 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -90,7 +90,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.6.2</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.6.5</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -148,7 +148,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.6.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.6.5 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -507,7 +507,7 @@
                 <div class="flex-1 min-w-[260px]"><label class="block text-[11px] font-bold text-slate-600 mb-1">🔍 ស្វែងរកវគ្គ ឬ សិក្ខាកាម</label><input type="text" id="filter-cert-search" oninput="onFilter('certs')" placeholder="ឈ្មោះវគ្គ · ឈ្មោះសិក្ខាកាម (ខ្មែរ/ឡាតាំង) · លេខសញ្ញាបត្រ · អង្គភាព" class="form-input-focus w-full border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
                 <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ចាប់ពីថ្ងៃ</label><input type="date" id="filter-cert-from" onchange="onFilter('certs')" class="form-input-focus border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
                 <div><label class="block text-[11px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><input type="date" id="filter-cert-to" onchange="onFilter('certs')" class="form-input-focus border border-slate-300 rounded-xl px-3 h-10 bg-white"></div>
-                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">ស្ថានភាព</label><select id="filter-cert-status" onchange="onFilter('certs')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 h-10 text-sm bg-white"><option value="">ស្ថានភាពទាំងអស់</option><option>សកម្ម</option><option>ដកហូត</option><option>ជំនួស</option></select></div>
+                <div><label class="block text-[11px] font-bold text-slate-600 mb-1">ប្រភេទសញ្ញាបត្រ</label><select id="filter-cert-status" onchange="onFilter('certs')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 h-10 text-sm bg-white"><option value="">ប្រភេទទាំងអស់</option></select></div>
                 <button type="button" onclick="certFilterReset()" title="សម្អាត" class="h-10 px-3 rounded-xl border border-slate-300 bg-white hover:bg-rose-50 font-bold">✕</button>
               </div>
               <div id="cert-course-view" class="space-y-2"></div>
@@ -542,7 +542,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.6.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.6.5 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -698,7 +698,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.6.2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.6.5</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -710,7 +710,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.6.2 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.6.5 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -907,7 +907,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.6.2</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.6.5</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -4106,7 +4106,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
 
     // [EXT:exams] ការិយាល័យទី១ ការប្រឡង៖ ឧ. លទ្ធផលតាមមុខវិជ្ជា, ផ្គូផ្គងបេក្ខជន-មណ្ឌល, ក្រាហ្វជាប់/ធ្លាក់, នាំចូលបញ្ជីបេក្ខជន
-    // [EXT:exams-report] % ជាប់ + Report ប្រឡង (V3.6.2)
+    // [EXT:exams-report] % ជាប់ + Report ប្រឡង (V3.6.5)
     function exYear(e) { return String(e.start_date || e.created_at || '').slice(0, 4) || 'មិនបញ្ជាក់'; }
     function exNums(e) {
       const c = Number(e.candidates) || 0, p = Number(e.passed) || 0, f = Number(e.failed) || 0, a = Number(e.absent) || 0;
@@ -4717,7 +4717,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const taken = new Set(all.map(n => n.toLowerCase())); let n = max + 1; while (taken.has(build(n).toLowerCase())) n++;
       return build(n);
     }
-    // [EXT:certs:audit] V3.6.2 ពិនិត្យលេខស្ទួន/ដាច់ + ប្រវត្តិសិក្ខាកាម (គ្មានការកែស្វ័យប្រវត្តិ)
+    // [EXT:certs:audit] V3.6.5 ពិនិត្យលេខស្ទួន/ដាច់ + ប្រវត្តិសិក្ខាកាម (គ្មានការកែស្វ័យប្រវត្តិ)
     function certNumAudit() {
       const rows = activeRows('certs'), by = new Map(), groups = new Map(); let noNum = 0, unparsed = 0;
       rows.forEach(c => {
@@ -4735,7 +4735,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       }).filter(g => g.count > 1).sort((a, b) => b.missingTotal - a.missingTotal);
       return { dups, gaps, noNum, unparsed, total: rows.length };
     }
-    // [EXT:certs:bulk-attach] V3.6.2 ភ្ជាប់ PDF/រូប ជាក្រុម៖ ឈ្មោះ file (ដកនាមត្រកូល) = លេខសញ្ញាបត្រ → Google Drive (Apps Script) ឬ Supabase
+    // [EXT:certs:bulk-attach] V3.6.5 ភ្ជាប់ PDF/រូប ជាក្រុម៖ ឈ្មោះ file (ដកនាមត្រកូល) = លេខសញ្ញាបត្រ → Google Drive (Apps Script) ឬ Supabase
     const CBA = { items: [], busy: false };
     function certNumKey(x) { return String(x || '').toLowerCase().replace(/\.[a-z0-9]{2,4}$/i, '').replace(/[^a-z0-9ក-៿]+/g, ''); }
     function certBulkMatch(files) {
@@ -4928,7 +4928,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function certPickCourse(c) { certCourseSel = c; const e = document.getElementById('filter-cert-course'); if (e) e.value = c; pager.certs.page = 1; renderCerts(); }
     function certFilterReset() { certCourseSel = ''; ['filter-cert-search', 'filter-cert-course', 'filter-cert-name', 'filter-cert-from', 'filter-cert-to', 'filter-cert-status'].forEach(i => { const e = document.getElementById(i); if (e) e.value = ''; }); onFilter('certs'); }
     // [EXT:certs:list] បញ្ជីតាមវគ្គ + តម្រងខាងលើ (filter-cert-*)៖ ថែមតម្រង/ជួរ/ប៊ូតុងសកម្មភាពវគ្គ (ឧ. ភ្ជាប់ឯកសារទាំងវគ្គ, ប្រវត្តិសិក្ខាកាម)
-    // [EXT:certs:course-page] V3.6.2 ទំព័រលម្អិតវគ្គ (ចុចពីរដងលើឈ្មោះវគ្គ) — ពេញអេក្រង់, ប៊ូតុង Back របស់ browser ដំណើរការ
+    // [EXT:certs:course-page] V3.6.5 ទំព័រលម្អិតវគ្គ (ចុចពីរដងលើឈ្មោះវគ្គ) — ពេញអេក្រង់, ប៊ូតុង Back របស់ browser ដំណើរការ
     const CCP = { course: '', q: '' };
     function certCoursePageOpen(c) {
       CCP.course = c || ''; CCP.q = ''; let p = document.getElementById('cert-course-page');
@@ -4960,10 +4960,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function renderCerts() {
       if (document.getElementById('cert-course-page')) setTimeout(certCoursePageRender, 0);
       const tbody = document.getElementById('certs-table-body'); if (!tbody) return;
-      const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim(), fs = document.getElementById('filter-cert-status')?.value || '';
+      const fsEl = document.getElementById('filter-cert-status');
+      if (fsEl) { const cur = fsEl.value, used = [...new Set(activeRows('certs').map(c => c.type).filter(Boolean))], names = [...new Set([...certTypeNames(), ...used])];
+        fsEl.innerHTML = '<option value="">ប្រភេទទាំងអស់</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join(''); fsEl.value = names.includes(cur) ? cur : ''; }
+      const q = (document.getElementById('filter-cert-search')?.value || '').toLowerCase().trim(), fs = fsEl?.value || '';
       const gv = id => (document.getElementById(id)?.value || '').toLowerCase().trim(), fc = gv('filter-cert-course'), fn = gv('filter-cert-name'), fd1 = gv('filter-cert-from'), fd2 = gv('filter-cert-to');
       const dl = document.getElementById('filter-cert-course-list'); if (dl) { const cs = [...new Set(activeRows('certs').map(c => c.course).filter(Boolean))].sort().join('|'); if (dl.dataset.k !== cs) { dl.dataset.k = cs; dl.innerHTML = cs.split('|').filter(Boolean).map(v => `<option value="${esc(v)}">`).join(''); } }
-      const inF = c => (!fs || (c.status || 'សកម្ម') === fs) && (!fd1 || String(c.start_date || c.date || '') >= fd1) && (!fd2 || String(c.start_date || c.date || '') <= fd2);
+      const inF = c => (!fs || c.type === fs) && (!fd1 || String(c.start_date || c.date || '') >= fd1) && (!fd2 || String(c.start_date || c.date || '') <= fd2);
       const pm = c => [c.num, c.recipient, c.recipient_latin, c.institution].some(v => String(v || '').toLowerCase().includes(q)), cm = c => [c.course, c.course_latin].some(v => String(v || '').toLowerCase().includes(q));
       const base = activeRows('certs').filter(inF);
       const rows = sortRecords(certCourseSel ? base.filter(c => String(c.course || '') === certCourseSel && (!q || pm(c) || cm(c))) : (q ? base.filter(pm) : []));
@@ -4976,7 +4979,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           const by = new Map(); base.forEach(c => { const k = c.course || ''; if (q && !cm(c) && !pm(c)) return; if (!by.has(k)) by.set(k, []); by.get(k).push(c); });
           const rng = rs => { const d = rs.map(c => c.start_date || c.date).filter(Boolean).sort(), e = rs.map(c => c.end_date || c.date).filter(Boolean).sort(); return d.length ? d[0] + (e[e.length - 1] && e[e.length - 1] !== d[0] ? ' → ' + e[e.length - 1] : '') : ''; };
           const list = [...by.entries()].sort((a, b) => String(rng(b[1])).localeCompare(String(rng(a[1]))));
-          cv.innerHTML = `<div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs"><table class="w-full text-left text-sm resizable-table"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3.5 w-12 text-center">ល.រ</th><th class="p-3.5 min-w-[220px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center">សិក្ខាកាម</th><th class="p-3.5 text-center">ស្រី</th><th class="p-3.5 text-center">ម៉ោង / ក្រេឌីត</th><th class="p-3.5">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${list.map(([k, rs], i) => `<tr class="hover:bg-emerald-50 cursor-pointer select-none" title="ចុចពីរដង ដើម្បីបើកបញ្ជីសិក្ខាកាម" data-c="${esc(k)}" ondblclick="certCoursePageOpen(this.dataset.c)"><td class="p-3.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3.5 text-base font-bold text-slate-900">${esc(k || '(គ្មានឈ្មោះវគ្គ)')}${(rs.find(c => c.course_latin) || {}).course_latin ? `<div class="text-sm font-normal text-slate-500">${esc(rs.find(c => c.course_latin).course_latin)}</div>` : ''}</td><td class="p-3.5 text-center font-bold text-emerald-700">${toKhmerDigits(rs.length)}</td><td class="p-3.5 text-center">${toKhmerDigits(rs.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-3.5 text-center font-bold text-indigo-700">${certCourseHours(rs) ? toKhmerDigits(certCourseHours(rs)) : '—'}</td><td class="p-3.5 font-mono text-sm text-slate-700">${esc(rng(rs))}</td><td class="p-3.5 text-center"><button type="button" data-c="${esc(k)}" onclick="event.stopPropagation();certCoursePageOpen(this.dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-bold hover:bg-emerald-50">👁 មើល</button> <button type="button" title="បោះពុម្ព / PDF" onclick="event.stopPropagation();certCoursePrint(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50 text-xs font-bold">🖨 PDF</button>${can('edit') ? ` <button type="button" title="កែវគ្គ" onclick="event.stopPropagation();certCourseEdit(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-amber-50 text-xs font-bold">✏️</button>` : ''}${can('delete') ? ` <button type="button" title="លុបវគ្គ" onclick="event.stopPropagation();certCourseDelete(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600">🗑</button>` : noDelBtn()}</td></tr>`).join('') || '<tr><td colspan="7" class="p-8 text-center text-slate-400">មិនទាន់មានទិន្នន័យ</td></tr>'}</tbody><tfoot class="bg-emerald-50/70 font-bold text-emerald-900 border-t border-emerald-100"><tr><td class="p-3.5"></td><td class="p-3.5">សរុប៖ ${toKhmerDigits(list.length)} វគ្គ</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.length, 0))}</td><td class="p-3.5 text-center">${toKhmerDigits(list.reduce((a, [, rs]) => a + rs.filter(c => c.gender === 'ស្រី').length, 0))}</td><td class="p-3.5 text-center text-indigo-700">${toKhmerDigits(list.reduce((a, [, rs]) => a + certCourseHours(rs), 0))}</td><td class="p-3.5"></td><td class="p-3.5"></td></tr></tfoot></table></div>`; initResizableTables();
+          cv.innerHTML = `<div class="border border-slate-200 rounded-2xl overflow-x-auto shadow-2xs"><table class="w-full text-left text-sm resizable-table"><thead class="bg-emerald-50/90 text-emerald-900 font-bold border-b border-emerald-100 whitespace-nowrap"><tr><th class="p-3.5 w-12 text-center">ល.រ</th><th class="p-3.5 min-w-[220px]">ឈ្មោះវគ្គ</th><th class="p-3.5 text-center">សិក្ខាកាម</th><th class="p-3.5 text-center">ស្រី</th><th class="p-3.5 text-center">ម៉ោង / ក្រេឌីត</th><th class="p-3.5">កាលបរិច្ឆេទ</th><th class="p-3.5 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100 bg-white">${list.map(([k, rs], i) => `<tr class="hover:bg-emerald-50 cursor-pointer select-none" title="ចុចពីរដង ដើម្បីបើកបញ្ជីសិក្ខាកាម" data-c="${esc(k)}" ondblclick="certCoursePageOpen(this.dataset.c)"><td class="p-3.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-3.5 text-base font-bold text-slate-900">${esc(k || '(គ្មានឈ្មោះវគ្គ)')}${(rs.find(c => c.course_latin) || {}).course_latin ? `<div class="text-sm font-normal text-slate-500">${esc(rs.find(c => c.course_latin).course_latin)}</div>` : ''}</td><td class="p-3.5 text-center font-bold text-emerald-700">${toKhmerDigits(rs.length)}</td><td class="p-3.5 text-center">${toKhmerDigits(rs.filter(c => c.gender === 'ស្រី').length)}</td><td class="p-3.5 text-center font-bold text-indigo-700">${certCourseHours(rs) ? toKhmerDigits(certCourseHours(rs)) : '—'}</td><td class="p-3.5 font-mono text-sm text-slate-700">${esc(rng(rs))}</td><td class="p-3.5 text-center"><button type="button" data-c="${esc(k)}" onclick="event.stopPropagation();certCoursePageOpen(this.dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-bold hover:bg-emerald-50">👁 មើល</button> <button type="button" title="បោះពុម្ព / PDF" onclick="event.stopPropagation();certCoursePrint(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50 text-xs font-bold">🖨 PDF</button>${can('edit') ? ` <button type="button" title="កែវគ្គ" onclick="event.stopPropagation();certCourseEdit(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-amber-50 text-xs font-bold">✏️</button>` : ''}${can('delete') ? ` <button type="button" title="លុបវគ្គ" onclick="event.stopPropagation();certCourseDelete(this.closest('tr').dataset.c)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600">🗑</button>` : noDelBtn()}</td></tr>`).join('') || '<tr><td colspan="7" class="p-8 text-center text-slate-400">មិនទាន់មានទិន្នន័យ</td></tr>'}</tbody></table></div>`; initResizableTables();
         }
       }
       const pg = paginate('certs', rows);
@@ -5097,7 +5100,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // ---------- Save (ចុះបញ្ជីថ្មី) ----------
     // ================= ចុះបញ្ជីច្រើននាក់ ១ វគ្គ — តារាងដូច Excel (paste បាន) =================
     const CB = { rows: [] };
-    const cbBlank = () => ({ no: '', name: '', latin: '', gender: '', unit: '', date: '' });
+    const cbBlank = () => ({ no: '', name: '', latin: '', gender: '', unit: '', date: '', hours: '', file: null });
     const cbVal = id => (document.getElementById(id)?.value || '').trim();
     function cbSuggestStart() { let m = 0; store.certs.forEach(c => { if (/^\d+$/.test(String(c.num || '').trim())) m = Math.max(m, parseInt(c.num, 10)); }); return m + 1; }
     function cbNumbers() {
@@ -5127,8 +5130,22 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <td class="p-1 w-24"><select data-f="gender" class="${inp}"><option value="">—</option><option ${r.gender === 'ប្រុស' ? 'selected' : ''}>ប្រុស</option><option ${r.gender === 'ស្រី' ? 'selected' : ''}>ស្រី</option></select></td>
         <td class="p-1 min-w-[220px]"><input data-f="unit" value="${esc(r.unit)}" class="${inp}"></td>
         <td class="p-1 w-40"><input type="date" data-f="date" value="${esc(r.date || cbVal('cb-date'))}" class="${inp}"></td>
+        <td class="p-1 w-20"><input type="number" min="0" step="0.5" data-f="hours" value="${esc(r.hours || '')}" placeholder="${esc(cbVal('cb-hours'))}" class="${inp}"></td>
+        <td class="p-1 min-w-[190px] text-xs">${r.file ? `<span class="text-emerald-700 font-bold break-all">📎 ${esc(r.file.name)}</span> <button type="button" tabindex="-1" onclick="cbRowFile(${i},null)" class="text-rose-600 font-bold">✕</button>` : `<label class="cursor-pointer text-sky-700 font-bold hover:underline">+ ជ្រើស file<input type="file" accept=".pdf,.png,.jpg,.jpeg" class="hidden" onchange="cbRowFile(${i},this.files[0])"></label>`}</td>
         <td class="p-1 w-8 text-center"><button type="button" tabindex="-1" onclick="cbDel(${i})" class="text-slate-300 hover:text-rose-500">✕</button></td></tr>`).join('');
       cbPreview();
+    }
+    function cbRowFile(i, f) {
+      if (!f) { CB.rows[i].file = null; return cbRender(); }
+      if (!/\.(pdf|png|jpe?g)$/i.test(f.name)) return alert('⚠️ គាំទ្រតែ PDF, PNG, JPG ប៉ុណ្ណោះ!');
+      if (f.size > MAX_FILE_SIZE) return alert('⚠️ ឯកសារធំលើស ' + maxFileMB() + 'MB!');
+      CB.rows[i].file = f; cbRender();
+    }
+    function cbAttachFiles(files) {
+      const nums = cbNumbers(), idx = new Map(); CB.rows.forEach((r, i) => { const k = certNumKey(nums[i]); if (r.name && k && !idx.has(k)) idx.set(k, i); });
+      let ok = 0; const miss = [];
+      [...files].forEach(f => { const i = idx.get(certNumKey(f.name)); if (i == null || !/\.(pdf|png|jpe?g)$/i.test(f.name) || f.size > MAX_FILE_SIZE) return miss.push(f.name); CB.rows[i].file = f; ok++; });
+      cbRender(); const el = document.getElementById('cb-fmsg'); if (el) el.textContent = '✅ ផ្គូផ្គង ' + ok + (miss.length ? ' • ⚠️ រកមិនឃើញ ' + miss.length + ': ' + miss.slice(0, 3).join(', ') + (miss.length > 3 ? '…' : '') : '');
     }
     function cbAdd(n) { for (let i = 0; i < n; i++) CB.rows.push(cbBlank()); cbRender(); }
     function cbDel(i) { CB.rows.splice(i, 1); if (!CB.rows.length) CB.rows.push(cbBlank()); cbRender(); }
@@ -5227,7 +5244,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div>${CQ_LB('ការកំណត់លេខ')}<select id="cb-mode" onchange="if(this.value==='start'&&!document.getElementById('cb-startno').value)document.getElementById('cb-startno').value=cbSuggestStart();cbPreview()" class="${CQ_IN}"><option value="start">🔢 ចាប់ពីលេខ…</option><option value="auto">⚙️ ស្វ័យប្រវត្តិតាមទម្រង់</option><option value="manual">✏️ ដោយដៃ</option></select></div>
           <div id="cb-start-wrap" class="grid grid-cols-3 gap-1.5"><div>${CQ_LB('កូដមុខ')}<input id="cb-prefix" oninput="cbPreview()" placeholder="(ទទេ)" class="${CQ_IN}"></div><div class="col-span-2">${CQ_LB('លេខចាប់ផ្តើម')}<input type="number" id="cb-startno" min="0" oninput="cbPreview()" class="${CQ_IN} font-mono font-bold"></div></div></div>
         <div class="flex items-center gap-2 text-xs"><button type="button" onclick="cbAdd(1)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ជួរ</button><button type="button" onclick="cbAdd(10)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ១០ ជួរ</button><button type="button" onclick="CB.rows=CB.rows.filter(r=>r.name);if(!CB.rows.length)CB.rows.push(cbBlank());cbRender()" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">🧹 លុបជួរទទេ</button><span id="cb-count" class="ml-auto font-bold text-emerald-700"></span></div>
-        <div class="overflow-auto border border-slate-200 rounded-xl max-h-[380px] bg-white"><table class="w-full text-left"><thead class="bg-slate-100 text-slate-700 text-xs sticky top-0 z-10"><tr><th class="p-2">#</th><th class="p-2">ល.បញ្ជី (លេខសញ្ញាបត្រ)</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ឈ្មោះឡាតាំង</th><th class="p-2">ភេទ</th><th class="p-2">អង្គភាព</th><th class="p-2">ថ្ងៃចុះហត្ថលេខា</th><th></th></tr></thead><tbody id="cb-body" oninput="cbInput(event)" onchange="cbInput(event)" onkeydown="cbKey(event)" onpaste="cbPaste(event)"></tbody></table></div>
+        <div class="flex flex-wrap items-center gap-2 bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-xs"><span class="font-bold text-sky-800">📎 ឯកសារ PDF/រូប៖</span>
+          <label class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold cursor-pointer">ជ្រើស file ច្រើន<input type="file" multiple accept=".pdf,.png,.jpg,.jpeg" class="hidden" onchange="cbAttachFiles(this.files);this.value=''"></label>
+          <span class="text-slate-600">ឈ្មោះ file ត្រូវដូចលេខសញ្ញាបត្រ (ឧ. 137.pdf) — ផ្គូផ្គងដោយស្វ័យប្រវត្តិ។ ឬជ្រើសម្តងមួយជួរ។</span><span id="cb-fmsg" class="font-bold text-sky-800"></span>
+          <span class="ml-auto flex items-center gap-2 font-bold"><label><input type="radio" name="cb-dest" value="drive" checked> ☁️ Google Drive</label><label><input type="radio" name="cb-dest" value="supabase"> 🗄️ Supabase</label></span></div>
+        <div class="overflow-auto border border-slate-200 rounded-xl max-h-[380px] bg-white"><table class="w-full text-left"><thead class="bg-slate-100 text-slate-700 text-xs sticky top-0 z-10"><tr><th class="p-2">#</th><th class="p-2">ល.បញ្ជី (លេខសញ្ញាបត្រ)</th><th class="p-2">ឈ្មោះ</th><th class="p-2">ឈ្មោះឡាតាំង</th><th class="p-2">ភេទ</th><th class="p-2">អង្គភាព</th><th class="p-2">ថ្ងៃចុះហត្ថលេខា</th><th class="p-2">ម៉ោង</th><th class="p-2 min-w-[190px]">📎 PDF/រូប</th><th></th></tr></thead><tbody id="cb-body" oninput="cbInput(event)" onchange="cbInput(event)" onkeydown="cbKey(event)" onpaste="cbPaste(event)"></tbody></table></div>
         <div class="flex justify-end"><button type="button" id="cb-save" onclick="cbSave()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">✅ រក្សាទុកទាំងអស់</button></div></div>`;
     }
     function cbReset() { CB.rows = Array.from({ length: 8 }, cbBlank); cbRender(); const s = document.getElementById('cb-startno'); if (s && cbVal('cb-mode') === 'start') s.value = cbSuggestStart(); cbPreview(); }
@@ -5265,8 +5286,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (dups.length) return alert('⚠️ លេខស្ទួន៖ ' + [...new Set(dups)].slice(0, 6).join(', '));
       const hrs = parseFloat(cbVal('cb-hours')), d0 = cbVal('cb-date') || todayISO();
       const rows = named.map(({ r, i }) => ({ id: generateSafeId(), num: nums[i], recipient: r.name, recipient_latin: (r.latin || '').toUpperCase() || null, course_latin: cbVal('cb-course-latin') || null, type, date: r.date || d0, signer: cbVal('cb-signer'), gender: r.gender || impGender(r.name) || null, dob: null, nationality: 'ខ្មែរ', major: null, institution: r.unit || null, grad_year: null,
-        course: cbVal('cb-course') || null, location: cbVal('cb-loc') || null, start_date: cs || null, end_date: ce || cs || null, hours: Number.isFinite(hrs) ? hrs : null, status: 'សកម្ម', status_note: '', file_name: '', file_size: '', file_link: '', created_at: nowISO(), deleted_at: null, deleted_by: null }));
+        course: cbVal('cb-course') || null, location: cbVal('cb-loc') || null, start_date: cs || null, end_date: ce || cs || null, hours: Number.isFinite(parseFloat(r.hours)) ? parseFloat(r.hours) : (Number.isFinite(hrs) ? hrs : null), status: 'សកម្ម', status_note: '', file_name: '', file_size: '', file_link: '', created_at: nowISO(), deleted_at: null, deleted_by: null }));
       const btn = document.getElementById('cb-save'); btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…';
+      const dest = document.querySelector('input[name="cb-dest"]:checked')?.value || 'drive'; let upFail = 0;
+      for (let k = 0; k < named.length; k++) { const f = named[k].r.file; if (!f) continue; btn.textContent = '⬆️ Upload file ' + (k + 1) + '/' + named.length + '…';
+        const u = await certBulkAttachOne(f, { id: rows[k].id }, dest); if (u) { rows[k].file_name = u.file_name; rows[k].file_size = u.file_size; rows[k].file_link = u.file_link; } else upFail++; }
+      if (upFail) alert('⚠️ Upload file មិនបាន ' + upFail + ' — សិក្ខាកាមនៅតែត្រូវបានចុះបញ្ជី។ អ្នកអាចភ្ជាប់ជាក្រុមតាមក្រោយ (📎 ភ្ជាប់ PDF ជាក្រុម)។');
+      btn.textContent = '⏳ កំពុងរក្សាទុក…';
       const ok = await persistMany('certs', rows); const course = cbVal('cb-course') || type; cbReset(); btn.disabled = false; btn.textContent = '✅ រក្សាទុកទាំងអស់'; renderCerts(); updateStats();
       showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានចុះបញ្ជី') + ' ' + rows.length + ' នាក់ (' + rows[0].num + (rows.length > 1 ? ' → ' + rows[rows.length - 1].num : '') + ')', ok === false);
       logActivity('ចុះបញ្ជីសញ្ញាបត្រច្រើននាក់', course + ' (' + rows.length + ' នាក់: ' + rows[0].num + ' → ' + rows[rows.length - 1].num + ')');
@@ -6389,7 +6415,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return { docs: docs.length, sbN, sbMB, drN, linkN, noneN, pendU, pending };
     }
     // [EXT:system:health] System Health cards (card()/row())៖ ថែមកាតថ្មី (ឧ. គុណភាពទិន្នន័យ, ទិន្នន័យស្ទួន)
-    // [EXT:quality] V3.6.2 គុណភាពទិន្នន័យ (System Health)៖ ថែមការត្រួតពិនិត្យក្នុង QUALITY_CHECKS
+    // [EXT:quality] V3.6.5 គុណភាពទិន្នន័យ (System Health)៖ ថែមការត្រួតពិនិត្យក្នុង QUALITY_CHECKS
     const QUALITY_CHECKS = [
       { id: 'cert_nocourse', table: 'certs', label: 'សញ្ញាបត្រ គ្មានឈ្មោះវគ្គ', test: c => !String(c.course || '').trim(), bulk: true },
       { id: 'cert_nodate', table: 'certs', label: 'សញ្ញាបត្រ គ្មានកាលបរិច្ឆេទ', test: c => !c.date && !c.start_date },
@@ -6480,7 +6506,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.6.2') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.6.5') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           ${qualityCardHTML()}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
