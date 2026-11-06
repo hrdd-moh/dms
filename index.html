@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.11.1 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.12.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -70,6 +70,64 @@
       @media (min-width: 1280px) { .main-wide { grid-column: 1 / -1 !important; } }
     .tb-ico{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;font-size:16px;line-height:1;flex-shrink:0}
 .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;max-height:3em}
+    /* ===== V3.12.0 UI: ទូរស័ព្ទ/កុំព្យូទ័រ ===== */
+    /* កម្រិតពណ៌ (ប្រើ body ឱ្យ specificity លើស Tailwind ដោយមិនបំបាត់ hover) */
+    body .text-slate-400 { color: #64748b; }
+    body .text-slate-500 { color: #475569; }
+    body .placeholder\:text-slate-300::placeholder, input::placeholder, textarea::placeholder { color: #8391a5; }
+    body .text-\[10px\] { font-size: 11.5px; line-height: 1.5; }
+    body .text-\[11px\] { font-size: 12px; line-height: 1.5; }
+    /* ប្រអប់ថ្ងៃខែ (បង្ហាញជាអក្សរខ្មែរពេញ) */
+    .kh-date { position: relative; display: block; }
+    .kh-date > input { width: 100%; cursor: pointer; }
+    .kh-date-ov { position: absolute; left: 1px; right: 1px; top: 1px; bottom: 1px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 0 .75rem; background: #fff; border-radius: 11px; pointer-events: none; font-size: 14px; color: #0f172a; white-space: nowrap; overflow: hidden; }
+    .kh-date-ov.empty { color: #64748b; }
+    .kh-date-ov::after { content: '📅'; font-size: 14px; flex-shrink: 0; }
+    div:has(> .kh-date) { flex: 1 1 calc(50% - .5rem); min-width: 150px; }
+    /* ម៉ឺនុយ ⋯ (លុប) */
+    .act-more { width: 2.25rem; height: 2.25rem; margin-left: .5rem; border-radius: .6rem; border: 1px solid #e2e8f0; background: #fff; color: #475569; font-weight: 800; font-size: 1.1rem; line-height: 1; }
+    .act-more:hover { background: #f1f5f9; }
+    /* កុំព្យូទ័រតូច (768–1279): តារាងបង្រួមបន្តិច */
+    @media (min-width: 768px) and (max-width: 1279px) {
+      body table.resizable-table { font-size: 13.5px; }
+      body table.resizable-table th, body table.resizable-table td { padding: .65rem .6rem; }
+    }
+    /* ទូរស័ព្ទ: កាតស្ថិតិតូច ៣ ក្នុងមួយជួរ */
+    @media (max-width: 639px) {
+      #metric-cards { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: .5rem !important; }
+      #metric-cards > div { flex-direction: column; align-items: flex-start !important; justify-content: flex-start !important; padding: .6rem !important; gap: .15rem; }
+      #metric-cards > div > .w-12, #metric-cards > div span.inline-block { display: none; }
+      #metric-cards > div p { font-size: 12px; line-height: 1.4; }
+      #metric-cards > div h3 { font-size: 1.3rem; margin-top: 0 !important; line-height: 1.3; }
+      #metric-cards > div:has(#stat-custom-multi:not(.hidden)) { grid-column: 1 / -1; }
+      #stat-custom-multi { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      #stat-custom-multi > button { padding: .3rem .4rem !important; }
+      #stat-custom-multi > button > div:first-child { font-size: 1.05rem; }
+      #train-scope-cards { gap: .5rem !important; }
+      #train-scope-cards > div { padding: .5rem .6rem !important; }
+      #train-scope-cards > div > div:first-child span:last-child { display: none; }
+      #train-scope-cards .grid-cols-4 { gap: .15rem; }
+      #train-scope-cards .grid-cols-4 > button { padding: .15rem .25rem !important; }
+      #train-scope-cards .grid-cols-4 > button > div:first-child { font-size: .95rem; }
+    }
+    /* ទូរស័ព្ទ: តារាង → កាត (ជួរនីមួយៗ = ១ កាត) */
+    @media (max-width: 767px) {
+      body .text-xs { font-size: 13px; line-height: 1.55; }
+      table.rt-card, table.rt-card tbody, table.rt-card tfoot, table.rt-card tr, table.rt-card td { display: block; width: auto; min-width: 0; }
+      table.rt-card thead { display: none; }
+      table.rt-card tr { border: 1px solid #e2e8f0; border-radius: 14px; margin: 8px; padding: 6px 12px; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .04); }
+      table.rt-card tbody.divide-y > tr { border-top-width: 1px; }
+      body table.rt-card td { padding: 5px 0; border: 0; text-align: left; white-space: normal; overflow: hidden; width: auto !important; max-width: none !important; }
+      table.rt-card td::before { content: attr(data-label); float: left; width: 38%; padding-right: 10px; font-size: 12px; font-weight: 700; color: #475569; }
+      table.rt-card td[data-label=""]::before { display: none; }
+      table.rt-card td[data-act] { text-align: right; border-top: 1px dashed #e2e8f0; margin-top: 4px; padding-top: 8px; }
+      table.rt-card td[data-act] button { min-height: 40px; }
+      table.rt-card .truncate { white-space: normal; overflow: visible; text-overflow: clip; }
+      table.rt-card [class*="max-w-"] { max-width: none !important; }
+      table.rt-card .col-resizer { display: none; }
+      table.rt-card td[data-label="ល.រ"] { display: none; }
+      .kh-date-ov { font-size: 14px; }
+    }
   </style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased h-screen overflow-hidden flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
@@ -90,7 +148,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.11.1</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.12.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -152,7 +210,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.11.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.12.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -238,7 +296,7 @@
         </div>
 
         <!-- METRIC CARDS -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div id="metric-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div onclick="switchBureauTab('docs')" class="cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-emerald-300 transition flex items-center justify-between">
             <div>
               <p class="text-xs text-slate-500 font-bold" data-i18n="card_lib_title">បណ្ណាល័យរួម (៣ ការិយាល័យ)</p>
@@ -608,7 +666,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.11.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.12.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -764,7 +822,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.11.1</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.12.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -776,7 +834,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.11.1 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.12.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -973,7 +1031,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.11.1</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.12.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2799,7 +2857,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function toggleSidebarCollapse() {
       const sb = document.getElementById('app-sidebar'); const icon = document.getElementById('sidebar-collapse-icon');
       if (!sb) return; sb.classList.toggle('collapsed');
+      try { localStorage.setItem('hrdd_sb_pref', sb.classList.contains('collapsed') ? '1' : '0'); } catch (e) { }
       if (icon) icon.innerText = sb.classList.contains('collapsed') ? '»' : '«';
+    }
+    // V3.12.0: កុំព្យូទ័រទទឹង <1360px → sidebar បត់តូចស្វ័យប្រវត្តិ (លើកលែងតែអ្នកប្រើបានជ្រើសដោយខ្លួនឯង)
+    function autoSidebar() {
+      const sb = document.getElementById('app-sidebar'); if (!sb) return; let pref = null; try { pref = localStorage.getItem('hrdd_sb_pref'); } catch (e) { }
+      const col = pref === '1' ? true : pref === '0' ? false : (window.innerWidth >= 1024 && window.innerWidth < 1360);
+      sb.classList.toggle('collapsed', col); const icon = document.getElementById('sidebar-collapse-icon'); if (icon) icon.innerText = col ? '»' : '«';
     }
 
     function toggleNotifDropdown() {
@@ -3278,7 +3343,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function onFilter(key) { pager[key].page = 1; RENDERERS[key](); }
     function emptyRow(cols, msg) { return `<tr><td colspan="${cols}" class="p-6 text-center text-slate-400">${esc(msg || tStr('no_data'))}</td></tr>`; }
     function noDelBtn() { return ` <button type="button" title="គ្មានសិទ្ធិលុប" onclick="event.stopPropagation();showToast('គ្មានសិទ្ធិលុប — សូមឱ្យ Admin ផ្តល់សិទ្ធិ «លុប» ក្នុង User Management ឬប្រើ ✏️ ដើម្បីកែ', true)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-bold text-slate-400 cursor-not-allowed">🗑</button>`; }
-    function deleteBtn(table, id) { return can('delete') ? `<button onclick="softDelete('${table}', ${id})" class="text-rose-600 hover:text-rose-800 font-bold text-xs ml-2 form-input-focus">${esc(tStr('btn_delete'))}</button>` : ''; }
+    function deleteBtn(table, id) { return can('delete') ? `<button type="button" onclick="actMenu(this,event)" data-t="${table}" data-i="${id}" aria-label="ជម្រើសបន្ថែម" title="ជម្រើសបន្ថែម" class="act-more form-input-focus">⋯</button>` : ''; }
 
     // ---------------- 12. TABLE RENDERERS ----------------
     function getFilteredDocs() {
@@ -4260,8 +4325,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">📊 Report — ការប្រឡងថ្នាក់ជាតិ</h3><button type="button" onclick="erClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-500 font-bold">✕</button></div>
         <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
           ${sel('type', 'ប្រភេទប្រឡង', uniq(e => e.type))}${sel('year', 'ឆ្នាំ', uniq(e => exYear(e)))}${sel('inst', 'គ្រឹះស្ថាន', uniq(e => e.institution))}
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ថ្ងៃប្រឡង ពី</label><input type="date" id="erf-from" onchange="erRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="erf-to" onchange="erRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ថ្ងៃប្រឡងពី</label><input type="date" id="erf-from" onchange="erRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><input type="date" id="erf-to" onchange="erRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក</label><input id="erf-q" oninput="erRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div>
         </div>
         <div class="flex flex-wrap items-center gap-2 text-xs">
@@ -4594,7 +4659,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const rows = all.filter(p => (fs === 'all' || (p.session || '') === fs) && (!q || [p.room, p.subject, p.session, p.center].some(v => String(v || '').toLowerCase().includes(q))));
       if (!rows.length) { tbl.innerHTML = '<p class="p-8 text-center text-slate-400">មិនទាន់មានប្លង់' + K.kh + ' — ចុច «➕ បង្កើតប្លង់»</p>'; return; }
       const by = new Map(); rows.forEach(p => { const k = p.session || ''; if (!by.has(k)) by.set(k, []); by.get(k).push(p); });
-      const del = p => can('delete') ? `<button type="button" onclick="softDelete('seat_plans', ${p.id})" class="text-rose-600 hover:text-rose-800 font-bold text-xs ml-1">លុប</button>` : '';
+      const del = p => deleteBtn('seat_plans', p.id);
       const files = spFiles();
       const B = 'px-2 py-0.5 rounded-lg border border-slate-200 bg-white hover:bg-emerald-50';
       tbl.innerHTML = `<table class="w-full text-sm text-left"><thead class="bg-emerald-50/90 text-emerald-900 font-bold sticky top-0 z-10 whitespace-nowrap"><tr><th class="p-3">បន្ទប់</th><th class="p-3">${K.sub}</th><th class="p-3 text-center">ទំហំ / ទម្រង់</th><th class="p-3 text-center">លេខតុ</th><th class="p-3 text-center">បេក្ខជន / ចំណុះ</th><th class="p-3 text-center">ថ្ងៃប្រឡង</th><th class="p-3 text-center">សកម្មភាព</th></tr></thead><tbody class="divide-y divide-slate-100">${[...by.entries()].map(([s, ps]) => {
@@ -6743,8 +6808,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="flex justify-between items-center border-b border-slate-100 pb-3"><h3 class="text-base font-bold text-slate-900">🎓 Report — វគ្គបណ្តុះបណ្តាល & វិញ្ញាបនបត្រ</h3><button type="button" onclick="ccrClose()" class="w-8 h-8 rounded-full hover:bg-slate-100 text-slate-400">✕</button></div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
           ${sel('course', 'វគ្គ', uniq('course'))}${sel('location', 'ទីកន្លែង', uniq('location'))}${sel('year', 'ឆ្នាំ', years)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ចាប់ផ្តើម ពី</label><input type="date" id="ccf-from" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="ccf-to" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើមពីថ្ងៃ</label><input type="date" id="ccf-from" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><input type="date" id="ccf-to" onchange="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div class="col-span-2"><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (ឈ្មោះ/អង្គភាព/លេខ)</label><input id="ccf-q" oninput="ccrRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div></div>
         <div class="flex flex-wrap items-center gap-2 text-xs"><button id="ccrtab-detail" onclick="ccrSetMode('detail')" class="px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600">📋 Detail Report</button><button id="ccrtab-summary" onclick="ccrSetMode('summary')" class="px-4 py-2 rounded-xl font-bold bg-emerald-600 text-white">🧮 Summary Report</button>
           <div id="ccr-group-wrap" class="flex items-center gap-2"><span class="font-bold text-slate-600">ដោយតាម៖</span><select id="ccf-group" onchange="ccrRender()" class="form-input-focus border border-slate-300 rounded-xl p-2 text-xs bg-white">${Object.entries(CCR_GROUPS).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div><span id="ccr-count" class="ml-auto font-bold text-emerald-700"></span></div>
@@ -7109,8 +7174,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 bg-slate-50 border border-slate-200 rounded-2xl p-3">
           ${sel('type', 'ប្រភេទ', [...new Set([...certTypeNames(), ...uniq('type')])]).replace('onchange="crRender()"', 'onchange="crCourseOptions();crRender()"')}${sel('year', 'ឆ្នាំ', years)}${sel('month', 'ខែ', Array.from({ length: 12 }, (_, i) => [String(i + 1).padStart(2, '0'), 'ខែ ' + (i + 1)]))}
           ${sel('status', 'ស្ថានភាព', CERT_STATUS)}${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('institution', 'អង្គភាព', uniq('institution'))}
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ថ្ងៃចេញ ពី</label><input type="date" id="crf-from" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="crf-to" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ថ្ងៃចេញពី</label><input type="date" id="crf-from" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><input type="date" id="crf-to" onchange="crRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div class="col-span-2">${sel('course', 'វគ្គបណ្តុះបណ្តាល', [])}</div>
           
         </div>
@@ -8401,8 +8466,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${sel('scope', 'ក្នុង/ក្រៅប្រទេស (ទាំងអស់ = ចែក ២-៣ ផ្នែក)', [['Domestic', 'ក្នុងប្រទេស'], ['International', 'ក្រៅប្រទេស'], ['Online', 'Online / ផ្សេងៗ']])}${sel('country', 'ប្រទេស', uniq('country'))}${sel('sponsor', 'អ្នកឧបត្ថម្ភ', uniq('sponsor'))}
           ${sel('gender', 'ភេទ', ['ប្រុស', 'ស្រី', ['-', 'មិនបញ្ជាក់']])}${sel('level', 'កម្រិត', [...LEVELS, ['-', 'មិនបញ្ជាក់']])}
           ${sel('term', 'រយៈពេល', [['short', 'វគ្គខ្លី'], ['long', 'វគ្គវែង']])}${sel('title', 'Title', getList('titles'))}${sel('status', 'ស្ថានភាព', ['មិនទាន់ចាប់ផ្តើម', 'កំពុងរៀន', 'បានបញ្ចប់', 'មិនស្គាល់ថ្ងៃ'])}${sel('year', 'ឆ្នាំ (ចាប់ផ្តើម)', [...new Set(all.map(t => (trainStart(t) || '').slice(0, 4)).filter(Boolean))].sort().reverse())}${sel('course', 'វគ្គសិក្សា', uniq('course'))}
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ចាប់ផ្តើម ពី</label><input type="date" id="trf-from" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
-          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ដល់</label><input type="date" id="trf-to" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ចាប់ផ្តើមពីថ្ងៃ</label><input type="date" id="trf-from" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
+          <div><label class="block text-[10px] font-bold text-slate-600 mb-1">📅 ដល់ថ្ងៃ</label><input type="date" id="trf-to" onchange="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-1.5 text-xs bg-white"></div>
           <div><label class="block text-[10px] font-bold text-slate-600 mb-1">ស្វែងរក (ឈ្មោះ/អង្គភាព/វគ្គ)</label><input id="trf-q" oninput="trRender()" class="form-input-focus w-full border border-slate-300 rounded-xl p-2 text-xs bg-white"></div>
         </div>
         <div class="flex flex-wrap items-center gap-2 text-xs">
@@ -8572,7 +8637,51 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const pc = document.getElementById('profile-menu-container'), pd = document.getElementById('profile-dropdown');
       if (pc && pd && !pc.contains(e.target)) pd.classList.add('hidden');
     });
+    // ===== V3.12.0 UI: តារាង→កាត (ទូរស័ព្ទ) · ម៉ឺនុយ ⋯ · ថ្ងៃខែជាខ្មែរ · sidebar ស្វ័យប្រវត្តិ =====
+    const RT_SEL = 'table.resizable-table, #cert-course-view table, #seat-plans-table table, #training-course-view table, #extrack-table table';
+    function rtLabel() {
+      document.querySelectorAll(RT_SEL).forEach(tb => {
+        tb.classList.add('rt-card');
+        const hr = tb.tHead && tb.tHead.rows[tb.tHead.rows.length - 1], labs = [];
+        if (hr) [...hr.cells].forEach(th => { const t = (th.textContent || '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < (th.colSpan || 1); i++) labs.push(t); });
+        [...tb.tBodies, tb.tFoot].filter(Boolean).forEach(sec => [...sec.rows].forEach(tr => {
+          let ci = 0; [...tr.cells].forEach(td => {
+            const cs = td.colSpan || 1; let lab = cs > 1 ? '' : (labs[ci] || ''); const act = /សកម្មភាព|Actions?/i.test(lab);
+            if (act) { lab = ''; if (!td.hasAttribute('data-act')) td.setAttribute('data-act', '1'); }
+            if (td.getAttribute('data-label') !== lab) td.setAttribute('data-label', lab); ci += cs;
+          });
+        }));
+      });
+    }
+    function closeActMenu() { document.getElementById('act-menu')?.remove(); }
+    function actMenu(btn, ev) {
+      if (ev) ev.stopPropagation(); const had = document.getElementById('act-menu'); closeActMenu(); if (had && had.dataset.for === btn.dataset.t + ':' + btn.dataset.i) return;
+      const t = btn.dataset.t, i = btn.dataset.i, m = document.createElement('div'); m.id = 'act-menu'; m.dataset.for = t + ':' + i; m.className = 'fixed z-[120] bg-white border border-slate-200 rounded-xl shadow-lg p-1.5';
+      m.innerHTML = `<button type="button" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-rose-600 hover:bg-rose-50 font-bold text-sm whitespace-nowrap">🗑 ${esc(tStr('btn_delete'))}</button>`; document.body.appendChild(m);
+      const r = btn.getBoundingClientRect(), h = m.offsetHeight, w = m.offsetWidth; m.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w)) + 'px'; m.style.top = (r.bottom + 4 + h > window.innerHeight ? Math.max(8, r.top - h - 4) : r.bottom + 4) + 'px';
+      m.firstChild.onclick = e => { e.stopPropagation(); closeActMenu(); softDelete(t, Number(i)); };
+      setTimeout(() => document.addEventListener('click', closeActMenu, { once: true }), 0);
+    }
+    document.addEventListener('scroll', closeActMenu, true); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeActMenu(); });
+    const KH_DATE_ID = /^(filter-[a-z]+-(from|to)|(erf|ccf|crf|evf|trf)-(from|to))$/;
+    function khDateText(v) { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(v || ''); return m ? toKhmerDigits(+m[3]) + ' ' + MONTHS_KH[+m[2] - 1] + ' ' + toKhmerDigits(m[1]) : ''; }
+    function khDateSync() {
+      document.querySelectorAll('input[type=date]').forEach(inp => {
+        if (!KH_DATE_ID.test(inp.id)) return;
+        if (!inp.dataset.kh) {
+          inp.dataset.kh = '1'; const w = document.createElement('div'); w.className = 'kh-date'; inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
+          const ov = document.createElement('span'); ov.className = 'kh-date-ov'; ov.setAttribute('aria-hidden', 'true'); w.appendChild(ov);
+          inp.addEventListener('click', () => { try { inp.showPicker && inp.showPicker(); } catch (e) { } });
+        }
+        const ov = inp.parentElement.querySelector('.kh-date-ov'), t = khDateText(inp.value), txt = t || 'ជ្រើសរើសថ្ងៃ';
+        if (ov && ov.textContent !== txt) { ov.textContent = txt; ov.classList.toggle('empty', !t); }
+      });
+    }
+    let _uiRaf = 0; function uiTick() { if (_uiRaf) return; _uiRaf = requestAnimationFrame(() => { _uiRaf = 0; rtLabel(); khDateSync(); }); }
+    try { new MutationObserver(uiTick).observe(document.body, { childList: true, subtree: true }); setInterval(khDateSync, 600); } catch (e) { }
+    window.addEventListener('resize', autoSidebar);
     window.addEventListener('DOMContentLoaded', () => {
+      autoSidebar(); uiTick();
       try { const qp = new URLSearchParams(location.search); if (qp.has('verify')) { showVerifyPage(qp.get('verify')); return; } } catch (e) { }
       startIdleWatcher(); initLocalDB();
     });
