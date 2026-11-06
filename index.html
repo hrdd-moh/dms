@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.12.1 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.13.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -75,8 +75,17 @@
     body .text-slate-400 { color: #64748b; }
     body .text-slate-500 { color: #475569; }
     body .placeholder\:text-slate-300::placeholder, input::placeholder, textarea::placeholder { color: #8391a5; }
-    body .text-\[10px\] { font-size: 11.5px; line-height: 1.5; }
-    body .text-\[11px\] { font-size: 12px; line-height: 1.5; }
+    html { font-size: 17px; }
+    body .text-xs { font-size: .85rem; line-height: 1.6; }
+    body .text-\[9px\] { font-size: 11.5px; line-height: 1.5; }
+    body .text-\[10px\] { font-size: 12.5px; line-height: 1.5; }
+    body .text-\[11px\] { font-size: 13px; line-height: 1.5; }
+    /* Zoom ក្នុង Preview */
+    .zoom-bar { position: fixed; right: 16px; bottom: 16px; z-index: 200; display: flex; align-items: center; gap: 2px; background: #0f172a; color: #fff; border-radius: 999px; padding: 4px 6px; box-shadow: 0 4px 16px rgb(0 0 0 / .35); user-select: none; }
+    .zoom-bar button { width: 40px; height: 40px; border-radius: 999px; font-size: 20px; font-weight: 800; line-height: 1; color: #fff; background: transparent; }
+    .zoom-bar button:hover:not([disabled]) { background: #334155; }
+    .zoom-bar button[disabled] { opacity: .35; cursor: not-allowed; }
+    .zoom-bar .zoom-pct { min-width: 52px; text-align: center; font-size: 14px; font-weight: 700; }
     /* ប្រអប់ថ្ងៃខែ (បង្ហាញជាអក្សរខ្មែរពេញ) */
     .kh-date { position: relative; display: block; }
     .kh-date > input { width: 100%; cursor: pointer; }
@@ -112,7 +121,6 @@
     }
     /* ទូរស័ព្ទ: តារាង → កាត (ជួរនីមួយៗ = ១ កាត) */
     @media (max-width: 767px) {
-      body .text-xs { font-size: 13px; line-height: 1.55; }
       table.rt-card, table.rt-card tbody, table.rt-card tfoot, table.rt-card tr, table.rt-card td { display: block; width: auto; min-width: 0; }
       table.rt-card thead { display: none; }
       table.rt-card tr { border: 1px solid #e2e8f0; border-radius: 14px; margin: 8px; padding: 6px 12px; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .04); }
@@ -148,7 +156,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.12.1</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.13.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -210,7 +218,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.12.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.13.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -666,7 +674,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.12.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.13.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -822,7 +830,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.12.1</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.13.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -834,7 +842,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.12.1 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.13.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1031,7 +1039,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.12.1</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.13.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -4858,7 +4866,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function spPreview() {
       const c = spFormCollect(); if (!c) return; document.getElementById('modal-seat-prev')?.remove();
-      const html = '<html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>' + SP_CSS + 'body{background:#e5e7eb;padding:12px}.pg{background:#fff;padding:18px;margin:0 auto 14px;width:1040px;box-shadow:0 1px 6px rgba(0,0,0,.25)}</style></head><body>' + c.recs.map(spPlanPage).join('') + '</body></html>';
+      const html = '<html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Moul&family=Siemreap&family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>' + SP_CSS + 'body{background:#e5e7eb;padding:12px}.pg{background:#fff;padding:18px;margin:0 auto 14px;width:1040px;box-shadow:0 1px 6px rgba(0,0,0,.25)}</style></head><body>' + c.recs.map(spPlanPage).join('') + '</body></html>';
       const d = document.createElement('div'); d.id = 'modal-seat-prev'; d.className = 'fixed inset-0 bg-slate-900/70 z-[90] flex items-center justify-center p-3';
       d.innerHTML = `<div class="bg-white rounded-3xl w-full max-w-6xl p-4 shadow-2xl flex flex-col h-[92vh] space-y-2"><div class="flex justify-between items-center"><h3 class="text-base font-bold text-slate-900">👁 Preview — ${toKhmerDigits(c.recs.length)} បន្ទប់ · ${toKhmerDigits(c.total)} នាក់ <span class="text-xs font-normal text-slate-500">(មិនទាន់រក្សាទុក)</span></h3><button type="button" onclick="document.getElementById('modal-seat-prev').remove()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">✕</button></div><iframe id="sf-prev-frame" class="flex-1 w-full border border-slate-200 rounded-xl bg-slate-100"></iframe></div>`;
       document.body.appendChild(d); document.getElementById('sf-prev-frame').srcdoc = html;
@@ -4986,11 +4994,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return `<section class="pg"><h1>បញ្ជីហត្ថលេខាបេក្ខជន</h1>${spMeta(i)}
         <table class="lst"><thead><tr><th>ល.រ</th><th>លេខបេក្ខជន</th><th>ឈ្មោះ</th><th>ជំនាញ/សាលា</th><th>តុ (ជួរ·ឈរ)</th><th>ហត្ថលេខា</th></tr></thead><tbody>${i.cs.map((c, k) => { const q = pos.get(String(c.no)); const pt = q == null ? '' : (q >= C * Number(p.nrows) ? 'បន្ថែម' : (Math.floor(q / C) + 1) + '·' + (q % C + 1)); return `<tr><td>${k + 1}</td><td><b>${esc(c.no)}</b></td><td>${esc(c.name || '')}</td><td>${esc(c.major || '')}</td><td>${pt}</td><td></td></tr>`; }).join('')}</tbody></table></section>`;
     }
-    const SP_CSS = `body{font-family:'Noto Sans Khmer','Khmer OS','Khmer UI','Leelawadee UI',sans-serif;margin:0;color:#000}.pg{page-break-after:always;padding:0}.pg:last-child{page-break-after:auto}h1{text-align:center;font-size:26px;line-height:1.5;margin:0 0 6px}.meta{font-size:15px;line-height:1.6;margin-bottom:6px;display:grid;grid-template-columns:1fr 1fr;column-gap:24px}.meta b{display:inline-block;min-width:105px}
-      .grid{border-collapse:separate;border-spacing:8px;margin:0 auto}.grid td{border:1.5px solid #000;text-align:center;vertical-align:middle;line-height:1;font-weight:700;padding:0}.x{background:linear-gradient(to top right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px))}
-      .xr{text-align:right;margin-right:12px}.seat{display:inline-block;border:1.5px solid #000;text-align:center;font-weight:700}.foot{font-size:14px;line-height:1.5;margin-top:8px;text-align:center}
-      .labs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lab{border:1.5px dashed #444;border-radius:6px;padding:6px 8px;height:3.6cm;box-sizing:border-box;overflow:hidden;break-inside:avoid}.ln{font-size:30px;font-weight:800;line-height:1.1}.lr{font-size:13px;font-weight:700}.ls{font-size:13px}.lm{font-size:12px;color:#333}.lf{font-size:10px;color:#444;margin-top:2px}
-      .lst{width:100%;border-collapse:collapse;font-size:13px}.lst th,.lst td{border:1px solid #000;padding:5px 6px}.lst th{background:#eee}.lst td:last-child{width:3.5cm}.rk{display:flex;gap:10px;margin:8px 0 12px;flex-wrap:wrap}.rk div{border:1.5px solid #000;border-radius:6px;padding:6px 12px;text-align:center;font-size:12px}.rk b{display:block;font-size:22px}.tr td{font-weight:800;background:#f3f3f3}`;
+    const SP_CSS = `body{font-family:'Khmer OS Siemreap','Siemreap','Noto Sans Khmer','Khmer UI','Leelawadee UI',sans-serif;margin:0;color:#000}.pg{page-break-after:always;padding:0}.pg:last-child{page-break-after:auto}h1{font-family:'Khmer OS Muol Light','Moul','Noto Sans Khmer',serif;font-weight:400;text-align:center;font-size:24px;line-height:1.7;margin:0 0 6px}.meta{font-size:15px;line-height:1.6;margin-bottom:6px;display:grid;grid-template-columns:1fr 1fr;column-gap:24px}.meta b{display:inline-block;min-width:105px}
+      .grid{border-collapse:separate;border-spacing:8px;margin:0 auto}.grid td{border:1.5px solid #000;text-align:center;vertical-align:middle;line-height:1;font-weight:700;padding:0;font-family:'Times New Roman',Times,serif}.x{background:linear-gradient(to top right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px))}
+      .xr{text-align:right;margin-right:12px}.seat{display:inline-block;border:1.5px solid #000;text-align:center;font-weight:700;font-family:'Times New Roman',Times,serif}.foot{font-size:14px;line-height:1.5;margin-top:8px;text-align:center}
+      .labs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lab{border:1.5px dashed #444;border-radius:6px;padding:6px 8px;height:3.6cm;box-sizing:border-box;overflow:hidden;break-inside:avoid}.ln{font-family:'Times New Roman',Times,serif;font-size:30px;font-weight:800;line-height:1.1}.lr{font-size:13px;font-weight:700}.ls{font-size:13px}.lm{font-size:12px;color:#333}.lf{font-size:10px;color:#444;margin-top:2px}
+      .lst{width:100%;border-collapse:collapse;font-size:13px}.lst th,.lst td{border:1px solid #000;padding:5px 6px}.lst th{background:#eee}.lst td:last-child{width:3.5cm}.lst td:nth-child(2){font-family:'Times New Roman',Times,serif;font-weight:700}.rk{display:flex;gap:10px;margin:8px 0 12px;flex-wrap:wrap}.rk div{border:1.5px solid #000;border-radius:6px;padding:6px 12px;text-align:center;font-size:12px}.rk b{display:block;font-size:22px}.tr td{font-weight:800;background:#f3f3f3}`;
     function spPrint(ids, mode) { spPrintPlans(ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean), mode); }
     function spPrintPlans(plans, mode) {
       if (!plans.length) return showToast('មិនមានប្លង់', true);
@@ -4998,7 +5006,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up សម្រាប់ Print', true);
       // ប្លង់៖ @page margin:0 → Chrome លាក់ក្បាល/ជើងទំព័រ (about:blank, កាលបរិច្ឆេទ) · គែមទុកដោយ padding
       const pgCss = mode === 'plan' ? '@page{size:A4 landscape;margin:0}.pg{box-sizing:border-box;padding:10mm}' : '@page{size:A4 portrait;margin:10mm}';
-      win.document.write(`<html><head><meta charset="utf-8"><title>ប្លង់តុ</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>${pgCss}${SP_CSS}${mode === 'plan' ? '.pg{padding:10mm}' : ''}</style></head><body>${pages}<script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
+      win.document.write(`<html><head><meta charset="utf-8"><title>ប្លង់តុ</title><link href="https://fonts.googleapis.com/css2?family=Moul&family=Siemreap&family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>${pgCss}${SP_CSS}${mode === 'plan' ? '.pg{padding:10mm}' : ''}</style></head><body>${pages}<script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
       win.document.close();
     }
     function spExportExcel(ids) {
@@ -5027,7 +5035,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.body.appendChild(ifr);
       try {
         const d = ifr.contentDocument; d.open();
-        d.write('<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>' + SP_CSS + 'body{margin:0;padding:20px;width:' + (W - 40) + 'px;background:#fff}.pg{page-break-after:auto}</style></head><body>' + pages.join('') + '</body></html>'); d.close();
+        d.write('<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Moul&family=Siemreap&family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>' + SP_CSS + 'body{margin:0;padding:20px;width:' + (W - 40) + 'px;background:#fff}.pg{page-break-after:auto}</style></head><body>' + pages.join('') + '</body></html>'); d.close();
         await Promise.race([d.fonts.ready, new Promise(r => setTimeout(r, 4000))]); await new Promise(r => setTimeout(r, 250));
         const pdf = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: 'a4' }), pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight(), mg = 8;
         let first = true;
@@ -8688,8 +8696,36 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         if (ov && ov.textContent !== txt) { ov.textContent = txt; ov.classList.toggle('empty', !t); }
       });
     }
-    let _uiRaf = 0; function uiTick() { if (_uiRaf) return; _uiRaf = requestAnimationFrame(() => { _uiRaf = 0; rtLabel(); khDateSync(); }); }
-    try { new MutationObserver(uiTick).observe(document.body, { childList: true, subtree: true }); setInterval(khDateSync, 600); } catch (e) { }
+    // ===== V3.13.0: Zoom in/out សម្រាប់គ្រប់ Preview =====
+    const ZM_IDS = ['modal-doc-viewer', 'modal-print-preview', 'modal-seat-prev', 'modal-import-prev', 'modal-seat-rpt', 'modal-cert-report', 'modal-cc-report', 'modal-train-report', 'modal-event-report', 'modal-exam-report'];
+    const ZM_LV = [50, 67, 80, 90, 100, 110, 125, 150, 175, 200, 250, 300], zmState = {};
+    function zmTop() { let best = null, bz = -1; ZM_IDS.forEach(id => { const m = document.getElementById(id); if (!m || m.classList.contains('hidden')) return; const z = parseInt(getComputedStyle(m).zIndex) || 0; if (z > bz || (z === bz && best && (best.compareDocumentPosition(m) & Node.DOCUMENT_POSITION_FOLLOWING))) { bz = z; best = m; } }); return best; }
+    function zmTargets(m) {
+      const f = m.querySelector('#sf-prev-frame'); if (f) { try { if (f.contentDocument && f.contentDocument.body) return [f.contentDocument.body]; } catch (e) { } return [f]; }
+      let c = m.id === 'modal-print-preview' ? m.querySelector('#printable-preview-content') : m.id === 'modal-doc-viewer' ? m.querySelector('#doc-viewer-body') : null;
+      if (!c) { let ba = -1; m.querySelectorAll('.overflow-auto, .overflow-y-auto, .overflow-x-auto').forEach(e => { const a = e.clientWidth * e.clientHeight; if (a >= ba) { ba = a; c = e; } }); }
+      return c ? [...c.children] : [];
+    }
+    function zmApply(m) { const z = (zmState[m.id] || 100) / 100; zmTargets(m).forEach(el => { const v = z === 1 ? '' : String(z); if (el.style.zoom !== v) el.style.zoom = v; }); }
+    function zmStep(d) {
+      const m = zmTop(); if (!m) return; const cur = zmState[m.id] || 100; let i = ZM_LV.indexOf(cur); if (i < 0) i = ZM_LV.findIndex(v => v >= cur); if (i < 0) i = ZM_LV.length - 1;
+      const n = d === 0 ? 100 : ZM_LV[Math.max(0, Math.min(ZM_LV.length - 1, i + d))]; zmState[m.id] = n; zmTick();
+    }
+    function zmTick() {
+      const m = zmTop(); let bar = document.getElementById('zoom-bar');
+      Object.keys(zmState).forEach(id => { const e = document.getElementById(id); if (!e || e.classList.contains('hidden')) delete zmState[id]; });
+      if (!m) { if (bar) bar.remove(); return; }
+      if (!bar) {
+        bar = document.createElement('div'); bar.id = 'zoom-bar'; bar.className = 'zoom-bar'; bar.setAttribute('role', 'toolbar'); bar.setAttribute('aria-label', 'Zoom');
+        bar.innerHTML = '<button type="button" id="zoom-out" aria-label="Zoom out" title="Zoom out (បង្រួម)" onclick="zmStep(-1)">−</button><button type="button" class="zoom-pct" id="zoom-pct" aria-label="Reset zoom" title="ត្រឡប់ 100%" onclick="zmStep(0)">100%</button><button type="button" id="zoom-in" aria-label="Zoom in" title="Zoom in (ពង្រីក)" onclick="zmStep(1)">+</button>';
+        document.body.appendChild(bar);
+      }
+      const cur = zmState[m.id] || 100; document.getElementById('zoom-pct').textContent = cur + '%';
+      document.getElementById('zoom-out').disabled = cur <= ZM_LV[0]; document.getElementById('zoom-in').disabled = cur >= ZM_LV[ZM_LV.length - 1]; zmApply(m);
+    }
+    document.addEventListener('wheel', e => { if (!e.ctrlKey) return; const m = zmTop(); if (!m || !m.contains(e.target)) return; e.preventDefault(); zmStep(e.deltaY < 0 ? 1 : -1); }, { passive: false });
+    let _uiRaf = 0; function uiTick() { if (_uiRaf) return; _uiRaf = requestAnimationFrame(() => { _uiRaf = 0; rtLabel(); khDateSync(); zmTick(); }); }
+    try { new MutationObserver(uiTick).observe(document.body, { childList: true, subtree: true }); setInterval(() => { khDateSync(); zmTick(); }, 600); } catch (e) { }
     window.addEventListener('resize', autoSidebar);
     window.addEventListener('DOMContentLoaded', () => {
       autoSidebar(); uiTick();
