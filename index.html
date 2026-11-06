@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.15.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.15.1 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -156,7 +156,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.15.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.15.1</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -218,7 +218,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.15.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.15.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -501,13 +501,15 @@
 
             <!-- TAB: SEAT PLANS (V3.10.0 ប្លង់តុ — ម៉ឺនុយរង «ប្រឡងចូល» / «ប្រឡងចេញ») -->
             <div id="section-seatplans" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                <div><h3 id="seat-title" class="text-base font-bold text-slate-900">🪑 ប្លង់តុ</h3><p class="text-[11px] text-slate-500 font-bold">បង្កើតប្លង់ច្រើនបន្ទប់ក្នុង Form តែមួយ (ទម្រង់ N · M · Z · X) → កែដៃ → PDF ទុកក្នុងសម័យ · បោះពុម្ព · Excel · Report</p></div>
+              <div class="pb-3 border-b border-slate-100 space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0"><h3 id="seat-title" class="text-base font-bold text-slate-900">🪑 ប្លង់តុ</h3><p class="text-[11px] text-slate-500 font-bold">បង្កើតប្លង់ច្រើនបន្ទប់ក្នុង Form តែមួយ (ទម្រង់ N · M · Z · X) → កែដៃ → PDF ទុកក្នុងសម័យ · បោះពុម្ព · Excel · Report</p></div>
+                  <button type="button" onclick="spForm()" class="perm-upload-el shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-xs">➕ បង្កើតប្លង់</button>
+                </div>
                 <div class="flex flex-wrap items-center gap-2">
                   <select id="filter-seat-session" onchange="renderSeatPlans()" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់សម័យ</option></select>
-                  <input type="text" id="filter-seat-search" oninput="renderSeatPlans()" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-44">
-                  <button type="button" onclick="spReport()" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold">📊 Report សង្ខេប</button>
-                  <button type="button" onclick="spForm()" class="perm-upload-el px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">➕ បង្កើតប្លង់</button>
+                  <input type="text" id="filter-seat-search" oninput="renderSeatPlans()" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 flex-1 min-w-[10rem] sm:max-w-xs">
+                  <button type="button" onclick="spReport()" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-emerald-50 text-xs font-bold whitespace-nowrap">📊 Report សង្ខេប</button>
                 </div>
               </div>
               <div id="seat-plans-table" class="border border-slate-200 rounded-2xl overflow-auto max-h-[620px]"></div>
@@ -674,7 +676,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.15.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.15.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -830,7 +832,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.15.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.15.1</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -842,7 +844,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.15.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.15.1 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1039,7 +1041,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.15.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.15.1</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -4987,9 +4989,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       // តាមគំរូអ្នកប្រើ (A4 បញ្ឈរ)៖ ប្រអប់ ≈ 2.9×1.4cm · គម្លាតឈរធំជាងដេក · លេខ ≈ 20px
       const x = Number(p.extra) ? 1 : 0, GH = 21.5 - (x ? 1.6 : 0), pitch = Math.min(2.1, (GH - 0.7) / R), ch = Math.min(1.4, pitch * 0.67), vs = Math.max(0.15, pitch - ch), hs = 0.3, cw = Math.min(3.0, (19 - hs * (C + 1)) / C - 0.08),
         mx = Math.max(4, ...cells.map(v => String(v || '').length)), fs = Math.round(Math.min(21, (cw - 0.2) / (mx * 0.01323), ch * 16)), st = `style="width:${cw.toFixed(2)}cm;height:${ch.toFixed(2)}cm;line-height:${ch.toFixed(2)}cm;font-size:${fs}px"`;
-      const rowsH = Array.from({ length: R }, (_, r) => '<tr>' + Array.from({ length: C }, (_, c) => { const v = cells[r * C + c] || ''; return `<td class="${v ? '' : 'x'}" ${st}>${esc(v)}</td>`; }).join('') + '</tr>').join('');
+      const rowsH = Array.from({ length: R }, (_, r) => '<tr>' + Array.from({ length: C }, (_, c) => { const v = cells[r * C + c] || ''; return `<td class="${v ? '' : 'x'}" data-n="${esc(v)}" ${st}>${esc(v)}</td>`; }).join('') + '</tr>').join('');
       return `<section class="pg"><h1>ប្លង់តុ</h1>${spMeta(i, true)}
-        ${x ? `<div class="xr"><span class="seat ${cells[N] ? '' : 'x'}" ${st}>${esc(cells[N] || '')}</span></div>` : ''}<table class="grid" style="border-spacing:${hs}cm ${vs.toFixed(2)}cm">${rowsH}</table><div class="foot">ទម្រង់៖ <b>${esc(p.tpl || (C + 'x' + R))}</b> · បេក្ខជន ${esc(toKhmerDigits(i.n))} នាក់ · ចំណុះ ${esc(toKhmerDigits(C * R + x))} តុ</div></section>`;
+        ${x ? `<div class="xr"><span class="seat ${cells[N] ? '' : 'x'}" data-n="${esc(cells[N] || '')}" ${st}>${esc(cells[N] || '')}</span></div>` : ''}<table class="grid" style="border-spacing:${hs}cm ${vs.toFixed(2)}cm">${rowsH}</table><div class="foot">ទម្រង់៖ <b>${esc(p.tpl || (C + 'x' + R))}</b></div></section>`;
     }
     function spLabelsPage(p) {
       const i = spInfo(p), cells = spPlanCells(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
@@ -5002,7 +5004,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     const SP_CSS = `body{font-family:'Khmer OS Siemreap','Siemreap','Noto Sans Khmer','Khmer UI','Leelawadee UI',sans-serif;margin:0;color:#000}.pg{page-break-after:always;padding:0}.pg:last-child{page-break-after:auto}h1{font-family:'Khmer OS Muol Light','Moul','Noto Sans Khmer',serif;font-weight:400;text-align:center;font-size:24px;line-height:1.7;margin:0 0 6px}.meta{font-size:15px;line-height:1.6;margin-bottom:6px;display:grid;grid-template-columns:1fr 1fr;column-gap:24px}.meta b{display:inline-block;min-width:105px}.meta.v{grid-template-columns:1fr;font-size:16px;line-height:1.55;margin:4px 0 10px}.meta.v b{min-width:4.8cm}
       .grid{border-collapse:separate;border-spacing:8px;margin:0 auto}.grid td{border:1.5px solid #000;text-align:center;vertical-align:middle;line-height:1;font-weight:700;padding:0;font-family:'Times New Roman',Times,serif}.x{background:linear-gradient(to top right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px))}
-      .xr{text-align:right;margin-right:12px}.seat{display:inline-block;border:1.5px solid #000;text-align:center;font-weight:700;font-family:'Times New Roman',Times,serif}.foot{font-size:14px;line-height:1.5;margin-top:8px;text-align:center}
+      .xr{text-align:right;margin-right:12px}.seat{display:inline-block;border:1.5px solid #000;text-align:center;font-weight:700;font-family:'Times New Roman',Times,serif}.foot{font-size:14px;line-height:1.5;margin-top:8px;text-align:left}
       .labs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lab{border:1.5px dashed #444;border-radius:6px;padding:6px 8px;height:3.6cm;box-sizing:border-box;overflow:hidden;break-inside:avoid}.ln{font-family:'Times New Roman',Times,serif;font-size:30px;font-weight:800;line-height:1.1}.lr{font-size:13px;font-weight:700}.ls{font-size:13px}.lm{font-size:12px;color:#333}.lf{font-size:10px;color:#444;margin-top:2px}
       .lst{width:100%;border-collapse:collapse;font-size:13px}.lst th,.lst td{border:1px solid #000;padding:5px 6px}.lst th{background:#eee}.lst td:last-child{width:3.5cm}.lst td:nth-child(2){font-family:'Times New Roman',Times,serif;font-weight:700}.rk{display:flex;gap:10px;margin:8px 0 12px;flex-wrap:wrap}.rk div{border:1.5px solid #000;border-radius:6px;padding:6px 12px;text-align:center;font-size:12px}.rk b{display:block;font-size:22px}.tr td{font-weight:800;background:#f3f3f3}`;
     function spPrint(ids, mode) { spPrintPlans(ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean), mode); }
@@ -5046,12 +5048,19 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const pdf = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: 'a4' }), pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight(), mg = 8;
         let first = true;
         for (const sec of [...d.querySelectorAll('.pg')]) {
+          // លេខតុ (ឡាតាំង) គូរជា vector Times-Bold ត្រង់កណ្តាលប្រអប់ពិតប្រាកដ (html2canvas ដាក់អក្សរទាបជាងកណ្តាល) · អក្សរខ្មែរនៅជារូបភាព
+          const sr = sec.getBoundingClientRect(), nums = [...sec.querySelectorAll('[data-n]')].filter(e => /^[\x20-\x7E]+$/.test(e.dataset.n || '') && e.dataset.n.trim()).map(e => {
+            const r = e.getBoundingClientRect(); e.style.color = 'transparent';
+            return { t: e.dataset.n, cx: (r.left - sr.left + r.width / 2), cy: (r.top - sr.top + r.height / 2), fs: parseFloat(d.defaultView.getComputedStyle(e).fontSize) || 20 };
+          });
           const cv = await window.html2canvas(sec, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
           const iw = pw - mg * 2, k = iw / cv.width, sliceH = Math.floor((ph - mg * 2) / k);
           for (let y = 0; y < cv.height; y += sliceH) {
             const h = Math.min(sliceH, cv.height - y), part = document.createElement('canvas'); part.width = cv.width; part.height = h;
             part.getContext('2d').drawImage(cv, 0, y, cv.width, h, 0, 0, cv.width, h);
             if (!first) pdf.addPage(); first = false; pdf.addImage(part.toDataURL('image/jpeg', 0.92), 'JPEG', mg, mg, iw, h * k);
+            const kc = k * (cv.width / (sec.offsetWidth || sr.width || cv.width)); // mm ក្នុង 1 CSS px
+            nums.forEach(n => { const cyc = n.cy * (cv.width / (sec.offsetWidth || sr.width || cv.width)); if (cyc < y || cyc >= y + h) return; const fm = n.fs * kc; pdf.setFont('times', 'bold'); pdf.setFontSize(fm / 0.352778); pdf.setTextColor(0, 0, 0); pdf.text(n.t, mg + n.cx * kc, mg + (cyc - y) * k + fm * 0.676 / 2, { align: 'center' }); });
           }
         }
         return pdf.output('blob');
