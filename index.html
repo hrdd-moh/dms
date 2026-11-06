@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.15.2 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.16.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -156,7 +156,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.15.2</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.16.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -218,7 +218,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.15.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.16.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -676,7 +676,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.15.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.16.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -832,7 +832,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.15.2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.16.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -844,7 +844,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.15.2 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.16.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -938,6 +938,9 @@
           <button onclick="switchListTab('titles')" id="listtab-titles" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🏷️ Title</button>
           <button onclick="switchListTab('sponsors')" id="listtab-sponsors" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🤝 អ្នកឧបត្ថម្ភ</button>
           <button onclick="switchListTab('certTypes')" id="listtab-certTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📜 ប្រភេទសញ្ញាបត្រ</button>
+          <button onclick="switchListTab('examCenters')" id="listtab-examCenters" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🏫 មណ្ឌលប្រឡង</button>
+          <button onclick="switchListTab('examSkills')" id="listtab-examSkills" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🛠️ ជំនាញ (ប្រឡងចេញ)</button>
+          <button onclick="switchListTab('examSubjects')" id="listtab-examSubjects" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📘 មុខវិជ្ជា (ប្រឡងចូល)</button>
         </div>
         <div id="sub-location" class="space-y-4">
         <div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
@@ -1041,7 +1044,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.15.2</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.16.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -3606,6 +3609,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       examTypes: { icon: '🎓', label: 'ប្រភេទប្រឡង', hint: 'ឧ. ប្រឡងចូល', def: EXAM_TYPES.slice() },
       titles: { icon: '🏷️', label: 'Title (ពាក្យនាំមុខ)', hint: 'ឧ. លោក, លោកស្រី, វេជ្ជបណ្ឌិត', def: ['លោក', 'លោកស្រី', 'កញ្ញា', 'វេជ្ជបណ្ឌិត', 'សាស្ត្រាចារ្យ', 'ឯកឧត្តម', 'លោកជំទាវ'] },
       sponsors: { icon: '🤝', label: 'អ្នកឧបត្ថម្ភ', hint: 'ឧ. រដ្ឋាភិបាលអូស្រ្តាលី', def: ['សាមីខ្លួន'] },
+      examCenters: { icon: '🏫', label: 'មណ្ឌលប្រឡង', hint: 'ឧ. សកលវិទ្យាល័យភូមិន្ទភ្នំពេញ (RUPP)', def: [], optional: true },
+      examSkills: { icon: '🛠️', label: 'ជំនាញ (ប្រឡងចេញ)', hint: 'ជំនាញ សម្រាប់តែប្រឡងចេញ ឧ. គិលានុបដ្ឋាក', def: [], optional: true },
+      examSubjects: { icon: '📘', label: 'មុខវិជ្ជា (ប្រឡងចូល)', hint: 'មុខវិជ្ជា សម្រាប់តែប្រឡងចូល ឧ. គណិត', def: [], optional: true },
       certTypes: { icon: '📜', label: 'ប្រភេទសញ្ញាបត្រ', hint: 'ទម្រង់ ឈ្មោះ|កូដ ឧ. វិញ្ញាបនបត្រ|VN (កូដប្រើក្នុងលេខស្វ័យប្រវត្តិ)', def: ['វិញ្ញាបនបត្រ|VN', 'សញ្ញាបត្រ|SB', 'លិខិតបញ្ជាក់|LP'] }
     };
     let appLists = {};
@@ -3666,6 +3672,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function listUsage(k, v) {
       if (k === 'titles') return activeRows('trainings').filter(t => String(t.trainee || '').startsWith(v + '.')).length;
       if (k === 'certTypes') return activeRows('certs').filter(c => c.type === certTypeParts(v).name).length;
+      if (k === 'examCenters' || k === 'examSkills' || k === 'examSubjects') return activeRows('seat_plans').filter(p => Number(p.is_tpl) === 0 && (k === 'examCenters' ? exNorm(p.center) === exNorm(v) : exNorm(p.subject) === exNorm(v) && ((p.kind || 'out') === (k === 'examSubjects' ? 'in' : 'out')))).length;
       return k === 'docCats' ? activeRows('docs').filter(d => d.category === v).length : k === 'examTypes' ? activeRows('exams').filter(e => e.type === v).length : activeRows('trainings').filter(t => t.sponsor === v).length;
     }
     function renderListPanel(k) {
@@ -3682,7 +3689,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     async function listDel(k, i) {
       const items = getList(k).slice(), v = items[i];
-      if (items.length <= 1) return alert('ត្រូវមានយ៉ាងហោចណាស់ ១ ធាតុ');
+      if (!LIST_DEFS[k].optional && items.length <= 1) return alert('ត្រូវមានយ៉ាងហោចណាស់ ១ ធាតុ');
       const n = listUsage(k, v);
       if (!confirm('លុប "' + v + '" ?' + (n ? '\n(មាន ' + n + ' កំណត់ត្រាកំពុងប្រើ — កំណត់ត្រាទាំងនោះនៅរក្សាតម្លៃដដែល)' : ''))) return;
       items.splice(i, 1); await saveList(k, items); renderListPanel(k);
@@ -4552,7 +4559,17 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const SEAT_TPL = [{"c":4,"r":5,"p":"X","s":[0,5,10,15,3,6,9,12,4,14,19,7,13,16,8,18,11,17,1,2],"part":0,"v":1},{"c":4,"r":5,"p":"Z","s":[0,1,2,3,6,9,12,13,14,15,4,5,7,10,16,17,18,19,8,11],"part":0,"v":1},{"c":4,"r":6,"p":"N","s":[20,16,12,8,4,0,5,10,15,11,7,3,21,17,13,9,1,14,19,22,18,6,2,23],"part":0,"v":1},{"c":4,"r":6,"p":"Z","s":[0,1,2,3,6,9,12,13,14,15,4,5,7,10,16,17,18,19,8,11,20,21,22,23],"part":0,"v":1},{"c":6,"r":4,"p":"X","s":[0,7,14,21,5,10,15,20,1,8,22,4,9,19,6,13,11,16,12,23,18,17,2,3],"part":0,"v":1},{"c":6,"r":4,"p":"Z","s":[0,1,2,3,4,5,10,15,20,21,22,23,6,7,8,9,11,16,17,12,13,14,18,19],"part":0,"v":1},{"c":5,"r":5,"p":"N","s":[20,15,10,5,0,6,12,18,24,19,14,9,4,21,16,11,1,7,13,8,3,22,17,2,23],"part":0,"v":1},{"c":5,"r":5,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,9,13,21,1,7,19,3,15,2,14,22,10],"part":0,"v":1},{"c":5,"r":6,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,29,9,13,21,25,10,22,28,14,26,1,7,19,3,15,27,2],"part":0,"v":1},{"c":5,"r":6,"p":"X","s":[0,6,12,18,24,4,8,16,20,5,11,17,23,29,9,13,21,25,10,22,28,14,26,15,27,19,1,7,3,2],"part":0,"v":2},{"c":5,"r":6,"p":"Z","s":[0,1,2,3,4,8,12,16,20,21,22,23,24,5,6,7,9,13,17,25,26,27,28,29,10,11,14,18,19,15],"part":0,"v":1},{"c":6,"r":5,"p":"X","s":[0,7,14,21,28,5,10,15,20,25,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,11,26,12,17],"part":0,"v":1},{"c":6,"r":5,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,26,27,28,29,6,7,8,9,11,16,21,22,23,12,13,14,17,18,19,24],"part":0,"v":1},{"c":5,"r":7,"p":"V","s":[0,6,12,8,4,5,11,17,13,9,10,16,22,18,14,15,21,27,23,19,20,26,32,28,24,25,31,33,29,1,7,3,30,34,2],"part":0,"v":1},{"c":5,"r":7,"p":"Z","s":[0,1,2,3,4,8,12,16,20,21,22,23,24,5,6,7,9,13,17,25,26,27,28,29,10,11,14,18,30,31,32,33,34,15,19],"part":0,"v":1},{"c":7,"r":5,"p":"X","s":[0,8,16,24,32,6,12,18,30,1,9,17,25,33,5,11,23,29,2,10,26,34,4,22,28,3,19,27,7,15,31,13,14,20,21],"part":0,"v":1},{"c":7,"r":5,"p":"Z","s":[0,1,2,3,4,5,6,12,18,24,30,31,32,33,34,7,8,9,10,11,13,19,25,26,27,14,15,16,17,20,21,22,23,28,29],"part":0,"v":1},{"c":6,"r":6,"p":"X","s":[0,7,14,21,28,35,5,10,15,20,25,30,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,34,11,26,31,12,33,17,32],"part":0,"v":1},{"c":6,"r":6,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,27,28,29,12,13,14,17,22,23,18,19,24],"part":35,"v":1},{"c":6,"r":7,"p":"M","s":[36,30,24,18,12,6,0,7,14,15,10,5,11,17,23,29,35,41,37,31,25,19,13,1,8,9,4,16,22,28,34,40,38,32,26,20,2,39,33,27,21,3],"part":0,"v":1},{"c":6,"r":7,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,22,27,28,29,18,19,23,24],"part":0,"v":1},{"c":6,"r":8,"p":"M","s":[42,36,30,24,18,12,6,0,7,14,15,10,5,11,17,23,29,35,41,47,43,37,31,25,19,13,1,8,9,4,16,22,28,34,40,46,44,38,32,26,20,2,45,39,33,27,21,3],"part":0,"v":1},{"c":6,"r":8,"p":"X","s":[0,7,14,21,28,35,5,10,15,20,25,30,1,8,22,29,4,9,19,24,2,16,23,3,13,18,6,27,34,41,11,26,31,36,12,33,40,47,17,32,37,42,38,45,39,44,43,46],"part":0,"v":1},{"c":6,"r":8,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,18,19,22,23,28,43,44,45,46,47,24,27,29,42],"part":0,"v":1},{"c":6,"r":8,"p":"Z","s":[0,1,2,3,4,5,10,15,20,25,30,31,32,33,34,35,6,7,8,9,11,16,21,26,36,37,38,39,40,41,12,13,14,17,22,27,42,43,44,45,46,47,18,19,23,28,29,24],"part":0,"v":2},{"c":8,"r":6,"p":"M","s":[40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,41,33,25,17,1,10,19,20,13,6,22,30,38,46,42,34,26,2,11,4,12,36,44,43,35,3,45,37,29,5],"part":0,"v":1},{"c":8,"r":6,"p":"M","s":[40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,41,33,25,17,1,10,19,20,13,6,22,30,38,46,42,34,26,2,11,12,5,29,37,45,43,35,3,44,36,4],"part":0,"v":2},{"c":8,"r":6,"p":"X","s":[0,9,18,27,36,45,7,14,21,28,35,42,1,10,19,37,46,6,13,20,34,41,2,11,29,38,47,5,12,26,33,40,3,30,39,4,25,32,8,17,44,15,22,43,16,23,24,31],"part":45,"v":1},{"c":8,"r":6,"p":"Z","s":[0,1,2,3,4,5,6,7,14,21,28,35,42,43,44,45,46,47,8,9,10,11,12,13,15,22,29,36,37,38,39,16,17,18,19,20,23,30,31,24,25,26,27,34,41,32,33,40],"part":0,"v":1},{"c":8,"r":7,"p":"M","s":[48,40,32,24,16,8,0,9,18,27,28,21,14,7,15,23,31,39,47,55,49,41,33,25,17,1,10,19,20,13,6,22,30,38,46,54,50,42,34,26,2,11,12,5,29,37,45,53,51,43,35,3,4,36,44,52],"part":0,"v":1},{"c":8,"r":7,"p":"Z","s":[0,1,2,3,4,5,6,7,14,21,28,35,42,49,50,51,52,53,54,55,8,9,10,11,12,13,15,22,29,36,43,44,45,46,47,16,17,18,19,20,23,30,37,38,39,24,25,26,27,31,32,33,34,40,41,48],"part":0,"v":1}];
     const SP_PATS = ['N', 'M', 'Z', 'X'], SP_DIMS = [4, 5, 6, 7, 8, 9, 10];
     const SP = { blocks: [], editIdx: null, entry: null, rooms: [], plan: null, sel: -1, dirty: false, kind: 'out' };
-    const SP_KIND = { in: { kh: 'ប្រឡងចូល', sub: 'ជំនាញ', ic: '🎓' }, out: { kh: 'ប្រឡងចេញ', sub: 'មុខវិជ្ជា', ic: '📝' } };
+    const SP_KIND = { in: { kh: 'ប្រឡងចូល', sub: 'មុខវិជ្ជា', ic: '🎓' }, out: { kh: 'ប្រឡងចេញ', sub: 'ជំនាញ', ic: '📝' } };
+    // បញ្ជី «មណ្ឌល / ជំនាញ (ចេញ) / មុខវិជ្ជា (ចូល)» ពី System Tools → កំណត់ (Lists) → ជ្រើសក្នុង Form · វាយថ្មីបាន (រក្សាចូលបញ្ជីស្វ័យប្រវត្តិ)
+    const spListKey = kind => kind === 'in' ? 'examSubjects' : 'examSkills';
+    function spOptHTML(key, field, kind) {
+      const used = activeRows('seat_plans').filter(p => Number(p.is_tpl) === 0 && (!kind || (p.kind || 'out') === kind)).map(p => p[field]), seen = new Set();
+      return [...getList(key), ...used].map(v => String(v || '').trim()).filter(v => { const n = exNorm(v); if (!v || seen.has(n)) return false; seen.add(n); return true; }).map(v => `<option value="${esc(v)}">`).join('');
+    }
+    async function listSaveQuiet(k, items) { appLists[k] = items; await localDB.app_lists.put({ key: k, items }).catch(() => { }); await pushList(k); }
+    function spLearn(kind, sub, ctr) {
+      [[spListKey(kind), sub], ['examCenters', ctr]].forEach(([k, v]) => { v = String(v || '').trim(); if (!v) return; const items = getList(k).slice(); if (items.some(x => exNorm(x) === exNorm(v))) return; items.push(v); listSaveQuiet(k, items); });
+    }
     const spT = v => String(v == null ? '' : v).trim();
     const spCapOf = (c, r, x) => c * r + (x ? 1 : 0);
     const spKind = () => activeTab === 'ex_seat_in' ? 'in' : 'out';
@@ -4762,8 +4779,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="overflow-y-auto space-y-3 pr-1">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 rounded-2xl bg-slate-50 border border-slate-200 p-3">
           <div>${L('សម័យប្រឡង *')}<input id="sf-session" list="sf-sess-list" oninput="spFormSession()" class="${I}" placeholder="ឈ្មោះសម័យ"><datalist id="sf-sess-list">${sess.map(s => `<option value="${esc(s)}">`).join('')}</datalist></div>
-          <div>${L(K.sub)}<input id="sf-subject" class="${I}"></div>
-          <div>${L('មណ្ឌលប្រឡង')}<input id="sf-center" class="${I}" value="${esc(last.center || '')}"></div>
+          <div>${L(K.sub)}<input id="sf-subject" list="sf-subject-dl" class="${I}" placeholder="ជ្រើស ឬវាយថ្មី"><datalist id="sf-subject-dl">${spOptHTML(spListKey(kind), 'subject', kind)}</datalist></div>
+          <div>${L('មណ្ឌលប្រឡង')}<input id="sf-center" list="sf-center-dl" class="${I}" value="${esc(last.center || '')}" placeholder="ជ្រើស ឬវាយថ្មី"><datalist id="sf-center-dl">${spOptHTML('examCenters', 'center', '')}</datalist></div>
           <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="sf-date" class="${I}"></div>
         </div>
         <div class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-3">
@@ -4880,6 +4897,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (c.recs.some(r => exist.includes(exNorm(r.room))) && !confirm('⚠️ មានបន្ទប់ក្នុងសម័យនេះរួចហើយ ដែលមានលេខដូចគ្នា។ បន្តបង្កើតស្ទួន?')) return;
       const btn = document.getElementById('sf-save'); if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; } const sp = document.getElementById('sf-saveprint'); if (sp) sp.disabled = true;
       const ok = await persistMany('seat_plans', c.recs); spFormClose(); seatGoKind(c.kind); renderExTrack();
+      if (c.recs[0]) spLearn(c.recs[0].kind, c.recs[0].subject, c.recs[0].center);
       showToast((ok === false ? 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync' : 'បានរក្សាទុកប្លង់') + ' ' + c.recs.length + ' បន្ទប់', ok === false); if (opt && opt.print) spPrintPlans(c.recs, 'plan');
       logActivity('បង្កើតប្លង់តុ ' + spKindName(c.kind), c.f.session + ' · ' + c.recs.length + ' បន្ទប់ · ' + c.total + ' នាក់');
     }
@@ -4898,8 +4916,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5">
             <div>${L('បន្ទប់លេខ')}<input id="se-room" class="${I}" value="${esc(SP.plan.room)}" ${ed ? '' : 'disabled'}></div>
             <div>${L('សម័យ')}<input id="se-session" class="${I}" value="${esc(SP.plan.session)}" ${ed ? '' : 'disabled'}></div>
-            <div>${L(K.sub)}<input id="se-subject" class="${I}" value="${esc(SP.plan.subject)}" ${ed ? '' : 'disabled'}></div>
-            <div>${L('មណ្ឌល')}<input id="se-center" class="${I}" value="${esc(SP.plan.center)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L(K.sub)}<input id="se-subject" list="se-subject-dl" class="${I}" value="${esc(SP.plan.subject)}" ${ed ? '' : 'disabled'}><datalist id="se-subject-dl">${spOptHTML(spListKey(p.kind || 'out'), 'subject', p.kind || 'out')}</datalist></div>
+            <div>${L('មណ្ឌល')}<input id="se-center" list="se-center-dl" class="${I}" value="${esc(SP.plan.center)}" ${ed ? '' : 'disabled'}><datalist id="se-center-dl">${spOptHTML('examCenters', 'center', '')}</datalist></div>
             <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="se-date" class="${I}" value="${esc(String(SP.plan.exam_date || '').slice(0, 10))}" ${ed ? '' : 'disabled'}></div>
             <div>${L('អក្សរបញ្ជាក់ (ឧ. 6x6 Z)')}<input id="se-label" class="${I} font-bold" value="${esc(SP.plan.tpl)}" ${ed ? '' : 'disabled'}></div>
           </div>
@@ -4955,7 +4973,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!can('edit') || !SP.plan) return; const patch = spEditPatch(); if (!patch.room) return alert('⚠️ សូមបញ្ចូលលេខបន្ទប់!'); if (!patch.session) return alert('⚠️ សូមបញ្ចូលសម័យ!');
       if (spPlans().some(x => x.id !== SP.plan.id && exNorm(x.session) === exNorm(patch.session) && exNorm(x.room) === exNorm(patch.room) && (x.kind || '') === (SP.plan.kind || '')) && !confirm('⚠️ មានបន្ទប់ដូចគ្នាក្នុងសម័យនេះរួចហើយ។ រក្សាទុកស្ទួន?')) return;
       const rec = store.seat_plans.find(x => x.id === SP.plan.id); if (!rec) return; Object.assign(rec, patch);
-      const ok = await persist('seat_plans', rec); spEditClose(); renderSeatPlans(); renderExTrack();
+      const ok = await persist('seat_plans', rec); spLearn(rec.kind || 'out', rec.subject, rec.center); spEditClose(); renderSeatPlans(); renderExTrack();
       showToast(ok ? 'បានរក្សាទុកប្លង់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync', !ok); logActivity('កែប្លង់តុ', rec.session + ' · ' + rec.room);
     }
     async function spSaveAsTpl() {
