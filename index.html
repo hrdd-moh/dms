@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.20.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.21.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.20.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.21.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -253,7 +253,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.20.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.21.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -588,7 +588,8 @@
             <!-- TAB: EXAM TASKS (sub-menu ក្រោមការប្រឡង) -->
             <div id="section-examtasks" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                <h3 id="extask-title" class="text-base font-bold text-slate-900">🗂️ ការរៀបចំប្រឡង</h3>
+                <div id="ep-strip" class="hidden space-y-3 pb-3 border-b border-slate-100"></div>
+              <h3 id="extask-title" class="text-base font-bold text-slate-900">🗂️ ការរៀបចំប្រឡង</h3>
                 <div class="flex items-center gap-2 flex-wrap">
                   <input type="text" id="filter-extask-search" oninput="onFilter('exam_tasks')" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-56">
                   <select id="filter-extask-status" onchange="onFilter('exam_tasks')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white font-medium"><option value="all">ស្ថានភាពទាំងអស់</option></select>
@@ -711,7 +712,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.20.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.21.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -868,7 +869,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.20.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.21.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -880,7 +881,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.20.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.21.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1080,7 +1081,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.20.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.21.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2073,8 +2074,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // ទង់ជាតិ SVG (Windows មិនបង្ហាញ emoji ទង់ជាតិ → ឃើញជាអក្សរ KH)
     const FLAG_KH = '<svg viewBox="0 0 30 20" width="22" height="15" style="display:inline-block;vertical-align:-3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12)" aria-label="ខ្មែរ"><rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.2" width="12" height="1.4"/><rect x="10.5" y="10.8" width="9" height="1.5"/><path d="M12 10.8V8.4l1-1.5 1 1.5v2.4zM14.2 10.8V5.8l.8-2.4.8 2.4v5zM16.2 10.8V8.4l1-1.5 1 1.5v2.4z"/></g></svg>';
     const FLAG_EN = '<svg viewBox="0 0 60 30" width="24" height="15" style="display:inline-block;vertical-align:-3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12)" aria-label="English"><clipPath id="ukc"><path d="M30 15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>';
-    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks', 'cert_courses', 'workshops', 'seat_plans'];
-    const OPTIONAL_TABLES = ['exam_tasks', 'cert_courses', 'workshops', 'seat_plans'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
+    const DATA_TABLES = ['docs', 'trainings', 'dispatches', 'exams', 'certs', 'report_notes', 'exam_tasks', 'cert_courses', 'workshops', 'seat_plans', 'exam_plans'];
+    const OPTIONAL_TABLES = ['exam_tasks', 'cert_courses', 'workshops', 'seat_plans', 'exam_plans'];   // តារាងថ្មី៖ បើ Supabase មិនទាន់មាន មិនរាប់ជាបរាជ័យ Sync
     const EXTASK_KINDS = {
       ex_docs: { kind: 'docs', icon: '📑', kh: 'ការរៀបចំឯកសារ', en: 'Document Prep', qty: 'ចំនួនឯកសារ', ph: 'ឧ. រៀបចំសំណុំឯកសារប្រឡង' },
       ex_names: { kind: 'names', icon: '👥', kh: 'ការរៀបចំបញ្ជីឈ្មោះ', en: 'Name Lists', qty: 'ចំនួនបេក្ខជន', ph: 'ឧ. បញ្ជីឈ្មោះបេក្ខជនប្រឡង' },
@@ -2109,7 +2110,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const STAGE_DONE = 'បញ្ចប់រួចរាល់';
     const STAGES = ['រដ្ឋបាលទទួល', 'កំពុងពិនិត្យបច្ចេកទេស', 'រង់ចាំចំណារ/ហត្ថលេខា', 'បញ្ចប់រួចរាល់'];
     const LOCATIONS = ['ការិយាល័យសាមី', 'ប្រធាននាយកដ្ឋាន (DHRD)', 'អគ្គនាយកដ្ឋានសុខាភិបាល', 'ខុទ្ទកាល័យឯកឧត្តមរដ្ឋមន្ត្រី', 'ទីស្តីការគណៈរដ្ឋមន្ត្រី', 'ក្រសួងមុខងារសាធារណៈ'];
-    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', cert_courses: '🎓 វគ្គ & វិញ្ញាបនបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', workshops: '🎤 សិក្ខាសាលា & ប្រជុំ', seat_plans: '🪑 ប្លង់តុបន្ទប់ប្រឡង', users: '👤 គណនី' };
+    const TABLE_LABELS = { docs: '📚 ឯកសារ', trainings: '🌐 វគ្គបណ្តុះបណ្តាល', dispatches: '🔄 លិខិត', exams: '🎓 សម័យប្រឡង', exam_tasks: '🗂️ ការងាររៀបចំប្រឡង', certs: '📜 សញ្ញាបត្រ', cert_courses: '🎓 វគ្គ & វិញ្ញាបនបត្រ', report_notes: '📝 កំណត់ចំណាំរបាយការណ៍', workshops: '🎤 សិក្ខាសាលា & ប្រជុំ', exam_plans: '📋 ផែនការរៀបចំប្រឡង', seat_plans: '🪑 ប្លង់តុបន្ទប់ប្រឡង', users: '👤 គណនី' };
 
     function toggleSysMenu(force) {
       const box = document.getElementById('sys-menu-items'), ar = document.getElementById('sys-menu-arrow'), b = document.getElementById('sys-menu-toggle');
@@ -2318,6 +2319,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       cert_courses: 'id, course, cert_no, start_date, trainee',
       workshops: 'id, kind, scope, start_date, title',
       seat_plans: 'id, session, room, is_tpl',
+      exam_plans: 'id, session, exam_type',
       countries: 'code, kh, en',
       users: 'id, username',
       logs: 'id, time, user, action',
@@ -2325,7 +2327,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     };
     function makeLocalDB(name, memory) {
       const d = (window.Dexie && !memory) ? new Dexie(name) : new MemoryDB();
-      d.version(8).stores(LOCAL_SCHEMA);
+      d.version(9).stores(LOCAL_SCHEMA);
       return d;
     }
     let localDB = makeLocalDB('DHRD_DB_V4');
@@ -2358,7 +2360,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
     ];
 
-    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [], workshops: [], seat_plans: [] };
+    const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [], workshops: [], seat_plans: [], exam_plans: [] };
     let countriesData = [...defaultCountries];
     let usersData = [];
     let auditLogs = [];
@@ -3212,7 +3214,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!currentUser) return;
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
-      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); }
+      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); epRenderStrip(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
@@ -3310,8 +3312,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       } else if (EXTASK_KINDS[activeTab]) {
         const kc = EXTASK_KINDS[activeTab];
         const subHtml = kc.subs ? `<div><label class="block text-xs mb-1 font-bold text-slate-700">${esc(kc.subLabel)} *</label><select id="et-sub" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXTASK_SUBS[kc.subs].map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select><p class="text-[10px] text-slate-400 mt-1">ចំនួនក្នុងខែ នឹងទៅដាក់ក្នុង Report ផ្លូវការ (Report ១) ស្វ័យប្រវត្តិ</p></div>` : '';
+        const epBtn = activeTab === 'ex_docs' && can('create') ? `<button type="button" onclick="epNew()" class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-extrabold shadow-md transition">➕ ${en ? 'Create Exam Preparation Plan' : 'បង្កើតការរៀបចំប្រឡង'}</button><p class="text-[10px] text-slate-500 -mt-2">${en ? 'Opens a full page: exam info, plan & period, steps, % progress, charts, notes' : 'បើក page ថ្មី៖ ព័ត៌មានប្រឡង · ផែនការ/រយៈពេល · ជំហាន · % · ក្រាហ្វ · កត់ត្រា'}</p><div class="text-center text-[10px] font-bold text-slate-400">— ${en ? 'or quick-add a single task' : 'ឬបញ្ចូលការងារតូចតែមួយរហ័ស'} —</div>` : '';
         container.innerHTML = `
           <form onsubmit="handleSaveExamTask(event)" class="space-y-3.5 text-sm font-medium">
+            ${epBtn}
             ${targetBureauSelectHtml}
             <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Task Title *' : 'ចំណងជើងការងារ *'}</label><input type="text" id="et-title" required autocomplete="off" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="${esc(kc.ph)}"></div>
             ${subHtml}
@@ -3373,9 +3377,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     // ---------------- 11. PAGINATION ----------------
     const pager = {};
-    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'workshops', 'seat_plans', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
+    ['docs', 'dispatches', 'exams', 'exam_tasks', 'trainings', 'workshops', 'seat_plans', 'exam_plans', 'certs', 'courses', 'logs', 'recycle'].forEach(k => pager[k] = { page: 1, size: DEFAULT_PAGE_SIZE });
     const RENDERERS = {
-      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => { renderExams(); renderExTrack(); }, exam_tasks: () => { renderExamTasks(); renderExTrack(); }, trainings: () => renderTrainingList(), workshops: () => renderEvents(), seat_plans: () => { renderSeatPlans(); renderExTrack(); },
+      docs: () => renderDocs(), dispatches: () => renderDispatch(), exams: () => { renderExams(); renderExTrack(); }, exam_tasks: () => { renderExamTasks(); renderExTrack(); }, trainings: () => renderTrainingList(), workshops: () => renderEvents(), seat_plans: () => { renderSeatPlans(); renderExTrack(); }, exam_plans: () => epRenderStrip(),
       certs: () => renderCerts(), courses: () => renderCourses(), logs: () => renderLogsTable(), recycle: () => renderRecycleBin()
     };
     function paginate(key, rows) {
@@ -6270,6 +6274,191 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       renderPager('exam_tasks', pg);
     }
 
+    // ===== V3.21.0 [EXT:examplan]: ផែនការរៀបចំប្រឡង (ប៊ូតុង «បង្កើតការរៀបចំប្រឡង» → page ថ្មី: ព័ត៌មាន · ផែនការ/រយៈពេល · ជំហាន · % · ក្រាហ្វ · កត់ត្រា) =====
+    const EP_TYPES = ['ប្រឡងចូល', 'ប្រឡងចេញ', 'ផ្សេងៗ'], EP_ST = ['មិនទាន់ចាប់ផ្តើម', 'កំពុងធ្វើ', 'រួចរាល់'], EP_DONE = 'រួចរាល់';
+    const EP_DEFAULT_STEPS = ['ចេញសេចក្តីជូនដំណឹង / ប្រកាសប្រឡង', 'ទទួលពាក្យ និងចុះឈ្មោះបេក្ខជន', 'រៀបចំបញ្ជីឈ្មោះបេក្ខជន', 'រៀបចំមណ្ឌល និងបន្ទប់ប្រឡង', 'រៀបចំប្លង់តុ និងលេខតុ', 'រៀបចំឯកសារប្រឡង (វិញ្ញាសា, សន្លឹកឆ្លើយ)', 'រៀបចំគណៈកម្មការ និងអ្នកត្រួតពិនិត្យ', 'ប្រារព្ធការប្រឡង', 'កែវិញ្ញាសា និងបូកលទ្ធផល', 'ប្រកាសលទ្ធផល និងបិទបញ្ចប់'];
+    let EP = null;
+    const epDay = s => /^\d{4}-\d{2}-\d{2}/.test(s || '') ? Date.parse(String(s).slice(0, 10) + 'T00:00:00Z') / 864e5 : null;
+    const epPlans = () => activeRows('exam_plans');
+    const epList = (p, k) => { const v = safeJSON(p[k], []); return Array.isArray(v) ? v : []; };
+    function epPct(steps) { return steps.length ? Math.round(steps.filter(s => s.status === EP_DONE).length * 100 / steps.length) : 0; }
+    // ពេលវេលា៖ % ដែលគួរបានធ្វើតាមកាលវិភាគ (ពីថ្ងៃចាប់ផ្តើម → ថ្ងៃបញ្ចប់ផែនការ) ប្រៀបធៀប % ពិត
+    function epMetrics(d, steps, today) {
+      const t = epDay(today), a = epDay(d.start_date), b = epDay(d.end_date), pct = epPct(steps);
+      const done = steps.filter(s => s.status === EP_DONE).length, late = steps.filter(s => s.status !== EP_DONE && s.end && epDay(s.end) < t);
+      let exp = null; if (a != null && b != null && b >= a) exp = Math.max(0, Math.min(100, Math.round((t - a) * 100 / Math.max(1, b - a))));
+      const left = b != null ? b - t : null;
+      const state = pct >= 100 ? 'done' : (late.length || (exp != null && pct < exp - 10)) ? 'behind' : 'ok';
+      return { pct, done, total: steps.length, late, exp, left, state };
+    }
+    const epStateBadge = m => m.state === 'done' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">✅ រួចរាល់</span>' : m.state === 'behind' ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700">⚠️ យឺតជាងផែនការ</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800">🟢 តាមផែនការ</span>';
+    const epBar = (pct, h) => `<div class="w-full bg-slate-200 rounded-full overflow-hidden ${h || 'h-2.5'}"><div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-600' : pct >= 50 ? 'bg-emerald-500' : 'bg-amber-500'}" style="width:${pct}%"></div></div>`;
+
+    function epRenderStrip() {
+      const box = document.getElementById('ep-strip'); if (!box) return;
+      const show = activeTab === 'ex_docs'; box.classList.toggle('hidden', !show); if (!show) return;
+      const today = todayISO(), rows = sortRecords(epPlans());
+      const cards = rows.map(p => {
+        const steps = epList(p, 'steps'), m = epMetrics(p, steps, today), next = steps.find(s => s.status !== EP_DONE);
+        return `<div class="rounded-2xl border border-slate-200 bg-white p-3.5 space-y-2 shadow-2xs">
+          <div class="flex items-start justify-between gap-2"><button type="button" onclick="epOpen(${p.id})" class="text-left font-bold text-slate-900 text-sm hover:text-emerald-700 clamp2">📋 ${esc(p.title)}</button>${deleteBtn('exam_plans', p.id)}</div>
+          <div class="flex flex-wrap gap-1.5 text-[10px] font-bold"><span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800">${esc(p.exam_type || '-')}</span>${p.session ? `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">${esc(p.session)}</span>` : ''}${p.candidates ? `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">👥 ${toKhmerDigits(Number(p.candidates).toLocaleString())}</span>` : ''}${epStateBadge(m)}</div>
+          <div class="flex items-center gap-2">${epBar(m.pct)}<b class="text-sm text-slate-800 whitespace-nowrap">${toKhmerDigits(m.pct)}%</b></div>
+          <div class="text-[11px] text-slate-500 font-bold">ជំហាន ${toKhmerDigits(m.done)}/${toKhmerDigits(m.total)}${m.late.length ? ` · <span class="text-rose-600">ហួសកំណត់ ${toKhmerDigits(m.late.length)}</span>` : ''}${m.left != null ? ` · ${m.left >= 0 ? 'នៅសល់ ' + toKhmerDigits(m.left) + ' ថ្ងៃ' : '<span class="text-rose-600">ហួសផែនការ ' + toKhmerDigits(-m.left) + ' ថ្ងៃ</span>'}` : ''}</div>
+          ${next ? `<div class="text-[11px] text-slate-600">▶ បន្ទាប់៖ <b>${esc(next.name)}</b>${next.assignee ? ' — ' + esc(next.assignee) : ''}</div>` : ''}
+        </div>`;
+      }).join('');
+      box.innerHTML = `<div class="flex flex-wrap items-center justify-between gap-2"><h4 class="font-bold text-slate-900 text-sm">📋 ផែនការរៀបចំប្រឡង (${toKhmerDigits(rows.length)})</h4>${can('create') ? '<button type="button" onclick="epNew()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md">➕ បង្កើតការរៀបចំប្រឡង</button>' : ''}</div>
+        ${rows.length ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${cards}</div>` : '<p class="text-xs text-slate-400 py-2">មិនទាន់មានផែនការ — ចុច «បង្កើតការរៀបចំប្រឡង» ដើម្បីចាប់ផ្តើម</p>'}`;
+    }
+
+    function epNew() {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបង្កើត', true);
+      if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
+      EP = { id: null, dirty: false, d: { title: '', exam_type: EP_TYPES[0], session: '', candidates: '', start_date: todayISO(), end_date: '', exam_date: '', assignee: currentUser?.fullname || '', note: '' },
+        steps: EP_DEFAULT_STEPS.map((n, i) => ({ id: i + 1, name: n, assignee: '', start: '', end: '', status: EP_ST[0], note: '' })), logs: [], bureau: entryBureau() };
+      epShell();
+    }
+    function epOpen(id) {
+      const p = store.exam_plans.find(x => x.id === id); if (!p) return;
+      EP = { id: p.id, dirty: false, bureau: p.bureau, d: { title: p.title || '', exam_type: p.exam_type || EP_TYPES[0], session: p.session || '', candidates: p.candidates == null ? '' : p.candidates, start_date: p.start_date || '', end_date: p.end_date || '', exam_date: p.exam_date || '', assignee: p.assignee || '', note: p.note || '' },
+        steps: epList(p, 'steps').map((s, i) => ({ id: s.id || i + 1, name: s.name || '', assignee: s.assignee || '', start: s.start || '', end: s.end || '', status: EP_ST.includes(s.status) ? s.status : EP_ST[0], note: s.note || '' })), logs: epList(p, 'logs') };
+      epShell();
+    }
+    function epClose(force) {
+      if (!force && EP && EP.dirty && !confirm('មានការកែប្រែមិនទាន់រក្សាទុក។ ចាកចេញដោយមិនរក្សាទុក?')) return;
+      document.getElementById('ep-overlay')?.remove(); document.body.classList.remove('overflow-hidden'); EP = null;
+    }
+    const epRO = () => !(EP && (EP.id ? can('edit') : can('create')));
+    const epDirty = () => { if (EP) { EP.dirty = true; const b = document.getElementById('ep-dirty'); if (b) b.classList.remove('hidden'); } };
+    function epSet(k, v) { EP.d[k] = v; epDirty(); if (['start_date', 'end_date', 'candidates', 'title', 'session', 'exam_type'].includes(k)) epAnalysis(); }
+    function epStep(i, k, v) { EP.steps[i][k] = v; epDirty(); if (k === 'status') { epRenderSteps(); } epAnalysis(); }
+    function epAddStep() { const n = Math.max(0, ...EP.steps.map(s => Number(s.id) || 0)) + 1; EP.steps.push({ id: n, name: '', assignee: '', start: '', end: '', status: EP_ST[0], note: '' }); epDirty(); epRenderSteps(); epAnalysis(); }
+    function epDelStep(i) { if (!confirm('លុបជំហាន «' + (EP.steps[i].name || '') + '» ?')) return; EP.steps.splice(i, 1); epDirty(); epRenderSteps(); epAnalysis(); }
+    function epMove(i, dir) { const j = i + dir; if (j < 0 || j >= EP.steps.length) return; [EP.steps[i], EP.steps[j]] = [EP.steps[j], EP.steps[i]]; epDirty(); epRenderSteps(); epAnalysis(); }
+    function epAddLog() { const ta = document.getElementById('ep-log-in'), t = (ta.value || '').trim(); if (!t) return; EP.logs.unshift({ at: nowISO(), by: currentUser?.fullname || currentUser?.username || 'user', text: t }); ta.value = ''; epDirty(); epRenderLogs(); }
+    function epDelLog(i) { EP.logs.splice(i, 1); epDirty(); epRenderLogs(); }
+
+    function epShell() {
+      document.getElementById('ep-overlay')?.remove();
+      const ro = epRO(), ip = 'form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 text-sm', lb = (t, r) => `<label class="block text-xs mb-1 font-bold text-slate-700">${t}${r ? ' <span class="text-rose-500">*</span>' : ''}</label>`, d = EP.d;
+      const ov = document.createElement('div'); ov.id = 'ep-overlay'; ov.className = 'fixed inset-0 z-[100] bg-slate-100 overflow-y-auto';
+      ov.innerHTML = `<div class="max-w-6xl mx-auto p-3 sm:p-5 space-y-4">
+        <div class="sticky top-0 z-10 -mx-3 sm:-mx-5 px-3 sm:px-5 py-2.5 bg-emerald-700 text-white flex flex-wrap items-center justify-between gap-2 shadow-md">
+          <div class="font-bold text-sm sm:text-base">📋 ${EP.id ? 'ផែនការរៀបចំប្រឡង' : 'បង្កើតការរៀបចំប្រឡង'} <span id="ep-dirty" class="hidden ml-2 text-[10px] bg-amber-300 text-amber-900 px-2 py-0.5 rounded-full">មិនទាន់រក្សាទុក</span></div>
+          <div class="flex gap-2">${ro ? '' : '<button type="button" id="ep-save" onclick="epSave()" class="px-4 py-2 rounded-xl bg-white text-emerald-800 text-xs font-extrabold shadow">💾 រក្សាទុក</button>'}<button type="button" onclick="epClose()" class="px-4 py-2 rounded-xl bg-emerald-900/60 hover:bg-emerald-900 text-white text-xs font-bold">✕ បិទ</button></div>
+        </div>
+        <fieldset ${ro ? 'disabled' : ''} class="space-y-4">
+        <section class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
+          <h4 class="font-bold text-slate-900 text-sm">១) ព័ត៌មានការប្រឡង</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="sm:col-span-2">${lb('ឈ្មោះផែនការ', 1)}<input type="text" class="${ip}" value="${esc(d.title)}" oninput="epSet('title',this.value)" placeholder="ឧ. ផែនការប្រឡងចូល សម័យទី១ ឆ្នាំ ២០២៦"></div>
+            <div>${lb('ប្រភេទប្រឡង')}<select class="${ip} bg-white" onchange="epSet('exam_type',this.value)">${EP_TYPES.map(t => `<option ${t === d.exam_type ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div>
+            <div>${lb('សម័យប្រឡង')}<input type="text" class="${ip}" value="${esc(d.session)}" oninput="epSet('session',this.value)" list="ep-sess-list" autocomplete="off"><datalist id="ep-sess-list">${[...new Set(activeRows('exams').map(x => x.session).filter(Boolean))].map(s => `<option value="${esc(s)}">`).join('')}</datalist></div>
+            <div>${lb('ចំនួនបេក្ខជន')}<input type="number" min="0" class="${ip}" value="${esc(d.candidates)}" oninput="epSet('candidates',this.value)"></div>
+            <div>${lb('អ្នកទទួលខុសត្រូវសរុប')}<input type="text" class="${ip}" value="${esc(d.assignee)}" oninput="epSet('assignee',this.value)"></div>
+          </div>
+          <h4 class="font-bold text-slate-900 text-sm pt-2">២) គម្រោងផែនការ និងរយៈពេល</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>${lb('ចាប់ផ្តើមផែនការ')}<input type="date" class="${ip} bg-white" value="${esc(d.start_date)}" onchange="epSet('start_date',this.value)"></div>
+            <div>${lb('ថ្ងៃប្រឡង')}<input type="date" class="${ip} bg-white" value="${esc(d.exam_date)}" onchange="epSet('exam_date',this.value)"></div>
+            <div>${lb('បញ្ចប់ផែនការ (ថ្ងៃកំណត់)')}<input type="date" class="${ip} bg-white" value="${esc(d.end_date)}" onchange="epSet('end_date',this.value)"></div>
+          </div>
+          <div id="ep-period" class="text-xs font-bold text-slate-600"></div>
+          <div>${lb('កំណត់ចំណាំទូទៅ')}<textarea rows="2" class="${ip}" oninput="epSet('note',this.value)">${esc(d.note)}</textarea></div>
+        </section>
+        <section class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2"><h4 class="font-bold text-slate-900 text-sm">៣) ជំហានការងារ (កែបាន · បន្ថែម · លុប · ផ្លាស់ទី)</h4><button type="button" onclick="epAddStep()" class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">➕ បន្ថែមជំហាន</button></div>
+          <div id="ep-steps" class="space-y-2"></div>
+        </section>
+        </fieldset>
+        <section id="ep-an" class="space-y-4"></section>
+        <section class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
+          <h4 class="font-bold text-slate-900 text-sm">៥) កត់ត្រាផ្សេងៗ</h4>
+          ${ro ? '' : '<div class="flex gap-2"><textarea id="ep-log-in" rows="2" class="form-input-focus flex-1 border border-slate-300 rounded-xl p-2.5 bg-slate-50 text-sm" placeholder="ឧ. ថ្ងៃនេះបានទទួលបញ្ជីពីមណ្ឌល…"></textarea><button type="button" onclick="epAddLog()" class="px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold">➕ កត់ត្រា</button></div>'}
+          <div id="ep-logs" class="space-y-2"></div>
+        </section>
+      </div>`;
+      document.body.appendChild(ov); document.body.classList.add('overflow-hidden');
+      epRenderSteps(); epAnalysis(); epRenderLogs();
+    }
+
+    function epRenderSteps() {
+      const box = document.getElementById('ep-steps'); if (!box) return; const ro = epRO(), today = todayISO(), ip = 'form-input-focus w-full border border-slate-300 rounded-lg p-2 bg-white text-xs';
+      box.innerHTML = EP.steps.map((s, i) => {
+        const late = s.status !== EP_DONE && s.end && epDay(s.end) < epDay(today), bg = s.status === EP_DONE ? 'bg-emerald-50 border-emerald-200' : late ? 'bg-rose-50 border-rose-200' : s.status === EP_ST[1] ? 'bg-amber-50 border-amber-200' : 'bg-white border-slate-200';
+        return `<div class="rounded-2xl border ${bg} p-2.5 space-y-2">
+          <div class="flex items-center gap-2"><span class="w-7 h-7 shrink-0 rounded-full bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center">${toKhmerDigits(i + 1)}</span>
+            <input type="text" class="${ip} font-bold" value="${esc(s.name)}" placeholder="ឈ្មោះជំហាន" onchange="epStep(${i},'name',this.value)" oninput="EP.steps[${i}].name=this.value;epDirty()">
+            ${ro ? '' : `<button type="button" onclick="epMove(${i},-1)" class="px-1.5 text-slate-500" title="ឡើង">▲</button><button type="button" onclick="epMove(${i},1)" class="px-1.5 text-slate-500" title="ចុះ">▼</button><button type="button" onclick="epDelStep(${i})" class="px-1.5 text-rose-600" title="លុប">🗑</button>`}</div>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <input type="text" class="${ip}" value="${esc(s.assignee)}" placeholder="អ្នកទទួលខុសត្រូវ" onchange="epStep(${i},'assignee',this.value)">
+            <input type="date" class="${ip}" value="${esc(s.start)}" title="ចាប់ផ្តើម" onchange="epStep(${i},'start',this.value)">
+            <input type="date" class="${ip}" value="${esc(s.end)}" title="ត្រូវចប់ថ្ងៃ" onchange="epStep(${i},'end',this.value)">
+            <select class="${ip} font-bold" onchange="epStep(${i},'status',this.value)">${EP_ST.map(x => `<option ${x === s.status ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>
+            <input type="text" class="${ip} col-span-2 md:col-span-1" value="${esc(s.note)}" placeholder="កំណត់ចំណាំ" onchange="epStep(${i},'note',this.value)">
+          </div>${late ? '<div class="text-[11px] font-bold text-rose-600">⚠️ ហួសកំណត់ មិនទាន់ចប់</div>' : ''}</div>`;
+      }).join('') || '<p class="text-xs text-slate-400">មិនទាន់មានជំហាន</p>';
+    }
+
+    function epRenderLogs() {
+      const box = document.getElementById('ep-logs'); if (!box) return; const ro = epRO();
+      box.innerHTML = EP.logs.length ? EP.logs.map((l, i) => `<div class="rounded-xl border border-slate-200 bg-slate-50 p-2.5 text-xs"><div class="flex justify-between gap-2 text-[10px] text-slate-500 font-bold"><span>🕒 ${esc(String(l.at || '').slice(0, 16).replace('T', ' '))} — ${esc(l.by || '')}</span>${ro ? '' : `<button type="button" onclick="epDelLog(${i})" class="text-rose-600">🗑</button>`}</div><div class="text-slate-800 whitespace-pre-wrap">${esc(l.text)}</div></div>`).join('') : '<p class="text-xs text-slate-400">មិនទាន់មានកំណត់ត្រា</p>';
+    }
+
+    // ក្រាហ្វ SVG សុទ្ធ៖ Donut, Stepper %, Gantt, តាមអ្នកទទួលខុសត្រូវ, នៅខ្វះអ្វី
+    function epAnalysis() {
+      const box = document.getElementById('ep-an'); if (!box || !EP) return; const today = todayISO(), st = EP.steps, m = epMetrics(EP.d, st, today), n = st.length;
+      const per = document.getElementById('ep-period');
+      if (per) { const a = epDay(EP.d.start_date), b = epDay(EP.d.end_date); per.innerHTML = a != null && b != null ? (b < a ? '<span class="text-rose-600">⚠️ ថ្ងៃបញ្ចប់នៅមុនថ្ងៃចាប់ផ្តើម</span>' : `រយៈពេលផែនការ៖ <b>${toKhmerDigits(b - a)} ថ្ងៃ</b>${m.left != null ? ' · ' + (m.left >= 0 ? 'នៅសល់ <b>' + toKhmerDigits(m.left) + ' ថ្ងៃ</b>' : '<span class="text-rose-600">ហួសផែនការ ' + toKhmerDigits(-m.left) + ' ថ្ងៃ</span>') : ''}`) : 'ដាក់ថ្ងៃចាប់ផ្តើម និងថ្ងៃបញ្ចប់ ដើម្បីឱ្យប្រព័ន្ធប្រៀបធៀបវឌ្ឍនភាពជាមួយពេលវេលា'; }
+      const R = 52, C = 2 * Math.PI * R, dash = C * m.pct / 100, col = m.pct >= 100 ? '#059669' : m.pct >= 50 ? '#10b981' : '#f59e0b';
+      const donut = `<svg viewBox="0 0 140 140" class="w-36 h-36 shrink-0"><circle cx="70" cy="70" r="${R}" fill="none" stroke="#e2e8f0" stroke-width="16"/><circle cx="70" cy="70" r="${R}" fill="none" stroke="${col}" stroke-width="16" stroke-dasharray="${dash} ${C - dash}" transform="rotate(-90 70 70)" stroke-linecap="round"/><text x="70" y="68" text-anchor="middle" font-size="28" font-weight="800" fill="#0f172a">${toKhmerDigits(m.pct)}%</text><text x="70" y="88" text-anchor="middle" font-size="11" fill="#64748b">${toKhmerDigits(m.done)}/${toKhmerDigits(n)} ជំហាន</text></svg>`;
+      const timeBar = m.exp != null ? `<div class="space-y-1 text-[11px] font-bold text-slate-600"><div class="flex justify-between"><span>វឌ្ឍនភាពពិត</span><span>${toKhmerDigits(m.pct)}%</span></div>${epBar(m.pct)}<div class="flex justify-between"><span>ពេលវេលាកន្លងទៅ (តាមផែនការ)</span><span>${toKhmerDigits(m.exp)}%</span></div><div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden"><div class="h-full bg-sky-500" style="width:${m.exp}%"></div></div></div>` : '';
+      const flow = st.map((s, i) => { const c = s.status === EP_DONE ? 'bg-emerald-600 text-white border-emerald-700' : s.status === EP_ST[1] ? 'bg-amber-100 text-amber-900 border-amber-300' : 'bg-white text-slate-600 border-slate-300'; return `<div class="rounded-xl border ${c} px-2.5 py-1.5 text-[11px] font-bold min-w-[110px] max-w-[170px]"><div class="opacity-80">ជំហាន ${toKhmerDigits(i + 1)} → ${toKhmerDigits(Math.round((i + 1) * 100 / n))}%</div><div class="clamp2">${esc(s.name || '-')}</div></div>`; }).join('<span class="self-center text-slate-300">➜</span>');
+      // Gantt
+      const ds = st.flatMap(s => [epDay(s.start), epDay(s.end)]).concat([epDay(EP.d.start_date), epDay(EP.d.end_date), epDay(EP.d.exam_date), epDay(today)]).filter(x => x != null);
+      let gantt = '<p class="text-xs text-slate-400">ដាក់ថ្ងៃចាប់ផ្តើម/ត្រូវចប់ ក្នុងជំហាន ដើម្បីបង្ហាញតារាងពេលវេលា</p>';
+      if (st.some(s => epDay(s.start) != null || epDay(s.end) != null) && ds.length) {
+        const lo = Math.min(...ds), hi = Math.max(...ds, lo + 1), W = 760, L = 170, rowH = 24, H = st.length * rowH + 28, x = v => L + (v - lo) * (W - L - 10) / (hi - lo);
+        const bars = st.map((s, i) => { const a = epDay(s.start), b = epDay(s.end), y = 22 + i * rowH, c = s.status === EP_DONE ? '#059669' : s.status === EP_ST[1] ? '#f59e0b' : '#94a3b8', lt = s.status !== EP_DONE && b != null && b < epDay(today);
+          const a2 = a != null ? a : b, b2 = b != null ? b : a;
+          return `<text x="4" y="${y + 12}" font-size="10.5" fill="#334155">${esc(toKhmerDigits(i + 1) + '. ' + (s.name || '').slice(0, 26))}</text>` + (a2 != null ? `<rect x="${x(a2)}" y="${y + 2}" width="${Math.max(5, x(b2) - x(a2))}" height="14" rx="4" fill="${lt ? '#e11d48' : c}"/>` : ''); }).join('');
+        const tx = epDay(today), mk = (v, c, t) => v != null ? `<line x1="${x(v)}" x2="${x(v)}" y1="14" y2="${H}" stroke="${c}" stroke-width="1.5" stroke-dasharray="4 3"/><text x="${x(v)}" y="10" font-size="9.5" fill="${c}" text-anchor="middle">${t}</text>` : '';
+        gantt = `<div class="overflow-x-auto"><svg viewBox="0 0 ${W} ${H}" class="w-full min-w-[620px]" style="max-height:480px">${bars}${mk(tx, '#0284c7', 'ថ្ងៃនេះ')}${mk(epDay(EP.d.exam_date), '#7c3aed', 'ថ្ងៃប្រឡង')}</svg></div><div class="flex flex-wrap gap-3 text-[10px] font-bold text-slate-500"><span>🟩 រួចរាល់</span><span>🟧 កំពុងធ្វើ</span><span>⬜ មិនទាន់</span><span>🟥 ហួសកំណត់</span></div>`;
+      }
+      // តាមអ្នកទទួលខុសត្រូវ
+      const by = {}; st.forEach(s => { const k = (s.assignee || '').trim() || 'មិនទាន់កំណត់'; (by[k] = by[k] || { t: 0, d: 0, l: 0 }).t++; if (s.status === EP_DONE) by[k].d++; else if (s.end && epDay(s.end) < epDay(today)) by[k].l++; });
+      const who = Object.entries(by).map(([k, v]) => `<div class="space-y-0.5"><div class="flex justify-between text-[11px] font-bold text-slate-700"><span>👤 ${esc(k)}</span><span>${toKhmerDigits(v.d)}/${toKhmerDigits(v.t)}${v.l ? ` · <span class="text-rose-600">ហួស ${toKhmerDigits(v.l)}</span>` : ''}</span></div>${epBar(Math.round(v.d * 100 / v.t), 'h-2')}</div>`).join('');
+      // នៅខ្វះអ្វី
+      const todo = st.map((s, i) => ({ s, i })).filter(o => o.s.status !== EP_DONE);
+      const gaps = []; if (!EP.d.title.trim()) gaps.push('មិនទាន់មានឈ្មោះផែនការ'); if (!EP.d.candidates) gaps.push('មិនទាន់ដាក់ចំនួនបេក្ខជន'); if (!EP.d.end_date) gaps.push('មិនទាន់កំណត់ថ្ងៃបញ្ចប់ផែនការ'); if (!EP.d.exam_date) gaps.push('មិនទាន់កំណត់ថ្ងៃប្រឡង');
+      const noWho = st.filter(s => !(s.assignee || '').trim()).length, noDate = st.filter(s => !s.end).length; if (noWho) gaps.push(toKhmerDigits(noWho) + ' ជំហានមិនទាន់មានអ្នកទទួលខុសត្រូវ'); if (noDate) gaps.push(toKhmerDigits(noDate) + ' ជំហានមិនទាន់មានថ្ងៃត្រូវចប់');
+      const miss = todo.length ? todo.map(o => `<li class="flex justify-between gap-2"><span>${toKhmerDigits(o.i + 1)}. ${esc(o.s.name || '-')}</span><span class="text-slate-500 whitespace-nowrap">${esc(o.s.assignee || '— គ្មានអ្នកទទួល —')}${o.s.end ? ' · ' + esc(o.s.end) : ''}${epDay(o.s.end) != null && epDay(o.s.end) < epDay(today) ? ' <b class="text-rose-600">⚠️</b>' : ''}</span></li>`).join('') : '<li class="text-emerald-700 font-bold">✅ គ្រប់ជំហានបានបញ្ចប់</li>';
+      const card = (t, b) => `<div class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3"><h4 class="font-bold text-slate-900 text-sm">${t}</h4>${b}</div>`;
+      box.innerHTML = card('៤) តាមដានវឌ្ឍនភាព (ភាគរយ = ជំហានបានបញ្ចប់ ÷ ជំហានសរុប)', `<div class="flex flex-wrap items-center gap-4">${donut}<div class="flex-1 min-w-[220px] space-y-2"><div>${epStateBadge(m)}${m.late.length ? ` <span class="text-[11px] font-bold text-rose-600">ហួសកំណត់ ${toKhmerDigits(m.late.length)} ជំហាន</span>` : ''}</div>${timeBar}</div></div>
+          <div><div class="text-[11px] font-bold text-slate-500 mb-1.5">ពីជំហានមួយទៅជំហានមួយ (ភាគរយបន្ត)</div><div class="flex flex-wrap gap-1.5">${flow || ''}</div></div>`)
+        + card('📅 តារាងពេលវេលា (Gantt)', gantt)
+        + `<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">${card('👤 អ្នកទទួលខុសត្រូវ (បានធ្វើ/សរុប)', `<div class="space-y-2.5">${who || '<p class="text-xs text-slate-400">-</p>'}</div>`)}${card('🔎 នៅខ្វះអ្វី', `<ul class="space-y-1 text-xs text-slate-700">${miss}</ul>${gaps.length ? `<div class="pt-2 border-t border-slate-100 text-[11px] text-amber-800 font-bold space-y-0.5">${gaps.map(g => '<div>⚠️ ' + esc(g) + '</div>').join('')}</div>` : ''}`)}</div>`;
+    }
+
+    async function epSave() {
+      if (!EP || epRO()) return; const d = EP.d;
+      if (!d.title.trim()) return showToast('សូមបញ្ចូលឈ្មោះផែនការ', true);
+      if (d.start_date && d.end_date && d.end_date < d.start_date) return showToast('ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម', true);
+      const bureau = EP.bureau || entryBureau(); if (!bureau) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
+      const old = EP.id ? store.exam_plans.find(x => x.id === EP.id) : null;
+      const steps = EP.steps.filter(s => (s.name || '').trim()).map(s => ({ ...s, name: s.name.trim() }));
+      const rec = { ...(old || {}), id: EP.id || generateSafeId(), bureau, title: d.title.trim(), exam_type: d.exam_type, session: (d.session || '').trim(), candidates: d.candidates === '' ? null : Math.max(0, Number(d.candidates) || 0),
+        start_date: d.start_date || null, end_date: d.end_date || null, exam_date: d.exam_date || null, assignee: (d.assignee || '').trim(), note: (d.note || '').trim(), pct: epPct(steps),
+        steps: JSON.stringify(steps), logs: JSON.stringify(EP.logs), created_by: old?.created_by || currentUser?.username || 'user', created_at: old?.created_at || nowISO(), deleted_at: null, deleted_by: null };
+      const btn = document.getElementById('ep-save'); if (btn) btn.disabled = true;
+      const ok = await persist('exam_plans', rec); if (btn) btn.disabled = false;
+      EP.id = rec.id; EP.bureau = bureau; EP.steps = steps.length ? steps : EP.steps; EP.dirty = false; document.getElementById('ep-dirty')?.classList.add('hidden');
+      epRenderSteps(); epAnalysis(); epRenderStrip();
+      showToast(ok ? 'បានរក្សាទុកផែនការរួចរាល់!' : 'បានរក្សាទុកក្នុងឧបករណ៍ — រង់ចាំ Sync (ត្រូវ Run SQL V3.21.0)', !ok);
+      logActivity('កត់ត្រាផែនការរៀបចំប្រឡង', rec.title);
+    }
+
     async function handleSaveExamTask(e) {
       e.preventDefault(); if (!can('create')) return;
       const cfg = EXTASK_KINDS[activeTab]; if (!cfg) return;
@@ -7586,6 +7775,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (table === 'seat_plans') return (r.is_tpl ? 'template ' : '') + (r.session || '') + ' — ' + (r.room || '');
       if (table === 'dispatches') return (r.code || '') + ' — ' + (r.title || '');
       if (table === 'exams') return (r.major || '') + ' (' + (r.session || '') + ')';
+      if (table === 'exam_plans') return (r.title || '') + (r.session ? ' (' + r.session + ')' : '');
       if (table === 'exam_tasks') return (r.title || '') + (r.session ? ' (' + r.session + ')' : '');
       if (table === 'certs') return (r.num || '') + ' — ' + (r.recipient || '');
       if (table === 'cert_courses') return (r.trainee || '') + ' — ' + (r.course || '') + (r.cert_no ? ' (' + r.cert_no + ')' : '');
@@ -7593,7 +7783,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return String(r.id);
     }
     function rerenderTable(table) {
-      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts, cert_courses: renderCourses, workshops: renderEvents, seat_plans: renderSeatPlans })[table]?.();
+      ({ docs: renderDocs, trainings: renderTrainingList, dispatches: renderDispatch, exams: renderExams, exam_tasks: renderExamTasks, certs: renderCerts, cert_courses: renderCourses, workshops: renderEvents, seat_plans: renderSeatPlans, exam_plans: epRenderStrip })[table]?.();
       updateStats(); renderNotifBadge();
     }
 
@@ -7925,13 +8115,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       exam_tasks: ['id', 'kind', 'title', 'due_date', 'status', 'deleted_at', 'deleted_by', 'updated_at'],
       workshops: ['id', 'title', 'kind', 'scope', 'start_date', 'end_date', 'location', 'country', 'organizer', 'attendees', 'female', 'note', 'file_name', 'file_size', 'file_link', 'deleted_at', 'deleted_by', 'updated_at'],
       cert_courses: ['id', 'course', 'trainee', 'cert_no', 'deleted_at', 'deleted_by', 'updated_at'],
-      seat_plans: ['id', 'session', 'room', 'subject', 'center', 'exam_date', 'tpl', 'ncols', 'nrows', 'extra', 'layout', 'cands', 'cells', 'is_tpl', 'kind', 'start_no', 'pattern', 'file_name', 'file_link', 'building', 'floor', 'day', 'deleted_at', 'deleted_by', 'updated_at']
+      seat_plans: ['id', 'session', 'room', 'subject', 'center', 'exam_date', 'tpl', 'ncols', 'nrows', 'extra', 'layout', 'cands', 'cells', 'is_tpl', 'kind', 'start_no', 'pattern', 'file_name', 'file_link', 'building', 'floor', 'day', 'deleted_at', 'deleted_by', 'updated_at'],
+      exam_plans: ['id', 'bureau', 'title', 'exam_type', 'session', 'candidates', 'start_date', 'end_date', 'exam_date', 'assignee', 'steps', 'logs', 'note', 'pct', 'created_by', 'created_at', 'deleted_at', 'deleted_by', 'updated_at']
     };
     const schemaState = { at: 0, running: false, res: null, error: '' };
     function schemaColType(c) {
       if (/_at$/.test(c)) return 'timestamptz';
       if (/^(date|dob|due_date|start_date|end_date)$/.test(c)) return 'date';
-      if (/^(hours|grad_year|passed|failed|absent|qty)$/.test(c)) return 'numeric';
+      if (/^(hours|grad_year|passed|failed|absent|qty|candidates|pct)$/.test(c)) return 'numeric';
       if (/^(stage_history|nums|permissions)$/.test(c)) return 'jsonb';
       return 'text';
     }
@@ -8116,7 +8307,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const ago = ms => { if (!ms) return 'មិនទាន់ Sync'; const s = Math.floor((now - ms) / 1000); return s < 60 ? s + ' វិនាទីមុន' : s < 3600 ? Math.floor(s / 60) + ' នាទីមុន' : Math.floor(s / 3600) + ' ម៉ោងមុន'; };
       const card = (t, body, tone) => `<div class="rounded-2xl border p-4 space-y-1.5 ${tone || 'border-slate-200 bg-white'}"><h4 class="font-bold text-slate-800 text-sm">${t}</h4>${body}</div>`;
       const row = (k, v) => `<div class="flex justify-between gap-3"><span class="text-slate-500">${k}</span><b class="text-slate-800 text-right">${v}</b></div>`;
-      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['workshops', 'សិក្ខាសាលា & ប្រជុំ'], ['seat_plans', 'ប្លង់តុបន្ទប់ប្រឡង'], ['certs', 'សញ្ញាបត្រ'], ['cert_courses', 'វគ្គ & វិញ្ញាបនបត្រ']].filter(([t]) => t !== 'cert_courses' || activeRows(t).length).map(([t, k]) => row(k, activeRows(t).length)).join('');
+      const counts = [['docs', 'ឯកសារ'], ['dispatches', 'លិខិត'], ['trainings', 'បណ្តុះបណ្តាល'], ['exams', 'សម័យប្រឡង'], ['exam_tasks', 'ការងាររៀបចំប្រឡង'], ['workshops', 'សិក្ខាសាលា & ប្រជុំ'], ['seat_plans', 'ប្លង់តុបន្ទប់ប្រឡង'], ['exam_plans', 'ផែនការរៀបចំប្រឡង'], ['certs', 'សញ្ញាបត្រ'], ['cert_courses', 'វគ្គ & វិញ្ញាបនបត្រ']].filter(([t]) => t !== 'cert_courses' || activeRows(t).length).map(([t, k]) => row(k, activeRows(t).length)).join('');
       const deleted = DATA_TABLES.reduce((n, t) => n + store[t].filter(isDeleted).length, 0);
       el.innerHTML = `
         ${bOk ? '' : `<div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 flex flex-wrap items-center justify-between gap-3"><div><b class="text-amber-900">💾 ${bDays === null ? 'មិនទាន់មាន Backup' : 'Backup ចុងក្រោយ ' + bDays + ' ថ្ងៃមុន'}</b><p class="text-amber-800">ណែនាំ Backup យ៉ាងតិចម្តងក្នុង ${BACKUP_WARN_DAYS} ថ្ងៃ ហើយរក្សាទុកក្នុង Google Drive។</p></div><button onclick="backupEntireSystem(); renderSystemHealth()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold form-input-focus">📥 Backup ឥឡូវនេះ</button></div>`}
@@ -8383,7 +8574,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const strip = r => { const c = { ...r }; delete c._pending; if (c.driveLink) delete c.fileDataUrl; return c; };
       const full = { app: 'HRDD DMS', version: 'V2.5', exportedAt: nowISO(), exportedBy: currentUser?.username,
         users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
-        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip), seat_plans: store.seat_plans.map(strip) };
+        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip), seat_plans: store.seat_plans.map(strip), exam_plans: store.exam_plans.map(strip) };
       downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
       try { localStorage.setItem('hrd_last_backup', nowISO()); } catch (e) { }
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
@@ -8396,7 +8587,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       let data;
       try { data = JSON.parse(await file.text()); } catch (err) { return alert('⚠️ ហ្វាល JSON មិនត្រឹមត្រូវ ឬខូច!'); }
       if (!data || typeof data !== 'object') return alert('⚠️ ទម្រង់ Backup មិនត្រឹមត្រូវ!');
-      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks, cert_courses: data.cert_courses, workshops: data.workshops, seat_plans: data.seat_plans };
+      const src = { docs: data.documents || data.docs, trainings: data.trainings, dispatches: data.dispatches, exams: data.exams, certs: data.certificates || data.certs, report_notes: data.report_notes, exam_tasks: data.exam_tasks, cert_courses: data.cert_courses, workshops: data.workshops, seat_plans: data.seat_plans, exam_plans: data.exam_plans };
       const clean = {};
       DATA_TABLES.forEach(t => {
         clean[t] = (Array.isArray(src[t]) ? src[t] : []).filter(r => r && r.id != null && !isNaN(Number(r.id))).map(r => {
