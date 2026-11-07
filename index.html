@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.17.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.18.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -119,6 +119,25 @@
       #train-scope-cards .grid-cols-4 > button { padding: .15rem .25rem !important; }
       #train-scope-cards .grid-cols-4 > button > div:first-child { font-size: .95rem; }
     }
+
+    /* V3.17.1 ទូរស័ព្ទ: ប៊ូតុងមិនហៀរ · ថ្ងៃមិនហៀរ · tab រំកិលបាន · តម្រងបត់/លាត */
+    .mf-btn { display: none; }
+    @media (max-width: 767px) {
+      [id^="section-"] .flex-nowrap.shrink-0 { flex-wrap: wrap !important; flex-shrink: 1 !important; min-width: 0; width: 100%; }
+      [id^="section-"] .flex-nowrap.shrink-0 > * { flex: 1 1 auto; }
+      [id^="section-"] .flex-nowrap.shrink-0 > .relative { flex: 0 0 auto; }
+      .grid > div:has(> .kh-date), div:has(> .kh-date) { min-width: 0 !important; flex-basis: 100%; }
+      .kh-date, .kh-date > input[type=date] { min-width: 0; max-width: 100%; box-sizing: border-box; }
+      input[type=date] { -webkit-appearance: none; appearance: none; min-width: 0; }
+      #train-scope-tabs { flex-wrap: nowrap !important; }
+      #train-scope-tabs { overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      #train-scope-tabs > button { flex: 0 0 auto; white-space: nowrap; padding: .5rem .8rem !important; }
+      .mf-btn { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; grid-column: 1 / -1; padding: .6rem .9rem; margin-bottom: .5rem; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; font-weight: 700; font-size: 14px; color: #0f172a; }
+      .mf-btn .mf-n { margin-left: auto; min-width: 22px; text-align: center; padding: 0 6px; border-radius: 999px; background: #059669; color: #fff; font-size: 12px; }
+      .mf-btn .mf-n:empty { display: none; }
+      .mf-panel:not(.mf-open) .mf-ct > *:not(.mf-keep) { display: none !important; }
+      .mf-panel:not(.mf-open) { padding-top: .5rem; padding-bottom: .5rem; }
+    }
     /* ទូរស័ព្ទ: តារាង → កាត (ជួរនីមួយៗ = ១ កាត) */
     @media (max-width: 767px) {
       table.rt-card, table.rt-card tbody, table.rt-card tfoot, table.rt-card tr, table.rt-card td { display: block; width: auto; min-width: 0; }
@@ -156,7 +175,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.17.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.18.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -218,7 +237,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.17.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.18.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -676,7 +695,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.17.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.18.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -832,7 +851,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.17.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.18.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -844,7 +863,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.17.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.18.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1044,7 +1063,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.17.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.18.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -4617,10 +4636,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const SP_ORD = ['N', 'M', 'Z', 'X', 'V', '★'];
     function spTplsFor(c, r) { return spAllTpls().filter(t => t.c === c && t.r === r).sort((a, b) => (SP_ORD.indexOf(a.p) - SP_ORD.indexOf(b.p)) || (a.v - b.v)); }
     // អក្សរបញ្ជាក់លំនាំដើម ឧ. «6x6 Z»
+    // «6x6 Z» → «6x6 (Z)» (រួមទាំងប្លង់ដែលបានរក្សាទុករួច)
+    const spLblFmt = s => String(s == null ? '' : s).replace(/^(\d+x\d+) ([NMZXV★])(?=$| )/, '$1 ($2)');
     function spTplLabel(t, all) {
       if (t.custom) return t.c + 'x' + t.r + ' ★ ' + (t.name || 'ផ្ទាល់ខ្លួន');
       const multi = (all || spAllTpls()).filter(x => !x.custom && x.c === t.c && x.r === t.r && x.p === t.p).length > 1;
-      return t.c + 'x' + t.r + ' ' + t.p + (multi ? ' (' + t.v + ')' : '');
+      return t.c + 'x' + t.r + ' (' + t.p + (multi ? ' ' + t.v : '') + ')';
     }
     function spPatText(t, all) {
       if (t.custom) return '★ ' + (t.name || 'ផ្ទាល់ខ្លួន');
@@ -4701,7 +4722,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         return head + ps.map(p => {
           const cs = spPlanCands(p), cap = spCapOf(Number(p.ncols), Number(p.nrows), Number(p.extra)), bad = spConflicts(Number(p.ncols), Number(p.nrows), spPlanCells(p), cs).size, nums = cs.length ? cs[0].no + (cs.length > 1 ? ' – ' + cs[cs.length - 1].no : '') : '';
           return `<tr class="hover:bg-emerald-50 cursor-pointer" title="ចុច ២ ដង ដើម្បីបើក/កែ" ondblclick="if(!event.target.closest('button,a,input,select'))spOpen(${p.id})"><td class="p-3 font-bold text-slate-900">${p.day ? `<span class="mr-1 px-1.5 py-0.5 rounded-md text-[10px] ${p.day === '2' ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800'}">ថ្ងៃ${toKhmerDigits(p.day)}</span>` : ''}${esc(p.room || '-')}${p.center ? `<div class="text-[10px] font-normal text-slate-500">🏫 ${esc(p.center)}</div>` : ''}${p.building || p.floor ? `<div class="text-[10px] font-normal text-slate-500">${esc([p.building && 'អគារ ' + p.building, p.floor && 'ជាន់ ' + p.floor].filter(Boolean).join(' · '))}</div>` : ''}</td><td class="p-3 text-xs font-bold text-slate-600">${esc(p.subject || '-')}</td>
-            <td class="p-3 text-center text-xs font-bold whitespace-nowrap">${esc(p.tpl || '')}</td>
+            <td class="p-3 text-center text-xs font-bold whitespace-nowrap">${esc(spLblFmt(p.tpl || ''))}</td>
             <td class="p-3 text-center text-xs font-mono whitespace-nowrap">${esc(nums)}</td>
             <td class="p-3 text-center font-bold">${toKhmerDigits(cs.length)} / ${toKhmerDigits(cap)}${bad ? `<div class="text-[10px] text-amber-600">⚠️ ជិតគ្នាជំនាញដូចគ្នា ${toKhmerDigits(bad)} តុ</div>` : ''}</td>
             <td class="p-3 text-center font-mono text-xs whitespace-nowrap">${esc(String(p.exam_date || '-').slice(0, 10))}</td>
@@ -5045,7 +5066,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             <div>${L(K.sub)}<input id="se-subject" list="se-subject-dl" class="${I}" value="${esc(SP.plan.subject)}" ${ed ? '' : 'disabled'}><datalist id="se-subject-dl">${spOptHTML(spListKey(p.kind || 'out'), 'subject', p.kind || 'out')}</datalist></div>
             <div>${L('មណ្ឌល')}<input id="se-center" list="se-center-dl" class="${I}" value="${esc(SP.plan.center)}" ${ed ? '' : 'disabled'}><datalist id="se-center-dl">${spOptHTML('examCenters', 'center', '')}</datalist></div>
             <div>${L('ថ្ងៃប្រឡង')}<input type="date" id="se-date" class="${I}" value="${esc(String(SP.plan.exam_date || '').slice(0, 10))}" ${ed ? '' : 'disabled'}></div>
-            <div>${L('អក្សរបញ្ជាក់ (ឧ. 6x6 Z)')}<input id="se-label" class="${I} font-bold" value="${esc(SP.plan.tpl)}" ${ed ? '' : 'disabled'}></div>
+            <div>${L('អក្សរបញ្ជាក់ (ឧ. 6x6 (Z))')}<input id="se-label" class="${I} font-bold" value="${esc(spLblFmt(SP.plan.tpl))}" ${ed ? '' : 'disabled'}></div>
           </div>
           ${ed ? `<div class="flex flex-wrap items-center gap-2 text-xs"><label class="font-bold text-slate-600">ប្តូរទំហំ/ទម្រង់៖</label><select id="se-tpl" onchange="spEditTpl(this.value)" class="border border-slate-300 rounded-lg p-1.5 bg-white"><option value="">— រក្សាបច្ចុប្បន្ន (${esc(SP.plan.tpl)}) —</option>${spTplOptions('')}</select>
             <label class="font-bold text-slate-600"><input type="checkbox" id="se-extra" ${SP.plan.extra ? 'checked' : ''} onchange="spEditExtra(this.checked)"> +១ តុបន្ថែម</label>
@@ -5135,7 +5156,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         mx = Math.max(4, ...cells.map(v => String(v || '').length)), fs = Math.round(Math.min(21, (cw - 0.2) / (mx * 0.01323), ch * 16)), st = `style="width:${cw.toFixed(2)}cm;height:${ch.toFixed(2)}cm;line-height:${ch.toFixed(2)}cm;font-size:${fs}px"`;
       const rowsH = Array.from({ length: R }, (_, r) => '<tr>' + Array.from({ length: C }, (_, c) => { const v = cells[r * C + c] || ''; return `<td class="${v ? '' : 'x'}" data-n="${esc(v)}" ${st}>${esc(v)}</td>`; }).join('') + '</tr>').join('');
       return `<section class="pg"><h1>ប្លង់តុ</h1>${spMeta(i, true)}
-        ${x ? `<div class="xr"><span class="seat ${cells[N] ? '' : 'x'}" data-n="${esc(cells[N] || '')}" ${st}>${esc(cells[N] || '')}</span></div>` : ''}<table class="grid" style="border-spacing:${hs}cm ${vs.toFixed(2)}cm">${rowsH}</table><div class="foot">ទម្រង់៖ <b>${esc(p.tpl || (C + 'x' + R))}</b></div></section>`;
+        ${x ? `<div class="xr"><span class="seat ${cells[N] ? '' : 'x'}" data-n="${esc(cells[N] || '')}" ${st}>${esc(cells[N] || '')}</span></div>` : ''}<table class="grid" style="border-spacing:${hs}cm ${vs.toFixed(2)}cm">${rowsH}</table><div class="foot">ទម្រង់៖ <b>${esc(spLblFmt(p.tpl || (C + 'x' + R)))}</b></div></section>`;
     }
     function spLabelsPage(p) {
       const i = spInfo(p), cells = spPlanCells(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
@@ -5147,7 +5168,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <table class="lst"><thead><tr><th>ល.រ</th><th>លេខបេក្ខជន</th><th>ឈ្មោះ</th><th>ជំនាញ/សាលា</th><th>តុ (ជួរ·ឈរ)</th><th>ហត្ថលេខា</th></tr></thead><tbody>${i.cs.map((c, k) => { const q = pos.get(String(c.no)); const pt = q == null ? '' : (q >= C * Number(p.nrows) ? 'បន្ថែម' : (Math.floor(q / C) + 1) + '·' + (q % C + 1)); return `<tr><td>${k + 1}</td><td><b>${esc(c.no)}</b></td><td>${esc(c.name || '')}</td><td>${esc(c.major || '')}</td><td>${pt}</td><td></td></tr>`; }).join('')}</tbody></table></section>`;
     }
     const SP_CSS = `body{font-family:'Khmer OS Siemreap','Siemreap','Noto Sans Khmer','Khmer UI','Leelawadee UI',sans-serif;margin:0;color:#000}.pg{page-break-after:always;padding:0}.pg:last-child{page-break-after:auto}h1{font-family:'Khmer OS Muol Light','Moul','Noto Sans Khmer',serif;font-weight:400;text-align:center;font-size:24px;line-height:1.7;margin:0 0 6px}.meta{font-size:15px;line-height:1.6;margin-bottom:6px;display:grid;grid-template-columns:1fr 1fr;column-gap:24px}.meta b{display:inline-block;min-width:105px}.meta.v{grid-template-columns:1fr;font-size:16px;line-height:1.55;margin:4px 0 10px}.meta.v b{min-width:4.8cm}
-      .grid{border-collapse:separate;border-spacing:8px;margin:0 auto}.grid td{border:1.5px solid #000;text-align:center;vertical-align:middle;line-height:1;font-weight:700;padding:0;font-family:'Times New Roman',Times,serif}.x{background:linear-gradient(to top right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#000 50%,transparent calc(50% + 1px))}
+      .grid{border-collapse:separate;border-spacing:8px;margin:0 auto}.grid td{border:1.5px solid #000;text-align:center;vertical-align:middle;line-height:1;font-weight:700;padding:0;font-family:'Times New Roman',Times,serif}.x{background-color:#e5e7eb;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke='%23000' stroke-width='1.2' vector-effect='non-scaling-stroke' fill='none'/%3E%3C/svg%3E");background-size:100% 100%;-webkit-print-color-adjust:exact;print-color-adjust:exact}
       .xr{text-align:right;margin-right:12px}.seat{display:inline-block;border:1.5px solid #000;text-align:center;font-weight:700;font-family:'Times New Roman',Times,serif}.foot{font-size:14px;line-height:2;margin-top:8px;padding-bottom:16px;text-align:left}
       .labs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lab{border:1.5px dashed #444;border-radius:6px;padding:6px 8px;height:3.6cm;box-sizing:border-box;overflow:hidden;break-inside:avoid}.ln{font-family:'Times New Roman',Times,serif;font-size:30px;font-weight:800;line-height:1.1}.lr{font-size:13px;font-weight:700}.ls{font-size:13px}.lm{font-size:12px;color:#333}.lf{font-size:10px;color:#444;margin-top:2px}
       .lst{width:100%;border-collapse:collapse;font-size:13px}.lst th,.lst td{border:1px solid #000;padding:5px 6px}.lst th{background:#eee}.lst td:last-child{width:3.5cm}.lst td:nth-child(2){font-family:'Times New Roman',Times,serif;font-weight:700}.rk{display:flex;gap:10px;margin:8px 0 12px;flex-wrap:wrap}.rk div{border:1.5px solid #000;border-radius:6px;padding:6px 12px;text-align:center;font-size:12px}.rk b{display:block;font-size:22px}.tr td{font-weight:800;background:#f3f3f3}`;
@@ -5161,19 +5182,91 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       win.document.write(`<html><head><meta charset="utf-8"><title>ប្លង់តុ</title><link href="https://fonts.googleapis.com/css2?family=Moul&family=Siemreap&family=Noto+Sans+Khmer:wght@400;700;800&display=swap" rel="stylesheet"><style>${pgCss}${SP_CSS}${mode === 'plan' ? '.pg{padding:10mm}' : ''}</style></head><body>${pages}<script>setTimeout(function(){window.print()},700)<\/script></body></html>`);
       win.document.close();
     }
-    function spExportExcel(ids) {
-      const plans = ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean); if (!plans.length) return showToast('មិនមានប្លង់', true);
-      const sum = [], all = [], grids = [];
+    // ===== V3.18.0: Excel ប្លង់តុ — ១ sheet/បន្ទប់ តាមទម្រង់ (ប្រអប់មានស៊ុម · ✕ = អង្កត់ទ្រូង + ប្រផេះស្រាល) — សរសេរ .xlsx ដោយផ្ទាល់ (JSZip) ដើម្បីមាន style =====
+    const xmlEsc = s => String(s == null ? '' : s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const xlCol = n => { let s = ''; for (n++; n > 0; n = Math.floor((n - 1) / 26)) s = String.fromCharCode(65 + (n - 1) % 26) + s; return s; };
+    function xlSheet() { return { cells: new Map(), cols: [], rows: [], merges: [], orient: 'portrait', fit: true }; }
+    function xlPut(sh, r, c, v, s) { sh.cells.set(r + ',' + c, { v, s }); }
+    function xlBuildBook(sheets) {
+      const fonts = [], fills = ['<fill><patternFill patternType="none"/></fill>', '<fill><patternFill patternType="gray125"/></fill>'], borders = ['<border><left/><right/><top/><bottom/><diagonal/></border>'], xfs = [], fi = new Map(), fl = new Map(), xi = new Map();
+      const L = '<color auto="1"/>', bx = '<left style="thin">' + L + '</left><right style="thin">' + L + '</right><top style="thin">' + L + '</top><bottom style="thin">' + L + '</bottom>';
+      borders.push('<border>' + bx + '<diagonal/></border>'); borders.push('<border diagonalUp="1" diagonalDown="1">' + bx + '<diagonal style="thin">' + L + '</diagonal></border>');
+      const fontId = (n, z, b) => { const k = n + '|' + z + '|' + b; if (!fi.has(k)) { fi.set(k, fonts.length); fonts.push('<font>' + (b ? '<b/>' : '') + '<sz val="' + z + '"/><name val="' + xmlEsc(n) + '"/><family val="1"/></font>'); } return fi.get(k); };
+      fontId('Khmer OS Siemreap', 12, 0);
+      const fillId = rgb => { if (!rgb) return 0; if (!fl.has(rgb)) { fl.set(rgb, fills.length); fills.push('<fill><patternFill patternType="solid"><fgColor rgb="FF' + rgb + '"/><bgColor indexed="64"/></patternFill></fill>'); } return fl.get(rgb); };
+      const sid = o => {
+        o = o || {}; const k = JSON.stringify(o); if (xi.has(k)) return xi.get(k);
+        const f = fontId(o.f || 'Khmer OS Siemreap', o.z || 12, o.b ? 1 : 0), fi_ = fillId(o.fill), bd = o.bd || 0, al = '<alignment horizontal="' + (o.h || 'left') + '" vertical="center"' + (o.wrap ? ' wrapText="1"' : '') + '/>';
+        xfs.push('<xf numFmtId="' + (o.nf || 0) + '" fontId="' + f + '" fillId="' + fi_ + '" borderId="' + bd + '" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1">' + al + '</xf>'); xi.set(k, xfs.length - 1); return xfs.length - 1;
+      };
+      sid({}); const out = {};
+      const sheetXml = sh => {
+        const rowsMap = new Map(); let maxR = 0, maxC = 0;
+        sh.cells.forEach((cell, key) => { const [r, c] = key.split(',').map(Number); if (!rowsMap.has(r)) rowsMap.set(r, []); rowsMap.get(r).push([c, cell]); maxR = Math.max(maxR, r); maxC = Math.max(maxC, c); });
+        sh.rows.forEach((h, r) => { if (h && !rowsMap.has(r)) rowsMap.set(r, []); maxR = Math.max(maxR, r); });
+        const rows = [...rowsMap.keys()].sort((a, b) => a - b).map(r => {
+          const h = sh.rows[r], cs = rowsMap.get(r).sort((a, b) => a[0] - b[0]).map(([c, { v, s }]) => {
+            const ref = xlCol(c) + (r + 1), st = sid(s);
+            if (v === '' || v == null) return '<c r="' + ref + '" s="' + st + '"/>';
+            if (typeof v === 'number') return '<c r="' + ref + '" s="' + st + '"><v>' + v + '</v></c>';
+            return '<c r="' + ref + '" s="' + st + '" t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(v) + '</t></is></c>';
+          }).join('');
+          return '<row r="' + (r + 1) + '"' + (h ? ' ht="' + h + '" customHeight="1"' : '') + '>' + cs + '</row>';
+        }).join('');
+        const cols = sh.cols.length ? '<cols>' + sh.cols.map((w, i) => '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w + '" customWidth="1"/>').join('') + '</cols>' : '';
+        return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:' + xlCol(maxC) + (maxR + 1) + '"/><sheetViews><sheetView showGridLines="' + (sh.grid ? 1 : 0) + '" workbookViewId="0"/></sheetViews><sheetFormatPr defaultRowHeight="18"/>' + cols + '<sheetData>' + rows + '</sheetData>'
+          + (sh.merges.length ? '<mergeCells count="' + sh.merges.length + '">' + sh.merges.map(m => '<mergeCell ref="' + xlCol(m[1]) + (m[0] + 1) + ':' + xlCol(m[3]) + (m[2] + 1) + '"/>').join('') + '</mergeCells>' : '')
+          + '<pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="' + sh.orient + '" fitToWidth="1" fitToHeight="' + (sh.fit ? 1 : 0) + '"/></worksheet>';
+      };
+      const used = new Set(), names = sheets.map(sh => xlsxSheetName(sh.name, used)), xmls = sheets.map(sheetXml), NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+      out.files = {
+        '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' + sheets.map((_, i) => '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('') + '</Types>',
+        '_rels/.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+        'xl/workbook.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="' + NS + '" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + names.map((n, i) => '<sheet name="' + xmlEsc(n) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>').join('') + '</sheets></workbook>',
+        'xl/_rels/workbook.xml.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map((_, i) => '<Relationship Id="rId' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' + (i + 1) + '.xml"/>').join('') + '<Relationship Id="rId' + (sheets.length + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
+      };
+      xmls.forEach((x, i) => { out.files['xl/worksheets/sheet' + (i + 1) + '.xml'] = x; });
+      out.files['xl/styles.xml'] = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="' + NS + '"><fonts count="' + fonts.length + '">' + fonts.join('') + '</fonts><fills count="' + fills.length + '">' + fills.join('') + '</fills><borders count="' + borders.length + '">' + borders.join('') + '</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="' + xfs.length + '">' + xfs.join('') + '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+      return out.files;
+    }
+    // តារាងធម្មតា (សង្ខេប · បេក្ខជន)
+    function xlTable(name, rows) {
+      const sh = xlSheet(), keys = []; sh.fit = false; sh.grid = true; sh.name = name; rows = rows && rows.length ? rows : [{ 'ព័ត៌មាន': 'មិនមានទិន្នន័យ' }];
+      rows.forEach(r => Object.keys(r).forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+      keys.forEach((k, c) => { sh.cols[c] = Math.min(40, Math.max(String(k).length, ...rows.slice(0, 200).map(r => String(r[k] == null ? '' : r[k]).length)) + 3); xlPut(sh, 0, c, k, { b: 1, fill: 'D1FAE5', bd: 1, h: 'center' }); });
+      rows.forEach((r, i) => keys.forEach((k, c) => xlPut(sh, i + 1, c, r[k] == null ? '' : String(r[k]), { bd: 1 }))); sh.rows[0] = 24; return sh;
+    }
+    // ១ បន្ទប់ = ១ sheet៖ ចំណងជើង · ព័ត៌មាន · តារាងប្រអប់ · ទម្រង់
+    function xlRoomSheet(p) {
+      const i = spInfo(p), C = Number(p.ncols), R = Number(p.nrows), N = C * R, cells = spPlanCells(p), x = Number(p.extra) ? 1 : 0, sh = xlSheet(), W = 2 * C - 1, lbl = spLblFmt(p.tpl || (C + 'x' + R));
+      const mx = Math.max(4, ...cells.map(v => String(v || '').length)), bw = Math.min(30, Math.max(15, mx * 2 + 3)), nf = mx > 8 ? 13 : 16;
+      for (let c = 0; c < W; c++) sh.cols[c] = c % 2 ? 2.2 : bw;
+      const T = { f: 'Khmer OS Muol Light', z: 20, h: 'center' }, LB = { f: 'Khmer OS Siemreap', z: 14 }, NUM = { f: 'Times New Roman', z: nf, b: 1, h: 'center', bd: 1 }, XX = { f: 'Times New Roman', z: nf, b: 1, h: 'center', bd: 2, fill: 'E7E6E6' };
+      let r = 0; sh.rows[r++] = 8; xlPut(sh, r, 0, 'ប្លង់តុ', T); sh.merges.push([r, 0, r, W - 1]); sh.rows[r++] = 40;
+      const info = [['បន្ទប់លេខ', i.room], ['ចំនួនបេក្ខជន', toKhmerDigits(i.n)], [i.subL, i.subject], ['មណ្ឌល', i.center]]; if (i.loc) info.push(['អគារ/ជាន់', i.loc]);
+      info.forEach(([a, b]) => { xlPut(sh, r, 0, a, LB); if (W > 2) { xlPut(sh, r, 2, b, LB); if (W > 3) sh.merges.push([r, 2, r, W - 1]); } else xlPut(sh, r, 1, b, LB); sh.rows[r++] = 27; });
+      if (i.date) { xlPut(sh, r, 0, i.date, LB); sh.merges.push([r, 0, r, W - 1]); sh.rows[r++] = 27; }
+      sh.rows[r++] = 10;
+      if (x) { xlPut(sh, r, W - 1, cells[N] ? String(cells[N]) : '', cells[N] ? NUM : XX); sh.rows[r++] = 38; sh.rows[r++] = 12; }
+      for (let rr = 0; rr < R; rr++) { for (let c = 0; c < C; c++) { const v = cells[rr * C + c]; xlPut(sh, r, 2 * c, v ? String(v) : '', v ? NUM : XX); } sh.rows[r++] = 38; sh.rows[r++] = 12; }
+      xlPut(sh, r, 0, lbl, { f: 'Khmer OS Siemreap', z: 12 }); sh.merges.push([r, 0, r, W - 1]); sh.rows[r] = 24;
+      sh.orient = 'portrait'; sh.name = (p.day ? 'D' + p.day + ' ' : '') + (p.room || p.id) + ' ' + C + 'x' + R + (p.pattern ? '(' + p.pattern + ')' : ''); return sh;
+    }
+    async function spXlsxBuild(plans) {
+      const sum = [], all = [];
       plans.forEach(p => {
         const C = Number(p.ncols), R = Number(p.nrows), N = C * R, cells = spPlanCells(p), cs = spPlanCands(p), pos = new Map(); cells.forEach((v, k) => { if (v) pos.set(String(v), k); });
-        sum.push({ 'ប្រភេទ': p.kind ? spKindName(p.kind) : '', 'សម័យ': p.session || '', 'ថ្ងៃ': p.day ? 'ថ្ងៃទី' + p.day : '', 'អគារ': p.building || '', 'ជាន់': p.floor || '', 'បន្ទប់': p.room || '', 'មុខវិជ្ជា/ជំនាញ': p.subject || '', 'មណ្ឌល': p.center || '', 'ថ្ងៃប្រឡង': String(p.exam_date || '').slice(0, 10), 'ទំហំ (ឈរ×ជួរ)': C + 'x' + R + (Number(p.extra) ? '+1' : ''), 'ទម្រង់': p.tpl || '', 'លេខតុពី': cs[0] ? cs[0].no : '', 'រហូតដល់': cs.length ? cs[cs.length - 1].no : '', 'បេក្ខជន': cs.length, 'ចំណុះតុ': spCapOf(C, R, Number(p.extra)) });
-        cs.forEach(c => { const q = pos.get(String(c.no)); all.push({ 'សម័យ': p.session || '', 'បន្ទប់': p.room || '', 'លេខបេក្ខជន': c.no, 'ឈ្មោះ': c.name || '', 'ជំនាញ/សាលា': c.major || '', 'ជួរ': q == null ? '' : (q >= N ? 'បន្ថែម' : Math.floor(q / C) + 1), 'ឈរ': q == null || q >= N ? '' : q % C + 1 }); });
-        const g = Array.from({ length: R }, (_, r) => { const o = { 'ជួរ': r + 1 }; for (let c = 0; c < C; c++) o['ឈរ ' + (c + 1)] = cells[r * C + c] || '✕'; return o; });
-        if (Number(p.extra)) g.push({ 'ជួរ': 'តុបន្ថែម', 'ឈរ 1': cells[N] || '✕' });
-        grids.push({ name: 'ប្លង់ ' + (p.day ? 'D' + p.day + ' ' : '') + (p.room || p.id), rows: g });
+        sum.push({ 'ប្រភេទ': p.kind ? spKindName(p.kind) : '', 'សម័យ': p.session || '', 'ថ្ងៃ': p.day ? 'ថ្ងៃទី' + p.day : '', 'អគារ': p.building || '', 'ជាន់': p.floor || '', 'បន្ទប់': p.room || '', 'មុខវិជ្ជា/ជំនាញ': p.subject || '', 'មណ្ឌល': p.center || '', 'ថ្ងៃប្រឡង': String(p.exam_date || '').slice(0, 10), 'ទំហំ (ឈរ×ជួរ)': C + 'x' + R + (Number(p.extra) ? '+1' : ''), 'ទម្រង់': spLblFmt(p.tpl || ''), 'លេខតុពី': cs[0] ? cs[0].no : '', 'លេខតុដល់': cs.length ? cs[cs.length - 1].no : '', 'ចំនួនបេក្ខជន': cs.length });
+        cs.forEach(c => { const q = pos.get(String(c.no)); all.push({ 'សម័យ': p.session || '', 'ថ្ងៃ': p.day ? 'ថ្ងៃទី' + p.day : '', 'មណ្ឌល': p.center || '', 'បន្ទប់': p.room || '', 'លេខបេក្ខជន': c.no, 'ឈ្មោះ': c.name || '', 'ជំនាញ/សាលា': c.major || '', 'ជួរ': q == null ? '' : (q >= N ? 'បន្ថែម' : Math.floor(q / C) + 1), 'ឈរ': q == null || q >= N ? '' : q % C + 1 }); });
       });
-      if (!xlsxBook([{ name: 'សង្ខេប', rows: sum }, { name: 'បេក្ខជន', rows: all }].concat(grids.slice(0, 40)), 'ប្លង់តុ_' + todayISO() + '.xlsx')) return;
-      showToast('បាន Export Excel (' + plans.length + ' បន្ទប់)'); logActivity('Export ប្លង់តុ', plans.length + ' បន្ទប់');
+      const sh = [xlTable('សង្ខេប', sum), xlTable('បេក្ខជន', all)].concat(plans.map(xlRoomSheet)), files = xlBuildBook(sh), zip = new JSZip();
+      Object.keys(files).forEach(n => zip.file(n, files[n])); return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', compression: 'DEFLATE' });
+    }
+    async function spExportExcel(ids) {
+      const plans = ids.map(id => store.seat_plans.find(x => x.id === id)).filter(Boolean).sort(spSortKey); if (!plans.length) return showToast('មិនមានប្លង់', true);
+      if (!window.JSZip) return showToast('Library JSZip មិនទាន់ផ្ទុកបានទេ — សូមពិនិត្យអ៊ីនធឺណិត', true);
+      try { downloadBlob(await spXlsxBuild(plans), 'ប្លង់តុ_' + todayISO() + '.xlsx'); } catch (e) { console.warn(e); return showToast('មិនអាចបង្កើត Excel', true); }
+      showToast('បាន Export Excel (' + plans.length + ' បន្ទប់ · ១ sheet/បន្ទប់)'); logActivity('Export ប្លង់តុ', plans.length + ' បន្ទប់');
     }
 
     // ---------- PDF (html2canvas + jsPDF — បង្ហាញអក្សរខ្មែរបានត្រឹមត្រូវ) → Download + ទុកក្នុងប្រព័ន្ធតាមសម័យ
@@ -5197,6 +5290,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             const r = e.getBoundingClientRect(); e.style.color = 'transparent';
             return { t: e.dataset.n, cx: (r.left - sr.left + r.width / 2), cy: (r.top - sr.top + r.height / 2), fs: parseFloat(d.defaultView.getComputedStyle(e).fontSize) || 20 };
           });
+          const xs = [...sec.querySelectorAll('.x')].map(e => { const r = e.getBoundingClientRect(); e.style.background = 'none'; return { l: r.left - sr.left, t: r.top - sr.top, w: r.width, h: r.height }; });
           const cv = await window.html2canvas(sec, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
           const iw = pw - mg * 2, k = iw / cv.width, sliceH = Math.floor((ph - mg * 2) / k);
           for (let y = 0; y < cv.height; y += sliceH) {
@@ -5204,6 +5298,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             part.getContext('2d').drawImage(cv, 0, y, cv.width, h, 0, 0, cv.width, h);
             if (!first) pdf.addPage(); first = false; pdf.addImage(part.toDataURL('image/jpeg', 0.92), 'JPEG', mg, mg, iw, h * k);
             const kc = k * (cv.width / (sec.offsetWidth || sr.width || cv.width)); // mm ក្នុង 1 CSS px
+            xs.forEach(b => { const t0 = b.t * (cv.width / (sec.offsetWidth || sr.width || cv.width)); if (t0 < y || t0 >= y + h) return; const bx = mg + b.l * kc, by = mg + (t0 - y) * k, bw = b.w * kc, bh = b.h * kc, ins = 0.25; pdf.setFillColor(229, 231, 235); pdf.rect(bx + ins, by + ins, bw - 2 * ins, bh - 2 * ins, 'F'); pdf.setDrawColor(0, 0, 0); pdf.setLineWidth(0.3); pdf.line(bx, by, bx + bw, by + bh); pdf.line(bx + bw, by, bx, by + bh); });
             nums.forEach(n => { const cyc = n.cy * (cv.width / (sec.offsetWidth || sr.width || cv.width)); if (cyc < y || cyc >= y + h) return; const fm = n.fs * kc; pdf.setFont('times', 'bold'); pdf.setFontSize(fm / 0.352778); pdf.setTextColor(0, 0, 0); pdf.text(n.t, mg + n.cx * kc, mg + (cyc - y) * k + fm * 0.676 / 2, { align: 'center' }); });
           }
         }
@@ -8883,8 +8978,24 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.getElementById('zoom-out').disabled = cur <= ZM_LV[0]; document.getElementById('zoom-in').disabled = cur >= ZM_LV[ZM_LV.length - 1]; zmApply(m);
     }
     document.addEventListener('wheel', e => { if (!e.ctrlKey) return; const m = zmTop(); if (!m || !m.contains(e.target)) return; e.preventDefault(); zmStep(e.deltaY < 0 ? 1 : -1); }, { passive: false });
-    let _uiRaf = 0; function uiTick() { if (_uiRaf) return; _uiRaf = requestAnimationFrame(() => { _uiRaf = 0; rtLabel(); khDateSync(); zmTick(); }); }
-    try { new MutationObserver(uiTick).observe(document.body, { childList: true, subtree: true }); setInterval(() => { khDateSync(); zmTick(); }, 600); } catch (e) { }
+
+    // ===== V3.17.1: តម្រងបត់/លាត លើទូរស័ព្ទ (ទុកតែប្រអប់ស្វែងរក) =====
+    function mfInit() {
+      document.querySelectorAll('.bg-slate-50.rounded-2xl.border').forEach(p => {
+        if (p.dataset.mf) return; const ctl = p.querySelectorAll('[id^="filter-"]'); if (ctl.length < 3) return;
+        const search = [...ctl].find(e => e.tagName === 'INPUT' && (e.type === 'text' || e.type === 'search')); if (!search) return; p.dataset.mf = '1';
+        let ct = p; while (true) { const ch = [...ct.children].filter(e => !e.classList.contains('mf-btn')); if (ch.length === 1 && ch[0] !== search && ch[0].contains(search)) ct = ch[0]; else break; }
+        let keep = search; while (keep.parentElement !== ct) keep = keep.parentElement; keep.classList.add('mf-keep'); ct.classList.add('mf-ct'); p.classList.add('mf-panel');
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-btn'; b.innerHTML = '<span>🔎 តម្រង</span><span class="mf-n"></span><span class="mf-ar">▾</span>';
+        b.onclick = () => { p.classList.toggle('mf-open'); b.querySelector('.mf-ar').textContent = p.classList.contains('mf-open') ? '▴' : '▾'; }; p.insertBefore(b, p.firstChild);
+      });
+      document.querySelectorAll('.mf-panel').forEach(p => {
+        let n = 0; p.querySelectorAll('[id^="filter-"]').forEach(e => { if (e.type === 'text' || e.type === 'search') return; const d = e.tagName === 'SELECT' ? (e.options[0] ? e.options[0].value : '') : ''; if (String(e.value) !== String(d) && e.value !== 'all') n++; });
+        const s = p.querySelector('.mf-n'); if (s) { const v = n ? toKhmerDigits(n) : ''; if (s.textContent !== v) s.textContent = v; }
+      });
+    }
+    let _uiRaf = 0; function uiTick() { if (_uiRaf) return; _uiRaf = requestAnimationFrame(() => { _uiRaf = 0; rtLabel(); khDateSync(); zmTick(); mfInit(); }); }
+    try { new MutationObserver(uiTick).observe(document.body, { childList: true, subtree: true }); setInterval(() => { khDateSync(); zmTick(); mfInit(); }, 600); } catch (e) { }
     window.addEventListener('resize', autoSidebar);
     window.addEventListener('DOMContentLoaded', () => {
       autoSidebar(); uiTick();
