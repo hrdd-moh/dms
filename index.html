@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.21.2 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.21.3 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.21.2</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.21.3</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -253,7 +253,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.21.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.21.3 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -518,6 +518,7 @@
                   <select id="filter-exam-year" onchange="onFilter('exams')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white"><option value="all">គ្រប់ឆ្នាំ</option></select>
                   <select id="filter-exam-inst" onchange="onFilter('exams')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white max-w-[170px]"><option value="all">គ្រប់គ្រឹះស្ថាន</option></select>
                   <input type="text" id="filter-exam-search" oninput="onFilter('exams')" placeholder="🔍 ស្វែងរកជំនាញ ឬសម័យប្រឡង..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-56">
+                  <button type="button" onclick="exOpenForm()" class="perm-upload-el px-3.5 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md">➕ កត់ត្រាសម័យប្រឡងរហ័ស</button>
                   <button type="button" onclick="ebOpen()" class="perm-upload-el px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold">👥 បញ្ចូលច្រើន / 📥 Import</button>
                   <button type="button" onclick="examExportExcel()" class="perm-download-el px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 border border-slate-200 text-xs font-bold">📤 Excel</button>
                   <button type="button" onclick="openExamReport()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">📊 Report</button>
@@ -712,7 +713,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.21.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.21.3 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -869,7 +870,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.21.2</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.21.3</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -881,7 +882,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.21.2 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.21.3 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1081,7 +1082,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.21.2</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.21.3</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -3239,6 +3240,29 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       set('stat-custom-label', appLang === 'en' ? cfg[1] : cfg[0]); set('stat-custom-val', cfg[2]); set('stat-custom-icon', cfg[3]); renderCertStatCard();
     }
 
+    // ទម្រង់កត់ត្រាសម័យប្រឡង (ប្រើក្នុង page ថ្មី exOpenForm)
+    function examFormHtml(en) {
+      return `
+          <form onsubmit="handleSaveExam(event)" class="space-y-3.5 text-sm font-medium">
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Major / Specialty' : 'ជំនាញ / ឯកទេស'}</label><input type="text" id="exam-major" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Exam Type' : 'ប្រភេទ'}</label><select id="exam-type" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXAM_TYPES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join("")}</select></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Session' : 'សម័យប្រឡង'}</label><input type="text" id="exam-session" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Total Candidates' : 'ចំនួនបេក្ខជនសរុប'}</label><input type="number" min="0" id="exam-candidates" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Status' : 'ស្ថានភាព'}</label><input type="text" id="exam-status" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="កំពុងរៀបចំវិញ្ញាសា"></div>
+            <div><label class="block text-xs mb-1 font-bold text-slate-700">គ្រឹះស្ថាន (ជម្រើស)</label><input type="text" id="exam-institution" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="ឧ. សាកលវិទ្យាល័យន័រតុន"></div>
+            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ថ្ងៃប្រឡង (ចាប់ផ្តើម)</label><input type="date" id="exam-start" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="exam-end" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
+            <div class="grid grid-cols-3 gap-2 bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200"><div class="col-span-3 text-[11px] font-bold text-emerald-800">លទ្ធផល (ទុកទទេបើមិនទាន់ដឹង — កែបានក្រោយដោយ ✏️)</div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ជាប់</label><input type="number" min="0" id="exam-passed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ធ្លាក់</label><input type="number" min="0" id="exam-failed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">អវត្តមាន</label><input type="number" min="0" id="exam-absent" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
+            <button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">Submit Exam</button>
+          </form>`;
+    }
+    function exOpenForm() {
+      if (!can('create')) return showToast('គ្មានសិទ្ធិបង្កើត', true);
+      document.getElementById('ex-overlay')?.remove(); const en = appLang === 'en';
+      const ov = document.createElement('div'); ov.id = 'ex-overlay'; ov.className = 'fixed inset-0 z-[100] bg-slate-100 overflow-y-auto';
+      ov.innerHTML = `<div class="max-w-3xl mx-auto p-3 sm:p-5 space-y-4"><div class="sticky top-0 z-10 -mx-3 sm:-mx-5 px-3 sm:px-5 py-2.5 bg-emerald-700 text-white flex items-center justify-between gap-2 shadow-md"><div class="font-bold text-sm sm:text-base">🎓 កត់ត្រាសម័យប្រឡងរហ័ស <span class="text-[11px] font-medium text-emerald-100">National Exam Session</span></div><button type="button" onclick="exCloseForm()" class="px-4 py-2 rounded-xl bg-emerald-900/60 hover:bg-emerald-900 text-white text-xs font-bold">✕ បិទ</button></div><div class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-2xs">${examFormHtml(en)}</div><p class="text-center text-[11px] text-slate-400">បន្ទាប់ពី Submit ទម្រង់នៅបើក ដើម្បីបញ្ចូលបន្តបាន · ចុច ✕ បិទ ពេលចប់</p></div>`;
+      document.body.appendChild(ov); document.body.classList.add('overflow-hidden'); if (typeof khDateSync === 'function') khDateSync(); setTimeout(() => document.getElementById('exam-major')?.focus(), 50);
+    }
+    function exCloseForm() { document.getElementById('ex-overlay')?.remove(); document.body.classList.remove('overflow-hidden'); }
     function renderSideForm() {
       const container = document.getElementById('side-form-container');
       const titleEl = document.getElementById('side-panel-header-title');
@@ -3246,7 +3270,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!container) return;
       // បណ្ណាល័យរួម៖ មានតែ Admin / Super Admin ទេដែលបង្ហោះបាន → បិទផ្ទាំងសម្រាប់អ្នកផ្សេង
       const panel = container.closest('.xl\\:col-span-4'), mainCol = document.querySelector('.xl\\:col-span-8');
-      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry', 'ex_track'].includes(activeTab) || SEAT_PLAN_TABS.includes(activeTab) || (activeTab === 'docs' && !isAdmin());
+      const hidePanel = ['tracking', 'reports', 'certs', 'training', 'trainentry', 'ex_track', 'exams', 'ex_docs', 'ex_seats'].includes(activeTab) || SEAT_PLAN_TABS.includes(activeTab) || (activeTab === 'docs' && !isAdmin());
       if (panel) panel.classList.toggle('hidden', hidePanel);
       if (mainCol) mainCol.classList.toggle('main-wide', hidePanel);
       if (hidePanel) { container.innerHTML = ''; if (activeTab === 'certs') { certViewApply(); if (certSub) renderCertQuickPanel(true); } return; }
@@ -3297,22 +3321,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             <button type="submit" id="btn-save-disp" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md transition mt-2 flex items-center justify-center gap-2 form-input-focus"><span>Submit Letter / រក្សាទុក</span></button>
           </form>`;
       } else if (activeTab === 'exams') {
-        container.innerHTML = `
-          <form onsubmit="handleSaveExam(event)" class="space-y-3.5 text-sm font-medium">
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Major / Specialty' : 'ជំនាញ / ឯកទេស'}</label><input type="text" id="exam-major" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Exam Type' : 'ប្រភេទ'}</label><select id="exam-type" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXAM_TYPES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join("")}</select></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Session' : 'សម័យប្រឡង'}</label><input type="text" id="exam-session" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Total Candidates' : 'ចំនួនបេក្ខជនសរុប'}</label><input type="number" min="0" id="exam-candidates" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">${en ? 'Status' : 'ស្ថានភាព'}</label><input type="text" id="exam-status" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="កំពុងរៀបចំវិញ្ញាសា"></div>
-            <div><label class="block text-xs mb-1 font-bold text-slate-700">គ្រឹះស្ថាន (ជម្រើស)</label><input type="text" id="exam-institution" class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50" placeholder="ឧ. សាកលវិទ្យាល័យន័រតុន"></div>
-            <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200"><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 ថ្ងៃប្រឡង (ចាប់ផ្តើម)</label><input type="date" id="exam-start" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-xs font-bold text-slate-600 mb-1">📅 បញ្ចប់</label><input type="date" id="exam-end" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
-            <div class="grid grid-cols-3 gap-2 bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200"><div class="col-span-3 text-[11px] font-bold text-emerald-800">លទ្ធផល (ទុកទទេបើមិនទាន់ដឹង — កែបានក្រោយដោយ ✏️)</div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ជាប់</label><input type="number" min="0" id="exam-passed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ធ្លាក់</label><input type="number" min="0" id="exam-failed" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div><div><label class="block text-[11px] font-bold text-slate-600 mb-1">អវត្តមាន</label><input type="number" min="0" id="exam-absent" class="form-input-focus w-full border border-slate-300 rounded-lg p-1.5 bg-white text-xs"></div></div>
-            <button type="submit" class="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold shadow-md form-input-focus text-sm mt-2">Submit Exam</button>
-          </form>`;
+        container.innerHTML = examFormHtml(en);
       } else if (EXTASK_KINDS[activeTab]) {
         const kc = EXTASK_KINDS[activeTab];
         const subHtml = kc.subs ? `<div><label class="block text-xs mb-1 font-bold text-slate-700">${esc(kc.subLabel)} *</label><select id="et-sub" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXTASK_SUBS[kc.subs].map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select><p class="text-[10px] text-slate-400 mt-1">ចំនួនក្នុងខែ នឹងទៅដាក់ក្នុង Report ផ្លូវការ (Report ១) ស្វ័យប្រវត្តិ</p></div>` : '';
-        const epBtn = activeTab === 'ex_docs' ? `<div id="ep-side-sum">${epSideSummary()}</div>` : '';
+        const epBtn = '';
         container.innerHTML = `
           <form onsubmit="handleSaveExamTask(event)" class="space-y-3.5 text-sm font-medium">
             ${epBtn}
@@ -6298,7 +6311,6 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const epBar = (pct, h) => `<div class="w-full bg-slate-200 rounded-full overflow-hidden ${h || 'h-2.5'}"><div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-600' : pct >= 50 ? 'bg-emerald-500' : 'bg-amber-500'}" style="width:${pct}%"></div></div>`;
 
     function epRenderStrip() {
-      const sm = document.getElementById('ep-side-sum'); if (sm) sm.innerHTML = epSideSummary();
       const box = document.getElementById('ep-strip'); if (!box) return;
       const show = activeTab === 'ex_docs'; box.classList.toggle('hidden', !show); if (!show) return;
       const today = todayISO(), rows = sortRecords(epPlans());
@@ -6316,23 +6328,6 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ${rows.length ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${cards}</div>` : '<p class="text-xs text-slate-400 py-2">មិនទាន់មានផែនការ — ចុច «បង្កើតការរៀបចំប្រឡង» ដើម្បីចាប់ផ្តើម</p>'}`;
     }
 
-    // ផ្ទាំងស្តាំ៖ សង្ខេបផែនការទាំងអស់ (មិនស្ទួនប៊ូតុងបង្កើត)
-    function epSideSummary() {
-      const today = todayISO(), rows = epPlans(); if (!rows.length) return '<div class="rounded-2xl bg-slate-50 border border-slate-200 p-3.5 text-xs text-slate-500">📊 សង្ខេបផែនការ៖ មិនទាន់មានផែនការ។ ចុចប៊ូតុងពណ៌បៃតងនៅខាងឆ្វេងដើម្បីចាប់ផ្តើម។</div>';
-      let tot = 0, late = 0, doneP = 0; const next = [];
-      rows.forEach(p => { const st = epList(p, 'steps'), m = epMetrics(p, st, today); tot += m.pct; late += m.late.length; if (m.pct >= 100) doneP++;
-        st.filter(s => s.status !== EP_DONE && s.end).forEach(s => next.push({ p, s })); });
-      next.sort((x, y) => (x.s.end < y.s.end ? -1 : 1));
-      const kpi = (v, l, c) => `<div class="rounded-xl ${c} p-2 text-center"><div class="text-lg font-extrabold">${v}</div><div class="text-[10px] font-bold">${l}</div></div>`;
-      return `<div class="rounded-2xl bg-emerald-50/70 border border-emerald-200 p-3.5 space-y-2.5">
-        <div class="text-xs font-extrabold text-emerald-900">📊 សង្ខេបផែនការប្រឡងទាំងអស់</div>
-        <div class="grid grid-cols-3 gap-2">${kpi(toKhmerDigits(rows.length), 'ផែនការ', 'bg-white text-slate-800')}${kpi(toKhmerDigits(Math.round(tot / rows.length)) + '%', 'មធ្យម', 'bg-white text-emerald-700')}${kpi(toKhmerDigits(late), 'ជំហានហួសកំណត់', late ? 'bg-rose-100 text-rose-700' : 'bg-white text-slate-500')}</div>
-        ${epBar(Math.round(tot / rows.length))}
-        <div class="text-[11px] font-bold text-slate-600">⏰ ជំហានជិតដល់កំណត់ (${toKhmerDigits(Math.min(4, next.length))})</div>
-        <ul class="space-y-1 text-[11px] text-slate-700">${next.slice(0, 4).map(o => `<li class="flex justify-between gap-2"><button type="button" onclick="epOpen(${o.p.id})" class="text-left hover:text-emerald-700 clamp2">${esc(o.s.name)} <span class="text-slate-400">· ${esc(o.p.title)}</span></button><span class="whitespace-nowrap ${o.s.end < today ? 'text-rose-600 font-bold' : 'text-slate-500'}">${esc(o.s.end)}</span></li>`).join('') || '<li class="text-slate-400">គ្មានជំហានមានថ្ងៃកំណត់</li>'}</ul>
-      </div>
-      <div class="text-center text-[10px] font-bold text-slate-400">— ឬបញ្ចូលការងារតូចតែមួយរហ័ស —</div>`;
-    }
     function epNew() {
       if (!can('create')) return showToast('គ្មានសិទ្ធិបង្កើត', true);
       if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
