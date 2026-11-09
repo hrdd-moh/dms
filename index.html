@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.21.1 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.21.2 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.21.1</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.21.2</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -253,7 +253,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.21.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.21.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -587,8 +587,8 @@
 
             <!-- TAB: EXAM TASKS (sub-menu ក្រោមការប្រឡង) -->
             <div id="section-examtasks" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
+              <div id="ep-strip" class="hidden space-y-3 pb-4 border-b border-slate-100"></div>
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                <div id="ep-strip" class="hidden space-y-3 pb-3 border-b border-slate-100"></div>
               <h3 id="extask-title" class="text-base font-bold text-slate-900">🗂️ ការរៀបចំប្រឡង</h3>
                 <div class="flex items-center gap-2 flex-wrap">
                   <input type="text" id="filter-extask-search" oninput="onFilter('exam_tasks')" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-56">
@@ -712,7 +712,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.21.1 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.21.2 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -869,7 +869,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.21.1</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.21.2</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -881,7 +881,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.21.1 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.21.2 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1081,7 +1081,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.21.1</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.21.2</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -3312,7 +3312,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       } else if (EXTASK_KINDS[activeTab]) {
         const kc = EXTASK_KINDS[activeTab];
         const subHtml = kc.subs ? `<div><label class="block text-xs mb-1 font-bold text-slate-700">${esc(kc.subLabel)} *</label><select id="et-sub" required class="form-input-focus w-full border border-slate-300 rounded-xl p-2.5 bg-white">${EXTASK_SUBS[kc.subs].map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select><p class="text-[10px] text-slate-400 mt-1">ចំនួនក្នុងខែ នឹងទៅដាក់ក្នុង Report ផ្លូវការ (Report ១) ស្វ័យប្រវត្តិ</p></div>` : '';
-        const epBtn = activeTab === 'ex_docs' && can('create') ? `<button type="button" onclick="epNew()" class="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-extrabold shadow-md transition">➕ ${en ? 'Create Exam Preparation Plan' : 'បង្កើតការរៀបចំប្រឡង'}</button><p class="text-[10px] text-slate-500 -mt-2">${en ? 'Opens a full page: exam info, plan & period, steps, % progress, charts, notes' : 'បើក page ថ្មី៖ ព័ត៌មានប្រឡង · ផែនការ/រយៈពេល · ជំហាន · % · ក្រាហ្វ · កត់ត្រា'}</p><div class="text-center text-[10px] font-bold text-slate-400">— ${en ? 'or quick-add a single task' : 'ឬបញ្ចូលការងារតូចតែមួយរហ័ស'} —</div>` : '';
+        const epBtn = activeTab === 'ex_docs' ? `<div id="ep-side-sum">${epSideSummary()}</div>` : '';
         container.innerHTML = `
           <form onsubmit="handleSaveExamTask(event)" class="space-y-3.5 text-sm font-medium">
             ${epBtn}
@@ -6298,6 +6298,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const epBar = (pct, h) => `<div class="w-full bg-slate-200 rounded-full overflow-hidden ${h || 'h-2.5'}"><div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-600' : pct >= 50 ? 'bg-emerald-500' : 'bg-amber-500'}" style="width:${pct}%"></div></div>`;
 
     function epRenderStrip() {
+      const sm = document.getElementById('ep-side-sum'); if (sm) sm.innerHTML = epSideSummary();
       const box = document.getElementById('ep-strip'); if (!box) return;
       const show = activeTab === 'ex_docs'; box.classList.toggle('hidden', !show); if (!show) return;
       const today = todayISO(), rows = sortRecords(epPlans());
@@ -6315,6 +6316,23 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ${rows.length ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${cards}</div>` : '<p class="text-xs text-slate-400 py-2">មិនទាន់មានផែនការ — ចុច «បង្កើតការរៀបចំប្រឡង» ដើម្បីចាប់ផ្តើម</p>'}`;
     }
 
+    // ផ្ទាំងស្តាំ៖ សង្ខេបផែនការទាំងអស់ (មិនស្ទួនប៊ូតុងបង្កើត)
+    function epSideSummary() {
+      const today = todayISO(), rows = epPlans(); if (!rows.length) return '<div class="rounded-2xl bg-slate-50 border border-slate-200 p-3.5 text-xs text-slate-500">📊 សង្ខេបផែនការ៖ មិនទាន់មានផែនការ។ ចុចប៊ូតុងពណ៌បៃតងនៅខាងឆ្វេងដើម្បីចាប់ផ្តើម។</div>';
+      let tot = 0, late = 0, doneP = 0; const next = [];
+      rows.forEach(p => { const st = epList(p, 'steps'), m = epMetrics(p, st, today); tot += m.pct; late += m.late.length; if (m.pct >= 100) doneP++;
+        st.filter(s => s.status !== EP_DONE && s.end).forEach(s => next.push({ p, s })); });
+      next.sort((x, y) => (x.s.end < y.s.end ? -1 : 1));
+      const kpi = (v, l, c) => `<div class="rounded-xl ${c} p-2 text-center"><div class="text-lg font-extrabold">${v}</div><div class="text-[10px] font-bold">${l}</div></div>`;
+      return `<div class="rounded-2xl bg-emerald-50/70 border border-emerald-200 p-3.5 space-y-2.5">
+        <div class="text-xs font-extrabold text-emerald-900">📊 សង្ខេបផែនការប្រឡងទាំងអស់</div>
+        <div class="grid grid-cols-3 gap-2">${kpi(toKhmerDigits(rows.length), 'ផែនការ', 'bg-white text-slate-800')}${kpi(toKhmerDigits(Math.round(tot / rows.length)) + '%', 'មធ្យម', 'bg-white text-emerald-700')}${kpi(toKhmerDigits(late), 'ជំហានហួសកំណត់', late ? 'bg-rose-100 text-rose-700' : 'bg-white text-slate-500')}</div>
+        ${epBar(Math.round(tot / rows.length))}
+        <div class="text-[11px] font-bold text-slate-600">⏰ ជំហានជិតដល់កំណត់ (${toKhmerDigits(Math.min(4, next.length))})</div>
+        <ul class="space-y-1 text-[11px] text-slate-700">${next.slice(0, 4).map(o => `<li class="flex justify-between gap-2"><button type="button" onclick="epOpen(${o.p.id})" class="text-left hover:text-emerald-700 clamp2">${esc(o.s.name)} <span class="text-slate-400">· ${esc(o.p.title)}</span></button><span class="whitespace-nowrap ${o.s.end < today ? 'text-rose-600 font-bold' : 'text-slate-500'}">${esc(o.s.end)}</span></li>`).join('') || '<li class="text-slate-400">គ្មានជំហានមានថ្ងៃកំណត់</li>'}</ul>
+      </div>
+      <div class="text-center text-[10px] font-bold text-slate-400">— ឬបញ្ចូលការងារតូចតែមួយរហ័ស —</div>`;
+    }
     function epNew() {
       if (!can('create')) return showToast('គ្មានសិទ្ធិបង្កើត', true);
       if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
