@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.24.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.25.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.24.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.25.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -253,7 +253,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.24.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.25.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -590,7 +590,7 @@
             <div id="section-examtasks" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4 hidden">
               <div id="ep-strip" class="hidden space-y-3 pb-4 border-b border-slate-100"></div>
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-              <h3 id="extask-title" class="text-base font-bold text-slate-900">🗂️ ការរៀបចំប្រឡង</h3>
+              <h3 id="extask-title" class="text-base font-bold text-slate-900">🗂️ ការរៀបចំ</h3>
                 <div class="flex items-center gap-2 flex-wrap">
                   <input type="text" id="filter-extask-search" oninput="onFilter('exam_tasks')" placeholder="🔍 ស្វែងរក..." class="form-input-focus border border-slate-300 rounded-xl px-3.5 py-1.5 text-xs bg-slate-50 w-full sm:w-56">
                   <select id="filter-extask-status" onchange="onFilter('exam_tasks')" class="form-input-focus border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs bg-white font-medium"><option value="all">ស្ថានភាពទាំងអស់</option></select>
@@ -713,7 +713,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.24.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.25.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -870,7 +870,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.24.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.25.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -882,7 +882,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.24.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.25.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -1082,7 +1082,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.24.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.25.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2389,18 +2389,18 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const BUREAUS = {
       all: { id: 'all', name: 'ការិយាល័យទាំង ៣ (All Bureaus Overview)', nameEn: 'All 3 Bureaus (Master Overview)', shortName: 'ការិយាល័យទាំង ៣', shortNameEn: 'All 3 Bureaus',
         desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' },
-          { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' },
+          { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
           { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
     };
     function bureauShort(k) { const b = BUREAUS[k]; return b ? (appLang === 'en' ? b.shortNameEn : b.shortName) : (k || '-'); }
     function specialtyTabFor(k) { return k === 'bureau_1' ? 'exams' : (k === 'bureau_3' ? 'certs' : 'training'); }
@@ -3173,7 +3173,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-sm text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr>${head}</tr></thead><tbody class="divide-y divide-slate-100">${body || '<tr><td colspan="6" class="p-6 text-center text-slate-400">គ្មានទិន្នន័យ</td></tr>'}</tbody></table></div></div>`;
     }
 
-    let examMenuOpen = false, certSub = ''; const SEAT_PLAN_TABS = ['ex_seat_in', 'ex_seat_out'], SEAT_TABS = ['ex_seats'].concat(SEAT_PLAN_TABS), EXAM_SUBS = ['ex_track', 'ex_docs', 'ex_names'].concat(SEAT_TABS);
+    let examMenuOpen = false, certSub = ''; const SEAT_PLAN_TABS = ['ex_seat_in', 'ex_seat_out'], SEAT_TABS = ['ex_seats'].concat(SEAT_PLAN_TABS), EXAM_SUBS = ['ex_track', 'ex_names'].concat(SEAT_TABS);
     // [EXT:certs:sub] Sub-menu ថ្មីក្រោម «ចុះបញ្ជីសញ្ញាបត្រ» → ថែមក្នុង CERT_SUBS + ករណីក្នុង certSubGo/renderCerts (ឧ. ភ្ជាប់រូបជាច្រើន, បោះពុម្ពជាក្រុម)
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -3215,6 +3215,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!currentUser) return;
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
+      if (activeTab === 'ex_docs') { renderExamTasks(); epRenderStrip(); }
       if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); epRenderStrip(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
@@ -3653,6 +3654,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       examCenters: { icon: '🏫', label: 'មណ្ឌលប្រឡង', hint: 'ឧ. សកលវិទ្យាល័យភូមិន្ទភ្នំពេញ (RUPP)', def: [], optional: true },
       examSkills: { icon: '🛠️', label: 'ជំនាញ (ប្រឡងចេញ)', hint: 'ជំនាញ សម្រាប់តែប្រឡងចេញ ឧ. គិលានុបដ្ឋាក', def: [], optional: true },
       examSubjects: { icon: '📘', label: 'មុខវិជ្ជា (ប្រឡងចូល)', hint: 'មុខវិជ្ជា សម្រាប់តែប្រឡងចូល ឧ. គណិត', def: [], optional: true },
+      epTemplates: { icon: '📑', label: 'គំរូផែនការរៀបចំ', hint: '', def: [], optional: true, hidden: true },
       certTypes: { icon: '📜', label: 'ប្រភេទសញ្ញាបត្រ', hint: 'ទម្រង់ ឈ្មោះ|កូដ ឧ. វិញ្ញាបនបត្រ|VN (កូដប្រើក្នុងលេខស្វ័យប្រវត្តិ)', def: ['វិញ្ញាបនបត្រ|VN', 'សញ្ញាបត្រ|SB', 'លិខិតបញ្ជាក់|LP'] }
     };
     let appLists = {};
@@ -6377,8 +6379,104 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
 
     // ===== V3.21.0 [EXT:examplan]: ផែនការរៀបចំប្រឡង (ប៊ូតុង «បង្កើតការរៀបចំប្រឡង» → page ថ្មី: ព័ត៌មាន · ផែនការ/រយៈពេល · ជំហាន · % · ក្រាហ្វ · កត់ត្រា) =====
-    const EP_TYPES = ['ប្រឡងចូល', 'ប្រឡងចេញ', 'ផ្សេងៗ'], EP_ST = ['មិនទាន់ចាប់ផ្តើម', 'កំពុងធ្វើ', 'រួចរាល់'], EP_DONE = 'រួចរាល់';
-    const EP_DEFAULT_STEPS = ['ចេញសេចក្តីជូនដំណឹង / ប្រកាសប្រឡង', 'ទទួលពាក្យ និងចុះឈ្មោះបេក្ខជន', 'រៀបចំបញ្ជីឈ្មោះបេក្ខជន', 'រៀបចំមណ្ឌល និងបន្ទប់ប្រឡង', 'រៀបចំប្លង់តុ និងលេខតុ', 'រៀបចំឯកសារប្រឡង (វិញ្ញាសា, សន្លឹកឆ្លើយ)', 'រៀបចំគណៈកម្មការ និងអ្នកត្រួតពិនិត្យ', 'ប្រារព្ធការប្រឡង', 'កែវិញ្ញាសា និងបូកលទ្ធផល', 'ប្រកាសលទ្ធផល និងបិទបញ្ចប់'];
+    // ===== V3.25.0: គំរូ (template) · ការិយាល័យទទួលខុសត្រូវ ១/២/៣ · សម្ភារៈ + ប៉ាន់ស្មានចំនួន · តំណទៅម៉ឺនុយប្លង់តុ/បញ្ជីឈ្មោះ =====
+    const EP_BUREAUS = [['', '— ការិយាល័យ —'], ['bureau_1', 'ការិយាល័យទី១'], ['bureau_2', 'ការិយាល័យទី២'], ['bureau_3', 'ការិយាល័យទី៣'], ['all', 'ទាំង ៣']];
+    const epBShort = b => ({ bureau_1: '១', bureau_2: '២', bureau_3: '៣', all: 'ទាំង៣' })[b] || '';
+    const EP_LINKS = { ex_names: '👥 បញ្ជីឈ្មោះ', ex_seats: '🪑 ប្លង់តុ' };
+    const epI = (n, basis, per, unit, spare, cap) => ({ n, basis, per, unit, spare: spare || 0, cap: cap || '' });
+    const epS = (name, bureau, link, items) => ({ name, bureau: bureau || '', link: link || '', items: items || [] });
+    const EP_BASE_STEPS = () => [
+      epS('រៀបរាប់ការងារ និងកំណត់សម្ភារៈត្រូវការ', 'bureau_1'),
+      epS('ធ្វើលិខិតបង្គាប់ការ (គណៈកម្មការ / អ្នកត្រួតពិនិត្យ)', 'bureau_1'),
+      epS('ធ្វើលិខិតផ្សព្វផ្សាយ ប្រកាសប្រឡង', 'bureau_2'),
+      epS('ការទទួលពាក្យ', 'bureau_3'),
+      epS('រៀបចំបញ្ជីឈ្មោះបេក្ខជន', 'bureau_3', 'ex_names'),
+      epS('រៀបចំប្លង់តុ និងលេខតុ', 'bureau_1', 'ex_seats'),
+      epS('រៀបចំឯកសារប្រឡង (វិញ្ញាសា, សន្លឹកឆ្លើយ, សន្លឹកព្រាង)', 'bureau_1', '', [epI('វិញ្ញាសា', 'cand', 1, 'សន្លឹក', 10), epI('សន្លឹកឆ្លើយ', 'cand', 1, 'សន្លឹក', 10), epI('សន្លឹកព្រាង', 'cand', 2, 'សន្លឹក', 10), epI('បញ្ជីហត្ថលេខា', 'room', 2, 'សន្លឹក', 0, 30)]),
+      epS('ការបិទឈ្មោះ (ស្លាកឈ្មោះ / លេខតុ)', 'bureau_2', '', [epI('ស្លាកឈ្មោះបេក្ខជន', 'cand', 1, 'ស្លាក', 5), epI('ស្លាកលេខបន្ទប់', 'room', 1, 'ស្លាក', 0, 30)]),
+      epS('រៀបចំច្រក និងវេចខ្ចប់កិច្ចការ', 'bureau_2', '', [epI('ស្រោមវេចខ្ចប់វិញ្ញាសា', 'room', 1, 'ស្រោម', 10, 30)]),
+      epS('រៀបចំសម្ភារៈប្រើប្រាស់ (ប៊ិច, ក្រដាស…)', 'bureau_1', '', [epI('ប៊ិច', 'room', 4, 'ដើម', 20, 30)]),
+      epS('រៀបចំ album (រូបថត / កំណត់ត្រា)', 'bureau_3'),
+      epS('ប្រារព្ធការប្រឡង', 'all'),
+      epS('កែវិញ្ញាសា បូកលទ្ធផល និងប្រកាសលទ្ធផល', 'bureau_1')
+    ];
+    const EP_TYPES = ['ប្រឡងចូល', 'ប្រឡងចេញ', 'ប្រឡងបញ្ចប់ការសិក្សាផ្ទៃក្នុង', 'ផ្សេងៗ'], EP_ST = ['មិនទាន់ចាប់ផ្តើម', 'កំពុងធ្វើ', 'រួចរាល់'], EP_DONE = 'រួចរាល់';
+    const EP_DEFAULT_STEPS = EP_BASE_STEPS().map(s => s.name);
+    const epTplBuiltin = () => EP_TYPES.slice(0, 3).map(t => ({ id: 'b:' + t, name: 'គំរូ ' + t, type: t, builtin: true, steps: EP_BASE_STEPS() }))
+      .concat([{ id: 'b:blank', name: 'គំរូទទេ (ផ្សេងៗ)', type: 'ផ្សេងៗ', builtin: true, steps: [epS('ជំហានទី ១', '')] }]);
+    const epTplCustom = () => getList('epTemplates').map(x => { const o = safeJSON(x, null); return o && o.id && Array.isArray(o.steps) ? { ...o, builtin: false } : null; }).filter(Boolean);
+    const epTplAll = () => epTplBuiltin().concat(epTplCustom());
+    const epMkStep = (s, i) => ({ id: i + 1, name: s.name || '', assignee: '', start: '', end: '', status: EP_ST[0], note: '', bureau: s.bureau || '', link: s.link || '', items: (Array.isArray(s.items) ? s.items : []).map(x => ({ ...x })), subs: (Array.isArray(s.subs) ? s.subs : []).map((u, j) => ({ id: j + 1, name: u.name || '', assignee: '', end: '', done: false })) });
+    function epQty(it, c) {
+      c = Number(c) || 0; const sp = 1 + (Number(it.spare) || 0) / 100, per = Number(it.per) || 0, cap = Math.max(1, Number(it.cap) || 30);
+      return it.basis === 'room' ? Math.ceil(Math.ceil(c / cap) * per * sp - 1e-9) : it.basis === 'fix' ? Math.ceil(per * sp - 1e-9) : Math.ceil(c * per * sp - 1e-9);
+    }
+    function epByBureau(steps) {
+      const o = { bureau_1: { t: 0, d: 0 }, bureau_2: { t: 0, d: 0 }, bureau_3: { t: 0, d: 0 } };
+      steps.forEach(s => { const ks = s.bureau === 'all' ? Object.keys(o) : o[s.bureau] ? [s.bureau] : []; ks.forEach(k => { o[k].t++; o[k].d += epProg(s) / 100; }); });
+      Object.values(o).forEach(v => { v.p = v.t ? Math.round(v.d * 100 / v.t) : null; });
+      return o;
+    }
+    const epBureauChips = steps => { const o = epByBureau(steps); return `<div class="flex flex-wrap gap-1 text-[10px] font-bold">${Object.entries(o).map(([k, v]) => `<span class="px-1.5 py-0.5 rounded-md ${v.t ? (v.p >= 100 ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700') : 'bg-slate-50 text-slate-300'}">ការិ.${epBShort(k)} ${v.t ? toKhmerDigits(v.p) + '%' : '-'}</span>`).join('')}</div>`; };
+    function epStepExtra(s, i, ro) {
+      const ip = 'form-input-focus border border-slate-300 rounded-lg p-1.5 bg-white text-xs', its = Array.isArray(s.items) ? s.items : [], c = EP.d.candidates;
+      const rows = its.map((it, k) => `<div class="grid grid-cols-6 md:grid-cols-12 gap-1.5 items-center">
+        <input class="${ip} col-span-3 md:col-span-3" value="${esc(it.n)}" placeholder="សម្ភារៈ / ឯកសារ" onchange="epItem(${i},${k},'n',this.value)">
+        <select class="${ip} col-span-3 md:col-span-2" onchange="epItem(${i},${k},'basis',this.value,1)"><option value="cand" ${it.basis === 'cand' ? 'selected' : ''}>ក្នុង ១ បេក្ខជន</option><option value="room" ${it.basis === 'room' ? 'selected' : ''}>ក្នុង ១ បន្ទប់</option><option value="fix" ${it.basis === 'fix' ? 'selected' : ''}>ចំនួនថេរ</option></select>
+        <input type="number" min="0" step="any" class="${ip} md:col-span-1" value="${esc(it.per)}" title="ចំនួន/ឯកតា" placeholder="ចំនួន" onchange="epItem(${i},${k},'per',this.value,1)">
+        <input type="number" min="1" class="${ip} md:col-span-1 ${it.basis === 'room' ? '' : 'opacity-40'}" value="${esc(it.cap)}" title="បេក្ខជន/បន្ទប់" placeholder="នាក់/បន្ទប់" ${it.basis === 'room' ? '' : 'disabled'} onchange="epItem(${i},${k},'cap',this.value,1)">
+        <input type="number" min="0" class="${ip} md:col-span-1" value="${esc(it.spare)}" title="បម្រុង %" placeholder="បម្រុង%" onchange="epItem(${i},${k},'spare',this.value,1)">
+        <input class="${ip} md:col-span-1" value="${esc(it.unit)}" placeholder="ឯកតា" onchange="epItem(${i},${k},'unit',this.value)">
+        <div class="md:col-span-2 text-xs font-extrabold text-emerald-800 text-center">≈ ${toKhmerDigits(epQty(it, c).toLocaleString('en-US'))} ${esc(it.unit || '')}</div>
+        ${ro ? '' : `<button type="button" class="text-rose-600 text-xs" onclick="epDelItem(${i},${k})">🗑</button>`}</div>`).join('');
+      return `<div class="flex flex-wrap items-center gap-2">
+        <select class="${ip} font-bold" ${ro ? 'disabled' : ''} onchange="epStep(${i},'bureau',this.value);epRenderSteps()" title="ការិយាល័យទទួលខុសត្រូវ">${EP_BUREAUS.map(([v, t]) => `<option value="${v}" ${v === (s.bureau || '') ? 'selected' : ''}>${t}</option>`).join('')}</select>
+        ${s.link && EP_LINKS[s.link] ? `<button type="button" onclick="epGoLink('${s.link}')" class="px-2.5 py-1 rounded-lg bg-sky-50 border border-sky-200 text-sky-800 text-[11px] font-bold">↗ ទៅ ${EP_LINKS[s.link]}</button>` : ''}
+        ${ro ? '' : `<select class="${ip}" onchange="epStep(${i},'link',this.value);epRenderSteps()" title="ភ្ជាប់ទៅម៉ឺនុយ"><option value="">ភ្ជាប់ម៉ឺនុយ: គ្មាន</option>${Object.entries(EP_LINKS).map(([v, t]) => `<option value="${v}" ${v === s.link ? 'selected' : ''}>${t}</option>`).join('')}</select><button type="button" onclick="epAddItem(${i})" class="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-bold">＋ សម្ភារៈ/ឯកសារ</button>`}</div>${rows ? `<div class="space-y-1.5 rounded-xl bg-amber-50/50 border border-amber-100 p-2">${rows}</div>` : ''}`;
+    }
+    function epItem(i, k, f, v, re) { EP.steps[i].items[k][f] = v; if (f === 'basis' && v === 'room' && !EP.steps[i].items[k].cap) EP.steps[i].items[k].cap = 30; epDirty(); if (re) epRenderSteps(); epAnalysis(); }
+    function epAddItem(i) { (EP.steps[i].items = EP.steps[i].items || []).push(epI('', 'cand', 1, '', 0)); epDirty(); epRenderSteps(); epAnalysis(); }
+    function epDelItem(i, k) { EP.steps[i].items.splice(k, 1); epDirty(); epRenderSteps(); epAnalysis(); }
+    function epGoLink(t) {
+      const ok = (BUREAUS[activeBureauKey] || {}).tabs?.some(x => x.id === t);
+      if (!ok) return showToast('ម៉ឺនុយនេះមាននៅការិយាល័យទី១ / ទាំង ៣ — សូមប្តូរការិយាល័យនៅ Sidebar', true);
+      if (EP.dirty && !confirm('មានការកែប្រែមិនទាន់រក្សាទុក។ ចាកចេញ?')) return; epClose(true); switchBureauTab(t);
+    }
+    function epExtraCards() {
+      const st = EP.steps, ob = epByBureau(st), c = Number(EP.d.candidates) || 0, card = (t, b) => `<div class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3"><h4 class="font-bold text-slate-900 text-sm">${t}</h4>${b}</div>`;
+      const bar = Object.entries(ob).map(([k, v]) => `<div class="space-y-0.5"><div class="flex justify-between text-[11px] font-bold text-slate-700"><span>🏢 ការិយាល័យទី${epBShort(k)}</span><span>${v.t ? toKhmerDigits(Math.round(v.d * 10) / 10) + '/' + toKhmerDigits(v.t) + ' ជំហាន · ' + toKhmerDigits(v.p) + '%' : 'មិនទាន់មានជំហាន'}</span></div>${epBar(v.p || 0, 'h-2')}</div>`).join('');
+      const unassigned = st.filter(s => !s.bureau).length;
+      const mat = {}, perB = {};
+      st.forEach(s => (s.items || []).forEach(it => { if (!(it.n || '').trim()) return; const q = epQty(it, c), key = it.n.trim() + '|' + (it.unit || ''); (mat[key] = mat[key] || { n: it.n.trim(), u: it.unit || '', q: 0 }).q += q; const b = s.bureau ? 'ការិយាល័យទី' + epBShort(s.bureau) : 'មិនទាន់កំណត់ការិយាល័យ'; (perB[b] = perB[b] || []).push({ n: it.n.trim(), q, u: it.unit || '', s: s.name }); }));
+      const mrows = Object.values(mat), rooms = (() => { const cap = Math.max(1, Math.max(0, ...st.flatMap(s => (s.items || []).filter(x => x.basis === 'room').map(x => Number(x.cap) || 0))) || 30); return c ? Math.ceil(c / cap) : 0; })();
+      const matHTML = mrows.length ? `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-slate-500 text-left"><th class="py-1">សម្ភារៈ / ឯកសារ</th><th class="py-1 text-right">ចំនួនប៉ាន់ស្មានសរុប</th></tr></thead><tbody>${mrows.map(m => `<tr class="border-t border-slate-100"><td class="py-1 font-bold">${esc(m.n)}</td><td class="py-1 text-right font-extrabold text-emerald-800">${toKhmerDigits(m.q.toLocaleString('en-US'))} ${esc(m.u)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="pt-2 border-t border-slate-100 space-y-1.5"><div class="text-[11px] font-bold text-slate-500">ការបែងចែកតាមការិយាល័យទទួលខុសត្រូវ</div>${Object.entries(perB).map(([b, a]) => `<div class="text-xs"><b class="text-slate-800">${esc(b)}</b><div class="pl-3 text-slate-600">${a.map(x => esc(x.n) + ' ' + toKhmerDigits(x.q.toLocaleString('en-US')) + ' ' + esc(x.u)).join(' · ')}</div></div>`).join('')}</div>` : '<p class="text-xs text-slate-400">មិនទាន់មានសម្ភារៈ — ចុច «＋ សម្ភារៈ/ឯកសារ» ក្នុងជំហាន</p>';
+      return `<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">${card('🏢 វឌ្ឍនភាពតាមការិយាល័យ', `<div class="space-y-2.5">${bar}</div>${unassigned ? `<p class="text-[11px] font-bold text-amber-700">⚠️ ${toKhmerDigits(unassigned)} ជំហានមិនទាន់កំណត់ការិយាល័យ</p>` : ''}`)}${card('📦 សម្ភារៈ / ឯកសារ ប៉ាន់ស្មាន' + (c ? ` (បេក្ខជន ${toKhmerDigits(c.toLocaleString('en-US'))}${rooms ? ' · ≈ ' + toKhmerDigits(rooms) + ' បន្ទប់' : ''})` : ''), (c ? '' : '<p class="text-[11px] font-bold text-amber-700">⚠️ សូមបញ្ចូលចំនួនបេក្ខជន ដើម្បីគណនា</p>') + matHTML)}</div>`;
+    }
+    function epTplBar() {
+      const all = epTplAll(), cur = EP.tpl || '', ip = 'form-input-focus border border-slate-300 rounded-xl p-2 bg-white text-sm';
+      return `<div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-3 flex flex-wrap items-center gap-2"><b class="text-xs text-emerald-900">📑 គំរូ (template)</b>
+        <select id="ep-tpl" class="${ip} flex-1 min-w-[180px]" onchange="epApplyTpl(this.value)"><option value="">— ជ្រើសគំរូ —</option>${all.map(t => `<option value="${esc(t.id)}" ${t.id === cur ? 'selected' : ''}>${t.builtin ? '' : '⭐ '}${esc(t.name)}</option>`).join('')}</select>
+        <button type="button" onclick="epSaveTpl()" class="px-3 py-2 rounded-xl bg-white border border-emerald-300 text-emerald-800 text-xs font-bold">💾 រក្សាទុកជាគំរូ</button>
+        <button type="button" onclick="epDelTpl()" class="px-3 py-2 rounded-xl bg-white border border-rose-200 text-rose-700 text-xs font-bold">🗑 លុបគំរូ</button></div>`;
+    }
+    function epApplyTpl(id) {
+      const t = epTplAll().find(x => x.id === id); if (!t) return;
+      if (EP.dirty && EP.steps.length && !confirm('ប្តូរគំរូ នឹងជំនួសជំហានទាំងអស់ក្នុងទំព័រនេះ។ បន្ត?')) { document.getElementById('ep-tpl').value = EP.tpl || ''; return; }
+      EP.tpl = id; EP.steps = t.steps.map(epMkStep); if (t.type && EP_TYPES.includes(t.type)) EP.d.exam_type = t.type; epDirty(); epShell();
+    }
+    async function epSaveTpl() {
+      const name = (prompt('ឈ្មោះគំរូថ្មី (ឧ. គំរូប្រឡងចូល ២០២៧)៖') || '').trim(); if (!name) return;
+      const t = { id: 'c:' + generateSafeId(), name, type: EP.d.exam_type, steps: EP.steps.filter(s => (s.name || '').trim()).map(s => ({ name: s.name.trim(), bureau: s.bureau || '', link: s.link || '', items: (s.items || []).filter(x => (x.n || '').trim()), subs: epSubs(s).filter(u => (u.name || '').trim()).map(u => ({ name: u.name.trim() })) })) };
+      const items = epTplCustom().map(x => JSON.stringify({ id: x.id, name: x.name, type: x.type, steps: x.steps })); items.push(JSON.stringify(t));
+      await listSaveQuiet('epTemplates', items); EP.tpl = t.id; showToast('បានរក្សាទុកគំរូ «' + name + '»'); const s = document.getElementById('ep-tpl'); if (s) { s.outerHTML = epTplBar().match(/<select id="ep-tpl"[\s\S]*?<\/select>/)[0]; }
+    }
+    async function epDelTpl() {
+      const id = document.getElementById('ep-tpl')?.value, t = epTplCustom().find(x => x.id === id); if (!t) return showToast('ជ្រើសគំរូដែលអ្នកបានរក្សាទុក (⭐) ដើម្បីលុប — គំរូលំនាំដើមលុបមិនបាន', true);
+      if (!confirm('លុបគំរូ «' + t.name + '» ?')) return;
+      await listSaveQuiet('epTemplates', epTplCustom().filter(x => x.id !== id).map(x => JSON.stringify({ id: x.id, name: x.name, type: x.type, steps: x.steps })));
+      if (EP.tpl === id) EP.tpl = ''; const s = document.getElementById('ep-tpl'); if (s) s.outerHTML = epTplBar().match(/<select id="ep-tpl"[\s\S]*?<\/select>/)[0]; showToast('បានលុបគំរូ');
+    }
     let EP = null;
     const epDay = s => /^\d{4}-\d{2}-\d{2}/.test(s || '') ? Date.parse(String(s).slice(0, 10) + 'T00:00:00Z') / 864e5 : null;
     const epPlans = () => activeRows('exam_plans');
@@ -6408,7 +6506,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         return `<div class="rounded-2xl border border-slate-200 bg-white p-3.5 space-y-2 shadow-2xs">
           <div class="flex items-start justify-between gap-2"><button type="button" onclick="epOpen(${p.id})" class="text-left font-bold text-slate-900 text-sm hover:text-emerald-700 clamp2">📋 ${esc(p.title)}</button>${deleteBtn('exam_plans', p.id)}</div>
           <div class="flex flex-wrap gap-1.5 text-[10px] font-bold"><span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800">${esc(p.exam_type || '-')}</span>${p.session ? `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">${esc(p.session)}</span>` : ''}${p.candidates ? `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">👥 ${toKhmerDigits(Number(p.candidates).toLocaleString())}</span>` : ''}${epStateBadge(m)}</div>
-          <div class="flex items-center gap-2">${epBar(m.pct)}<b class="text-sm text-slate-800 whitespace-nowrap">${toKhmerDigits(m.pct)}%</b></div>
+          <div class="flex items-center gap-2">${epBar(m.pct)}<b class="text-sm text-slate-800 whitespace-nowrap">${toKhmerDigits(m.pct)}%</b></div>${epBureauChips(steps)}
           <div class="text-[11px] text-slate-500 font-bold">ជំហាន ${toKhmerDigits(m.done)}/${toKhmerDigits(m.total)}${m.late.length ? ` · <span class="text-rose-600">ហួសកំណត់ ${toKhmerDigits(m.late.length)}</span>` : ''}${m.left != null ? ` · ${m.left >= 0 ? 'នៅសល់ ' + toKhmerDigits(m.left) + ' ថ្ងៃ' : '<span class="text-rose-600">ហួសផែនការ ' + toKhmerDigits(-m.left) + ' ថ្ងៃ</span>'}` : ''}</div>
           ${next ? `<div class="text-[11px] text-slate-600">▶ បន្ទាប់៖ <b>${esc(next.name)}</b>${next.assignee ? ' — ' + esc(next.assignee) : ''}</div>` : ''}
         </div>`;
@@ -6420,14 +6518,15 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function epNew() {
       if (!can('create')) return showToast('គ្មានសិទ្ធិបង្កើត', true);
       if (!entryBureau()) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
-      EP = { id: null, dirty: false, d: { title: '', exam_type: EP_TYPES[0], session: '', candidates: '', start_date: todayISO(), end_date: '', exam_date: '', assignee: currentUser?.fullname || '', note: '' },
-        steps: EP_DEFAULT_STEPS.map((n, i) => ({ id: i + 1, name: n, assignee: '', start: '', end: '', status: EP_ST[0], note: '', subs: [] })), logs: [], bureau: entryBureau() };
+      const tp = epTplBuiltin()[0];
+      EP = { id: null, dirty: false, tpl: tp.id, d: { title: '', exam_type: tp.type, session: '', candidates: '', start_date: todayISO(), end_date: '', exam_date: '', assignee: currentUser?.fullname || '', note: '' },
+        steps: tp.steps.map(epMkStep), logs: [], bureau: entryBureau() };
       epShell();
     }
     function epOpen(id) {
       const p = store.exam_plans.find(x => x.id === id); if (!p) return;
       EP = { id: p.id, dirty: false, bureau: p.bureau, d: { title: p.title || '', exam_type: p.exam_type || EP_TYPES[0], session: p.session || '', candidates: p.candidates == null ? '' : p.candidates, start_date: p.start_date || '', end_date: p.end_date || '', exam_date: p.exam_date || '', assignee: p.assignee || '', note: p.note || '' },
-        steps: epList(p, 'steps').map((s, i) => ({ id: s.id || i + 1, name: s.name || '', assignee: s.assignee || '', start: s.start || '', end: s.end || '', status: EP_ST.includes(s.status) ? s.status : EP_ST[0], note: s.note || '', subs: (Array.isArray(s.subs) ? s.subs : []).map((u, j) => ({ id: u.id || j + 1, name: u.name || '', assignee: u.assignee || '', end: u.end || '', done: !!u.done })) })), logs: epList(p, 'logs') };
+        steps: epList(p, 'steps').map((s, i) => ({ id: s.id || i + 1, name: s.name || '', assignee: s.assignee || '', start: s.start || '', end: s.end || '', status: EP_ST.includes(s.status) ? s.status : EP_ST[0], note: s.note || '', bureau: s.bureau || '', link: s.link || '', items: Array.isArray(s.items) ? s.items : [], subs: (Array.isArray(s.subs) ? s.subs : []).map((u, j) => ({ id: u.id || j + 1, name: u.name || '', assignee: u.assignee || '', end: u.end || '', done: !!u.done })) })), logs: epList(p, 'logs') };
       epShell();
     }
     function epClose(force) {
@@ -6436,9 +6535,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     const epRO = () => !(EP && (EP.id ? can('edit') : can('create')));
     const epDirty = () => { if (EP) { EP.dirty = true; const b = document.getElementById('ep-dirty'); if (b) b.classList.remove('hidden'); } };
-    function epSet(k, v) { EP.d[k] = v; epDirty(); if (['start_date', 'end_date', 'candidates', 'title', 'session', 'exam_type'].includes(k)) epAnalysis(); }
+    function epSet(k, v) { EP.d[k] = v; epDirty(); if (['start_date', 'end_date', 'candidates', 'title', 'session', 'exam_type'].includes(k)) epAnalysis(); if (k === 'candidates') epRenderSteps(); }
     function epStep(i, k, v) { EP.steps[i][k] = v; epDirty(); if (k === 'status') { epRenderSteps(); } epAnalysis(); }
-    function epAddStep() { const n = Math.max(0, ...EP.steps.map(s => Number(s.id) || 0)) + 1; EP.steps.push({ id: n, name: '', assignee: '', start: '', end: '', status: EP_ST[0], note: '', subs: [] }); epDirty(); epRenderSteps(); epAnalysis(); }
+    function epAddStep() { const n = Math.max(0, ...EP.steps.map(s => Number(s.id) || 0)) + 1; EP.steps.push({ id: n, name: '', assignee: '', start: '', end: '', status: EP_ST[0], note: '', bureau: '', link: '', items: [], subs: [] }); epDirty(); epRenderSteps(); epAnalysis(); }
     function epDelStep(i) { if (!confirm('លុបជំហាន «' + (EP.steps[i].name || '') + '» ?')) return; EP.steps.splice(i, 1); epDirty(); epRenderSteps(); epAnalysis(); }
     function epMove(i, dir) { const j = i + dir; if (j < 0 || j >= EP.steps.length) return; [EP.steps[i], EP.steps[j]] = [EP.steps[j], EP.steps[i]]; epDirty(); epRenderSteps(); epAnalysis(); }
     function epAddSub(i) { const u = EP.steps[i].subs = epSubs(EP.steps[i]); u.push({ id: Math.max(0, ...u.map(x => Number(x.id) || 0)) + 1, name: '', assignee: '', end: '', done: false }); if (EP.steps[i].status === EP_DONE) EP.steps[i].status = EP_ST[1]; epDirty(); epRenderSteps(); epAnalysis(); setTimeout(() => document.getElementById('ep-sub-' + i + '-' + (u.length - 1))?.focus(), 30); }
@@ -6461,6 +6560,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <fieldset ${ro ? 'disabled' : ''} class="space-y-4">
         <section class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
           <h4 class="font-bold text-slate-900 text-sm">១) ព័ត៌មានការប្រឡង</h4>
+          ${EP.id || ro ? '' : epTplBar()}
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="sm:col-span-2">${lb('ឈ្មោះផែនការ', 1)}<input type="text" class="${ip}" value="${esc(d.title)}" oninput="epSet('title',this.value)" placeholder="ឧ. ផែនការប្រឡងចូល សម័យទី១ ឆ្នាំ ២០២៦"></div>
             <div>${lb('ប្រភេទប្រឡង')}<select class="${ip} bg-white" onchange="epSet('exam_type',this.value)">${EP_TYPES.map(t => `<option ${t === d.exam_type ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div>
@@ -6507,7 +6607,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             <input type="date" class="${ip}" value="${esc(s.end)}" title="ត្រូវចប់ថ្ងៃ" onchange="epStep(${i},'end',this.value)">
             <select class="${ip} font-bold" onchange="epStep(${i},'status',this.value)">${EP_ST.map(x => `<option ${x === s.status ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>
             <input type="text" class="${ip} col-span-2 md:col-span-1" value="${esc(s.note)}" placeholder="កំណត់ចំណាំ" onchange="epStep(${i},'note',this.value)">
-          </div>${late ? '<div class="text-[11px] font-bold text-rose-600">⚠️ ហួសកំណត់ មិនទាន់ចប់</div>' : ''}
+          </div>${epStepExtra(s, i, ro)}${late ? '<div class="text-[11px] font-bold text-rose-600">⚠️ ហួសកំណត់ មិនទាន់ចប់</div>' : ''}
           <div class="ml-4 sm:ml-9 pl-3 border-l-2 border-emerald-200 space-y-1.5">
             ${epSubs(s).map((u, j) => `<div class="flex flex-wrap sm:flex-nowrap items-center gap-1.5 ${u.done ? 'opacity-70' : ''}"><input type="checkbox" class="w-4 h-4 accent-emerald-600 shrink-0" ${u.done ? 'checked' : ''} onchange="epSub(${i},${j},'done',this.checked)" title="រួចរាល់"><input id="ep-sub-${i}-${j}" type="text" class="${ip} flex-1 min-w-[140px] ${u.done ? 'line-through' : ''}" value="${esc(u.name)}" placeholder="ការងារ sub" onchange="epSub(${i},${j},'name',this.value)" oninput="EP.steps[${i}].subs[${j}].name=this.value;epDirty()"><input type="text" class="${ip} sm:w-36" value="${esc(u.assignee)}" placeholder="អ្នកទទួលខុសត្រូវ" onchange="epSub(${i},${j},'assignee',this.value)"><input type="date" class="${ip} sm:w-40" value="${esc(u.end)}" title="ត្រូវចប់ថ្ងៃ" onchange="epSub(${i},${j},'end',this.value)">${ro ? '' : `<button type="button" onclick="epDelSub(${i},${j})" class="px-1.5 text-rose-600" title="លុប">🗑</button>`}</div>`).join('')}
             ${ro ? '' : `<button type="button" onclick="epAddSub(${i})" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-900">➕ ការងារផ្សេងៗ (sub) ក្រោមជំហាននេះ</button>`}
@@ -6548,13 +6648,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       // នៅខ្វះអ្វី
       const todo = st.map((s, i) => ({ s, i })).filter(o => o.s.status !== EP_DONE);
       const gaps = []; if (!EP.d.title.trim()) gaps.push('មិនទាន់មានឈ្មោះផែនការ'); if (!EP.d.candidates) gaps.push('មិនទាន់ដាក់ចំនួនបេក្ខជន'); if (!EP.d.end_date) gaps.push('មិនទាន់កំណត់ថ្ងៃបញ្ចប់ផែនការ'); if (!EP.d.exam_date) gaps.push('មិនទាន់កំណត់ថ្ងៃប្រឡង');
-      const noWho = st.filter(s => !(s.assignee || '').trim()).length, noDate = st.filter(s => !s.end).length; if (noWho) gaps.push(toKhmerDigits(noWho) + ' ជំហានមិនទាន់មានអ្នកទទួលខុសត្រូវ'); if (noDate) gaps.push(toKhmerDigits(noDate) + ' ជំហានមិនទាន់មានថ្ងៃត្រូវចប់');
+      const noWho = st.filter(s => !(s.assignee || '').trim()).length, noDate = st.filter(s => !s.end).length; if (noWho) gaps.push(toKhmerDigits(noWho) + ' ជំហានមិនទាន់មានអ្នកទទួលខុសត្រូវ'); if (noDate) gaps.push(toKhmerDigits(noDate) + ' ជំហានមិនទាន់មានថ្ងៃត្រូវចប់'); const noB = st.filter(s => !s.bureau).length; if (noB) gaps.push(toKhmerDigits(noB) + ' ជំហានមិនទាន់កំណត់ការិយាល័យទទួលខុសត្រូវ');
       const miss = todo.length ? todo.map(o => `<li class="flex justify-between gap-2"><span>${toKhmerDigits(o.i + 1)}. ${esc(o.s.name || '-')}${epSubs(o.s).filter(x => !x.done).map(u => `<div class="pl-4 text-[11px] text-slate-500">↳ ${esc(u.name || '-')}${u.assignee ? ' — ' + esc(u.assignee) : ''}${u.end ? ' · ' + esc(u.end) : ''}</div>`).join('')}</span><span class="text-slate-500 whitespace-nowrap">${esc(o.s.assignee || '— គ្មានអ្នកទទួល —')}${o.s.end ? ' · ' + esc(o.s.end) : ''}${epDay(o.s.end) != null && epDay(o.s.end) < epDay(today) ? ' <b class="text-rose-600">⚠️</b>' : ''}</span></li>`).join('') : '<li class="text-emerald-700 font-bold">✅ គ្រប់ជំហានបានបញ្ចប់</li>';
       const card = (t, b) => `<div class="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3"><h4 class="font-bold text-slate-900 text-sm">${t}</h4>${b}</div>`;
       box.innerHTML = card('៤) តាមដានវឌ្ឍនភាព (ភាគរយ = ជំហានបានបញ្ចប់ ÷ ជំហានសរុប)', `<div class="flex flex-wrap items-center gap-4">${donut}<div class="flex-1 min-w-[220px] space-y-2"><div>${epStateBadge(m)}${m.late.length ? ` <span class="text-[11px] font-bold text-rose-600">ហួសកំណត់ ${toKhmerDigits(m.late.length)} ជំហាន</span>` : ''}</div>${timeBar}</div></div>
           <div><div class="text-[11px] font-bold text-slate-500 mb-1.5">ពីជំហានមួយទៅជំហានមួយ (ភាគរយបន្ត)</div><div class="flex flex-wrap gap-1.5">${flow || ''}</div></div>`)
         + card('📅 តារាងពេលវេលា (Gantt)', gantt)
         + `<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">${card('👤 អ្នកទទួលខុសត្រូវ (បានធ្វើ/សរុប)', `<div class="space-y-2.5">${who || '<p class="text-xs text-slate-400">-</p>'}</div>`)}${card('🔎 នៅខ្វះអ្វី', `<ul class="space-y-1 text-xs text-slate-700">${miss}</ul>${gaps.length ? `<div class="pt-2 border-t border-slate-100 text-[11px] text-amber-800 font-bold space-y-0.5">${gaps.map(g => '<div>⚠️ ' + esc(g) + '</div>').join('')}</div>` : ''}`)}</div>`;
+      box.innerHTML += epExtraCards();
     }
 
     async function epSave() {
@@ -6563,7 +6664,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (d.start_date && d.end_date && d.end_date < d.start_date) return showToast('ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម', true);
       const bureau = EP.bureau || entryBureau(); if (!bureau) return showToast('សូមជ្រើសការិយាល័យមួយនៅ Sidebar ជាមុនសិន', true);
       const old = EP.id ? store.exam_plans.find(x => x.id === EP.id) : null;
-      const steps = EP.steps.filter(s => (s.name || '').trim()).map(s => ({ ...s, name: s.name.trim(), subs: epSubs(s).filter(u => (u.name || '').trim()).map(u => ({ ...u, name: u.name.trim() })) }));
+      const steps = EP.steps.filter(s => (s.name || '').trim()).map(s => ({ ...s, name: s.name.trim(), subs: epSubs(s).filter(u => (u.name || '').trim()).map(u => ({ ...u, name: u.name.trim() })), items: (Array.isArray(s.items) ? s.items : []).filter(x => (x.n || '').trim()) }));
       const rec = { ...(old || {}), id: EP.id || generateSafeId(), bureau, title: d.title.trim(), exam_type: d.exam_type, session: (d.session || '').trim(), candidates: d.candidates === '' ? null : Math.max(0, Number(d.candidates) || 0),
         start_date: d.start_date || null, end_date: d.end_date || null, exam_date: d.exam_date || null, assignee: (d.assignee || '').trim(), note: (d.note || '').trim(), pct: epPct(steps),
         steps: JSON.stringify(steps), logs: JSON.stringify(EP.logs), created_by: old?.created_by || currentUser?.username || 'user', created_at: old?.created_at || nowISO(), deleted_at: null, deleted_by: null };
