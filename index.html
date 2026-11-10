@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.26.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.27.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.26.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.27.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -204,10 +204,11 @@
         <div id="sidebar-bureau-box" class="p-3.5 border-b border-slate-100 bg-emerald-50/40 space-y-1.5">
           <label class="block text-[11px] text-emerald-900 font-bold" data-i18n="active_bureau_label">🏛️ ការិយាល័យប្រតិបត្តិការ៖</label>
           <select id="active-bureau-select" onchange="changeActiveBureau(this.value)" class="w-full bg-white text-emerald-950 text-xs font-bold border border-emerald-300 rounded-xl p-2 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer form-input-focus shadow-2xs">
-            <option value="all" id="opt-bureau-all" data-i18n="bureau_all_opt">👑 ការិយាល័យទាំង ៣ (All Bureaus)</option>
+            <option value="all" id="opt-bureau-all" data-i18n="bureau_all_opt">👑 ការិយាល័យទាំង ៤ (All Bureaus)</option>
             <option value="bureau_1" data-i18n="bureau_1_opt">១. មុនពេលបម្រើការងារ</option>
             <option value="bureau_2" data-i18n="bureau_2_opt">២. បណ្តុះបណ្តាលបន្ត</option>
             <option value="bureau_3" data-i18n="bureau_3_opt">៣. ចុះបញ្ជិកា និងសញ្ញាបត្រ</option>
+            <option value="bureau_4" data-i18n="bureau_4_opt">៤. ប្រឡងថ្នាក់ជាតិ</option>
           </select>
           <p id="bureau-lock-notice" class="text-[10px] text-amber-700 font-semibold hidden" data-i18n="bureau_locked">🔒 ចាក់សោរតាមការិយាល័យសាមី</p>
         </div>
@@ -253,7 +254,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.26.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.3.27.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -331,10 +332,11 @@
         <div class="lg:hidden bg-white p-3.5 rounded-2xl border border-slate-200 shadow-2xs flex items-center justify-between gap-2">
           <span class="text-xs font-bold text-slate-700" data-i18n="active_bureau_label">🏛️ ការិយាល័យប្រតិបត្តិការ៖</span>
           <select id="mobile-bureau-select" onchange="changeActiveBureau(this.value)" class="bg-emerald-50 text-emerald-900 text-xs font-bold border border-emerald-200 rounded-xl px-3 py-1.5 outline-none">
-            <option value="all" id="opt-mobile-bureau-all" data-i18n="bureau_all_opt">👑 ការិយាល័យទាំង ៣ (All Bureaus)</option>
+            <option value="all" id="opt-mobile-bureau-all" data-i18n="bureau_all_opt">👑 ការិយាល័យទាំង ៤ (All Bureaus)</option>
             <option value="bureau_1" data-i18n="bureau_1_opt">១. មុនពេលបម្រើការងារ</option>
             <option value="bureau_2" data-i18n="bureau_2_opt">២. បណ្តុះបណ្តាលបន្ត</option>
             <option value="bureau_3" data-i18n="bureau_3_opt">៣. ចុះបញ្ជិកា និងសញ្ញាបត្រ</option>
+            <option value="bureau_4" data-i18n="bureau_4_opt">៤. ប្រឡងថ្នាក់ជាតិ</option>
           </select>
         </div>
 
@@ -404,6 +406,7 @@
                     <option value="bureau_1">ការិយាល័យទី១</option>
                     <option value="bureau_2">ការិយាល័យទី២</option>
                     <option value="bureau_3">ការិយាល័យទី៣</option>
+                    <option value="bureau_4">ការិយាល័យទី៤</option>
                   </select>
                 </div>
                 <div>
@@ -713,7 +716,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.26.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.3.27.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -870,7 +873,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.26.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.27.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -882,7 +885,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.26.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.27.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -937,7 +940,7 @@
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label class="block text-[11px] font-bold text-slate-700 mb-1">ការិយាល័យ (Bureau Scope)</label><select id="new-user-bureau" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"><option value="bureau_1">ការិយាល័យទី១</option><option value="bureau_2">ការិយាល័យទី២</option><option value="bureau_3">ការិយាល័យទី៣</option><option value="all">👑 គ្រប់ការិយាល័យទាំង ៣ (All Bureaus)</option></select></div>
+              <div><label class="block text-[11px] font-bold text-slate-700 mb-1">ការិយាល័យ (Bureau Scope)</label><select id="new-user-bureau" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white"><option value="bureau_1">ការិយាល័យទី១</option><option value="bureau_2">ការិយាល័យទី២</option><option value="bureau_3">ការិយាល័យទី៣</option><option value="bureau_4">ការិយាល័យទី៤</option><option value="all">👑 គ្រប់ការិយាល័យទាំង ៤ (All Bureaus)</option></select></div>
               <div><label class="block text-[11px] font-bold text-slate-700 mb-1">ស្ថានភាពគណនី (Status)</label><select id="new-user-status" class="form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white font-bold text-slate-700"><option value="Active">🟢 Active</option><option value="Suspended">🔴 Suspended</option><option value="Pending">🟡 Pending</option></select></div>
             </div>
             <div>
@@ -1052,7 +1055,7 @@
           <h4 class="font-bold text-emerald-900">🛡️ គោលការណ៍សុវត្ថិភាពទិន្នន័យ (Role-Based Access Control)</h4>
           <ul class="list-disc list-inside space-y-1.5 text-slate-700 leading-relaxed">
             <li><strong>Super Admin:</strong> មានសិទ្ធិពេញលេញ គ្រប់គ្រង Users, Roles, Backup/Restore និងលុបជាអចិន្ត្រៃយ៍។</li>
-            <li><strong>Admin:</strong> គ្រប់គ្រងការិយាល័យទាំង ៣ ប៉ុន្តែមិនអាចផ្អាក/លុបគណនី Super Admin បានទេ។</li>
+            <li><strong>Admin:</strong> គ្រប់គ្រងការិយាល័យទាំង ៤ ប៉ុន្តែមិនអាចផ្អាក/លុបគណនី Super Admin បានទេ។</li>
             <li><strong>Editor:</strong> វាយបញ្ចូល Upload និងធ្វើបច្ចុប្បន្នភាពដំណាក់កាលលិខិត។</li>
             <li><strong>Viewer:</strong> អាចត្រឹមតែមើល និង Download មិនអាចកែប្រែអ្វីបានទេ។</li>
           </ul>
@@ -1082,10 +1085,10 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.26.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.27.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
-          <p><strong>៣. ការិយាល័យទាំង ៣៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៣</b> ដើម្បីមើលទិន្នន័យរួម។</p>
+          <p><strong>៣. ការិយាល័យទាំង ៤៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៤</b> ដើម្បីមើលទិន្នន័យរួម។</p>
           <p><strong>៤. ដំណាក់កាលលិខិត៖</strong> ចុច <b>🕘 ដំណាក់កាល</b> លើជួរលិខិត ដើម្បីប្ដូរដំណាក់កាល/ទីតាំង និងមើលប្រវត្តិពេញលេញ។ លិខិតដែលហួសថ្ងៃផុតកំណត់ (ឬលើស ៧ ថ្ងៃបើគ្មានថ្ងៃផុតកំណត់) នឹងបង្ហាញ <b>⚠️ ហួសកំណត់</b>។</p>
           <p><strong>៥. ការលុប៖</strong> ទិន្នន័យដែលលុបនឹងចូល <b>🗑️ ធុងសំរាម</b> ហើយ Admin អាចស្ដារវិញ ឬលុបជាអចិន្ត្រៃយ៍។</p>
           <p><strong>៦. Backup / Restore៖</strong> នៅ <b>📁 File System</b> អាច Export JSON និង Restore JSON វិញ។</p>
@@ -2129,7 +2132,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     const I18N_DICT = {
       km: {
         ministry_name: 'ក្រសួងសុខាភិបាល', active_bureau_label: '🏛️ ការិយាល័យប្រតិបត្តិការ៖',
-        bureau_all_opt: '👑 ការិយាល័យទាំង ៣ (All Bureaus)', bureau_1_opt: '១. មុនពេលបម្រើការងារ', bureau_2_opt: '២. បណ្តុះបណ្តាលបន្ត', bureau_3_opt: '៣. ចុះបញ្ជិកា និងសញ្ញាបត្រ',
+        bureau_all_opt: '👑 ការិយាល័យទាំង ៤ (All Bureaus)', bureau_1_opt: '១. មុនពេលបម្រើការងារ', bureau_2_opt: '២. បណ្តុះបណ្តាលបន្ត', bureau_3_opt: '៣. ចុះបញ្ជិកា និងសញ្ញាបត្រ', bureau_4_opt: '៤. ប្រឡងថ្នាក់ជាតិ',
         bureau_locked: '🔒 ចាក់សោរតាមការិយាល័យសាមី', core_menu_header: 'ម៉ឺនុយការងារស្នូល', sys_menu_header: 'ការកំណត់ និងប្រព័ន្ធ',
         nav_qr_scan: 'ស្កេនផ្ទៀងផ្ទាត់ QR Code', nav_users: 'គ្រប់គ្រងមន្ត្រី (Users)', nav_location: 'គ្រប់គ្រងប្រទេស (Location)',
         nav_files: 'ប្រព័ន្ធហ្វាល & Backups', nav_recycle: 'ធុងសំរាម (Recycle Bin)', nav_logs: 'កំណត់ត្រាសកម្មភាព (Logs)', nav_manual: 'សៀវភៅណែនាំ (Manual)',
@@ -2154,12 +2157,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       },
       en: {
         ministry_name: 'Ministry of Health', active_bureau_label: '🏛️ Operating Bureau:',
-        bureau_all_opt: '👑 All 3 Bureaus (Overview)', bureau_1_opt: '1. Pre-Service Training Bureau', bureau_2_opt: '2. Continuing Training Bureau', bureau_3_opt: '3. Registration & Certificate Bureau',
+        bureau_all_opt: '👑 All 4 Bureaus (Overview)', bureau_1_opt: '1. Pre-Service Training Bureau', bureau_2_opt: '2. Continuing Training Bureau', bureau_3_opt: '3. Registration & Certificate Bureau', bureau_4_opt: '4. National Examination Bureau',
         bureau_locked: '🔒 Locked to Assigned Bureau', core_menu_header: 'Core Workspace', sys_menu_header: 'System & Settings',
         nav_qr_scan: 'Scan & Verify QR Code', nav_users: 'User Management', nav_location: 'Country & Locations',
         nav_files: 'File System & Backups', nav_recycle: 'Recycle Bin', nav_logs: 'Audit Activity Logs', nav_manual: 'User Manual',
         nav_my_profile: 'My Account Profile', notif_title: '🔔 Recent System Activities', menu_profile_btn: 'My Profile & Photo',
-        menu_logout_btn: 'Sign Out (Logout)', card_lib_title: 'Shared E-Library (All 3 Bureaus)', card_disp_title: 'Active Dispatches',
+        menu_logout_btn: 'Sign Out (Logout)', card_lib_title: 'Shared E-Library (All 4 Bureaus)', card_disp_title: 'Active Dispatches',
         card_disp_sub: 'Administrative Stage', card_spec_sub: 'Live Records', sec_docs_title: '📚 Shared E-Library Documents',
         sec_docs_sub: 'Drag column borders on the table header to resize width as needed', btn_reset_filter: '🔄 Reset Filters',
         ph_doc_search: '🔍 Search by Doc ID or title...', opt_all_cats: '📂 All Categories', opt_all_bureaus: '🏢 All Bureaus',
@@ -2387,23 +2390,25 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     // [EXT:tab] Menu/Tab ថ្មី → ថែម {id,icon,label,labelEn} ក្នុង tabs[] របស់ការិយាល័យ + <div id="section-<id>"> + ដាក់ id ក្នុងបញ្ជី hide/show នៅ renderBureauWorkspace + render ក្នុង renderTablesAndStatsOnly
     const BUREAUS = {
-      all: { id: 'all', name: 'ការិយាល័យទាំង ៣ (All Bureaus Overview)', nameEn: 'All 3 Bureaus (Master Overview)', shortName: 'ការិយាល័យទាំង ៣', shortNameEn: 'All 3 Bureaus',
-        desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៣ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៣)', labelEn: 'All Dispatches (3 Bureaus)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' },
-          { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី១)', labelEn: 'National Exams (B1)' }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
+      all: { id: 'all', name: 'ការិយាល័យទាំង ៤ (All Bureaus Overview)', nameEn: 'All 4 Bureaus (Master Overview)', shortName: 'ការិយាល័យទាំង ៤', shortNameEn: 'All 4 Bureaus',
+        desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៤ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៤)', labelEn: 'All Dispatches (4 Bureaus)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី៤)', labelEn: 'National Exams (B4)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
           { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
-        desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងចូល និងចេញ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល សមមូលសញ្ញាបត្រ និងចុះហត្ថលេខាសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, Degree Equivalency and Certificate Signing',
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_2: { id: 'bureau_2', name: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', nameEn: 'Continuing Training Bureau', shortName: 'ការិយាល័យទី២', shortNameEn: 'Bureau 2',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងទិន្នន័យបណ្តុះបណ្តាលក្នុង/ក្រៅប្រទេស', descEn: 'Manage E-Library, Dispatches, and Domestic/International Continuing Training',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត', labelEn: 'Continuing Training' }, { id: 'events', icon: '🎤', label: 'សិក្ខាសាលា & ប្រជុំ', labelEn: 'Workshops & Meetings', hidden: true }, { id: 'trainentry', icon: '➕', label: 'បញ្ចូលបណ្តុះបណ្តាល', labelEn: 'Training Entry', hidden: true }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_3: { id: 'bureau_3', name: 'ការិយាល័យចុះបញ្ជិកា និងវិញ្ញាបនបត្រ', nameEn: 'Registration & Certificate Bureau', shortName: 'ការិយាល័យទី៣', shortNameEn: 'Bureau 3',
         desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការចុះបញ្ជីកំណត់លេខសញ្ញាបត្រ', descEn: 'Manage E-Library, Dispatches, and Certificate Registration',
-        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ (រួម)', labelEn: 'Document Prep (Shared)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ', labelEn: 'Certificate Registry' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
+      bureau_4: { id: 'bureau_4', name: 'ការិយាល័យប្រឡងថ្នាក់ជាតិ', nameEn: 'National Examination Bureau', shortName: 'ការិយាល័យទី៤', shortNameEn: 'Bureau 4',
+        desc: 'គ្រប់គ្រងបណ្ណាល័យ លិខិតចេញ-ចូល និងការប្រឡងចូល-ចេញថ្នាក់ជាតិ (បញ្ជីឈ្មោះ ឯកសារ ប្លង់តុ)', descEn: 'Manage E-Library, Dispatches, and National Entrance/Exit Examinations (name lists, documents, seating)',
+        tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល', labelEn: 'Dispatches (In/Out)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ', labelEn: 'National Exams' }, { id: 'ex_track', icon: '📡', label: 'ផ្ទាំងតាមដានសម័យប្រឡង', labelEn: 'Exam Tracker', sub: true }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] }
     };
     function bureauShort(k) { const b = BUREAUS[k]; return b ? (appLang === 'en' ? b.shortNameEn : b.shortName) : (k || '-'); }
-    function specialtyTabFor(k) { return k === 'bureau_1' ? 'exams' : (k === 'bureau_3' ? 'certs' : 'training'); }
+    function specialtyTabFor(k) { return k === 'bureau_4' ? 'exams' : k === 'bureau_1' ? 'ex_equiv' : (k === 'bureau_3' ? 'certs' : 'training'); }
 
     // ---------------- 5. PERMISSIONS ----------------
     function isAdmin(u) { u = u || currentUser; if (!u) return false; return u.permissions?.admin === true || u.role === 'SuperAdmin' || u.role === 'Admin' || u.bureau === 'all'; }
@@ -2974,7 +2979,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (dd >= 25 || dd <= 5) {
         let y = now.getFullYear(), m = now.getMonth() + 1; if (dd <= 5) { m -= 1; if (m < 1) { m = 12; y -= 1; } }
         const period = y + '-' + String(m).padStart(2, '0');
-        const need = (admin ? ['bureau_1', 'bureau_2', 'bureau_3'] : [me.bureau]).filter(k => OFFICIAL_NAMES[k] && !getNote(k, period));
+        const need = (admin ? ['bureau_1', 'bureau_2', 'bureau_3', 'bureau_4'] : [me.bureau]).filter(k => OFFICIAL_NAMES[k] && !getNote(k, period));
         if (need.length) N.reminders.push({ icon: '📝', title: 'ដល់ពេលរៀបចំរបាយការណ៍ប្រចាំខែ' + MONTHS_KH[m - 1] + ' ' + y, sub: 'មិនទាន់មានកំណត់ចំណាំ៖ ' + need.map(k => OFFICIAL_NAMES[k]).join(', '), act: `openMonthlyReport(${y}, ${m})` });
       }
       auditLogs.forEach(l => {
@@ -3031,7 +3036,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.getElementById('profile-modal-fullname').innerText = currentUser.fullname || currentUser.username;
       document.getElementById('profile-modal-username').innerText = '@' + currentUser.username;
       document.getElementById('profile-modal-role').innerText = currentUser.role || 'Editor';
-      document.getElementById('profile-modal-bureau').innerText = currentUser.bureau === 'all' ? '👑 គ្រប់ការិយាល័យទាំង ៣' : (BUREAUS[currentUser.bureau]?.name || currentUser.bureau);
+      document.getElementById('profile-modal-bureau').innerText = currentUser.bureau === 'all' ? '👑 គ្រប់ការិយាល័យទាំង ៤' : (BUREAUS[currentUser.bureau]?.name || currentUser.bureau);
       renderUserAvatarUI();
       document.getElementById('modal-user-profile').classList.remove('hidden');
     }
@@ -3125,10 +3130,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:certs:stat] Card ស្ថិតិ + Modal លម្អិត៖ ថែម metric ក្នុង certStatRender (ឧ. តាមខែ/ភេទ/វគ្គ ជាក្រាហ្វ)
     function renderCertStatCard() {
       const g = id => document.getElementById(id), multi = g('stat-custom-multi'); if (!multi) return;
-      const on = activeBureauKey === 'bureau_3' || activeBureauKey === 'bureau_2' || activeBureauKey === 'bureau_1';
+      const on = activeBureauKey === 'bureau_3' || activeBureauKey === 'bureau_2' || activeBureauKey === 'bureau_4';
       multi.classList.toggle('hidden', !on); g('stat-custom-main')?.classList.toggle('hidden', on); g('stat-custom-icon')?.classList.toggle('hidden', on);
       if (!on) return;
-      if (activeBureauKey === 'bureau_1') {
+      if (activeBureauKey === 'bureau_4') {
         const m = exTrackMetrics(), tl = (ic, n, l) => `<button type="button" onclick="event.stopPropagation();exTrackGo()" class="text-left rounded-xl px-2.5 py-1.5 hover:bg-blue-50 transition form-input-focus"><div class="text-xl font-extrabold text-slate-800 leading-tight">${ic} ${toKhmerDigits(n)}</div><div class="text-[11px] text-slate-500 font-bold">${l}</div></button>`;
         multi.innerHTML = tl('🎓', m.exams, 'សម័យប្រឡង') + tl('👥', m.candidates, 'បេក្ខជនសរុប') + tl('✅', m.rate == null ? '—' : m.rate + '%', '% ជាប់សរុប') + tl('⏳', m.upcoming, 'ប្រឡងក្នុង ៣០ ថ្ងៃ');
         return;
@@ -3173,7 +3178,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="overflow-auto border border-slate-200 rounded-xl"><table class="w-full text-sm text-left"><thead class="bg-slate-100 text-slate-700 sticky top-0"><tr>${head}</tr></thead><tbody class="divide-y divide-slate-100">${body || '<tr><td colspan="6" class="p-6 text-center text-slate-400">គ្មានទិន្នន័យ</td></tr>'}</tbody></table></div></div>`;
     }
 
-    let examMenuOpen = false, certSub = ''; const SEAT_PLAN_TABS = ['ex_seat_in', 'ex_seat_out'], SEAT_TABS = ['ex_seats'].concat(SEAT_PLAN_TABS), EXAM_SUBS = ['ex_track', 'ex_names'].concat(SEAT_TABS);
+    let examMenuOpen = false, certSub = ''; const SEAT_PLAN_TABS = ['ex_seat_in', 'ex_seat_out'], SEAT_TABS = ['ex_seats'].concat(SEAT_PLAN_TABS), EXAM_SUBS = ['ex_track', 'ex_docs', 'ex_names'].concat(SEAT_TABS);
     // [EXT:certs:sub] Sub-menu ថ្មីក្រោម «ចុះបញ្ជីសញ្ញាបត្រ» → ថែមក្នុង CERT_SUBS + ករណីក្នុង certSubGo/renderCerts (ឧ. ភ្ជាប់រូបជាច្រើន, បោះពុម្ពជាក្រុម)
     const CERT_SUBS = [['bulk', '👥', 'ចុះបញ្ជីច្រើននាក់'], ['single', '👤', 'ចុះបញ្ជី ១ នាក់']];
     function certSubGo(k) { certMenuOpen = true; certSub = k; certQuickTab = k; activeTab = 'certs'; renderBureauWorkspace(); document.getElementById('app-main')?.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -3182,15 +3187,16 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
 
     const BUREAU_DUTIES = {
-      all: ['ត្រួតពិនិត្យបណ្ណាល័យឯកសាររួម របស់ការិយាល័យទាំង ៣', 'តាមដានលិខិតចេញ-ចូលទាំង ៣ ការិយាល័យ និងករណីហួសកំណត់', 'មើលទិន្នន័យប្រឡង បណ្តុះបណ្តាល និងវិញ្ញាបនបត្រ ជាភាពរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែ (ទម្រង់ I/II/III) និងនាំចេញ Word', 'គ្រប់គ្រងអ្នកប្រើ សិទ្ធិ ប្រទេស និង Backup (សម្រាប់ Admin)'],
-      bureau_1: ['បញ្ចូល និងគ្រប់គ្រងទិន្នន័យប្រឡងចូល-ចេញថ្នាក់ជាតិ (ស្ថាប័ន កាលបរិច្ឆេទ ជាប់/ធ្លាក់/អវត្តមាន)', 'កត់ត្រាលិខិតចេញ-ចូលរបស់ការិយាល័យ និងតាមដានដំណាក់កាល', 'រក្សាឯកសារបទដ្ឋាន កម្មវិធីបណ្តុះបណ្តាល និងវិញ្ញាសា ក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី១'],
+      all: ['ត្រួតពិនិត្យបណ្ណាល័យឯកសាររួម របស់ការិយាល័យទាំង ៤', 'តាមដានលិខិតចេញ-ចូលទាំង ៤ ការិយាល័យ និងករណីហួសកំណត់', 'មើលទិន្នន័យប្រឡង បណ្តុះបណ្តាល និងវិញ្ញាបនបត្រ ជាភាពរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែ (ទម្រង់ I/II/III) និងនាំចេញ Word', 'គ្រប់គ្រងអ្នកប្រើ សិទ្ធិ ប្រទេស និង Backup (សម្រាប់ Admin)'],
+      bureau_1: ['កត់ត្រា និងតាមដានសំណើសមមូលសញ្ញាបត្រពីក្រៅប្រទេស និងការចុះហត្ថលេខាសញ្ញាបត្រ', 'កត់ត្រាលិខិតចេញ-ចូលរបស់ការិយាល័យ និងតាមដានដំណាក់កាល', 'រក្សាឯកសារបទដ្ឋាន កម្មវិធីបណ្តុះបណ្តាល និងវិញ្ញាសា ក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី១'],
       bureau_2: ['កត់ត្រាទិន្នន័យបណ្តុះបណ្តាលបន្ត ក្នុង/ក្រៅប្រទេស (ឈ្មោះ ភេទ កម្រិត រយៈពេល ប្រទេស អ្នកឧបត្ថម្ភ)', 'Import/Export បញ្ជីអ្នកបណ្តុះបណ្តាលតាម Excel/CSV', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី២'],
+      bureau_4: ['បញ្ចូល និងគ្រប់គ្រងទិន្នន័យប្រឡងចូល-ចេញថ្នាក់ជាតិ (ស្ថាប័ន កាលបរិច្ឆេទ ជាប់/ធ្លាក់/អវត្តមាន)', 'រៀបចំផែនការប្រឡង បញ្ជីឈ្មោះ ឯកសារ និងប្លង់តុ', 'កត់ត្រាលិខិតចេញ-ចូលរបស់ការិយាល័យ និងតាមដានដំណាក់កាល', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី៤'],
       bureau_3: ['ចុះបញ្ជី និងចេញលេខកូដវិញ្ញាបនបត្រ/សញ្ញាបត្រ ព្រមទាំង QR សម្រាប់ផ្ទៀងផ្ទាត់', 'កត់ត្រាលិខិតចេញ-ចូល និងតាមដានដំណាក់កាល', 'រក្សាឯកសារពាក់ព័ន្ធក្នុងបណ្ណាល័យរួម', 'រៀបចំរបាយការណ៍ប្រចាំខែរបស់ការិយាល័យទី៣']
     };
     function renderManualDuties() {
       const el = document.getElementById('manual-duties'); if (!el) return;
       const mine = currentUser && currentUser.bureau;
-      const keys = ['all', 'bureau_1', 'bureau_2', 'bureau_3'];
+      const keys = ['all', 'bureau_1', 'bureau_2', 'bureau_3', 'bureau_4'];
       el.innerHTML = '<h4 class="font-bold text-slate-900 text-sm">📋 ភារកិច្ចរបស់ការិយាល័យនីមួយៗ</h4>' + keys.map(k => `<div class="p-3 rounded-xl border ${k === mine ? 'border-emerald-300 bg-emerald-50/60' : 'border-slate-200 bg-white'}"><p class="font-bold text-slate-800 mb-1.5">${esc(BUREAUS[k].name)}${k === mine ? ' <span class="text-[10px] text-emerald-700">(ការិយាល័យរបស់អ្នក)</span>' : ''}</p><ol class="space-y-1">${BUREAU_DUTIES[k].map((t, i) => `<li class="flex gap-2"><span class="font-bold text-emerald-700">${toKhmerDigits(i + 1)}.</span><span>${esc(t)}</span></li>`).join('')}</ol></div>`).join('');
     }
     function renderBureauWorkspace() {
@@ -3215,8 +3221,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!currentUser) return;
       renderDocs(); renderDispatch();
       if (activeTab === 'reports') renderReports();
-      if (activeTab === 'ex_docs') { renderExamTasks(); epRenderStrip(); }
-      if (activeBureauKey === 'bureau_1' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); epRenderStrip(); }
+      if (activeBureauKey === 'bureau_4' || activeBureauKey === 'all') { renderExams(); renderExamTasks(); renderExTrack(); renderSeatPlans(); epRenderStrip(); }
+      else if (activeBureauKey === 'bureau_1') { renderExamTasks(); }
       if (activeBureauKey === 'bureau_2' || activeBureauKey === 'all') { renderTrainingList(); renderEvents(); renderTrainEntry(); trainScopeSync(); }
       if (activeBureauKey === 'bureau_3' || activeBureauKey === 'all') { renderCerts(); renderCourses(); }
       updateStats(); renderNotifBadge(); initResizableTables();
@@ -3234,7 +3240,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         sub.className = 'inline-block mt-1 text-[10px] px-2 py-0.5 rounded-md font-bold ' + (od ? 'text-rose-700 bg-rose-50' : 'text-amber-700 bg-amber-50');
       }
       const k = activeBureauKey;
-      const cfg = k === 'bureau_1' ? ['សម័យប្រឡងសរុប', 'National Exam Sessions', activeRows('exams').length, '🎓']
+      const cfg = k === 'bureau_4' ? ['សម័យប្រឡងសរុប', 'National Exam Sessions', activeRows('exams').length, '🎓']
+        : k === 'bureau_1' ? ['កំណត់ត្រាសមមូល/ហត្ថលេខា', 'Equivalency & Signing Records', activeRows('exam_tasks').filter(x => x.kind === 'equiv' || x.kind === 'sign').length, '🌍']
         : k === 'bureau_2' ? ['វគ្គបណ្តុះបណ្តាល', 'Training Records', activeRows('trainings').length, '🌐']
         : k === 'bureau_3' ? ['សញ្ញាបត្របានចុះបញ្ជី', 'Registered Certificates', activeRows('certs').length, '📜']
         : ['ការងារជំនាញសរុប (៣ ការិយាល័យ)', 'Total Specialty Records', activeRows('exams').length + activeRows('trainings').length + activeRows('certs').length, '👑'];
@@ -3421,7 +3428,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const o = document.getElementById('filter-doc-sort'); if (o) o.value = 'newest';
       onFilter('docs');
     }
-    // [EXT:docs] បណ្ណាល័យរួម (ទាំង ៣ ការិយាល័យ)៖ ឧ. តម្រង tag/ឆ្នាំ, Version ឯកសារ, ស្វែងរកក្នុងខ្លឹមសារ, ចែករំលែក Link មានកាលកំណត់
+    // [EXT:docs] បណ្ណាល័យរួម (ទាំង ៤ ការិយាល័យ)៖ ឧ. តម្រង tag/ឆ្នាំ, Version ឯកសារ, ស្វែងរកក្នុងខ្លឹមសារ, ចែករំលែក Link មានកាលកំណត់
     function renderDocs() {
       const tbody = document.getElementById('docs-table-body'); if (!tbody) return;
       fillDocCatFilter();
@@ -3499,7 +3506,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         trend.push({ y: ty, m: tm, in: rows.filter(d => d.type === 'ចូល').length, out: rows.filter(d => d.type === 'ចេញ').length, total: rows.length,
           done: rows.filter(d => d.stage === STAGE_DONE).length, open: rows.filter(d => d.stage !== STAGE_DONE).length, selected: mode === 'month' ? (ty === y && tm === m) : true });
       }
-      const exams = (bureau === 'all' || bureau === 'bureau_1') ? activeRows('exams').filter(e => inRange(e.start_date || e.created_at, start, end)) : [];
+      const exams = (bureau === 'all' || bureau === 'bureau_4') ? activeRows('exams').filter(e => inRange(e.start_date || e.created_at, start, end)) : [];
       const trainings = (bureau === 'all' || bureau === 'bureau_2') ? activeRows('trainings').filter(t => inRange(trainStart(t), start, end)) : [];
       const certs = (bureau === 'all' || bureau === 'bureau_3') ? activeRows('certs').filter(c => inRange(c.date || c.created_at, start, end)) : [];
       return { bureau, mode, y, m, start, end, disp, total: disp.length, inCount: disp.filter(d => d.type === 'ចូល').length, outCount: disp.filter(d => d.type === 'ចេញ').length,
@@ -3530,7 +3537,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="flex gap-4 text-[11px] text-slate-500 mt-1"><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500"></span> ចូល</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-yellow-500"></span> ចេញ</span></div>`;
     }
     function rptTitle(r) {
-      const bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៣' : (BUREAUS[r.bureau]?.name || r.bureau);
+      const bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៤' : (BUREAUS[r.bureau]?.name || r.bureau);
       return 'របាយការណ៍' + (r.mode === 'month' ? 'ប្រចាំខែ' + MONTHS_KH[r.m - 1] + ' ឆ្នាំ ' + r.y : 'ប្រចាំឆ្នាំ ' + r.y) + ' — ' + bn;
     }
 
@@ -3554,7 +3561,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div><div class="text-sm font-bold text-slate-900 mb-2">អ្នកទទួលខុសត្រូវ (កំពូល ៥)</div>${rptTable(['ឈ្មោះ', 'ចំនួន'], r.assignees)}</div>
         </div>`;
       if (r.mode === 'year') h += `<div><div class="text-sm font-bold text-slate-900 mb-2">តារាងប្រចាំខែ ឆ្នាំ ${r.y}</div>${rptTable(['ខែ', 'ចូល', 'ចេញ', 'សរុប', 'បញ្ចប់', 'នៅបន្ត'], r.trend.map(t => [MONTHS_KH[t.m - 1], t.in, t.out, t.total, t.done, t.open]).concat([['សរុបឆ្នាំ', r.inCount, r.outCount, r.total, r.done, r.openCount]]))}</div>`;
-      if (r.bureau === 'all' || r.bureau === 'bureau_1') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🎓 ការិយាល័យទី១ — ការប្រឡងថ្នាក់ជាតិ</div>
+      if (r.bureau === 'all' || r.bureau === 'bureau_4') h += `<div class="rounded-2xl border border-slate-200 p-4 space-y-3"><div class="text-sm font-bold text-slate-900">🎓 ការិយាល័យទី៤ — ការប្រឡងថ្នាក់ជាតិ</div>
         <div class="text-xs text-slate-600">សម័យប្រឡង ${r.exams.length} • បេក្ខជនសរុប ${r.exams.reduce((a, e) => a + (Number(e.candidates) || 0), 0)}</div>
         ${rptTable(['ជំនាញ', 'ប្រភេទ', 'សម័យ', 'បេក្ខជន', 'ជាប់', 'ធ្លាក់', 'អវត្តមាន'], r.exams.map(e => [e.major, e.type, e.session, Number(e.candidates) || 0, e.passed ?? '-', e.failed ?? '-', e.absent ?? '-']))}
         ${kitGrid([kitBox('បេក្ខជនតាមជំនាញ', svgBars(tally(r.exams.map(e => ({ k: e.major || KIT_NONE, n: Number(e.candidates) || 0 })), x => x.k).length ? Object.entries(r.exams.reduce((m, e) => { const k = e.major || KIT_NONE; m[k] = (m[k] || 0) + (Number(e.candidates) || 0); return m; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 8) : [], { color: KIT_COLORS[2] })), kitBox('លទ្ធផលសរុប (ជាប់/ធ្លាក់/អវត្តមាន)', svgDonut([['ជាប់', r.exams.reduce((a, e) => a + (Number(e.passed) || 0), 0)], ['ធ្លាក់', r.exams.reduce((a, e) => a + (Number(e.failed) || 0), 0)], ['អវត្តមាន', r.exams.reduce((a, e) => a + (Number(e.absent) || 0), 0)]]))])}</div>`;
@@ -3578,7 +3585,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const tab = (v, t) => `<button onclick="rptSet('view','${v}')" class="px-3 py-2 rounded-xl text-xs font-bold ${rpt.view === v ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-emerald-50'}">${t}</button>`;
       box.innerHTML = `
         <div class="w-full flex flex-wrap gap-2 mb-1">${tab('stats', '📊 ស្ថិតិ / KPI')}${tab('official', '📄 របាយការណ៍ផ្លូវការ (I / II / III)')}</div>
-        <div><label class="${lab}">ការិយាល័យ</label>${isAdmin() ? `<select id="rpt-bureau" onchange="rptSet('bureau', this.value)" class="${sel}">${['all', 'bureau_1', 'bureau_2', 'bureau_3'].map(k => `<option value="${k}" ${k === rpt.bureau ? 'selected' : ''}>${esc(k === 'all' ? 'ការិយាល័យទាំង ៣' : bureauShort(k))}</option>`).join('')}</select>` : `<div class="${sel} bg-slate-50">${esc(bureauShort(rpt.bureau))}</div>`}</div>
+        <div><label class="${lab}">ការិយាល័យ</label>${isAdmin() ? `<select id="rpt-bureau" onchange="rptSet('bureau', this.value)" class="${sel}">${['all', 'bureau_1', 'bureau_2', 'bureau_3', 'bureau_4'].map(k => `<option value="${k}" ${k === rpt.bureau ? 'selected' : ''}>${esc(k === 'all' ? 'ការិយាល័យទាំង ៤' : bureauShort(k))}</option>`).join('')}</select>` : `<div class="${sel} bg-slate-50">${esc(bureauShort(rpt.bureau))}</div>`}</div>
         ${offv ? '' : `<div><label class="${lab}">ប្រភេទរបាយការណ៍</label><select id="rpt-mode" onchange="rptSet('mode', this.value)" class="${sel}"><option value="month" ${rpt.mode === 'month' ? 'selected' : ''}>ប្រចាំខែ</option><option value="year" ${rpt.mode === 'year' ? 'selected' : ''}>ប្រចាំឆ្នាំ</option></select></div>`}
         <div id="rpt-month-wrap" style="${!offv && rpt.mode === 'year' ? 'display:none' : ''}"><label class="${lab}">ខែ</label><select id="rpt-month" onchange="rptSet('month', +this.value)" class="${sel}">${MONTHS_KH.map((n, i) => `<option value="${i + 1}" ${rpt.month === i + 1 ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
         <div><label class="${lab}">ឆ្នាំ</label><select id="rpt-year" onchange="rptSet('year', +this.value)" class="${sel}">${years.map(y => `<option value="${y}" ${rpt.year === y ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
@@ -3606,7 +3613,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function printReport() {
       if (rpt.view === 'official') return printOfficial();
       const el = document.getElementById('report-printable'); if (!el || !rpt.last) return;
-      const r = rpt.last, bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៣' : (BUREAUS[r.bureau]?.name || '');
+      const r = rpt.last, bn = r.bureau === 'all' ? 'ការិយាល័យទាំង ៤' : (BUREAUS[r.bureau]?.name || '');
       const win = window.open('', '_blank'); if (!win) return showToast('សូមអនុញ្ញាត Pop-up ដើម្បី Print', true);
       win.document.write(`<html><head><meta charset="utf-8"><title>${esc(rptTitle(r))}</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet"><style>body{font-family:'Battambang',sans-serif;padding:28px;color:#0f172a}.font-moul{font-family:'Moul',cursive}table{border-collapse:collapse}@media print{body{padding:10px}}</style></head><body>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
@@ -3628,7 +3635,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ['ទាន់ពេល (%)', r.onTimePct == null ? '-' : r.onTimePct], ['រយៈពេលមធ្យម (ថ្ងៃ)', r.avgDays == null ? '-' : r.avgDays]].map(([a, b]) => ({ 'សូចនាករ': a, 'តម្លៃ': b })));
       add('ប្រចាំខែ', r.trend.map(t => ({ 'ឆ្នាំ': t.y, 'ខែ': MONTHS_KH[t.m - 1], 'ចូល': t.in, 'ចេញ': t.out, 'សរុប': t.total, 'បញ្ចប់': t.done, 'នៅបន្ត': t.open })));
       add('លិខិតចេញ-ចូល', r.disp.map(d => { const od = overdueInfo(d); return { 'កូដ': d.code, 'ចំណងជើង': d.title, 'ប្រភេទ': d.type, 'ការិយាល័យ': bureauShort(d.bureau), 'ថ្ងៃចុះលិខិត': d.date, 'ថ្ងៃផុតកំណត់': d.due_date || '', 'ដំណាក់កាល': d.stage, 'អ្នកទទួលខុសត្រូវ': d.assignee || '', 'ទីតាំង': d.location || '', 'ហួសកំណត់ (ថ្ងៃ)': od ? od.days : 0 }; }));
-      if (r.exams.length || r.bureau === 'bureau_1') add('ប្រឡងថ្នាក់ជាតិ', r.exams.map(e => ({ 'ជំនាញ': e.major, 'ប្រភេទ': e.type, 'សម័យ': e.session, 'បេក្ខជន': e.candidates, 'ស្ថានភាព': e.status })));
+      if (r.exams.length || r.bureau === 'bureau_4') add('ប្រឡងថ្នាក់ជាតិ', r.exams.map(e => ({ 'ជំនាញ': e.major, 'ប្រភេទ': e.type, 'សម័យ': e.session, 'បេក្ខជន': e.candidates, 'ស្ថានភាព': e.status })));
       if (r.trainings.length || r.bureau === 'bureau_2') add('បណ្តុះបណ្តាលបន្ត', r.trainings.map(t => ({ 'ឈ្មោះ': t.trainee, 'អង្គភាព': t.unit, 'វគ្គ': t.course, 'រយៈពេល': t.duration, 'ប្រភេទ': t.scope || '', 'កាលបរិច្ឆេទ': t.dates, 'ប្រទេស': t.country, 'ដៃគូឧបត្ថម្ភ': t.sponsor })));
       if (r.certs.length || r.bureau === 'bureau_3') add('សញ្ញាបត្រ', r.certs.map(c => ({ 'លេខ': c.num, 'សាមីខ្លួន': c.recipient, 'ប្រភេទ': c.type, 'កាលបរិច្ឆេទ': c.date, 'ហត្ថលេខា': c.signer })));
       XLSX.writeFile(wb, 'របាយការណ៍_' + (r.mode === 'month' ? r.y + '-' + String(r.m).padStart(2, '0') : r.y) + '_' + r.bureau + '.xlsx');
@@ -3739,8 +3746,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     async function listReset(k) { if (!confirm('ស្តារបញ្ជីនេះទៅលំនាំដើម?')) return; await saveList(k, LIST_DEFS[k].def.slice()); renderListPanel(k); }
 
-    const OFFICIAL_NAMES = { bureau_1: 'ការិយាល័យបណ្តុះបណ្តាលមូលដ្ឋាន', bureau_2: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', bureau_3: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ' };
-    const OFFICIAL_LETTER = { bureau_1: 'ក', bureau_2: 'ខ', bureau_3: 'គ' };
+    const OFFICIAL_NAMES = { bureau_1: 'ការិយាល័យបណ្តុះបណ្តាលមូលដ្ឋាន', bureau_2: 'ការិយាល័យបណ្តុះបណ្តាលបន្ត', bureau_3: 'ការិយាល័យចុះបញ្ជិកា វិញ្ញាបនបត្រ', bureau_4: 'ការិយាល័យប្រឡងថ្នាក់ជាតិ' };
+    const OFFICIAL_LETTER = { bureau_1: 'ក', bureau_2: 'ខ', bureau_3: 'គ', bureau_4: 'ឃ' };
     const NOTE_NUMS = {
       bureau_1: [
         ['equiv_in', 'បានទទួលពាក្យស្នើសុំសមមូលសញ្ញាបត្រពីក្រៅប្រទេស (នាក់)', 'number'],
@@ -3755,6 +3762,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         ['promo', 'ផ្សព្វផ្សាយការផ្តល់វគ្គបណ្តុះបណ្តាលមន្ត្រី (ច្បាប់)', 'number'],
         ['other_docs', 'ឯកសារផ្សេងៗ (ច្បាប់)', 'number'],
         ['workshop', 'ស្នើសុំរៀបចំសិក្ខាសាលា សន្និសីទ សន្និបាត វគ្គបណ្តុះបណ្តាល (ច្បាប់)', 'number']],
+      bureau_4: [
+        ['exam_other_n', 'ការងារប្រឡងផ្សេងៗ (ច្បាប់/ដង)', 'number']],
       bureau_3: [
         ['officers_n', 'បានកែសម្រួល និងបញ្ចូលព័ត៌មានមន្ត្រី (នាក់)', 'number'],
         ['officers_unit', 'អង្គភាពរបស់មន្ត្រីទាំងនោះ (ឧ. មន្ទីរពេទ្យកុមារជាតិ)', 'text'],
@@ -3822,7 +3831,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const [start, end] = periodBounds('month', y, m), period = y + '-' + String(m).padStart(2, '0');
       const inR = v => { const x = dayOf(v); return !!x && x >= start && x < end; };
       const warn = new Set(), srcInfo = [];
-      const keys = bureau === 'all' ? ['bureau_1', 'bureau_2', 'bureau_3'] : [bureau];
+      const keys = bureau === 'all' ? ['bureau_1', 'bureau_2', 'bureau_3', 'bureau_4'] : [bureau];
       const secs = keys.map(k => {
         const note = getNote(k, period), nums = { ...noteNums(note) }, res = [];
         if (k === 'bureau_1') {
@@ -3844,6 +3853,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
             if (hasNum(nums.sign_review)) parts.push(`សញ្ញាបត្រកំពុងពិនិត្យចំនួន${c2(nums.sign_review)}សន្លឹក`);
             res.push(NI(parts.join(' ') + '។'));
           }
+        }
+
+        if (k === 'bureau_4') {
           const exams = activeRows('exams').filter(e => inR(e.start_date || e.created_at));
           const groups = new Map();
           exams.forEach(e => {
@@ -4027,7 +4039,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function renderRptNotesForm() {
       const b = rpt.notesBureau, period = notesPeriod(), note = getNote(b, period), nums = noteNums(note);
       const inp = 'form-input-focus w-full border border-slate-300 rounded-xl p-2 bg-white text-xs';
-      const bureauSel = isAdmin() ? `<select onchange="rpt.notesBureau=this.value;renderRptNotesForm()" class="${inp} font-bold">${['bureau_1', 'bureau_2', 'bureau_3'].map(k => `<option value="${k}" ${k === b ? 'selected' : ''}>${esc(OFFICIAL_LETTER[k] + '. ' + OFFICIAL_NAMES[k])}</option>`).join('')}</select>` : `<div class="${inp} bg-slate-50 font-bold">${esc(OFFICIAL_LETTER[b] + '. ' + OFFICIAL_NAMES[b])}</div>`;
+      const bureauSel = isAdmin() ? `<select onchange="rpt.notesBureau=this.value;renderRptNotesForm()" class="${inp} font-bold">${['bureau_1', 'bureau_2', 'bureau_3', 'bureau_4'].map(k => `<option value="${k}" ${k === b ? 'selected' : ''}>${esc(OFFICIAL_LETTER[k] + '. ' + OFFICIAL_NAMES[k])}</option>`).join('')}</select>` : `<div class="${inp} bg-slate-50 font-bold">${esc(OFFICIAL_LETTER[b] + '. ' + OFFICIAL_NAMES[b])}</div>`;
       document.getElementById('rpt-notes-body').innerHTML = `
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"><div><label class="block text-[11px] font-bold text-slate-600 mb-1">ការិយាល័យ</label>${bureauSel}</div>
           <div><label class="block text-[11px] font-bold text-slate-600 mb-1">ខែ / ឆ្នាំ</label><div class="${inp} bg-slate-50 font-bold">${esc(MONTHS_KH[rpt.month - 1])} ${rpt.year}</div></div></div>
@@ -4284,7 +4296,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const stageF = document.getElementById('filter-disp-stage')?.value || 'all';
       const scope = dispatchScopeRows();
       const badge = document.getElementById('disp-scope-badge');
-      if (badge) badge.innerText = view === 'all' ? (appLang === 'en' ? '👑 Viewing All 3 Bureaus' : '👑 កំពុងបង្ហាញលិខិតរួមនៃការិយាល័យទាំង ៣') : (appLang === 'en' ? '🔒 Isolated to ' + bureauShort(view) : '🔒 ឯកជនសម្រាប់តែ ' + bureauShort(view));
+      if (badge) badge.innerText = view === 'all' ? (appLang === 'en' ? '👑 Viewing All 4 Bureaus' : '👑 កំពុងបង្ហាញលិខិតរួមនៃការិយាល័យទាំង ៤') : (appLang === 'en' ? '🔒 Isolated to ' + bureauShort(view) : '🔒 ឯកជនសម្រាប់តែ ' + bureauShort(view));
 
       const odAll = scope.filter(overdueInfo);
       const banner = document.getElementById('overdue-banner');
@@ -6468,25 +6480,25 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoa), 'សម្ភារៈ'); XLSX.writeFile(wb, 'ការគណនាសម្ភារៈ-' + (EP.d.title || 'ផែនការ').slice(0, 30) + '.xlsx');
     }
     // ===== V3.25.0: គំរូ (template) · ការិយាល័យទទួលខុសត្រូវ ១/២/៣ · សម្ភារៈ + ប៉ាន់ស្មានចំនួន · តំណទៅម៉ឺនុយប្លង់តុ/បញ្ជីឈ្មោះ =====
-    const EP_BUREAUS = [['', '— ការិយាល័យ —'], ['bureau_1', 'ការិយាល័យទី១'], ['bureau_2', 'ការិយាល័យទី២'], ['bureau_3', 'ការិយាល័យទី៣'], ['all', 'ទាំង ៣']];
-    const epBShort = b => ({ bureau_1: '១', bureau_2: '២', bureau_3: '៣', all: 'ទាំង៣' })[b] || '';
+    const EP_BUREAUS = [['', '— ការិយាល័យ —'], ['bureau_1', 'ការិយាល័យទី១'], ['bureau_2', 'ការិយាល័យទី២'], ['bureau_3', 'ការិយាល័យទី៣'], ['bureau_4', 'ការិយាល័យទី៤'], ['all', 'ទាំង ៤']];
+    const epBShort = b => ({ bureau_1: '១', bureau_2: '២', bureau_3: '៣', bureau_4: '៤', all: 'ទាំង៤' })[b] || '';
     const EP_LINKS = { ex_names: '👥 បញ្ជីឈ្មោះ', ex_seats: '🪑 ប្លង់តុ' };
     const epI = (n, basis, per, unit, spare, cap) => ({ n, basis, per, unit, spare: spare || 0, cap: cap || '' });
     const epS = (name, bureau, link, items) => ({ name, bureau: bureau || '', link: link || '', items: items || [] });
     const EP_BASE_STEPS = () => [
-      epS('រៀបរាប់ការងារ និងកំណត់សម្ភារៈត្រូវការ', 'bureau_1'),
-      epS('ធ្វើលិខិតបង្គាប់ការ (គណៈកម្មការ / អ្នកត្រួតពិនិត្យ)', 'bureau_1'),
+      epS('រៀបរាប់ការងារ និងកំណត់សម្ភារៈត្រូវការ', 'bureau_4'),
+      epS('ធ្វើលិខិតបង្គាប់ការ (គណៈកម្មការ / អ្នកត្រួតពិនិត្យ)', 'bureau_4'),
       epS('ធ្វើលិខិតផ្សព្វផ្សាយ ប្រកាសប្រឡង', 'bureau_2'),
       epS('ការទទួលពាក្យ', 'bureau_3'),
       epS('រៀបចំបញ្ជីឈ្មោះបេក្ខជន', 'bureau_3', 'ex_names'),
-      epS('រៀបចំប្លង់តុ និងលេខតុ', 'bureau_1', 'ex_seats'),
-      epS('រៀបចំឯកសារប្រឡង (វិញ្ញាសា, សន្លឹកឆ្លើយ, សន្លឹកព្រាង)', 'bureau_1'),
+      epS('រៀបចំប្លង់តុ និងលេខតុ', 'bureau_4', 'ex_seats'),
+      epS('រៀបចំឯកសារប្រឡង (វិញ្ញាសា, សន្លឹកឆ្លើយ, សន្លឹកព្រាង)', 'bureau_4'),
       epS('ការបិទឈ្មោះ (ស្លាកឈ្មោះ / លេខតុ)', 'bureau_2'),
       epS('រៀបចំច្រក និងវេចខ្ចប់កិច្ចការ', 'bureau_2'),
-      epS('រៀបចំសម្ភារៈប្រើប្រាស់ (ប៊ិច, ក្រដាស…)', 'bureau_1'),
+      epS('រៀបចំសម្ភារៈប្រើប្រាស់ (ប៊ិច, ក្រដាស…)', 'bureau_4'),
       epS('រៀបចំ album (រូបថត / កំណត់ត្រា)', 'bureau_3'),
       epS('ប្រារព្ធការប្រឡង', 'all'),
-      epS('កែវិញ្ញាសា បូកលទ្ធផល និងប្រកាសលទ្ធផល', 'bureau_1')
+      epS('កែវិញ្ញាសា បូកលទ្ធផល និងប្រកាសលទ្ធផល', 'bureau_4')
     ];
     const EP_TYPES = ['ប្រឡងចូល', 'ប្រឡងចេញ', 'ប្រឡងបញ្ចប់ការសិក្សាផ្ទៃក្នុង', 'ផ្សេងៗ'], EP_ST = ['មិនទាន់ចាប់ផ្តើម', 'កំពុងធ្វើ', 'រួចរាល់'], EP_DONE = 'រួចរាល់';
     const EP_DEFAULT_STEPS = EP_BASE_STEPS().map(s => s.name);
@@ -6500,7 +6512,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       return it.basis === 'room' ? Math.ceil(Math.ceil(c / cap) * per * sp - 1e-9) : it.basis === 'fix' ? Math.ceil(per * sp - 1e-9) : Math.ceil(c * per * sp - 1e-9);
     }
     function epByBureau(steps) {
-      const o = { bureau_1: { t: 0, d: 0 }, bureau_2: { t: 0, d: 0 }, bureau_3: { t: 0, d: 0 } };
+      const o = { bureau_1: { t: 0, d: 0 }, bureau_2: { t: 0, d: 0 }, bureau_3: { t: 0, d: 0 }, bureau_4: { t: 0, d: 0 } };
       steps.forEach(s => { const ks = s.bureau === 'all' ? Object.keys(o) : o[s.bureau] ? [s.bureau] : []; ks.forEach(k => { o[k].t++; o[k].d += epProg(s) / 100; }); });
       Object.values(o).forEach(v => { v.p = v.t ? Math.round(v.d * 100 / v.t) : null; });
       return o;
@@ -6527,7 +6539,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function epDelItem(i, k) { EP.steps[i].items.splice(k, 1); epDirty(); epRenderSteps(); epAnalysis(); }
     function epGoLink(t) {
       const ok = (BUREAUS[activeBureauKey] || {}).tabs?.some(x => x.id === t);
-      if (!ok) return showToast('ម៉ឺនុយនេះមាននៅការិយាល័យទី១ / ទាំង ៣ — សូមប្តូរការិយាល័យនៅ Sidebar', true);
+      if (!ok) return showToast('ម៉ឺនុយនេះមាននៅការិយាល័យទី៤ / ទាំង ៤ — សូមប្តូរការិយាល័យនៅ Sidebar', true);
       if (EP.dirty && !confirm('មានការកែប្រែមិនទាន់រក្សាទុក។ ចាកចេញ?')) return; epClose(true); switchBureauTab(t);
     }
     function epExtraCards() {
@@ -8715,8 +8727,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       userDetailId = id;
       const editable = canEditPerm(u), sup = isSuperAdmin(), dis = editable ? '' : 'disabled';
       const roles = ROLE_OPTS.filter(([v]) => sup || (v !== 'Admin' && v !== 'SuperAdmin') || v === u.role);
-      const bureaus = [['bureau_1', bureauShort('bureau_1')], ['bureau_2', bureauShort('bureau_2')], ['bureau_3', bureauShort('bureau_3')]];
-      if (sup || u.bureau === 'all') bureaus.push(['all', '👑 ការិយាល័យទាំង ៣']);
+      const bureaus = [['bureau_1', bureauShort('bureau_1')], ['bureau_2', bureauShort('bureau_2')], ['bureau_3', bureauShort('bureau_3')], ['bureau_4', bureauShort('bureau_4')]];
+      if (sup || u.bureau === 'all') bureaus.push(['all', '👑 ការិយាល័យទាំង ៤']);
       const perms = u.permissions || {};
       const sel = 'form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-white font-semibold text-slate-700 disabled:bg-slate-100';
       const hist = userDetailHistory(u);
@@ -8794,7 +8806,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       tbody.innerHTML = usersData.filter(u => u.status !== 'Deleted').map(u => {
         const fn = u.fullname || u.username || 'U';
         const av = u.avatar ? `<img src="${esc(u.avatar)}" class="w-8 h-8 rounded-full object-cover border border-emerald-300 shrink-0">` : `<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">${esc(fn.charAt(0).toUpperCase())}</div>`;
-        const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៣' : bureauShort(u.bureau);
+        const bLabel = u.bureau === 'all' ? '👑 ការិយាល័យទាំង ៤' : bureauShort(u.bureau);
         const st = u.status === 'Active' ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Active</span>' : (u.status === 'Suspended' ? '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Suspended</span>' : '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">' + esc(u.status) + '</span>');
         const editBtn = canEditPerm(u) ? `<button onclick="openUserDetail(${u.id})" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs mr-3 form-input-focus">✏️ សិទ្ធិ</button>` : '';
         const actions = editBtn + (canManageUser(u)
@@ -9206,7 +9218,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function renderReportKitButtons() {
       const el = document.getElementById('rpt-kit-btns'); if (!el) return; const b = rpt.bureau || 'all';
       const B = (fn, ic, t) => `<button onclick="${fn}()" class="h-9 px-3 whitespace-nowrap bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition inline-flex items-center gap-2 shadow-2xs form-input-focus"><span class="tb-ico">${ic}</span> ${t}</button>`;
-      el.innerHTML = (b === 'all' || b === 'bureau_1' ? B('openExamReport', '🎓', 'Report ប្រឡង') : '') + (b === 'all' || b === 'bureau_2' ? B('openTrainReport', '🌐', 'Report បណ្តុះបណ្តាល') + B('openEventReport', '🎤', 'Report សិក្ខាសាលា & ប្រជុំ') : '') + (b === 'all' || b === 'bureau_3' ? B('openCertReport', '📜', 'Report សញ្ញាបត្រ') : '');
+      el.innerHTML = (b === 'all' || b === 'bureau_4' ? B('openExamReport', '🎓', 'Report ប្រឡង') : '') + (b === 'all' || b === 'bureau_2' ? B('openTrainReport', '🌐', 'Report បណ្តុះបណ្តាល') + B('openEventReport', '🎤', 'Report សិក្ខាសាលា & ប្រជុំ') : '') + (b === 'all' || b === 'bureau_3' ? B('openCertReport', '📜', 'Report សញ្ញាបត្រ') : '');
     }
 
     // ---------------- REPORT បណ្តុះបណ្តាលបន្ត (លម្អិត / សង្ខេប + តម្រង) ----------------
