@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.4.0.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.4.1.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.4.0.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.4.1.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -254,7 +254,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.4.0.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.4.1.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -716,7 +716,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.4.0.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.4.1.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -873,7 +873,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.4.0.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.4.1.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -885,7 +885,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.4.0.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.4.1.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -987,6 +987,7 @@
       <div id="syscontent-location" class="space-y-4 flex-1 overflow-y-auto pr-1 hidden">
         <div class="flex flex-wrap gap-2 text-xs" id="list-subtabs">
           <button onclick="switchListTab('location')" id="listtab-location" class="px-3.5 py-2 rounded-xl font-bold bg-emerald-600 text-white form-input-focus">🌍 Location (ប្រទេស)</button>
+          <button onclick="switchListTab('staff')" id="listtab-staff" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">👥 បញ្ជីមន្ត្រី</button>
           <button onclick="switchListTab('docCats')" id="listtab-docCats" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">📂 ប្រភេទឯកសារ</button>
           <button onclick="switchListTab('examTypes')" id="listtab-examTypes" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🎓 ប្រភេទប្រឡង</button>
           <button onclick="switchListTab('titles')" id="listtab-titles" class="px-3.5 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 form-input-focus">🏷️ Title</button>
@@ -1099,7 +1100,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.4.0.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.4.1.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៤៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៤</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -2065,7 +2066,7 @@ return module.exports;})();
 const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{const q=new C(t,0);q.addData(text);q.make();const n=q.getModuleCount(),m=[];for(let r=0;r<n;r++){m.push([]);for(let c=0;c<n;c++)m[r].push(q.isDark(r,c)?1:0);}return m;}catch(e){}}return null;}};})();
 
     // ---------------- 1. CONFIG ----------------
-    const APP_VERSION = 'V4.0.0';   // លេខកំណែតែមួយ — ប្រើក្នុង Backup, System Health, ចំណងជើង
+    const APP_VERSION = 'V4.1.0';   // លេខកំណែតែមួយ — ប្រើក្នុង Backup, System Health, ចំណងជើង
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
@@ -3710,6 +3711,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       examSkills: { icon: '🛠️', label: 'ជំនាញ (ប្រឡងចេញ)', hint: 'ជំនាញ សម្រាប់តែប្រឡងចេញ ឧ. គិលានុបដ្ឋាក', def: [], optional: true },
       examSubjects: { icon: '📘', label: 'មុខវិជ្ជា (ប្រឡងចូល)', hint: 'មុខវិជ្ជា សម្រាប់តែប្រឡងចូល ឧ. គណិត', def: [], optional: true },
       epTemplates: { icon: '📑', label: 'គំរូផែនការរៀបចំ', hint: '', def: [], optional: true, hidden: true },
+      staff: { icon: '👥', label: 'បញ្ជីមន្ត្រី', hint: '', def: [], optional: true, hidden: true },
       certTypes: { icon: '📜', label: 'ប្រភេទសញ្ញាបត្រ', hint: 'ទម្រង់ ឈ្មោះ|កូដ ឧ. វិញ្ញាបនបត្រ|VN (កូដប្រើក្នុងលេខស្វ័យប្រវត្តិ)', def: ['វិញ្ញាបនបត្រ|VN', 'សញ្ញាបត្រ|SB', 'លិខិតបញ្ជាក់|LP'] }
     };
     let appLists = {};
@@ -3763,7 +3765,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       ['location', ...Object.keys(LIST_DEFS)].forEach(t => { const b = document.getElementById('listtab-' + t); if (b) { b.classList.toggle('bg-emerald-600', t === k); b.classList.toggle('text-white', t === k); b.classList.toggle('bg-slate-100', t !== k); b.classList.toggle('text-slate-600', t !== k); } });
       document.getElementById('sub-location')?.classList.toggle('hidden', k !== 'location');
       const lp = document.getElementById('sub-lists'); if (lp) lp.classList.toggle('hidden', k === 'location');
-      if (k === 'location') renderCountriesTable(); else renderListPanel(k);
+      if (k === 'location') renderCountriesTable(); else if (k === 'staff') renderStaffPanel(); else renderListPanel(k);
     }
     function titleGender(t) { return /លោកស្រី|កញ្ញា|លោកជំទាវ|អ្នកស្រី/.test(t) ? 'ស្រី' : /^(លោក|ឯកឧត្តម)$/.test(t) ? 'ប្រុស' : ''; }
     function onTrainTitle(v) { const g = titleGender(v), el = document.getElementById('train-gender'); if (el && g) el.value = g; }
@@ -8961,6 +8963,212 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const ok = todo.filter(r => r.result.ok), bad = todo.length - ok.length;
       showToast('Import រួច៖ ជោគជ័យ ' + ok.length + (bad ? ' · បរាជ័យ ' + bad : ''), bad > 0);
       logActivity('Import មន្ត្រីពីឯកសារ', UI.file + ' — ថ្មី ' + ok.filter(r => r.kind === 'new').length + ' · កែ ' + ok.filter(r => r.kind === 'update').length + (bad ? ' · បរាជ័យ ' + bad : ''));
+    }
+
+    // ===================== V4.1: បញ្ជីមន្ត្រី (Staff roster) — រក្សាក្នុង app_lists key='staff' =====================
+    // វាល៖ {id, staff_id(អត្តលេខ), name, gender, dob, position, contact, bureau, username, status}
+    const STAFF_HEAD = ['ល.រ', 'អត្តលេខមន្ត្រី', 'គោត្តនាមនិងនាម', 'ភេទ', 'ថ្ងៃខែឆ្នាំកំណើត', 'មុខតំណែង', 'ការិយាល័យ', 'លេខទូរស័ព្ទ / Email', 'Username'];
+    const STAFF_SYN = {
+      staff_id: ['អត្តលេខមន្ត្រី', 'អត្តលេខ', 'លេខសម្គាល់មន្ត្រី', 'លេខសម្គាល់', 'staffid', 'id', 'employeeid'],
+      name: ['គោត្តនាមនិងនាម', 'គោត្តនាម', 'ឈ្មោះពេញ', 'ឈ្មោះមន្ត្រី', 'ឈ្មោះ', 'fullname', 'name'],
+      gender: ['ភេទ', 'gender', 'sex'],
+      dob: ['ថ្ងៃខែឆ្នាំកំណើត', 'ថ្ងៃកំណើត', 'dob', 'birthdate', 'dateofbirth'],
+      position: ['មុខតំណែង', 'តួនាទី', 'តួនាទី/មុខតំណែង', 'position', 'title', 'jobtitle'],
+      contact: ['លេខទូរស័ព្ទ/email', 'លេខទូរស័ព្ទ', 'ទូរស័ព្ទ', 'email', 'phone', 'contact', 'tel'],
+      bureau: ['ការិយាល័យ', 'bureau', 'office', 'ការិ'],
+      username: ['username', 'user', 'ឈ្មោះគណនី', 'account', 'login']
+    };
+    const stNorm = v => normalizeKhmerDigits(String(v == null ? '' : v)).replace(/\s+/g, '').toLowerCase();
+    function stGender(v) { const s = stNorm(v); if (!s) return ''; if (/^(ប្រុស|m|male|ប)/.test(s)) return 'ប្រុស'; if (/^(ស្រី|f|female|ស)/.test(s)) return 'ស្រី'; return null; }
+    const staffList = () => getList('staff').filter(s => s && typeof s === 'object');
+    // ពាក្យសម្ងាត់ដំបូង = "@" + Username + ៣ខ្ទង់ចុងក្រោយនៃអត្តលេខ (លេខខ្មែរ → ឡាតាំង)
+    function staffDefaultPw(username, staffId) {
+      const tail = normalizeKhmerDigits(staffId || '').replace(/[^A-Za-z0-9]/g, '').slice(-3);
+      return tail.length === 3 && username ? '@' + username + tail : '';
+    }
+    let STF = { q: '', bureau: 'all', imp: null };
+    const stBureauName = b => b === 'all' ? 'គ្រប់ការិយាល័យ' : b ? 'ការិយាល័យទី' + toKhmerDigits(String(b).replace('bureau_', '')) : '—';
+    function stAcct(s) { return s.username ? usersData.find(u => String(u.username).toLowerCase() === String(s.username).toLowerCase() && u.status !== 'Deleted') : null; }
+    function renderStaffPanel() {
+      const el = document.getElementById('sub-lists'); if (!el) return;
+      const adm = isAdmin(), all = staffList(), q = stNorm(STF.q);
+      const rows = all.map((s, i) => ({ s, i })).filter(({ s }) => (STF.bureau === 'all' || s.bureau === STF.bureau) && (!q || stNorm([s.staff_id, s.name, s.position, s.contact, s.username].join(' ')).includes(q)));
+      el.innerHTML = `<div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4 space-y-3">
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <input id="stf-q" value="${esc(STF.q)}" oninput="STF.q=this.value;stfRefresh()" placeholder="🔍 ស្វែងរក ឈ្មោះ / អត្តលេខ / មុខតំណែង…" class="form-input-focus flex-1 min-w-[180px] border border-slate-200 rounded-xl p-2.5 bg-white">
+          <select onchange="STF.bureau=this.value;renderStaffPanel()" class="form-input-focus border border-slate-200 rounded-xl p-2.5 bg-white font-bold"><option value="all">ការិយាល័យទាំងអស់</option>${[1, 2, 3, 4].map(n => `<option value="bureau_${n}" ${STF.bureau === 'bureau_' + n ? 'selected' : ''}>ការិយាល័យទី${toKhmerDigits(n)}</option>`).join('')}</select>
+          ${adm ? `<button onclick="stfEdit('')" class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold form-input-focus">➕ បន្ថែមមន្ត្រី</button>
+          <button onclick="stfTemplate()" class="px-3.5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl font-bold form-input-focus">📄 គំរូ Excel</button>
+          <label class="px-3.5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold cursor-pointer">📥 Import Excel<input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="stfPick(this)"></label>` : ''}
+          <button onclick="stfExport()" class="px-3.5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl font-bold form-input-focus">⬇️ Export</button>
+        </div>
+        <p class="text-[11px] text-slate-500">👥 មន្ត្រីសរុប <b id="stf-count">${toKhmerDigits(rows.length)}</b>/${toKhmerDigits(all.length)} នាក់ · ${adm ? 'ចុច 🔑 ដើម្បីបង្កើតគណនី Login ពីបញ្ជីនេះ (ពាក្យសម្ងាត់ដំបូង = @Username + ៣ខ្ទង់ចុងអត្តលេខ ហើយមន្ត្រីត្រូវប្តូរពេល Login លើកដំបូង)' : 'មានតែ Admin ទេដែលអាចកែបញ្ជីនេះ'}</p></div>
+      <div class="border border-slate-200 rounded-2xl overflow-auto max-h-[58vh] text-xs"><table class="w-full text-left">
+        <thead class="bg-emerald-50 text-emerald-900 font-bold border-b border-emerald-100 sticky top-0 whitespace-nowrap"><tr><th class="p-2.5 w-12 text-center">ល.រ</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">គោត្តនាមនិងនាម</th><th class="p-2.5">ភេទ</th><th class="p-2.5">ថ្ងៃកំណើត</th><th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ទូរស័ព្ទ/Email</th><th class="p-2.5">គណនី Login</th>${adm ? '<th class="p-2.5 text-right">សកម្មភាព</th>' : ''}</tr></thead>
+        <tbody id="stf-body" class="divide-y divide-slate-100">${rows.length ? rows.map(({ s, i }) => stfRow(s, i, adm)).join('') : `<tr><td colspan="10" class="p-6 text-center text-slate-400">${all.length ? 'រកមិនឃើញ' : 'មិនទាន់មានមន្ត្រី — ចុច ➕ ឬ 📥 Import Excel'}</td></tr>`}</tbody></table></div>`;
+    }
+    function stfRow(s, i, adm) {
+      const a = stAcct(s);
+      const acct = a ? `<span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 font-bold">@${esc(a.username)}</span> <span class="text-slate-500">${esc(a.role)}</span>${a.status !== 'Active' ? ` <span class="text-rose-600 font-bold">${esc(a.status)}</span>` : ''}` : '<span class="text-slate-400">— គ្មាន</span>';
+      return `<tr class="hover:bg-slate-50/60"><td class="p-2.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-2.5 font-mono">${esc(s.staff_id)}</td><td class="p-2.5 font-bold text-slate-800">${esc(s.name)}</td><td class="p-2.5">${esc(s.gender)}</td><td class="p-2.5 whitespace-nowrap">${esc(s.dob)}</td><td class="p-2.5">${esc(s.position)}</td><td class="p-2.5 whitespace-nowrap">${esc(stBureauName(s.bureau))}</td><td class="p-2.5">${esc(s.contact)}</td><td class="p-2.5 whitespace-nowrap">${acct}</td>${adm ? `<td class="p-2.5 text-right whitespace-nowrap"><button title="${a ? 'កែ Role/សិទ្ធិ' : 'បង្កើតគណនី Login'}" onclick="stfAcct('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-amber-50">🔑</button><button title="កែ" onclick="stfEdit('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-sky-50">✏️</button><button title="លុប" onclick="stfDel('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-rose-50">🗑️</button></td>` : ''}</tr>`;
+    }
+    function stfRefresh() { const pos = document.getElementById('stf-q')?.selectionStart; renderStaffPanel(); const q = document.getElementById('stf-q'); if (q) { q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) { } } }
+    function stfClose(id) { document.getElementById(id)?.remove(); }
+    const stfInp = 'form-input-focus w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50/60';
+    function stfModal(id, html) {
+      stfClose(id); const ov = document.createElement('div'); ov.id = id; ov.className = 'fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto';
+      ov.innerHTML = html; document.body.appendChild(ov); return ov;
+    }
+    function stfEdit(id) {
+      if (!isAdmin()) return;
+      const s = staffList().find(x => x.id === id) || { id: '', staff_id: '', name: '', gender: '', dob: '', position: '', contact: '', bureau: '', username: '' };
+      stfModal('stf-edit', `<form onsubmit="stfSave(event,'${esc(s.id)}')" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-3 text-xs">
+        <h3 class="text-base font-bold text-slate-900">${s.id ? '✏️ កែព័ត៌មានមន្ត្រី' : '➕ បន្ថែមមន្ត្រី'}</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block font-bold mb-1">អត្តលេខមន្ត្រី</label><input id="sf-staff_id" value="${esc(s.staff_id)}" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ភេទ</label><select id="sf-gender" class="${stfInp}"><option value=""></option><option ${s.gender === 'ប្រុស' ? 'selected' : ''}>ប្រុស</option><option ${s.gender === 'ស្រី' ? 'selected' : ''}>ស្រី</option></select></div>
+          <div class="col-span-2"><label class="block font-bold mb-1">គោត្តនាមនិងនាម *</label><input id="sf-name" required value="${esc(s.name)}" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ថ្ងៃខែឆ្នាំកំណើត</label><input id="sf-dob" value="${esc(s.dob)}" placeholder="ឧ. 15/01/1985" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ការិយាល័យ</label><select id="sf-bureau" class="${stfInp}"><option value=""></option>${[1, 2, 3, 4].map(n => `<option value="bureau_${n}" ${s.bureau === 'bureau_' + n ? 'selected' : ''}>ការិយាល័យទី${toKhmerDigits(n)}</option>`).join('')}<option value="all" ${s.bureau === 'all' ? 'selected' : ''}>គ្រប់ការិយាល័យ</option></select></div>
+          <div class="col-span-2"><label class="block font-bold mb-1">មុខតំណែង / តួនាទី</label><input id="sf-position" value="${esc(s.position)}" class="${stfInp}"></div>
+          <div class="col-span-2"><label class="block font-bold mb-1">លេខទូរស័ព្ទ / Email</label><input id="sf-contact" value="${esc(s.contact)}" class="${stfInp}"></div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2"><button type="button" onclick="stfClose('stf-edit')" class="px-4 py-2.5 rounded-xl border border-slate-300 font-bold">បោះបង់</button><button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold">💾 រក្សាទុក</button></div></form>`);
+      setTimeout(() => document.getElementById('sf-name')?.focus(), 50);
+    }
+    async function stfSave(e, id) {
+      e.preventDefault(); if (!isAdmin()) return;
+      const v = k => document.getElementById('sf-' + k).value.trim(), list = staffList().slice();
+      const o = { staff_id: normalizeKhmerDigits(v('staff_id')), name: v('name'), gender: v('gender'), dob: v('dob'), position: v('position'), contact: v('contact'), bureau: v('bureau') };
+      if (!o.name) return;
+      if (o.staff_id && list.some(x => x.id !== id && stNorm(x.staff_id) === stNorm(o.staff_id))) return alert('អត្តលេខនេះមានរួចហើយ!');
+      const i = list.findIndex(x => x.id === id);
+      if (i >= 0) list[i] = { ...list[i], ...o }; else list.push({ id: 's' + generateSafeId(), username: '', status: 'Active', ...o });
+      stfClose('stf-edit'); await saveList('staff', list); renderStaffPanel(); logActivity(i >= 0 ? 'កែបញ្ជីមន្ត្រី' : 'បន្ថែមមន្ត្រី', o.name);
+    }
+    async function stfDel(id) {
+      if (!isAdmin()) return; const list = staffList(), s = list.find(x => x.id === id); if (!s) return;
+      if (!confirm('លុប "' + s.name + '" ចេញពីបញ្ជីមន្ត្រី?' + (stAcct(s) ? '\n(គណនី Login @' + s.username + ' មិនត្រូវលុបទេ — លុបក្នុង User Management)' : ''))) return;
+      await saveList('staff', list.filter(x => x.id !== id)); renderStaffPanel(); logActivity('លុបមន្ត្រីពីបញ្ជី', s.name);
+    }
+    // 🔑 បង្កើតគណនី Login ពីបញ្ជី · ឬបើមានគណនីរួច → បើកផ្ទាំងកែ Role/សិទ្ធិ
+    function stfAcct(id) {
+      if (!isAdmin()) return; const s = staffList().find(x => x.id === id); if (!s) return;
+      const a = stAcct(s); if (a) { openUserDetail(a.id); return; }
+      const roleOpts = ROLE_OPTS.filter(([k]) => isSuperAdmin() || (k !== 'Admin' && k !== 'SuperAdmin')).map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+      stfModal('stf-acct', `<form onsubmit="stfAcctSave(event,'${esc(s.id)}')" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-3 text-xs" autocomplete="off">
+        <h3 class="text-base font-bold text-slate-900">🔑 បង្កើតគណនី Login</h3>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><div class="font-bold text-slate-800">${esc(s.name)}</div><div class="text-slate-500">${esc(s.position || '—')} · ${esc(stBureauName(s.bureau))} · អត្តលេខ ${esc(s.staff_id || '—')}</div></div>
+        <div><label class="block font-bold mb-1">Username * <span class="font-normal text-slate-400">(a-z 0-9 _ . - · ៣–៣២ តួ)</span></label><input id="sa-user" required pattern="[A-Za-z0-9_.\\-]{3,32}" oninput="stfPwPreview()" class="${stfInp}"></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block font-bold mb-1">Role *</label><select id="sa-role" class="${stfInp}">${roleOpts}</select></div>
+          <div><label class="block font-bold mb-1">ការិយាល័យ</label><select id="sa-bureau" class="${stfInp}">${[1, 2, 3, 4].map(n => `<option value="bureau_${n}" ${s.bureau === 'bureau_' + n ? 'selected' : ''}>ការិយាល័យទី${toKhmerDigits(n)}</option>`).join('')}${isSuperAdmin() ? `<option value="all" ${s.bureau === 'all' ? 'selected' : ''}>គ្រប់ការិយាល័យ</option>` : ''}</select></div>
+        </div>
+        <div><label class="block font-bold mb-1">ពាក្យសម្ងាត់ដំបូង <span class="font-normal text-emerald-700">· ស្វ័យប្រវត្តិ @Username + ៣ខ្ទង់ចុងអត្តលេខ (កែបាន)</span></label><input id="sa-pw" required minlength="6" class="${stfInp} font-mono"></div>
+        <p class="text-emerald-700">🔐 មន្ត្រីត្រូវប្តូរពាក្យសម្ងាត់ពេល Login លើកដំបូង។ សូមប្រាប់ Username និងពាក្យសម្ងាត់នេះដល់មន្ត្រីផ្ទាល់។</p>
+        <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="stfClose('stf-acct')" class="px-4 py-2.5 rounded-xl border border-slate-300 font-bold">បោះបង់</button><button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold">✅ បង្កើតគណនី</button></div></form>`);
+      stfAcctSid = s.staff_id; setTimeout(() => document.getElementById('sa-user')?.focus(), 50);
+    }
+    let stfAcctSid = '', stfPwTouched = false;
+    function stfPwPreview() { const u = document.getElementById('sa-user').value.trim(); document.getElementById('sa-pw').value = staffDefaultPw(u, stfAcctSid); }
+    async function stfAcctSave(e, id) {
+      e.preventDefault(); if (!isAdmin()) return; const s = staffList().find(x => x.id === id); if (!s) return;
+      const uname = document.getElementById('sa-user').value.trim(), role = document.getElementById('sa-role').value, bureau = document.getElementById('sa-bureau').value, pw = document.getElementById('sa-pw').value.trim();
+      if (!/^[A-Za-z0-9_.\-]{3,32}$/.test(uname)) return alert('Username ត្រូវមាន ៣–៣២ តួ (a-z 0-9 _ . -)');
+      if (pw.length < 6 || !isLatin(pw)) return alert('ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួ ជាអក្សរឡាតាំង (បើអត្តលេខខ្វះលេខ សូមវាយដោយដៃ)');
+      if ((role === 'SuperAdmin' || role === 'Admin' || bureau === 'all') && !isSuperAdmin()) return alert('មានតែ Super Admin ទេដែលអាចបង្កើតគណនីកម្រិត Admin');
+      if (usersData.some(u => String(u.username).toLowerCase() === uname.toLowerCase())) return alert('Username នេះមានរួចហើយ (រួមទាំងក្នុងធុងសំរាម)! សូមជ្រើស Username ផ្សេង');
+      const flags = rolePresetPerms(role), btn = e.target.querySelector('button[type=submit]'); btn.disabled = true;
+      const nu = normalizeUserFromRecord({ id: generateSafeId(), fullname: s.name, username: uname, role, bureau, status: 'Active', avatar: '', permissions: { ...flags, _role: role, _status: 'Active', _avatar: '' } });
+      const r = await saveUserCloud(nu, pw, 'create'); btn.disabled = false;
+      if (!r.ok) return alert('⚠️ មិនអាចបង្កើតគណនី៖ ' + r.error);
+      const list = staffList().map(x => x.id === id ? { ...x, username: r.user.username, bureau: x.bureau || bureau } : x);
+      stfClose('stf-acct'); await saveList('staff', list); renderStaffPanel(); renderUsersTable();
+      showToast('បានបង្កើតគណនី @' + r.user.username + ' — មន្ត្រីត្រូវប្តូរពាក្យសម្ងាត់ពេល Login លើកដំបូង');
+      logActivity('បង្កើតគណនីពីបញ្ជីមន្ត្រី', s.name + ' → @' + r.user.username + ' (' + role + ')');
+    }
+    // ---- Excel ----
+    function stfTemplate() {
+      if (!uiNeedXLSX()) return;
+      const aoa = [STAFF_HEAD, [1, '1234567', 'សុខ សុភា', 'ប្រុស', '15/01/1985', 'ប្រធានការិយាល័យ', 1, '012 345 678', ''], [2, '7654321', 'ចាន់ ដារា', 'ស្រី', '03/07/1990', 'មន្ត្រី', 2, 'dara@example.com', '']];
+      const help = [['ជួរឈរ', 'ការពន្យល់'], ['ល.រ', 'លេខរៀង (មិនចាំបាច់ — ប្រព័ន្ធរៀបលេខឱ្យ)'], ['អត្តលេខមន្ត្រី', 'ប្រើផ្គូផ្គងពេល Import ម្តងទៀត (កែព័ត៌មានដែលមានរួច) និងប្រើ ៣ខ្ទង់ចុងសម្រាប់ពាក្យសម្ងាត់ដំបូង'], ['គោត្តនាមនិងនាម', 'ចាំបាច់'], ['ភេទ', 'ប្រុស / ស្រី'], ['ការិយាល័យ', '1–4 ឬ all (មិនចាំបាច់)'], ['Username', 'មិនចាំបាច់ — បើដាក់ ត្រូវតែជា Username របស់គណនីដែលមានរួច ដើម្បីភ្ជាប់']];
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = [{ wch: 6 }, { wch: 16 }, { wch: 26 }, { wch: 8 }, { wch: 18 }, { wch: 26 }, { wch: 12 }, { wch: 22 }, { wch: 16 }];
+      const wh = XLSX.utils.aoa_to_sheet(help); wh['!cols'] = [{ wch: 18 }, { wch: 90 }];
+      XLSX.utils.book_append_sheet(wb, ws, 'បញ្ជីមន្ត្រី'); XLSX.utils.book_append_sheet(wb, wh, 'របៀបបំពេញ'); XLSX.writeFile(wb, 'HRDD-DMS-គំរូ-បញ្ជីមន្ត្រី.xlsx');
+    }
+    function stfExport() {
+      if (!uiNeedXLSX()) return; const l = staffList(); if (!l.length) return showToast('មិនទាន់មានមន្ត្រី', true);
+      const aoa = [STAFF_HEAD].concat(l.map((s, i) => [i + 1, s.staff_id, s.name, s.gender, s.dob, s.position, s.bureau === 'all' ? 'all' : String(s.bureau || '').replace('bureau_', ''), s.contact, s.username || '']));
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); XLSX.utils.book_append_sheet(wb, ws, 'បញ្ជីមន្ត្រី'); XLSX.writeFile(wb, 'HRDD-DMS-បញ្ជីមន្ត្រី-' + todayISO() + '.xlsx');
+      logActivity('Export បញ្ជីមន្ត្រី', l.length + ' នាក់');
+    }
+    async function stfPick(input) {
+      const file = input.files && input.files[0]; input.value = ''; if (!file) return;
+      if (!isAdmin()) return showToast('មានតែ Admin ទេដែលអាច Import', true); if (!uiNeedXLSX()) return;
+      if (file.size > 2 * 1048576) return alert('⚠️ ឯកសារធំពេក (អតិបរមា 2MB)');
+      let aoa;
+      try {
+        const wb = /\.csv$/i.test(file.name) ? XLSX.read(await file.text(), { type: 'string', raw: true }) : XLSX.read(await file.arrayBuffer(), { type: 'array' });
+        aoa = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '', raw: false, blankrows: false });
+      } catch (e) { return alert('⚠️ មិនអាចអានឯកសារនេះបានទេ — សូមប្រើ .xlsx ឬ .csv'); }
+      const p = stfParse(aoa); if (p.error) return alert('⚠️ ' + p.error);
+      STF.imp = { file: file.name, rows: p.rows }; stfImpRender();
+    }
+    function stfParse(aoa) {
+      const rowsIn = (aoa || []).filter(r => Array.isArray(r) && r.some(c => String(c == null ? '' : c).trim() !== ''));
+      if (!rowsIn.length) return { error: 'ឯកសារទទេ' };
+      let hi = -1, map = null;
+      for (let i = 0; i < Math.min(rowsIn.length, 10) && hi < 0; i++) {
+        const m = {}; rowsIn[i].forEach((c, ci) => { const h = stNorm(c).replace(/[*:()]/g, ''); Object.keys(STAFF_SYN).forEach(k => { if (m[k] == null && STAFF_SYN[k].some(sy => h === stNorm(sy))) m[k] = ci; }); });
+        if (m.name != null) { hi = i; map = m; }
+      }
+      if (hi < 0) return { error: 'រកមិនឃើញជួរក្បាលតារាង «គោត្តនាមនិងនាម» — សូមប្រើគំរូ (📄 គំរូ Excel)' };
+      const body = rowsIn.slice(hi + 1); if (!body.length) return { error: 'មិនមានជួរទិន្នន័យក្រោមក្បាលតារាង' };
+      if (body.length > 500) return { error: 'Import បានច្រើនបំផុត ៥០០ នាក់ក្នុងមួយដង' };
+      const cell = (r, k) => map[k] == null ? '' : String(r[map[k]] == null ? '' : r[map[k]]).trim();
+      const cur = staffList(), seen = new Set();
+      const rows = body.map((r, i) => {
+        const o = { line: hi + 2 + i, staff_id: normalizeKhmerDigits(cell(r, 'staff_id')), name: cell(r, 'name').replace(/\s+/g, ' '), gender: '', dob: cell(r, 'dob'), position: cell(r, 'position'), contact: cell(r, 'contact'), bureau: '', username: cell(r, 'username').replace(/^@/, ''), kind: 'error', note: '', rec: null };
+        const errs = [], g = stGender(cell(r, 'gender')), b = uiBureau(cell(r, 'bureau'));
+        if (!o.name) errs.push('ខ្វះឈ្មោះ'); if (g === null) errs.push('ភេទមិនត្រឹមត្រូវ'); if (b === null) errs.push('ការិយាល័យមិនត្រឹមត្រូវ (1–4 / all)');
+        o.gender = g || ''; o.bureau = b || '';
+        if (o.username && !usersData.some(u => String(u.username).toLowerCase() === o.username.toLowerCase() && u.status !== 'Deleted')) errs.push('Username "' + o.username + '" មិនទាន់មានគណនី (ទុកទទេ ហើយបង្កើតតាម 🔑)');
+        const key = o.staff_id ? 'id:' + stNorm(o.staff_id) : 'n:' + stNorm(o.name) + '|' + stNorm(o.dob);
+        if (o.name && seen.has(key)) errs.push('ស្ទួនក្នុងឯកសារ'); seen.add(key);
+        const ex = cur.find(x => o.staff_id ? stNorm(x.staff_id) === stNorm(o.staff_id) : (stNorm(x.name) === stNorm(o.name) && stNorm(x.dob) === stNorm(o.dob)));
+        if (errs.length) { o.note = errs.join(' • '); return o; }
+        const rec = { id: ex ? ex.id : 's' + generateSafeId(), status: ex ? ex.status : 'Active', username: o.username || (ex ? ex.username : ''), staff_id: o.staff_id, name: o.name, gender: o.gender || (ex ? ex.gender : ''), dob: o.dob || (ex ? ex.dob : ''), position: o.position || (ex ? ex.position : ''), contact: o.contact || (ex ? ex.contact : ''), bureau: o.bureau || (ex ? ex.bureau : '') };
+        if (ex) {
+          const ch = ['staff_id', 'name', 'gender', 'dob', 'position', 'contact', 'bureau', 'username'].filter(k => String(rec[k] || '') !== String(ex[k] || ''));
+          if (!ch.length) { o.kind = 'same'; o.note = 'គ្មានការផ្លាស់ប្តូរ'; return o; }
+          o.kind = 'update'; o.note = 'កែ៖ ' + ch.length + ' វាល';
+        } else { o.kind = 'new'; o.note = 'មន្ត្រីថ្មី'; }
+        o.rec = rec; return o;
+      });
+      return { rows };
+    }
+    function stfImpClose() { document.getElementById('stf-imp')?.remove(); document.body.classList.remove('overflow-hidden'); STF.imp = null; }
+    function stfImpRender() {
+      const I = STF.imp; if (!I) return; let ov = document.getElementById('stf-imp');
+      if (!ov) { ov = document.createElement('div'); ov.id = 'stf-imp'; ov.className = 'fixed inset-0 z-[120] bg-slate-100 overflow-y-auto'; document.body.appendChild(ov); document.body.classList.add('overflow-hidden'); }
+      const n = k => I.rows.filter(r => r.kind === k).length, todo = n('new') + n('update');
+      const bd = { new: '🆕 ថ្មី', update: '✏️ កែ', same: '＝ ដដែល', error: '❌ កំហុស' };
+      ov.innerHTML = `<div class="max-w-6xl mx-auto p-3 sm:p-6 space-y-3 text-xs">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3"><div><h3 class="text-base font-bold text-slate-900">📥 Import បញ្ជីមន្ត្រី — ពិនិត្យមុនរក្សាទុក</h3><p class="text-slate-500 mt-0.5">📄 ${esc(I.file)} · ${toKhmerDigits(I.rows.length)} ជួរ</p></div>
+          <div class="flex flex-wrap gap-2 font-bold"><span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800">🆕 ថ្មី ${toKhmerDigits(n('new'))}</span><span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800">✏️ កែ ${toKhmerDigits(n('update'))}</span><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">＝ ដដែល ${toKhmerDigits(n('same'))}</span><span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800">❌ កំហុស ${toKhmerDigits(n('error'))}</span></div></div>
+        ${n('error') ? '<div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold">ជួរដែលមានកំហុសនឹងត្រូវរំលង — Import តែជួរត្រឹមត្រូវ</div>' : ''}
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-auto max-h-[62vh]"><table class="w-full text-left"><thead class="bg-slate-100 font-bold sticky top-0 whitespace-nowrap"><tr><th class="p-2.5">ជួរ</th><th class="p-2.5">សកម្មភាព</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">ឈ្មោះ</th><th class="p-2.5">ភេទ</th><th class="p-2.5">ថ្ងៃកំណើត</th><th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ចំណាំ</th></tr></thead>
+        <tbody class="divide-y divide-slate-100">${I.rows.map(r => `<tr class="${r.kind === 'error' ? 'bg-rose-50/60' : ''}"><td class="p-2.5 font-mono text-slate-500">${r.line}</td><td class="p-2.5 whitespace-nowrap font-bold">${bd[r.kind]}</td><td class="p-2.5 font-mono">${esc(r.staff_id)}</td><td class="p-2.5 font-bold">${esc(r.name)}</td><td class="p-2.5">${esc(r.gender)}</td><td class="p-2.5">${esc(r.dob)}</td><td class="p-2.5">${esc(r.position)}</td><td class="p-2.5">${esc(stBureauName(r.bureau))}</td><td class="p-2.5 ${r.kind === 'error' ? 'text-rose-700 font-bold' : 'text-slate-500'}">${esc(r.note)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="flex justify-end gap-2 pb-6"><button onclick="stfImpClose()" class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-bold">បោះបង់</button><button id="stf-go" onclick="stfImpCommit()" ${todo ? '' : 'disabled'} class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold">✅ Import ${toKhmerDigits(todo)} នាក់</button></div></div>`;
+    }
+    async function stfImpCommit() {
+      const I = STF.imp; if (!I || !isAdmin()) return; const todo = I.rows.filter(r => r.rec); if (!todo.length) return;
+      if (!confirm('Import មន្ត្រី ' + todo.length + ' នាក់ ចូលបញ្ជី?')) return;
+      const btn = document.getElementById('stf-go'); if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; }
+      const list = staffList().slice();
+      todo.forEach(r => { const i = list.findIndex(x => x.id === r.rec.id); if (i >= 0) list[i] = r.rec; else list.push(r.rec); });
+      await saveList('staff', list); const nNew = todo.filter(r => r.kind === 'new').length, nUp = todo.length - nNew;
+      stfImpClose(); renderStaffPanel(); logActivity('Import បញ្ជីមន្ត្រី', I.file + ' — ថ្មី ' + nNew + ' · កែ ' + nUp);
     }
 
     function canManageUser(u) {
