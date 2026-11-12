@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.3.27.0 - HRDD ក្រសួងសុខាភិបាល</title>
+  <title id="page-title">ប្រព័ន្ធគ្រប់គ្រងការងារ និងឯកសារឌីជីថល V.4.0.0 - HRDD ក្រសួងសុខាភិបាល</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -190,7 +190,7 @@
             <div class="sidebar-text truncate leading-tight">
               <div class="flex items-center gap-1.5">
                 <span data-org="app" class="font-extrabold text-slate-900 text-base tracking-tight">HRDD DMS</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.3.27.0</span>
+                <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-md">V.4.0.0</span>
               </div>
               <p class="text-xs text-slate-500 font-semibold truncate mt-0.5" data-i18n="ministry_name">ក្រសួងសុខាភិបាល</p>
             </div>
@@ -254,7 +254,7 @@
           <span class="text-base shrink-0">👤</span><span class="sidebar-text truncate" data-i18n="nav_my_profile">ព័ត៌មានគណនីផ្ទាល់ខ្លួន</span>
         </button>
         <div class="sidebar-text px-1 pt-0.5 text-[10px] text-slate-400 leading-tight">
-          © 2026. V.3.27.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
+          © 2026. V.4.0.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.
         </div>
       </div>
     </aside>
@@ -344,7 +344,7 @@
         <div id="metric-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div onclick="switchBureauTab('docs')" class="cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-emerald-300 transition flex items-center justify-between">
             <div>
-              <p class="text-xs text-slate-500 font-bold" data-i18n="card_lib_title">បណ្ណាល័យរួម (៣ ការិយាល័យ)</p>
+              <p class="text-xs text-slate-500 font-bold" data-i18n="card_lib_title">បណ្ណាល័យរួម (៤ ការិយាល័យ)</p>
               <h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="stat-bureau-docs">0</h3>
               <span class="inline-block mt-1 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-bold">☁️ Shared Cloud Library</span>
             </div>
@@ -716,7 +716,7 @@
 
         <footer id="app-footer" class="border-t border-slate-200/80 bg-white/70 rounded-2xl py-2.5 px-4 mt-auto shrink-0">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-1 text-[10px] text-slate-400 font-normal">
-            <p>© 2026. V.3.27.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
+            <p>© 2026. V.4.0.0 <span data-org="credit" class="font-semibold text-slate-500">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</p>
             <p class="text-[10px] text-slate-400" data-i18n="footer_dept">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
           </div>
         </footer>
@@ -873,7 +873,7 @@
         <img src="Logo MOH_Ok_Background.png" data-org-logo data-def="Logo MOH_Ok_Background.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MoH&background=059669&color=fff'" alt="MoH Logo" class="w-full h-full object-contain scale-105">
       </div>
       <div>
-        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.3.27.0</h3>
+        <h3 id="login-title" class="text-base font-bold text-slate-900">ចូលប្រព័ន្ធតាមការិយាល័យ V.4.0.0</h3>
         <p data-org="deptmin" class="text-xs text-emerald-600 font-semibold mt-0.5">នាយកដ្ឋានអភិវឌ្ឍន៍ធនធានមនុស្ស - ក្រសួងសុខាភិបាល</p>
       </div>
       <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
@@ -885,7 +885,7 @@
         <p id="login-error" class="text-xs text-rose-600 font-medium hidden">ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!</p>
         <button type="submit" id="btn-login-submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition cursor-pointer form-input-focus">ចូលប្រព័ន្ធ (Sign In)</button>
       </form>
-      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.3.27.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
+      <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-normal">© 2026. V.4.0.0 <span data-org="credit">Khun Ratanak (HRDD - MoH)</span> All rights reserved.</div>
     </div>
   </div>
 
@@ -926,13 +926,13 @@
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
-            <h4 class="text-sm font-bold text-slate-800">➕ បង្កើតគណនីមន្ត្រីថ្មី</h4><span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg">Multi-Channel Cloud Sync</span>
+            <h4 class="text-sm font-bold text-slate-800">➕ បង្កើតគណនីមន្ត្រីថ្មី</h4><span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded-lg">🔒 Supabase Auth</span>
           </div>
           <form onsubmit="handleCreateUser(event)" class="space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
               <div><label class="block font-semibold mb-1">ឈ្មោះពេញ *</label><input type="text" id="new-user-fullname" required class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50"></div>
               <div><label class="block font-semibold mb-1">Username *</label><input type="text" id="new-user-username" required pattern="[A-Za-z0-9_.\-]{3,32}" title="អក្សរឡាតាំង លេខ _ . - (3-32 តួ)" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50"></div>
-              <div><label class="block font-semibold mb-1">លេខសម្ងាត់ * (≥ 6)</label><input type="text" id="new-user-password" required minlength="6" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50"></div>
+              <div><label class="block font-semibold mb-1">លេខសម្ងាត់ដំបូង * (≥ 6) <span class="font-normal text-emerald-700">· មន្ត្រីត្រូវប្តូរពេល Login លើកដំបូង</span></label><input type="text" id="new-user-password" required minlength="6" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50"></div>
               <div><label class="block font-semibold mb-1">តួនាទី (Role) *</label>
                 <select id="new-user-role" onchange="handleRolePreset(this.value)" class="form-input-focus w-full border border-slate-200 rounded-xl p-2 bg-slate-50 font-medium text-emerald-800">
                   <option value="Editor">Editor / Officer</option><option value="Viewer">Viewer / Read Only</option><option value="Approver">Approver / Auditor</option><option value="Admin">System Admin</option><option value="SuperAdmin">Super Admin</option>
@@ -959,6 +959,19 @@
             </div>
             <div class="flex justify-end pt-2"><button type="submit" class="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 shadow-md transition form-input-focus">+ បង្កើតគណនី</button></div>
           </form>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="min-w-0">
+              <h4 class="text-sm font-bold text-slate-800">📥 Import / Update មន្ត្រីពីឯកសារ (Excel · CSV)</h4>
+              <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">ជួរមួយ = មន្ត្រីម្នាក់៖ <b>ឈ្មោះពេញ · Username · Password · ការិយាល័យ (1–4) · Role · Status</b>។ Username ដែលមានរួច → ធ្វើបច្ចុប្បន្នភាព (Password ទទេ = មិនប្តូរ)។ Username ថ្មី → បង្កើតគណនី ហើយមន្ត្រី Login បានភ្លាម។</p>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs shrink-0">
+              <button type="button" onclick="uiTemplate()" class="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold text-slate-700 form-input-focus">📄 ទាញយកគំរូ</button>
+              <button type="button" onclick="uiExportUsers()" class="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold text-slate-700 form-input-focus">📤 Export បញ្ជីបច្ចុប្បន្ន</button>
+              <label class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold cursor-pointer form-input-focus">📥 ជ្រើសឯកសារ<input type="file" id="ui-file" accept=".xlsx,.xls,.csv" class="hidden" onchange="uiPick(this)"></label>
+            </div>
+          </div>
         </div>
         <div class="border border-slate-200 rounded-2xl overflow-x-auto text-xs shadow-2xs">
           <table class="w-full text-left resizable-table">
@@ -1060,6 +1073,7 @@
             <li><strong>Viewer:</strong> អាចត្រឹមតែមើល និង Download មិនអាចកែប្រែអ្វីបានទេ។</li>
           </ul>
         </div>
+        <div id="sec-status"></div>
         <div id="migration-status"></div>
       </div>
 
@@ -1085,7 +1099,7 @@
       <div id="syscontent-manual" class="space-y-3.5 flex-1 overflow-y-auto pr-1 text-xs leading-relaxed text-slate-700 hidden">
         <div id="manual-duties" class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3"></div>
         <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.3.27.0</h4>
+          <h4 class="font-bold text-slate-900 text-sm">📖 សៀវភៅណែនាំអ្នកប្រើប្រាស់សង្ខេប V.4.0.0</h4>
           <p><strong>១. ការប្តូរភាសា៖</strong> ចុចប៊ូតុង <b>KH / EN</b> នៅផ្នែកខាងលើស្តាំ។ ប៊ូតុង <b>🔄</b> សម្រាប់ Sync ទិន្នន័យជាមួយ Cloud។</p>
           <p><strong>២. រូបថតផ្ទាល់ខ្លួន៖</strong> ចុច <b>👤 ព័ត៌មានគណនីផ្ទាល់ខ្លួន</b> → <b>📷 ប្តូររូបថត</b>។</p>
           <p><strong>៣. ការិយាល័យទាំង ៤៖</strong> Admin អាចជ្រើស <b>👑 ការិយាល័យទាំង ៤</b> ដើម្បីមើលទិន្នន័យរួម។</p>
@@ -1155,7 +1169,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT CORE ENGINE V2.5 ================= -->
+  <!-- ================= JAVASCRIPT CORE ENGINE ================= -->
   <script>
     'use strict';
 
@@ -2051,6 +2065,7 @@ return module.exports;})();
 const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{const q=new C(t,0);q.addData(text);q.make();const n=q.getModuleCount(),m=[];for(let r=0;r<n;r++){m.push([]);for(let c=0;c<n;c++)m[r].push(q.isDark(r,c)?1:0);}return m;}catch(e){}}return null;}};})();
 
     // ---------------- 1. CONFIG ----------------
+    const APP_VERSION = 'V4.0.0';   // លេខកំណែតែមួយ — ប្រើក្នុង Backup, System Health, ចំណងជើង
     const SUPABASE_URL = "https://whcpyxprjozjbhyzjtid.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoY3B5eHByam96amJoeXpqdGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NzI3MDgsImV4cCI6MjEwODI0ODcwOH0.0gDdi8HvHzXvygjH6DpUeMNdIbChUIN6rL1Cx5OsYME";
     const GOOGLE_DRIVE_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw_ncL4DUer9_BbmX0DJZ72nW_MXGe1T4BX9MJanmEDoFdxHV5o_Mi-lIOYL9PsurvOXA/exec";
@@ -2062,7 +2077,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (o.signal) o.signal.addEventListener('abort', () => ac.abort());
       return fetch(u, { ...o, signal: ac.signal }).finally(() => clearTimeout(t));
     }
-    if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { fetch: fetchTO } }); } catch (e) { console.warn('Supabase init error:', e); } }
+    // V4.0: Login ពិតប្រាកដតាម Supabase Auth — Username ត្រូវបានផ្គូជា email ផ្ទៃក្នុង (មិនផ្ញើ email ទេ)
+    const AUTH_EMAIL_DOMAIN = 'hrdd-dms.local';
+    const authEmail = u => String(u || '').trim().toLowerCase() + '@' + AUTH_EMAIL_DOMAIN;
+    if (window.supabase) { try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { global: { fetch: fetchTO }, auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: 'hrdd_dms_auth' } }); } catch (e) { console.warn('Supabase init error:', e); } }
+    async function authToken() { try { const { data } = await db.auth.getSession(); return data?.session?.access_token || SUPABASE_ANON_KEY; } catch (e) { return SUPABASE_ANON_KEY; } }
+    function authSignOut() { try { if (db) db.auth.signOut({ scope: 'local' }).then(() => { }, () => { }); } catch (e) { } }
 
     let SUPA_MAX_SIZE = 5 * 1024 * 1024;   // ≤ 5MB → Supabase
     let MAX_FILE_SIZE = 8 * 1024 * 1024;   // អតិបរមា 8MB (> 5MB ទៅ Google Drive ស្វ័យប្រវត្តិ)
@@ -2137,7 +2157,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         nav_qr_scan: 'ស្កេនផ្ទៀងផ្ទាត់ QR Code', nav_users: 'គ្រប់គ្រងមន្ត្រី (Users)', nav_location: 'គ្រប់គ្រងប្រទេស (Location)',
         nav_files: 'ប្រព័ន្ធហ្វាល & Backups', nav_recycle: 'ធុងសំរាម (Recycle Bin)', nav_logs: 'កំណត់ត្រាសកម្មភាព (Logs)', nav_manual: 'សៀវភៅណែនាំ (Manual)',
         nav_my_profile: 'ព័ត៌មានគណនីផ្ទាល់ខ្លួន', notif_title: '🔔 សកម្មភាពថ្មីៗក្នុងប្រព័ន្ធ', menu_profile_btn: 'ព័ត៌មានគណនី & រូបថត',
-        menu_logout_btn: 'ចាកចេញពីប្រព័ន្ធ (Logout)', card_lib_title: 'បណ្ណាល័យរួម (៣ ការិយាល័យ)', card_disp_title: 'លិខិតកំពុងរត់ការ',
+        menu_logout_btn: 'ចាកចេញពីប្រព័ន្ធ (Logout)', card_lib_title: 'បណ្ណាល័យរួម (៤ ការិយាល័យ)', card_disp_title: 'លិខិតកំពុងរត់ការ',
         card_disp_sub: 'ដំណាក់កាលរដ្ឋបាល', card_spec_sub: 'ទិន្នន័យជាក់ស្តែង', sec_docs_title: '📚 បណ្ណាល័យឯកសាររួម (E-Library)',
         sec_docs_sub: 'អាចប្រើប្រាស់ Mouse ទាញពង្រីក-បង្រួមទទឹងជួរឈរលើក្បាលតារាងបានតាមតម្រូវការ', btn_reset_filter: '🔄 Reset តម្រង',
         ph_doc_search: '🔍 ស្វែងរកតាមកូដ ឬចំណងជើង...', opt_all_cats: '📂 ប្រភេទទាំងអស់', opt_all_bureaus: '🏢 គ្រប់ការិយាល័យ',
@@ -2356,13 +2376,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       { code: 'TH', kh: 'ថៃ', en: 'Thailand' }, { code: 'VN', kh: 'វៀតណាម', en: 'Vietnam' }
     ];
 
-    // ⚠️ ពាក្យសម្ងាត់ Default ទាំងនេះប្រើបានតែពេលមិនទាន់មានទិន្នន័យលើ Cloud — សូមប្តូរភ្លាមៗក្រោយ Login លើកដំបូង
-    const defaultUsers = [
-      { id: 1, username: 'admin', password: 'admin123', fullname: 'ថ្នាក់ដឹកនាំរដ្ឋបាល', role: 'SuperAdmin', status: 'Active', bureau: 'all', avatar: '', permissions: { admin: true, read: true, create: true, edit: true, delete: true, upload: true, download: true, export: true, approve: true, _role: 'SuperAdmin', _status: 'Active', _avatar: '' } },
-      { id: 2, username: 'user1', password: '123', fullname: 'មន្ត្រីមុនពេលបម្រើការងារ', role: 'Editor', status: 'Active', bureau: 'bureau_1', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } },
-      { id: 3, username: 'user2', password: '123', fullname: 'មន្ត្រីបណ្តុះបណ្តាលបន្ត', role: 'Editor', status: 'Active', bureau: 'bureau_2', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } },
-      { id: 4, username: 'user3', password: '123', fullname: 'មន្ត្រីចុះបញ្ជិកា', role: 'Editor', status: 'Active', bureau: 'bureau_3', avatar: '', permissions: { admin: false, read: true, create: true, edit: true, delete: false, upload: true, download: true, export: false, approve: false, _role: 'Editor', _status: 'Active', _avatar: '' } }
-    ];
+    // V4.0: គ្មានគណនី Default ក្នុងកូដទៀតទេ — គណនីទាំងអស់នៅលើ Cloud (app_users + Supabase Auth)
+    const defaultUsers = [];
 
     const store = { docs: [], trainings: [], dispatches: [], exams: [], certs: [], report_notes: [], exam_tasks: [], cert_courses: [], workshops: [], seat_plans: [], exam_plans: [] };
     let countriesData = [...defaultCountries];
@@ -2391,7 +2406,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:tab] Menu/Tab ថ្មី → ថែម {id,icon,label,labelEn} ក្នុង tabs[] របស់ការិយាល័យ + <div id="section-<id>"> + ដាក់ id ក្នុងបញ្ជី hide/show នៅ renderBureauWorkspace + render ក្នុង renderTablesAndStatsOnly
     const BUREAUS = {
       all: { id: 'all', name: 'ការិយាល័យទាំង ៤ (All Bureaus Overview)', nameEn: 'All 4 Bureaus (Master Overview)', shortName: 'ការិយាល័យទាំង ៤', shortNameEn: 'All 4 Bureaus',
-        desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៤ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 3 bureaus',
+        desc: 'ត្រួតពិនិត្យបណ្ណាល័យរួម លិខិតចេញ-ចូល និងការងារជំនាញនៃការិយាល័យទាំង ៤ រួមគ្នា', descEn: 'Master overview of Shared E-Library, Dispatches, and Specialty Tasks across all 4 bureaus',
         tabs: [ { id: 'docs', icon: '📚', label: 'បណ្ណាល័យរួម', labelEn: 'Shared E-Library' }, { id: 'dispatch', icon: '🔄', label: 'ឯកសារចេញ-ចូល (ទាំង ៤)', labelEn: 'All Dispatches (4 Bureaus)' }, { id: 'exams', icon: '🎓', label: 'ការប្រឡងថ្នាក់ជាតិ (ទី៤)', labelEn: 'National Exams (B4)' }, { id: 'ex_docs', icon: '📑', label: 'ការរៀបចំឯកសារ', labelEn: 'Document Prep', sub: true }, { id: 'ex_names', icon: '👥', label: 'ការរៀបចំបញ្ជីឈ្មោះ', labelEn: 'Name Lists', sub: true }, { id: 'ex_seats', icon: '🪑', label: 'ការរៀបចំប្លង់តុ', labelEn: 'Seating Plans', sub: true }, { id: 'ex_seat_in', icon: '🎓', label: 'ប្រឡងចូល', labelEn: 'Entrance Exam', sub: true, sub2: true }, { id: 'ex_seat_out', icon: '📝', label: 'ប្រឡងចេញ', labelEn: 'Exit Exam', sub: true, sub2: true }, { id: 'ex_equiv', icon: '🌍', label: 'សមមូលសញ្ញាបត្រ', labelEn: 'Degree Equivalency' }, { id: 'ex_sign', icon: '🖊️', label: 'ចុះហត្ថលេខាសញ្ញាបត្រ', labelEn: 'Certificate Signing' }, { id: 'ex_other', icon: '🧩', label: 'ផ្សេងៗ', labelEn: 'Others' }, { id: 'training', icon: '🌐', label: 'បណ្តុះបណ្តាលបន្ត (ទី២)', labelEn: 'Continuing Training (B2)' },
           { id: 'certs', icon: '📜', label: 'ចុះបញ្ជីសញ្ញាបត្រ (ទី៣)', labelEn: 'Certificates (B3)' }, { id: 'tracking', icon: '🔎', label: 'តាមដានឯកសារ', labelEn: 'Document Tracking' }, { id: 'reports', icon: '📈', label: 'របាយការណ៍', labelEn: 'Reports' } ] },
       bureau_1: { id: 'bureau_1', name: 'ការិយាល័យបណ្តុះបណ្តាលមុនពេលបម្រើការងារ', nameEn: 'Pre-Service Training Bureau', shortName: 'ការិយាល័យទី១', shortNameEn: 'Bureau 1',
@@ -2429,10 +2444,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           admin: Boolean(p.admin || u.bureau === 'all' || roleVal === 'SuperAdmin' || roleVal === 'Admin'),
           read: p.read !== false, create: Boolean(p.create ?? true), edit: Boolean(p.edit ?? true), delete: Boolean(p.delete ?? false),
           upload: p.upload !== false, download: p.download !== false, export: Boolean(p.export ?? false), approve: Boolean(p.approve ?? false),
-          _role: roleVal, _status: statusVal, _avatar: avatarVal, _deleted_at: p._deleted_at || null, _deleted_by: p._deleted_by || null,
+          _role: roleVal, _status: statusVal, _avatar: avatarVal, _must_change: p._must_change === true, _deleted_at: p._deleted_at || null, _deleted_by: p._deleted_by || null,
           _prev_usernames: Array.isArray(p._prev_usernames) ? p._prev_usernames.slice(-10) : []
         } };
-      delete out.altPass; // 🔒 បិទ Backdoor ពាក្យសម្ងាត់ '123' របស់ admin
+      delete out.altPass; delete out.password; delete out._created; delete out._can_login;   // 🔒 V4.0: ពាក្យសម្ងាត់មិនដែលមកដល់ ឬរក្សាក្នុងកម្មវិធីទេ
       return out;
     }
 
@@ -2442,7 +2457,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       lists.forEach(list => {
         if (!Array.isArray(list)) return;
         list.forEach(u => {
-          if (!u || !u.username || !u.password) return;
+          if (!u || !u.username) return;
           const k = String(u.username).trim().toLowerCase();
           const prev = map.get(k);
           const merged = { ...(prev || {}), ...u };
@@ -2468,48 +2483,54 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     async function saveUsersLocal() {
       try { await localDB.users.clear(); await localDB.users.bulkPut(usersData); } catch (e) {}
-      try { localStorage.setItem('hrd_moh_users_cache', JSON.stringify(usersData.map(u => ({ ...u, avatar: '' })))); } catch (e) {}
+      try { localStorage.removeItem('hrd_moh_users_cache'); } catch (e) {}   // V4.0: លុប cache ចាស់ដែលធ្លាប់មានពាក្យសម្ងាត់
     }
 
-    async function pushUsersToCloud(changed, withLogs = true) {
+    // ===== V4.0: គណនីមន្ត្រី = app_users (គ្មានពាក្យសម្ងាត់) + Supabase Auth។ សរសេរបានតែតាម Function របស់ Admin លើ Cloud =====
+    function rpcErr(error) {
+      const m = String((error && (error.message || error.error_description)) || error || '');
+      if (/Could not find the function|PGRST202|does not exist/i.test(m)) return 'Cloud មិនទាន់រៀបចំ V4.0 — សូម Run «supabase-v4-step1-prepare.sql» ក្នុង Supabase → SQL Editor';
+      if (/Failed to fetch|NetworkError|abort|timeout|Load failed/i.test(m)) return 'មិនអាចភ្ជាប់ Cloud — សូមពិនិត្យអ៊ីនធឺណិត';
+      return m.replace(/^DMS_[A-Z_]+:\s*/, '') || 'មានបញ្ហាមិនស្គាល់';
+    }
+    function upsertLocalUser(u) { if (!u) return; const i = usersData.findIndex(x => x.id === u.id); if (i === -1) usersData.unshift(u); else usersData[i] = u; }
+    function userPayload(u, mode) {
+      const s = normalizeUserFromRecord(u), perms = { ...s.permissions }; delete perms._avatar; delete perms._must_change;   // ទង់ប្តូរពាក្យសម្ងាត់៖ Cloud គណនាខ្លួនឯង   // រូបថត៖ ម្ចាស់គណនីកែខ្លួនឯង
+      const o = { id: s.id, username: s.username, fullname: s.fullname, bureau: s.bureau, permissions: perms }; if (mode) o._mode = mode; return o;
+    }
+    async function saveUserCloud(u, password, mode) {
+      if (!db) return { ok: false, error: 'មិនមានការភ្ជាប់ Cloud' };
+      try {
+        const { data, error } = await db.rpc('dms_admin_save_user', { p: userPayload(u, mode), p_password: password || null });
+        if (error || !data) return { ok: false, error: rpcErr(error) };
+        const canLogin = data._can_login !== false, user = normalizeUserFromRecord(data);
+        upsertLocalUser(user); await saveUsersLocal();
+        return { ok: true, user, canLogin };
+      } catch (e) { return { ok: false, error: rpcErr(e) }; }
+    }
+    async function fetchMe() {
+      if (!db) return { ok: false, error: 'មិនមានការភ្ជាប់ Cloud' };
+      try {
+        const { data, error } = await db.rpc('dms_me');
+        if (error) return { ok: false, error: rpcErr(error) };
+        return { ok: true, user: data && data.username ? normalizeUserFromRecord(data) : null };
+      } catch (e) { return { ok: false, error: rpcErr(e) }; }
+    }
+    // ទាញបញ្ជីមន្ត្រី៖ full = ជំនួសទាំងអស់ · មិន full = តែជួរដែលប្តូរក្រោយលើកមុន (សន្សំ egress — រូប avatar មិនទាញឡើងវិញរាល់ ៤០ វិនាទីទៀតទេ)
+    let usersSyncAt = '';
+    async function pullCloudUsers(full) {
       if (!db) return false;
-      let pushed = false;
-      const rows = changed.map(u => { const s = normalizeUserFromRecord(u); return { id: s.id, fullname: s.fullname, username: s.username, password: s.password, bureau: s.bureau, permissions: s.permissions }; });
-      const r1 = await cloudUpsert('app_users', rows);
-      if (r1.ok) pushed = true;
       try {
-        const registry = { id: SYSTEM_USER_REGISTRY_ID, bureau: 'all', code: SYSTEM_USER_REGISTRY_CODE, title: 'SYSTEM_USER_SYNC_DATA', category: 'SYSTEM_INTERNAL', file_size: '0 KB', file_name: 'users.json',
-          drive_link: JSON.stringify(usersData.map(u => normalizeUserFromRecord(u))), storage: 'SYSTEM_HIDDEN', created_by: 'system' };
-        const rDoc = await db.from('docs').upsert([registry]);
-        if (!rDoc.error) pushed = true;
-      } catch (e) {}
-      if (withLogs) {
-        for (const u of changed) {
-          try {
-            const rLog = await db.from('audit_logs').insert([{ id: generateSafeId(), time: nowISO(), user: '__USER_SYNC__', action: 'USER_UPSERT', target: JSON.stringify(normalizeUserFromRecord(u)) }]);
-            if (!rLog.error) pushed = true;
-          } catch (e) {}
-        }
-      }
-      return pushed;
-    }
-
-    async function fetchAllCloudUsers() {
-      if (!db) return [];
-      let fromAppUsers = [], fromRegistry = [], fromLogs = [];
-      try {
-        const [resUsers, resReg, resLogs] = await Promise.allSettled([
-          db.from('app_users').select('*'),
-          db.from('docs').select('drive_link').eq('code', SYSTEM_USER_REGISTRY_CODE).limit(1),
-          db.from('audit_logs').select('target').eq('user', '__USER_SYNC__').order('id', { ascending: false }).limit(50)
-        ]);
-        if (resUsers.status === 'fulfilled' && Array.isArray(resUsers.value?.data)) fromAppUsers = resUsers.value.data;
-        if (resReg.status === 'fulfilled' && resReg.value?.data?.[0]?.drive_link) fromRegistry = safeJSON(resReg.value.data[0].drive_link, []);
-        if (resLogs.status === 'fulfilled' && Array.isArray(resLogs.value?.data)) {
-          resLogs.value.data.slice().reverse().forEach(row => { const p = safeJSON(row.target, null); if (p && p.username) fromLogs.push(p); });
-        }
-      } catch (e) {}
-      return mergeUserLists(fromRegistry, fromLogs, fromAppUsers);
+        let q = db.from('app_users').select('id,username,fullname,bureau,permissions,auth_id,updated_at');
+        if (!full && usersSyncAt) q = q.gt('updated_at', usersSyncAt);
+        const { data, error } = await q.order('id', { ascending: true });
+        if (error || !Array.isArray(data)) return false;
+        const rows = data.filter(r => r && r.username).map(normalizeUserFromRecord);
+        if (full || !usersSyncAt) { if (!rows.length) return false; usersData = rows; } else rows.forEach(upsertLocalUser);
+        data.forEach(r => { if (r.updated_at && String(r.updated_at) > usersSyncAt) usersSyncAt = String(r.updated_at); });
+        if (rows.length || full) await saveUsersLocal();
+        return true;
+      } catch (e) { return false; }
     }
 
     // ---------------- 7. CLOUD LAYER ----------------
@@ -2609,15 +2630,17 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const byId = new Map(store[table].map(r => [r.id, r]));
       recs.forEach(r => byId.set(r.id, r));
       store[table] = sortRecords(Array.from(byId.values()));
+      let allOk = recs.length > 0;
       for (let i = 0; i < recs.length; i += 200) {
         const chunk = recs.slice(i, i + 200);
         let ok = false;
         const iks = chunk.map(r => table + ':' + r.id); iks.forEach(k => inflight.add(k));
         try { if (db) { const res = await cloudUpsert(table, chunk.map(r => toCloud(table, r))); ok = res.ok && !res.critical; } } finally { iks.forEach(k => inflight.delete(k)); }
         chunk.forEach(r => { r._pending = ok ? 0 : 1; });
-        if (!ok) scheduleRetrySync();
+        if (!ok) { allOk = false; scheduleRetrySync(); }
       }
       try { await localDB[table].bulkPut(recs); } catch (e) { console.warn('Local bulk save error', e); }
+      return allOk;   // V3.27.1: false = យ៉ាងហោចណាស់មួយក្រុមមិនទាន់ឡើង Cloud (នៅ _pending រង់ចាំ Sync)
     }
 
     async function fetchAllRows(table) {
@@ -2681,12 +2704,29 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!db || isSyncing) return;
       if (!isManual && !force && document.hidden) return;
       if (!isManual && navigator.onLine === false) return;
+      if (currentUser && mustChangePw()) {   // V4.0: មន្ត្រីត្រូវប្តូរពាក្យសម្ងាត់ជាមុន — Cloud មិនទាន់ឱ្យអានទិន្នន័យ ដូច្នេះមិន Sync (ការពារលុបទិន្នន័យក្នុងឧបករណ៍ដោយច្រឡំ)
+        const me0 = await fetchMe();
+        if (me0.ok && me0.user && me0.user.status === 'Active') { currentUser = me0.user; setSessionUser(currentUser); }
+        if (mustChangePw()) { pwForceOpen(); return; }
+        pwForceClose();
+      }
       const slow = isManual || (syncTick++ % 8 === 0);
       isSyncing = true;
       const syncIcon = document.getElementById('sync-btn-icon');
       if (syncIcon) syncIcon.classList.add('spin');
       let failed = 0;
       try {
+        if (slow && currentUser) {   // ពិនិត្យស្ថានភាពគណនីមុនទាញទិន្នន័យ (ផ្អាក/លុប/Admin កំណត់ពាក្យសម្ងាត់ឱ្យថ្មី)
+          try {
+            const me = await fetchMe();
+            if (me.ok) {
+              if (!me.user || me.user.status !== 'Active') { forceLogout('🔴 គណនីរបស់អ្នកត្រូវបានផ្អាក ឬលុប។'); return; }
+              currentUser = me.user; setSessionUser(currentUser); renderUserAvatarUI();
+              if (mustChangePw()) { pwForceOpen(); return; }
+            }
+            await pullCloudUsers(false);
+          } catch (e) {}
+        }
         const tableResults = await Promise.allSettled(DATA_TABLES.map(t => syncTable(t)));
         tableResults.forEach((r, i) => { if (r.status === 'rejected' && OPTIONAL_TABLES.includes(DATA_TABLES[i])) console.warn('Optional table not ready:', DATA_TABLES[i]); else if (r.status === 'rejected') { failed++; console.warn('Sync failed:', DATA_TABLES[i], r.reason); } });
         syncHealth.at = Date.now(); syncHealth.failed = failed;
@@ -2700,18 +2740,6 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           try { await pullLists(); } catch (e) { }
         }
 
-        try {
-          const cloudUsers = await fetchAllCloudUsers();
-          if (cloudUsers.length) {
-            usersData = mergeUserLists(usersData, cloudUsers);
-            await saveUsersLocal();
-            if (currentUser) {
-              const me = usersData.find(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
-              if (!me || me.status === 'Suspended' || me.status === 'Deleted') { forceLogout('🔴 គណនីរបស់អ្នកត្រូវបានផ្អាក ឬលុប។'); return; }
-              currentUser = normalizeUserFromRecord(me); setSessionUser(currentUser); renderUserAvatarUI();
-            }
-          }
-        } catch (e) {}
 
         if (slow) {
           try {
@@ -2761,20 +2789,28 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const c = await localDB.countries.toArray();
         if (c.length > 0) countriesData = c;
         const u = await localDB.users.toArray();
-        const legacy = safeJSON(localStorage.getItem('hrd_moh_users_cache'), []);
-        usersData = mergeUserLists(legacy, u);
+        usersData = mergeUserLists(u);
+        saveUsersLocal();   // V4.0: សរសេរជាន់ cache ចាស់ (លុបពាក្យសម្ងាត់ដែលធ្លាប់រក្សាក្នុងឧបករណ៍)
       } catch (e) { console.warn('Local DB init:', e); usersData = mergeUserLists(); }
 
       const cached = safeJSON(localStorage.getItem('hrd_moh_session_cache'), null);
       if (cached && cached.username && idleSessionExpired()) { setSessionUser(null); setTimeout(() => showToast('🔒 Session ផុតកំណត់ដោយសារអសកម្ម — សូមចូលម្តងទៀត', true), 900); }
       else if (cached && cached.username) {
         const me = usersData.find(x => x.username.toLowerCase() === String(cached.username).toLowerCase());
-        currentUser = (me && me.status !== 'Suspended' && me.status !== 'Deleted') ? normalizeUserFromRecord(me) : null;
+        const rec = me || cached;
+        currentUser = (rec.status !== 'Suspended' && rec.status !== 'Deleted') ? normalizeUserFromRecord(rec) : null;
         if (!currentUser) setSessionUser(null);
       }
+      // V4.0: Session ក្នុងឧបករណ៍ត្រូវមាន Session Supabase Auth ពិតប្រាកដ (លើកលែងតែពេល Offline — មើលទិន្នន័យក្នុងឧបករណ៍បាន)
+      if (currentUser) {
+        let sess = null; try { sess = db ? ((await db.auth.getSession()).data || {}).session || null : null; } catch (e) { }
+        if (!sess && (db ? navigator.onLine !== false : false)) { currentUser = null; setSessionUser(null); setTimeout(() => showToast('🔒 សូមចូលប្រព័ន្ធម្តងទៀត (Login សុវត្ថិភាព V4.0)', true), 900); }
+      }
+      if (db) { try { db.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_OUT' && currentUser) setTimeout(() => { if (currentUser) forceLogout('🔒 Session ផុតកំណត់ — សូមចូលប្រព័ន្ធម្តងទៀត'); }, 0); }); } catch (e) { } }
 
       applyTranslations();
       checkAuth();
+      if (mustChangePw()) pwForceOpen();
       initResizableTables();
       await syncFromSupabase(false);
       setInterval(() => syncFromSupabase(false), SYNC_INTERVAL_MS);
@@ -2795,7 +2831,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const appShell = document.getElementById('app-shell');
       const mobNav = document.getElementById('app-mobile-nav');
       if (!currentUser || !currentUser.username) {
-        loginModal?.classList.remove('hidden'); appShell?.classList.add('hidden'); mobNav?.classList.add('hidden'); mobNav?.classList.remove('flex');
+        pwForceClose(); loginModal?.classList.remove('hidden'); appShell?.classList.add('hidden'); mobNav?.classList.add('hidden'); mobNav?.classList.remove('flex');
         return;
       }
       loginModal?.classList.add('hidden'); appShell?.classList.remove('hidden'); mobNav?.classList.remove('hidden'); mobNav?.classList.add('flex');
@@ -2852,33 +2888,47 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const errEl = document.getElementById('login-error');
       const u = document.getElementById('login-username').value.trim().toLowerCase();
       const p = document.getElementById('login-password').value.trim();
-      if (!isLatin(u) || !isLatin(p)) { errEl.innerText = 'សូមប្រើអក្សរឡាតាំងប៉ុណ្ណោះ (មិនអនុញ្ញាតអក្សរខ្មែរ)!'; errEl.classList.remove('hidden'); return; }
-      btn.disabled = true; btn.innerText = 'កំពុងទាញគណនីពី Cloud...';
-      if (db) {
-        try { const cloudUsers = await fetchAllCloudUsers(); if (cloudUsers.length) { usersData = mergeUserLists(usersData, cloudUsers); await saveUsersLocal(); } } catch (err) {}
-      }
-      btn.disabled = false; btn.innerText = 'ចូលប្រព័ន្ធ (Sign In)';
-      const user = usersData.find(x => x && x.username && String(x.username).trim().toLowerCase() === u && normalizeKhmerDigits(x.password) === p && x.status !== 'Deleted');
-      if (!user) { errEl.innerText = 'ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!'; errEl.classList.remove('hidden'); return; }
-      if (user.status === 'Suspended') { errEl.innerText = '🔴 គណនីនេះត្រូវបានផ្អាកការប្រើប្រាស់ (Suspended)!'; errEl.classList.remove('hidden'); return; }
-      if (user.status === 'Pending') { errEl.innerText = '🟡 គណនីនេះកំពុងរង់ចាំការអនុម័ត (Pending)!'; errEl.classList.remove('hidden'); return; }
-      currentUser = normalizeUserFromRecord(user);
-      setSessionUser(currentUser);
-      activeBureauKey = isAdmin() ? 'all' : (currentUser.bureau || 'bureau_1');
-      localStorage.setItem('hrd_moh_active_bureau_cache', activeBureauKey);
-      errEl.classList.add('hidden');
-      document.getElementById('login-password').value = '';
-      checkAuth();
-      showToast(appLang === 'en' ? 'Signed in successfully!' : 'ចូលប្រព័ន្ធជោគជ័យ!');
-      if (String(currentUser.username).toLowerCase() === 'admin' && p === 'admin123') showToast('🔐 សូមប្តូរពាក្យសម្ងាត់ Default របស់ admin ភ្លាមៗ!', true);
-      idleStay(); logActivity('ចូលប្រព័ន្ធ', '@' + currentUser.username);
-      syncFromSupabase(false);
-      setTimeout(checkBackupReminder, 3000);
-      setTimeout(() => { if (isAdmin() && !schemaState.at) checkSchema(false); }, 8000);
+      const fail = msg => { errEl.innerText = msg; errEl.classList.remove('hidden'); };
+      if (!isLatin(u) || !isLatin(p)) return fail('សូមប្រើអក្សរឡាតាំងប៉ុណ្ណោះ (មិនអនុញ្ញាតអក្សរខ្មែរ)!');
+      if (!/^[a-z0-9_.\-]{3,32}$/.test(u) || !p) return fail('ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!');
+      if (!db) return fail('🌐 មិនអាចភ្ជាប់ Cloud បានទេ — ការចូលប្រព័ន្ធត្រូវការអ៊ីនធឺណិត');
+      btn.disabled = true; btn.innerText = 'កំពុងផ្ទៀងផ្ទាត់...';
+      try {
+        let res; try { res = await db.auth.signInWithPassword({ email: authEmail(u), password: p }); } catch (err) { res = { error: err }; }
+        if (res.error || !res.data || !res.data.session) {
+          const m = String((res.error && res.error.message) || ''), st = res.error && res.error.status;
+          if (st === 429 || /rate limit|too many/i.test(m)) return fail('⏳ សាកច្រើនដងពេក — សូមរង់ចាំ ១ នាទី រួចសាកម្តងទៀត');
+          if (/invalid|credentials|not confirmed/i.test(m) || st === 400) return fail('ឈ្មោះគណនី ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!');
+          return fail('🌐 មិនអាចភ្ជាប់ Cloud — សូមពិនិត្យអ៊ីនធឺណិត រួចសាកម្តងទៀត');
+        }
+        const me = await fetchMe();
+        if (!me.ok) { authSignOut(); return fail('⚙️ ' + me.error); }
+        const user = me.user;
+        if (!user || user.status === 'Deleted') { authSignOut(); return fail('គណនីនេះមិនមានក្នុងបញ្ជីមន្ត្រីទេ — សូមទាក់ទង Admin'); }
+        if (user.status === 'Suspended') { authSignOut(); return fail('🔴 គណនីនេះត្រូវបានផ្អាកការប្រើប្រាស់ (Suspended)!'); }
+        if (user.status === 'Pending') { authSignOut(); return fail('🟡 គណនីនេះកំពុងរង់ចាំការអនុម័ត (Pending)!'); }
+        currentUser = user; upsertLocalUser(user);
+        setSessionUser(currentUser);
+        activeBureauKey = isAdmin() ? 'all' : (currentUser.bureau || 'bureau_1');
+        localStorage.setItem('hrd_moh_active_bureau_cache', activeBureauKey);
+        errEl.classList.add('hidden');
+        document.getElementById('login-password').value = '';
+        checkAuth();
+        _pwOld = '';
+        if (mustChangePw()) { _pwOld = p; idleStay(); pwForceOpen(); return; }   // V4.0: ពាក្យសម្ងាត់បណ្តោះអាសន្ន/ចាស់ — ត្រូវប្តូរមុនប្រើប្រព័ន្ធ
+        showToast(appLang === 'en' ? 'Signed in successfully!' : 'ចូលប្រព័ន្ធជោគជ័យ!');
+        if (p.length < 8) setTimeout(() => showToast('🔐 ពាក្យសម្ងាត់របស់អ្នកខ្លីជាង ៨ តួ — សូមប្តូរក្នុង ⚙️ System Tools', true), 2500);
+        idleStay(); logActivity('ចូលប្រព័ន្ធ', '@' + currentUser.username);
+        pullCloudUsers(true).then(() => { if (currentUser) refreshOpenSystemTab(); });
+        syncFromSupabase(false, true);
+        setTimeout(checkBackupReminder, 3000);
+        setTimeout(() => { if (isAdmin() && !schemaState.at) checkSchema(false); }, 8000);
+      } finally { btn.disabled = false; btn.innerText = 'ចូលប្រព័ន្ធ (Sign In)'; }
     }
 
     function forceLogout(msg) {
-      currentUser = null; setSessionUser(null); closeAllModals(); checkAuth();
+      _pwOld = ''; pwForceClose();
+      currentUser = null; setSessionUser(null); authSignOut(); closeAllModals(); checkAuth();
       if (msg) showToast(msg, true);
     }
 
@@ -2886,7 +2936,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       document.getElementById('profile-dropdown')?.classList.add('hidden');
       if (confirm(appLang === 'en' ? 'Are you sure you want to sign out?' : 'តើអ្នកពិតជាចង់ចាកចេញពីប្រព័ន្ធមែនទេ?')) {
         logActivity('ចាកចេញពីប្រព័ន្ធ', '@' + currentUser.username);
-        currentUser = null; setSessionUser(null);
+        _pwOld = ''; currentUser = null; setSessionUser(null); setTimeout(authSignOut, 400);   // ទុកពេលឱ្យ log ចាកចេញឡើង Cloud សិន
         document.getElementById('login-username').value = '';
         document.getElementById('login-password').value = '';
         closeAllModals(); checkAuth();
@@ -3042,16 +3092,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function closeProfileModal() { document.getElementById('modal-user-profile')?.classList.add('hidden'); }
 
-    async function updateMyUserRecord(mutator) {
-      const idx = usersData.findIndex(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
-      if (idx === -1) return null;
-      mutator(usersData[idx]);
-      usersData[idx] = normalizeUserFromRecord(usersData[idx]);
-      await saveUsersLocal();
-      await pushUsersToCloud([usersData[idx]]);
-      currentUser = normalizeUserFromRecord(usersData[idx]);
-      setSessionUser(currentUser);
-      return usersData[idx];
+    async function setMyAvatar(url) {
+      if (!db || !currentUser) { showToast('មិនមានការភ្ជាប់ Cloud', true); return false; }
+      try {
+        const { data, error } = await db.rpc('dms_set_my_avatar', { p_avatar: url || '' });
+        if (error || !data) { showToast('⚠️ ' + rpcErr(error), true); return false; }
+        const me = normalizeUserFromRecord(data); upsertLocalUser(me); await saveUsersLocal();
+        currentUser = me; setSessionUser(currentUser); return true;
+      } catch (e) { showToast('⚠️ ' + rpcErr(e), true); return false; }
     }
 
     function handleAvatarUpload(e) {
@@ -3067,7 +3115,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           const canvas = document.createElement('canvas'); canvas.width = Math.round(w); canvas.height = Math.round(h);
           canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
           const url = canvas.toDataURL('image/jpeg', 0.82);
-          await updateMyUserRecord(u => { u.avatar = url; u.permissions = { ...(u.permissions || {}), _avatar: url }; });
+          if (!await setMyAvatar(url)) return;
           renderUserAvatarUI(); renderUsersTable();
           showToast(appLang === 'en' ? 'Profile photo updated & synced!' : 'បានផ្លាស់ប្ដូររូបថតគណនី និងរក្សាទុកលើ Cloud ជោគជ័យ!');
         };
@@ -3079,7 +3127,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     async function removeUserAvatar() {
       if (!currentUser) return;
-      await updateMyUserRecord(u => { u.avatar = ''; u.permissions = { ...(u.permissions || {}), _avatar: '' }; });
+      if (!await setMyAvatar('')) return;
       renderUserAvatarUI(); renderUsersTable();
       showToast('បានលុបរូបថតគណនីរួចរាល់!');
     }
@@ -3089,13 +3137,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const form = e.target;
       const oldP = normalizeKhmerDigits(form.elements.oldPassword.value);
       const newP = normalizeKhmerDigits(form.elements.newPassword.value);
-      const me = usersData.find(u => u.username.toLowerCase() === currentUser.username.toLowerCase());
-      if (!me || normalizeKhmerDigits(me.password) !== oldP) return alert('⚠️ ពាក្យសម្ងាត់ចាស់មិនត្រឹមត្រូវ!');
       if (newP.length < 6) return alert('⚠️ ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងហោចណាស់ ៦ តួ!');
       if (!isLatin(newP)) return alert('⚠️ ពាក្យសម្ងាត់ត្រូវប្រើអក្សរឡាតាំងប៉ុណ្ណោះ!');
       if (newP === oldP) return alert('⚠️ ពាក្យសម្ងាត់ថ្មីត្រូវខុសពីពាក្យសម្ងាត់ចាស់!');
-      await updateMyUserRecord(u => { u.password = newP; });
-      showToast('បានផ្លាស់ប្ដូរ Password និងរក្សាទុកលើ Cloud ជោគជ័យ!');
+      if (!db) return alert('⚠️ មិនមានការភ្ជាប់ Cloud');
+      let r; try { r = await db.rpc('dms_change_my_password', { p_old: oldP, p_new: newP }); } catch (err) { r = { error: err }; }
+      if (r.error) return alert('⚠️ ' + rpcErr(r.error));
+      showToast('បានផ្លាស់ប្ដូរ Password ជោគជ័យ!');
       logActivity('ប្ដូរ Password', '@' + currentUser.username);
       form.reset();
     }
@@ -3244,7 +3292,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         : k === 'bureau_1' ? ['កំណត់ត្រាសមមូល/ហត្ថលេខា', 'Equivalency & Signing Records', activeRows('exam_tasks').filter(x => x.kind === 'equiv' || x.kind === 'sign').length, '🌍']
         : k === 'bureau_2' ? ['វគ្គបណ្តុះបណ្តាល', 'Training Records', activeRows('trainings').length, '🌐']
         : k === 'bureau_3' ? ['សញ្ញាបត្របានចុះបញ្ជី', 'Registered Certificates', activeRows('certs').length, '📜']
-        : ['ការងារជំនាញសរុប (៣ ការិយាល័យ)', 'Total Specialty Records', activeRows('exams').length + activeRows('trainings').length + activeRows('certs').length, '👑'];
+        : ['ការងារជំនាញសរុប (៤ ការិយាល័យ)', 'Total Specialty Records', activeRows('exams').length + activeRows('trainings').length + activeRows('certs').length, '👑'];
       set('stat-custom-label', appLang === 'en' ? cfg[1] : cfg[0]); set('stat-custom-val', cfg[2]); set('stat-custom-icon', cfg[3]); renderCertStatCard();
     }
 
@@ -4136,6 +4184,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (table === 'workshops' && next.female != null && next.attendees != null && next.female > next.attendees) return alert('⚠️ ចំនួនស្រីមិនអាចលើសចំនួនអ្នកចូលរួមសរុបទេ!');
       if ((table === 'trainings' || table === 'workshops') && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       if (table === 'exams' && next.start_date && next.end_date && next.end_date < next.start_date) return alert('⚠️ ថ្ងៃបញ្ចប់ត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
+      if (table === 'exams' && next.result_link && !/^https?:\/\//i.test(next.result_link)) return alert('⚠️ Link ឯកសារលទ្ធផលត្រូវចាប់ផ្តើមដោយ https://');
       if (table === 'exam_tasks' && next.link) { const n = normalizeDocLink(next.link); if (!n.ok) return alert('⚠️ ' + n.msg); next.link = n.url; }
       const before = { ...rec }, changes = [];
       Object.keys(next).forEach(k => { const o = before[k] == null ? '' : before[k], n = next[k] == null ? '' : next[k]; if (String(o) !== String(n)) changes.push(k + ': ' + (o === '' ? '∅' : o) + ' → ' + (n === '' ? '∅' : n)); rec[k] = next[k]; });
@@ -5609,7 +5658,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <td class="p-3.5 text-slate-600 font-bold text-sm whitespace-nowrap">${esc(e.session)}${(e.institution || e.start_date) ? `<div class="text-[10px] font-normal text-slate-400">${esc(e.institution || '')}${e.start_date ? ' • ' + esc(String(e.start_date).slice(0, 10)) : ''}</div>` : ''}</td>
           <td class="p-3.5 text-center font-bold text-slate-800 text-sm whitespace-nowrap">${esc(Number(e.candidates || 0).toLocaleString())} នាក់${hasNum(e.candidates_f) ? `<div class="text-[10px] font-normal text-pink-600">ស្រី ${esc(Number(e.candidates_f).toLocaleString())}</div>` : ''}</td>
           <td class="p-3.5 text-center text-xs font-bold whitespace-nowrap">${(e.passed != null && e.passed !== '') || (e.failed != null && e.failed !== '') || (e.absent != null && e.absent !== '') ? `<span class="text-emerald-700">${esc(e.passed ?? 0)}</span> / <span class="text-rose-600">${esc(e.failed ?? 0)}</span> / <span class="text-amber-600">${esc(e.absent ?? 0)}</span>${(hasNum(e.passed_f) || hasNum(e.failed_f) || hasNum(e.absent_f)) ? `<div class="text-[10px] font-normal text-pink-600">ស្រី ${esc(e.passed_f ?? 0)} / ${esc(e.failed_f ?? 0)} / ${esc(e.absent_f ?? 0)}</div>` : ''}${exRateHTML(e)}` : '<span class="text-slate-300">— មិនទាន់មាន</span>'}</td>
-          <td class="p-3.5 text-center text-sm font-bold text-sky-800 whitespace-nowrap">${(() => { const n = exNums(e); return n.hasRes ? `${esc(Math.max(0, n.c - n.a).toLocaleString())}${n.cf != null ? `<div class="text-[10px] font-normal text-pink-600">ស្រី ${esc(Math.max(0, n.cf - (n.af || 0)).toLocaleString())}</div>` : ''}` : '<span class="text-slate-300">—</span>'; })()}${e.result_link ? `<div><a href="${esc(e.result_link)}" target="_blank" rel="noopener" class="text-[10px] font-bold text-blue-600 hover:underline">📎 លទ្ធផល</a></div>` : ''}</td>
+          <td class="p-3.5 text-center text-sm font-bold text-sky-800 whitespace-nowrap">${(() => { const n = exNums(e); return n.hasRes ? `${esc(Math.max(0, n.c - n.a).toLocaleString())}${n.cf != null ? `<div class="text-[10px] font-normal text-pink-600">ស្រី ${esc(Math.max(0, n.cf - (n.af || 0)).toLocaleString())}</div>` : ''}` : '<span class="text-slate-300">—</span>'; })()}${/^https?:\/\//i.test(e.result_link || '') ? `<div><a href="${esc(e.result_link)}" target="_blank" rel="noopener" class="text-[10px] font-bold text-blue-600 hover:underline">📎 លទ្ធផល</a></div>` : ''}</td>
           <td class="p-3.5 text-center whitespace-nowrap">${editBtn('exams', e.id)}${deleteBtn('exams', e.id) || (can('edit') ? '' : '<span class="text-slate-300">-</span>')}</td>
         </tr>`).join('') : emptyRow(7);
       renderPager('exams', pg);
@@ -6180,11 +6229,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
 
     // ---------------- Upload ឯកសារ៖ Progress + Retry + ជួរចាំ (Queue) ----------------
-    function uploadToStorage(path, blob, contentType, onProgress) {
+    async function uploadToStorage(path, blob, contentType, onProgress) {
+      const tok = await authToken();   // V4.0: Upload ដោយ Session របស់មន្ត្រី (មិនមែន anon key)
       return new Promise(resolve => {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', SUPABASE_URL + '/storage/v1/object/documents/' + path.split('/').map(encodeURIComponent).join('/'));
-        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY); xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON_KEY);
+        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY); xhr.setRequestHeader('Authorization', 'Bearer ' + tok);
         xhr.setRequestHeader('x-upsert', 'true'); xhr.setRequestHeader('cache-control', 'max-age=3600');
         xhr.setRequestHeader('Content-Type', contentType || 'application/octet-stream');
         xhr.timeout = 180000;
@@ -7330,6 +7380,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div>${CQ_LB('ឈ្មោះវគ្គ')}<input type="text" id="cert-course" list="cert-course-list" autocomplete="off" class="${CQ_IN}"><datalist id="cert-course-list">${[...new Set(activeRows('certs').map(c => c.course).filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('')}</datalist></div>
         <div>${CQ_LB('ឈ្មោះវគ្គ (ឡាតាំង)')}<input type="text" id="cert-course-latin" autocomplete="off" class="${CQ_IN}"></div>
         <div>${CQ_LB('ចំនួនម៉ោង / ក្រេឌីត')}<input type="number" id="cert-hours" min="0" step="0.5" class="${CQ_IN}"></div>
+        <div>${CQ_LB('វគ្គ ពីថ្ងៃ')}<input type="date" id="cert-cstart" class="${CQ_IN}"></div>
+        <div>${CQ_LB('វគ្គ ដល់ថ្ងៃ')}<input type="date" id="cert-cend" class="${CQ_IN}"></div>
+        <div>${CQ_LB('ទីកន្លែងវគ្គ')}<input type="text" id="cert-location" autocomplete="off" class="${CQ_IN}"></div>
         <div>${CQ_LB('អង្គភាព / គ្រឹះស្ថាន')}<input type="text" id="cert-inst" list="cert-inst-list" autocomplete="off" class="${CQ_IN}"><datalist id="cert-inst-list">${certInstitutionOptions()}</datalist></div>
         <div>${CQ_LB('ជំនាញ')}<input type="text" id="cert-major" class="${CQ_IN}"></div>
         <div>${CQ_LB('សញ្ជាតិ')}<input type="text" id="cert-nation" value="ខ្មែរ" class="${CQ_IN}"></div>
@@ -7346,6 +7399,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div>${CQ_LB('ថ្ងៃចុះហត្ថលេខា', 1)}<input type="date" id="cb-date" value="${todayISO()}" onchange="cbRender()" class="${CQ_IN}"></div>
           <div>${CQ_LB('ហត្ថលេខា', 1)}<input id="cb-signer" value="ប្រធាននាយកដ្ឋាន" class="${CQ_IN}"></div>
           <div>${CQ_LB('ចំនួនម៉ោង / ក្រេឌីត')}<input type="number" id="cb-hours" min="0" step="0.5" placeholder="ឧ. 40" class="${CQ_IN}"></div>
+          <div>${CQ_LB('វគ្គ ពីថ្ងៃ')}<input type="date" id="cb-start" class="${CQ_IN}"></div>
+          <div>${CQ_LB('វគ្គ ដល់ថ្ងៃ')}<input type="date" id="cb-end" class="${CQ_IN}"></div>
+          <div class="col-span-2">${CQ_LB('ទីកន្លែងវគ្គ')}<input id="cb-loc" autocomplete="off" class="${CQ_IN}"></div>
           <div>${CQ_LB('ការកំណត់លេខ')}<select id="cb-mode" onchange="if(this.value==='start'&&!document.getElementById('cb-startno').value)document.getElementById('cb-startno').value=cbSuggestStart();cbPreview()" class="${CQ_IN}"><option value="start">🔢 ចាប់ពីលេខ…</option><option value="auto">⚙️ ស្វ័យប្រវត្តិតាមទម្រង់</option><option value="manual">✏️ ដោយដៃ</option></select></div>
           <div id="cb-start-wrap" class="grid grid-cols-3 gap-1.5"><div>${CQ_LB('កូដមុខ')}<input id="cb-prefix" oninput="cbPreview()" placeholder="(ទទេ)" class="${CQ_IN}"></div><div class="col-span-2">${CQ_LB('លេខចាប់ផ្តើម')}<input type="number" id="cb-startno" min="0" oninput="cbPreview()" class="${CQ_IN} font-mono font-bold"></div></div></div>
         <div class="flex items-center gap-2 text-xs"><button type="button" onclick="cbAdd(1)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ជួរ</button><button type="button" onclick="cbAdd(10)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">＋ ១០ ជួរ</button><button type="button" onclick="CB.rows=CB.rows.filter(r=>r.name);if(!CB.rows.length)CB.rows.push(cbBlank());cbRender()" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 font-bold text-slate-700">🧹 លុបជួរទទេ</button><span id="cb-count" class="ml-auto font-bold text-emerald-700"></span></div>
@@ -7411,6 +7467,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       let num = g('cert-num'); if (!certManual) num = certCodeFor(type, date);
       if (!num) return alert('⚠️ សូមបញ្ចូលលេខកូដសញ្ញាបត្រ!');
       if (activeRows('certs').some(c => String(c.num).toLowerCase() === num.toLowerCase())) return alert('⚠️ លេខកូដសញ្ញាបត្រ "' + num + '" មានរួចហើយ!');
+      if (g('cert-cstart') && g('cert-cend') && g('cert-cend') < g('cert-cstart')) return alert('⚠️ ថ្ងៃបញ្ចប់វគ្គត្រូវនៅក្រោយថ្ងៃចាប់ផ្តើម!');
       const btn = e.target.querySelector('button[type=submit]'), label = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…'; }
       try {
@@ -8106,8 +8163,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!can('delete')) return;
       if (table === 'users') {
         const u = usersData.find(x => x.id === id); if (!u) return;
-        setUserStatus(u, 'Active'); u.permissions._deleted_at = null; u.permissions._deleted_by = null;
-        await saveUsersLocal(); await pushUsersToCloud([u]);
+        const next = { ...u, permissions: { ...(u.permissions || {}), _deleted_at: null, _deleted_by: null } }; setUserStatus(next, 'Active');
+        const r = await saveUserCloud(next); if (!r.ok) return alert('⚠️ ' + r.error);
         renderRecycleBin(); renderUsersTable(); showToast('បានស្ដារគណនី @' + u.username); logActivity('ស្ដារគណនី', '@' + u.username); return;
       }
       const rec = store[table].find(r => r.id === id); if (!rec) return;
@@ -8620,7 +8677,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           ${card('📦 ទំហំ File (ប៉ាន់ស្មាន)', row('ក្នុង Supabase', h.sbN + ' file · ' + h.sbMB.toFixed(1) + ' MB') + `<div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="${pcol} h-full" style="width:${pct.toFixed(1)}%"></div></div><p class="text-[11px] text-slate-500">${pct.toFixed(1)}% នៃ ${STORAGE_QUOTA_MB} MB (Free plan)។ ការប្រើពិតមើលនៅ Supabase → Settings → Usage។</p>` + row('ក្នុង Google Drive', h.drN + ' file') + row('Link ខាងក្រៅ', h.linkN) + row('គ្មាន file', h.noneN), pct >= 70 ? 'border-amber-300 bg-amber-50' : '')}
           ${card('💾 Backup', row('Backup ចុងក្រោយ', last ? new Date(last).toLocaleString('km-KH') + ' (' + bDays + ' ថ្ងៃមុន)' : 'មិនទាន់មាន') + `<button onclick="backupEntireSystem(); renderSystemHealth()" class="mt-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold form-input-focus">📥 Export JSON</button>`, bOk ? 'border-emerald-200 bg-emerald-50/50' : 'border-amber-300 bg-amber-50')}
           ${card('🗃️ ទិន្នន័យ', counts + row('ក្នុងធុងសំរាម', deleted) + row('គណនីមន្ត្រី', usersData.filter(u => u && u.status !== 'Deleted').length))}
-          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', 'V3.11.0') + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
+          ${card('🧩 ប្រព័ន្ធ', row('កំណែ', APP_VERSION) + row('ទំហំ file អតិបរមា', Math.round(MAX_FILE_SIZE / 1048576) + ' MB') + row('ចំណុចកាត់ Supabase/Drive', Math.round(SUPA_MAX_SIZE / 1048576) + ' MB') + row('Sync រៀងរាល់', (SYNC_INTERVAL_MS / 1000) + ' វិនាទី') + row('ទុកទិន្នន័យ Offline', window.Dexie ? 'IndexedDB' : '⚠️ Memory'))}
           ${qualityCardHTML()}
           <div id="schema-card"></div>
           ${card('🛟 រក្សា Supabase មិនឱ្យផ្អាក', `<p class="text-slate-600 leading-relaxed">Free plan ផ្អាក Project បើគ្មានសកម្មភាព ១ សប្តាហ៍។ GitHub Actions «Supabase Keep-Alive» ping រៀងរាល់ ២ ថ្ងៃ។ ពិនិត្យថា Run ✅ នៅ GitHub → Actions។</p>`)}
@@ -8632,7 +8689,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function refreshOpenSystemTab() {
       if (document.getElementById('modal-system-tools')?.classList.contains('hidden') || !isAdmin()) return;
       if (currentSysTab === 'manual') renderManualDuties();
-      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, sysset: renderSystemSettings, health: renderSystemHealth, logging: renderLogsTable, security: renderMigrationStatus })[currentSysTab]?.();
+      ({ settings: renderUsersTable, location: () => switchListTab(curListTab), files: renderFilesSystemList, recycle: renderRecycleBin, sysset: renderSystemSettings, health: renderSystemHealth, logging: renderLogsTable, security: () => { renderMigrationStatus(); loadSecStatus(); } })[currentSysTab]?.();
     }
 
     function renderMigrationStatus() {
@@ -8658,15 +8715,252 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (roleVal === 'SuperAdmin' && !isSuperAdmin()) return alert('មានតែ Super Admin ទេដែលអាចបង្កើត Super Admin ថ្មី!');
       const statusVal = document.getElementById('new-user-status').value;
       const g = id => document.getElementById(id).checked;
+      const pw = document.getElementById('new-user-password').value.trim();
+      if (pw.length < 6 || !isLatin(pw)) return alert('លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួ ជាអក្សរឡាតាំង');
       const newUser = normalizeUserFromRecord({ id: generateSafeId(), fullname: document.getElementById('new-user-fullname').value.trim(), username: uname,
-        password: document.getElementById('new-user-password').value.trim(), role: roleVal, bureau: document.getElementById('new-user-bureau').value, status: statusVal, avatar: '',
+        role: roleVal, bureau: document.getElementById('new-user-bureau').value, status: statusVal, avatar: '',
         permissions: { admin: g('perm-admin'), read: g('perm-read'), create: g('perm-create'), edit: g('perm-edit'), delete: g('perm-delete'), upload: g('perm-upload'),
           download: g('perm-download'), export: g('perm-export'), approve: g('perm-approve'), _role: roleVal, _status: statusVal, _avatar: '' } });
-      usersData.unshift(newUser); await saveUsersLocal(); renderUsersTable();
-      const ok = await pushUsersToCloud([newUser]);
-      showToast(ok ? 'បានបង្កើតគណនី @' + newUser.username + ' លើ Cloud ជោគជ័យ!' : 'បានបង្កើតគណនី @' + newUser.username + ' (មិនទាន់ឡើង Cloud)', !ok);
+      const r = await saveUserCloud(newUser, pw, 'create');
+      if (!r.ok) return alert('⚠️ មិនអាចបង្កើតគណនី៖ ' + r.error);
+      renderUsersTable();
+      showToast('បានបង្កើតគណនី @' + newUser.username + ' ជោគជ័យ — មន្ត្រីនឹងត្រូវប្តូរពាក្យសម្ងាត់ពេល Login លើកដំបូង');
       logActivity('បង្កើត User ថ្មី', '@' + newUser.username + ' (' + newUser.role + ')');
       e.target.reset(); handleRolePreset('Editor');
+    }
+
+
+
+    // ===================== V4.0: ប្តូរពាក្យសម្ងាត់ជាកាតព្វកិច្ចពេល Login លើកដំបូង =====================
+    // Admin កំណត់ពាក្យសម្ងាត់ (បង្កើត / Import / Reset) = បណ្តោះអាសន្ន។ Cloud មិនឱ្យអានទិន្នន័យទេ រហូតទាល់តែមន្ត្រីប្តូរពាក្យសម្ងាត់ខ្លួនឯង
+    let _pwOld = '';
+    const mustChangePw = () => !!(currentUser && currentUser.permissions && currentUser.permissions._must_change === true);
+    function pwForceClose() { const o = document.getElementById('pw-force'); if (o) { o.remove(); document.body.classList.remove('overflow-hidden'); } }
+    function pwForceOpen() {
+      if (!mustChangePw()) return pwForceClose();
+      if (document.getElementById('pw-force')) return;
+      const cls = 'form-input-focus w-full border border-slate-200 rounded-xl p-2.5 text-xs bg-slate-50/60';
+      const ov = document.createElement('div'); ov.id = 'pw-force'; ov.className = 'fixed inset-0 z-[300] bg-slate-900/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto';
+      ov.innerHTML = `<form onsubmit="pwForceSubmit(event)" class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-3 text-xs" autocomplete="off">
+        <div class="text-center"><div class="text-3xl">🔐</div><h3 class="text-base font-bold text-slate-900 mt-1">សូមប្តូរពាក្យសម្ងាត់របស់អ្នក</h3>
+          <p class="text-slate-500 mt-1 leading-relaxed">@${esc(currentUser.username)} · ពាក្យសម្ងាត់បច្ចុប្បន្នត្រូវបានកំណត់ដោយ Admin។ ដើម្បីសុវត្ថិភាព សូមកំណត់ពាក្យសម្ងាត់ផ្ទាល់ខ្លួនមុនចាប់ផ្តើមប្រើប្រព័ន្ធ។</p></div>
+        ${_pwOld ? '' : `<div><label class="block font-bold text-slate-700 mb-1">ពាក្យសម្ងាត់បច្ចុប្បន្ន</label><input type="password" id="pf-old" autocomplete="current-password" class="${cls}"></div>`}
+        <div><label class="block font-bold text-slate-700 mb-1">ពាក្យសម្ងាត់ថ្មី <span class="font-normal text-slate-400">(យ៉ាងតិច ៨ តួ · អក្សរឡាតាំង)</span></label><input type="password" id="pf-new" autocomplete="new-password" class="${cls}"></div>
+        <div><label class="block font-bold text-slate-700 mb-1">វាយពាក្យសម្ងាត់ថ្មីម្តងទៀត</label><input type="password" id="pf-new2" autocomplete="new-password" class="${cls}"></div>
+        <p id="pf-err" class="text-rose-600 font-bold hidden"></p>
+        <button type="submit" id="pf-go" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white rounded-xl font-bold shadow-md form-input-focus">💾 រក្សាទុក និងចូលប្រើប្រព័ន្ធ</button>
+        <button type="button" onclick="forceLogout()" class="w-full py-2 text-slate-500 hover:text-slate-700 font-bold form-input-focus">ចាកចេញ</button></form>`;
+      document.body.appendChild(ov); document.body.classList.add('overflow-hidden');
+      setTimeout(() => document.getElementById(_pwOld ? 'pf-new' : 'pf-old')?.focus(), 50);
+    }
+    async function pwForceSubmit(e) {
+      e.preventDefault(); if (!mustChangePw()) return pwForceClose();
+      const err = document.getElementById('pf-err'), btn = document.getElementById('pf-go');
+      const show = m => { err.textContent = '⚠️ ' + m; err.classList.remove('hidden'); };
+      const old = _pwOld || normalizeKhmerDigits(document.getElementById('pf-old')?.value || ''), n1 = normalizeKhmerDigits(document.getElementById('pf-new').value), n2 = normalizeKhmerDigits(document.getElementById('pf-new2').value);
+      if (!old) return show('សូមបញ្ចូលពាក្យសម្ងាត់បច្ចុប្បន្ន');
+      if (n1.length < 8) return show('ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងតិច ៨ តួ');
+      if (!isLatin(n1)) return show('ពាក្យសម្ងាត់ត្រូវប្រើអក្សរឡាតាំងប៉ុណ្ណោះ');
+      if (n1 !== n2) return show('ពាក្យសម្ងាត់ថ្មីទាំង ២ ដងមិនដូចគ្នា');
+      if (n1 === old) return show('ពាក្យសម្ងាត់ថ្មីត្រូវខុសពីពាក្យសម្ងាត់បច្ចុប្បន្ន');
+      if (n1.toLowerCase() === String(currentUser.username).toLowerCase()) return show('ពាក្យសម្ងាត់មិនត្រូវដូច Username ទេ');
+      err.classList.add('hidden'); btn.disabled = true; btn.textContent = '⏳ កំពុងរក្សាទុក…';
+      let r; try { r = await db.rpc('dms_change_my_password', { p_old: old, p_new: n1 }); } catch (x) { r = { error: x }; }
+      btn.disabled = false; btn.textContent = '💾 រក្សាទុក និងចូលប្រើប្រព័ន្ធ';
+      if (r.error) { if (/ចាស់មិនត្រឹមត្រូវ/.test(String(r.error.message || ''))) _pwOld = ''; return show(rpcErr(r.error)); }
+      _pwOld = '';
+      const me = await fetchMe(); if (me.ok && me.user) { currentUser = me.user; upsertLocalUser(me.user); setSessionUser(currentUser); }
+      pwForceClose(); checkAuth();
+      showToast('បានប្តូរពាក្យសម្ងាត់ជោគជ័យ — សូមស្វាគមន៍!');
+      idleStay(); logActivity('ប្តូរ Password (ចូលលើកដំបូង)', '@' + currentUser.username);
+      pullCloudUsers(true).then(() => { if (currentUser) refreshOpenSystemTab(); });
+      syncFromSupabase(false, true);
+      setTimeout(checkBackupReminder, 3000);
+    }
+
+    // ===================== V4.0: ស្ថានភាពសុវត្ថិភាព (System Tools → Security) =====================
+    const secState = { at: 0, res: null, error: '' };
+    async function loadSecStatus(force) {
+      renderSecStatus();
+      if (!db || !currentUser || (!force && Date.now() - secState.at < 60000)) return;
+      secState.at = Date.now();
+      try { const { data, error } = await db.rpc('dms_security_status'); secState.res = error ? null : data; secState.error = error ? rpcErr(error) : ''; }
+      catch (e) { secState.res = null; secState.error = rpcErr(e); }
+      renderSecStatus();
+    }
+    function renderSecStatus() {
+      const el = document.getElementById('sec-status'); if (!el) return;
+      const s = secState.res, line = (ok, t) => `<li class="flex gap-2"><span>${ok ? '✅' : '⚠️'}</span><span>${t}</span></li>`;
+      if (!s) { el.innerHTML = `<div class="p-4 rounded-2xl border ${secState.error ? 'border-rose-200 bg-rose-50 text-rose-800' : 'border-slate-200 bg-white text-slate-500'}">${secState.error ? '⚠️ ' + esc(secState.error) : 'កំពុងពិនិត្យស្ថានភាពសុវត្ថិភាព…'}</div>`; return; }
+      const good = s.rls && !s.password_column && !s.legacy_registry;
+      el.innerHTML = `<div class="p-5 rounded-2xl border space-y-2 ${good ? 'border-emerald-200 bg-emerald-50/70' : 'border-amber-300 bg-amber-50'}">
+        <div class="flex items-center justify-between gap-2"><h4 class="font-bold ${good ? 'text-emerald-900' : 'text-amber-900'}">${good ? '🔒 ប្រព័ន្ធត្រូវបានការពារ (V4.0)' : '⚠️ សុវត្ថិភាពមិនទាន់ពេញលេញ'}</h4><button type="button" onclick="loadSecStatus(true)" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 font-bold text-slate-600 form-input-focus">🔄 ពិនិត្យម្តងទៀត</button></div>
+        <ul class="space-y-1 text-slate-700 leading-relaxed">
+          ${line(true, 'Login តាម Supabase Auth (ពាក្យសម្ងាត់ bcrypt — មិនរក្សាក្នុងកម្មវិធី ឬឧបករណ៍)')}
+          ${line(s.rls, s.rls ? 'RLS បើក៖ តែមន្ត្រីដែល Login ទើបអាន/សរសេរទិន្នន័យបាន' : 'RLS មិនទាន់បើក — ទិន្នន័យនៅអានបានដោយ anon key។ សូម Run <b>supabase-v4-step2-lockdown.sql</b>')}
+          ${line(!s.password_column && !s.legacy_registry, (!s.password_column && !s.legacy_registry) ? 'គ្មានពាក្យសម្ងាត់អក្សរធម្មតាលើ Cloud' : 'នៅមានពាក្យសម្ងាត់អក្សរធម្មតាលើ Cloud (' + toKhmerDigits(s.plaintext_passwords || 0) + ' គណនី) — នឹងលុបពេល Run ជំហានទី ២')}
+          ${s.pending_password_change ? `<li class="flex gap-2"><span>🔑</span><span>មន្ត្រី ${toKhmerDigits(s.pending_password_change)} នាក់ មិនទាន់ប្តូរពាក្យសម្ងាត់ដំបូង (Cloud មិនទាន់ឱ្យពួកគេអានទិន្នន័យ)</span></li>` : ''}
+          ${s.active_without_login ? line(false, 'មាន ' + toKhmerDigits(s.active_without_login) + ' គណនី Active ដែលមិនទាន់មាន Login — សូមកំណត់លេខសម្ងាត់ថ្មី (✏️ ក្នុងបញ្ជីមន្ត្រី)') : ''}
+        </ul>
+        <p class="text-[11px] text-slate-500">កំណត់៖ សិទ្ធិលម្អិត (Create/Edit/Delete តាមការិយាល័យ) នៅត្រួតពិនិត្យដោយកម្មវិធី។ Cloud ត្រួតពិនិត្យ «ជាមន្ត្រី Active ឬអត់» និងសិទ្ធិគ្រប់គ្រងគណនី។</p></div>`;
+    }
+
+    // ===================== V4.0: Import / Update មន្ត្រីពី Excel · CSV =====================
+    const UI_HEAD = { fullname: 'ឈ្មោះពេញ', username: 'Username', password: 'Password', bureau: 'ការិយាល័យ', role: 'Role', status: 'Status' };
+    const UI_SYN = {
+      fullname: ['ឈ្មោះពេញ', 'ឈ្មោះ', 'fullname', 'full name', 'name', 'ឈ្មោះមន្ត្រី', 'គោត្តនាម និងនាម'],
+      username: ['username', 'user', 'user name', 'ឈ្មោះគណនី', 'គណនី', 'account', 'login'],
+      password: ['password', 'pass', 'pwd', 'លេខសម្ងាត់', 'ពាក្យសម្ងាត់'],
+      bureau: ['ការិយាល័យ', 'bureau', 'office', 'ការិ'],
+      role: ['role', 'តួនាទី', 'សិទ្ធិ'],
+      status: ['status', 'ស្ថានភាព']
+    };
+    const uiNorm = v => normalizeKhmerDigits(String(v == null ? '' : v)).replace(/\s+/g, ' ').trim().toLowerCase();
+    function uiBureau(v) {
+      const s = uiNorm(v); if (!s) return '';
+      if (/^(all|ទាំងអស់|ទាំង ?4|គ្រប់ការិយាល័យ)/.test(s) || s.includes('all')) return 'all';
+      const m = /([1-4])/.exec(s); return m ? 'bureau_' + m[1] : null;
+    }
+    function uiRole(v) {
+      const s = uiNorm(v).replace(/[\s_\-]/g, ''); if (!s) return '';
+      const hit = ROLE_OPTS.find(([k]) => k.toLowerCase() === s); if (hit) return hit[0];
+      return { officer: 'Editor', 'មន្ត្រី': 'Editor', readonly: 'Viewer', 'មើល': 'Viewer', auditor: 'Approver', systemadmin: 'Admin' }[s] || null;
+    }
+    function uiStatus(v) {
+      const s = uiNorm(v); if (!s) return '';
+      if (/^(active|សកម្ម|បើក)/.test(s)) return 'Active'; if (/^(suspend|ផ្អាក|បិទ)/.test(s)) return 'Suspended'; if (/^(pending|រង់ចាំ)/.test(s)) return 'Pending'; return null;
+    }
+    let UI = null;   // { file, rows:[{line, fullname, username, password, bureau, role, status, kind:'new'|'update'|'same'|'error', note, payload}] }
+    function uiNeedXLSX() { if (window.XLSX) return true; showToast('មិនអាចទាញ Library Excel បានទេ — សូមពិនិត្យអ៊ីនធឺណិត រួច reload', true); return false; }
+    function uiTemplate() {
+      if (!uiNeedXLSX()) return;
+      const aoa = [Object.values(UI_HEAD), ['សុខ សុភា', 'sok.sophea', 'Sophea#2026', 1, 'Editor', 'Active'], ['ចាន់ ដារា', 'chan.dara', 'Dara#2026', 4, 'Viewer', 'Active']];
+      const help = [['ជួរឈរ', 'ការពន្យល់'], ['ឈ្មោះពេញ', 'ឈ្មោះមន្ត្រី (ខ្មែរ ឬឡាតាំង) — ចាំបាច់សម្រាប់គណនីថ្មី'], ['Username', '៣–៣២ តួ៖ a-z 0-9 _ . - (អក្សរឡាតាំង) — ប្រើសម្រាប់ Login និងជាកូនសោផ្គូផ្គងគណនីដែលមានរួច'],
+        ['Password', 'យ៉ាងតិច ៦ តួ (ណែនាំ ≥ ៨) អក្សរឡាតាំង។ ចាំបាច់សម្រាប់គណនីថ្មី។ ទុកទទេ = មិនប្តូរពាក្យសម្ងាត់គណនីដែលមានរួច'],
+        ['ការិយាល័យ', '1, 2, 3, 4 ឬ all (គ្រប់ការិយាល័យ — សម្រាប់ Admin)'], ['Role', 'Editor (លំនាំដើម) · Viewer · Approver · Admin · SuperAdmin'], ['Status', 'Active (លំនាំដើម) · Suspended · Pending'],
+        ['', ''], ['🔐 ពាក្យសម្ងាត់ដំបូង', 'ជាពាក្យសម្ងាត់បណ្តោះអាសន្ន — មន្ត្រីនឹងត្រូវប្តូរពាក្យសម្ងាត់ខ្លួនឯងពេល Login លើកដំបូង។ ក្រោយ Import រួច សូមលុបឯកសារនេះចោល']];
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = [{ wch: 24 }, { wch: 18 }, { wch: 18 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
+      const wh = XLSX.utils.aoa_to_sheet(help); wh['!cols'] = [{ wch: 16 }, { wch: 90 }];
+      XLSX.utils.book_append_sheet(wb, ws, 'មន្ត្រី'); XLSX.utils.book_append_sheet(wb, wh, 'របៀបបំពេញ');
+      XLSX.writeFile(wb, 'HRDD-DMS-គំរូ-Import-មន្ត្រី.xlsx');
+    }
+    function uiExportUsers() {
+      if (!uiNeedXLSX() || !isAdmin()) return;
+      const aoa = [Object.values(UI_HEAD)].concat(usersData.filter(u => u.status !== 'Deleted').map(u => [u.fullname || '', u.username, '', u.bureau === 'all' ? 'all' : String(u.bureau || '').replace('bureau_', ''), u.role, u.status]));
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = [{ wch: 24 }, { wch: 18 }, { wch: 18 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
+      XLSX.utils.book_append_sheet(wb, ws, 'មន្ត្រី'); XLSX.writeFile(wb, 'HRDD-DMS-មន្ត្រី-' + todayISO() + '.xlsx');
+      logActivity('Export បញ្ជីមន្ត្រី', (aoa.length - 1) + ' គណនី (គ្មានពាក្យសម្ងាត់)');
+    }
+    async function uiPick(input) {
+      const file = input.files && input.files[0]; input.value = '';
+      if (!file) return; if (!isAdmin()) return showToast('មានតែ Admin ទេដែលអាច Import មន្ត្រី', true);
+      if (!uiNeedXLSX()) return;
+      if (file.size > 2 * 1048576) return alert('⚠️ ឯកសារធំពេក (អតិបរមា 2MB)');
+      let aoa;
+      try {
+        const wb = /\.csv$/i.test(file.name) ? XLSX.read(await file.text(), { type: 'string', raw: true }) : XLSX.read(await file.arrayBuffer(), { type: 'array' });
+        aoa = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '', raw: false, blankrows: false });
+      } catch (e) { return alert('⚠️ មិនអាចអានឯកសារនេះបានទេ — សូមប្រើ .xlsx ឬ .csv តាមគំរូ'); }
+      const parsed = uiParse(aoa);
+      if (parsed.error) return alert('⚠️ ' + parsed.error);
+      UI = { file: file.name, rows: parsed.rows, done: null }; uiOpen();
+    }
+    // បម្លែងតារាង (ជួរ×ជួរឈរ) → ជួរដែលបានពិនិត្យ។ មិនប៉ះ Cloud — សាកល្បងបានដោយឯករាជ្យ
+    function uiParse(aoa) {
+      const rowsIn = (aoa || []).filter(r => Array.isArray(r) && r.some(c => String(c == null ? '' : c).trim() !== ''));
+      if (!rowsIn.length) return { error: 'ឯកសារទទេ' };
+      let hi = -1, map = null;
+      for (let i = 0; i < Math.min(rowsIn.length, 10) && hi < 0; i++) {
+        const m = {}; rowsIn[i].forEach((c, ci) => { const h = uiNorm(c).replace(/[*:()]/g, '').trim(); Object.keys(UI_SYN).forEach(k => { if (m[k] == null && UI_SYN[k].some(sy => h === sy || h.startsWith(sy + ' '))) m[k] = ci; }); });
+        if (m.username != null) { hi = i; map = m; }
+      }
+      if (hi < 0) return { error: 'រកមិនឃើញជួរក្បាលតារាង «Username» — សូមប្រើគំរូ (📄 ទាញយកគំរូ)' };
+      const body = rowsIn.slice(hi + 1); if (!body.length) return { error: 'មិនមានជួរទិន្នន័យក្រោមក្បាលតារាង' };
+      if (body.length > 500) return { error: 'Import បានច្រើនបំផុត ៥០០ នាក់ក្នុងមួយដង (ឯកសារនេះមាន ' + body.length + ' ជួរ)' };
+      const sup = isSuperAdmin(), seen = new Set(), meName = String(currentUser.username).toLowerCase();
+      const cell = (r, k) => map[k] == null ? '' : String(r[map[k]] == null ? '' : r[map[k]]).trim();
+      const rows = body.map((r, i) => {
+        const o = { line: hi + 2 + i, fullname: cell(r, 'fullname'), username: cell(r, 'username').replace(/^@/, ''), password: normalizeKhmerDigits(cell(r, 'password')), kind: 'error', note: '', payload: null };
+        const bRaw = cell(r, 'bureau'), rRaw = cell(r, 'role'), sRaw = cell(r, 'status');
+        let bureau = uiBureau(bRaw), role = uiRole(rRaw), status = uiStatus(sRaw);
+        const key = o.username.toLowerCase(), ex = usersData.find(u => String(u.username).toLowerCase() === key);
+        const errs = [];
+        if (!/^[A-Za-z0-9_.\-]{3,32}$/.test(o.username)) errs.push('Username ត្រូវមាន ៣–៣២ តួ (a-z 0-9 _ . -)');
+        else if (seen.has(key)) errs.push('Username ស្ទួនក្នុងឯកសារ');
+        seen.add(key);
+        if (bureau === null) errs.push('ការិយាល័យមិនត្រឹមត្រូវ៖ "' + bRaw + '" (ប្រើ 1–4 ឬ all)');
+        if (role === null) errs.push('Role មិនត្រឹមត្រូវ៖ "' + rRaw + '"');
+        if (status === null) errs.push('Status មិនត្រឹមត្រូវ៖ "' + sRaw + '"');
+        if (o.password && (o.password.length < 6 || !isLatin(o.password))) errs.push('Password ត្រូវមានយ៉ាងតិច ៦ តួ ជាអក្សរឡាតាំង');
+        if (!ex) { if (!o.fullname) errs.push('គណនីថ្មីត្រូវមានឈ្មោះពេញ'); if (!o.password) errs.push('គណនីថ្មីត្រូវមាន Password'); }
+        if (key === 'admin') errs.push('គណនីមេ admin មិន Import ទេ (កែក្នុងកម្មវិធីផ្ទាល់)');
+        else if (key === meName) errs.push('គណនីរបស់អ្នកផ្ទាល់ មិន Import ទេ');
+        if (ex && ex.status === 'Deleted') errs.push('គណនីនេះនៅក្នុងធុងសំរាម — សូមស្ដារវិញជាមុន');
+        role = role || (ex ? ex.role : 'Editor'); status = status || (ex ? ex.status : 'Active');
+        bureau = bureau || (ex ? ex.bureau : ((role === 'Admin' || role === 'SuperAdmin') ? 'all' : ''));
+        if (!bureau && !errs.length) errs.push('សូមបញ្ជាក់ការិយាល័យ (1–4)');
+        const adminLevel = role === 'Admin' || role === 'SuperAdmin' || bureau === 'all';
+        if (!sup && (adminLevel || (ex && isAdmin(ex)))) errs.push('មានតែ Super Admin ទេដែលអាច Import/កែគណនីកម្រិត Admin');
+        o.bureau = bureau || ''; o.role = role; o.status = status; o.fullname = o.fullname || (ex ? ex.fullname : '');
+        if (errs.length) { o.note = errs.join(' • '); return o; }
+        const flags = (!ex || ex.role !== role) ? rolePresetPerms(role) : PERM_KEYS.reduce((a, [k]) => (a[k] = ex.permissions?.[k] === true, a), {});
+        const ch = [];
+        if (ex) {
+          if (o.fullname !== ex.fullname) ch.push('ឈ្មោះ'); if (bureau !== ex.bureau) ch.push('ការិយាល័យ'); if (role !== ex.role) ch.push('Role'); if (status !== ex.status) ch.push('Status'); if (o.password) ch.push('Password ថ្មី');
+          if (!ch.length) { o.kind = 'same'; o.note = 'គ្មានការផ្លាស់ប្តូរ'; return o; }
+        }
+        o.kind = ex ? 'update' : 'new'; o.note = ex ? 'កែ៖ ' + ch.join(', ') : 'បង្កើតគណនីថ្មី';
+        o.payload = { user: { id: ex ? ex.id : generateSafeId(), username: ex ? ex.username : o.username, fullname: o.fullname, bureau, permissions: { ...flags, _role: role, _status: status } }, password: o.password || null };
+        return o;
+      });
+      return { rows };
+    }
+    function uiClose() { document.getElementById('ui-overlay')?.remove(); document.body.classList.remove('overflow-hidden'); UI = null; }
+    function uiOpen() {
+      document.getElementById('ui-overlay')?.remove();
+      const ov = document.createElement('div'); ov.id = 'ui-overlay'; ov.className = 'fixed inset-0 z-[100] bg-slate-100 overflow-y-auto';
+      document.body.appendChild(ov); document.body.classList.add('overflow-hidden'); uiRender();
+    }
+    function uiRender() {
+      const ov = document.getElementById('ui-overlay'); if (!ov || !UI) return;
+      const n = k => UI.rows.filter(r => r.kind === k).length, todo = n('new') + n('update');
+      const badge = r => {
+        const res = UI.done && r.result;
+        if (res) return res.ok ? '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">✅ រួច</span>' : '<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">❌ បរាជ័យ</span>';
+        return { new: '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">🆕 ថ្មី</span>', update: '<span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold">✏️ កែ</span>', same: '<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">＝ ដដែល</span>', error: '<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">⚠️ រំលង</span>' }[r.kind];
+      };
+      const okN = UI.done ? UI.rows.filter(r => r.result && r.result.ok).length : 0, badN = UI.done ? UI.rows.filter(r => r.result && !r.result.ok).length : 0;
+      ov.innerHTML = `<div class="max-w-6xl mx-auto p-3 sm:p-6 space-y-3 text-xs">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="min-w-0"><h3 class="text-base font-bold text-slate-900">📥 Import មន្ត្រី — ពិនិត្យមុនរក្សាទុក</h3><p class="text-slate-500 mt-0.5 truncate">📄 ${esc(UI.file)} · ${toKhmerDigits(UI.rows.length)} ជួរ</p></div>
+          <div class="flex flex-wrap items-center gap-2 font-bold"><span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800">🆕 ថ្មី ${toKhmerDigits(n('new'))}</span><span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800">✏️ កែ ${toKhmerDigits(n('update'))}</span><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">＝ ដដែល ${toKhmerDigits(n('same'))}</span><span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800">⚠️ រំលង ${toKhmerDigits(n('error'))}</span></div>
+        </div>
+        ${UI.done ? `<div class="p-4 rounded-2xl border ${badN ? 'border-amber-300 bg-amber-50 text-amber-900' : 'border-emerald-200 bg-emerald-50 text-emerald-900'} font-bold">លទ្ធផល៖ ជោគជ័យ ${toKhmerDigits(okN)} នាក់${badN ? ' · បរាជ័យ ' + toKhmerDigits(badN) + ' នាក់ (មើលមូលហេតុក្នុងតារាង)' : ''}។ 🔐 មន្ត្រីនឹងត្រូវប្តូរពាក្យសម្ងាត់ខ្លួនឯងពេល Login លើកដំបូង។ សូមលុបឯកសារ Excel ដែលមានពាក្យសម្ងាត់ចោល ហើយប្រាប់មន្ត្រីពីពាក្យសម្ងាត់ដំបូង។</div>` : (n('error') ? `<div class="p-3 rounded-2xl border border-rose-200 bg-rose-50 text-rose-800">ជួរដែលមាន ⚠️ នឹងត្រូវ <b>រំលង</b> — ជួរផ្សេងទៀតនៅតែ Import បាន។ អ្នកអាចកែឯកសារ រួចជ្រើសម្តងទៀត។</div>` : '')}
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-auto max-h-[62vh]"><table class="w-full text-left">
+          <thead class="bg-slate-100 text-slate-700 font-bold sticky top-0 whitespace-nowrap"><tr><th class="p-2.5">ជួរ</th><th class="p-2.5">សកម្មភាព</th><th class="p-2.5">ឈ្មោះពេញ</th><th class="p-2.5">Username</th><th class="p-2.5">Password</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">Role</th><th class="p-2.5">Status</th><th class="p-2.5">កំណត់សម្គាល់</th></tr></thead>
+          <tbody class="divide-y divide-slate-100">${UI.rows.map(r => `<tr class="${r.kind === 'error' || (r.result && !r.result.ok) ? 'bg-rose-50/60' : ''}"><td class="p-2.5 font-mono text-slate-500">${r.line}</td><td class="p-2.5 whitespace-nowrap">${badge(r)}</td><td class="p-2.5 font-bold text-slate-800">${esc(r.fullname)}</td><td class="p-2.5 font-mono text-emerald-700 font-bold">@${esc(r.username)}</td><td class="p-2.5 font-mono text-slate-500">${r.password ? '••••••' + ' (' + r.password.length + ')' : '—'}</td><td class="p-2.5 whitespace-nowrap">${esc(r.bureau === 'all' ? '👑 ទាំង ៤' : (r.bureau ? bureauShort(r.bureau) : '—'))}</td><td class="p-2.5">${esc(r.role || '')}</td><td class="p-2.5">${esc(r.status || '')}</td><td class="p-2.5 ${r.kind === 'error' || (r.result && !r.result.ok) ? 'text-rose-700 font-bold' : 'text-slate-600'}">${esc(r.result && !r.result.ok ? r.result.error : r.note)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="flex flex-wrap justify-end gap-2 pb-6">
+          <button type="button" onclick="uiClose()" class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-bold text-slate-700 form-input-focus">${UI.done ? 'បិទ' : 'បោះបង់'}</button>
+          ${UI.done ? '' : `<button type="button" id="ui-go" onclick="uiCommit()" ${todo ? '' : 'disabled'} class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold form-input-focus">✅ Import ${toKhmerDigits(todo)} នាក់</button>`}
+        </div></div>`;
+    }
+    async function uiCommit() {
+      if (!UI || UI.done || !isAdmin()) return;
+      const todo = UI.rows.filter(r => r.payload); if (!todo.length) return;
+      if (!db) return alert('⚠️ មិនមានការភ្ជាប់ Cloud');
+      if (!confirm('Import មន្ត្រី ' + todo.length + ' នាក់ (ថ្មី ' + todo.filter(r => r.kind === 'new').length + ' · កែ ' + todo.filter(r => r.kind === 'update').length + ')?')) return;
+      const btn = document.getElementById('ui-go'); if (btn) { btn.disabled = true; btn.textContent = '⏳ កំពុង Import…'; }
+      for (let i = 0; i < todo.length; i += 50) {
+        const chunk = todo.slice(i, i + 50); let res = null, err = '';
+        try { const r = await db.rpc('dms_admin_import_users', { p: chunk.map(x => x.payload) }); if (r.error) err = rpcErr(r.error); else res = r.data; } catch (e) { err = rpcErr(e); }
+        chunk.forEach((row, k) => { const one = Array.isArray(res) ? res[k] : null; row.result = one ? { ok: !!one.ok, error: one.error || '' } : { ok: false, error: err || 'គ្មានចម្លើយពី Cloud' }; });
+      }
+      todo.forEach(r => { r.password = r.password ? '•' : ''; if (r.payload) r.payload.password = null; });   // កុំទុកពាក្យសម្ងាត់ក្នុង memory
+      UI.done = true;
+      await pullCloudUsers(true); renderUsersTable(); uiRender();
+      const ok = todo.filter(r => r.result.ok), bad = todo.length - ok.length;
+      showToast('Import រួច៖ ជោគជ័យ ' + ok.length + (bad ? ' · បរាជ័យ ' + bad : ''), bad > 0);
+      logActivity('Import មន្ត្រីពីឯកសារ', UI.file + ' — ថ្មី ' + ok.filter(r => r.kind === 'new').length + ' · កែ ' + ok.filter(r => r.kind === 'update').length + (bad ? ' · បរាជ័យ ' + bad : ''));
     }
 
     function canManageUser(u) {
@@ -8680,18 +8974,20 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     async function toggleUserStatus(id) {
       const u = usersData.find(x => x.id === id);
       if (!canManageUser(u)) return alert('មិនអាចផ្អាកគណនីនេះបានទេ!');
-      setUserStatus(u, u.status === 'Active' ? 'Suspended' : 'Active');
-      await saveUsersLocal(); renderUsersTable(); await pushUsersToCloud([u]);
-      showToast('គណនី @' + u.username + ' → ' + u.status); logActivity('ប្តូរ Status: ' + u.status, '@' + u.username);
+      const next = { ...u, permissions: { ...(u.permissions || {}) } }; setUserStatus(next, u.status === 'Active' ? 'Suspended' : 'Active');
+      const r = await saveUserCloud(next); if (!r.ok) return alert('⚠️ ' + r.error);
+      renderUsersTable();
+      showToast('គណនី @' + r.user.username + ' → ' + r.user.status); logActivity('ប្តូរ Status: ' + r.user.status, '@' + r.user.username);
     }
 
     async function deleteUser(id) {
       const u = usersData.find(x => x.id === id);
       if (!canManageUser(u)) return alert('មិនអាចលុបគណនីនេះបានទេ!');
-      if (!confirm('តើអ្នកចង់ផ្លាស់គណនី @' + u.username + ' ទៅធុងសំរាមមែនទេ?')) return;
-      setUserStatus(u, 'Deleted');
-      u.permissions._deleted_at = nowISO(); u.permissions._deleted_by = currentUser.username;
-      await saveUsersLocal(); renderUsersTable(); await pushUsersToCloud([u]);
+      if (!confirm('តើអ្នកចង់ផ្លាស់គណនី @' + u.username + ' ទៅធុងសំរាមមែនទេ?\n(គណនីនេះនឹង Login លែងបានភ្លាម)')) return;
+      const next = { ...u, permissions: { ...(u.permissions || {}) } }; setUserStatus(next, 'Deleted');
+      next.permissions._deleted_at = nowISO(); next.permissions._deleted_by = currentUser.username;
+      const r = await saveUserCloud(next); if (!r.ok) return alert('⚠️ ' + r.error);
+      renderUsersTable();
       showToast('បានផ្លាស់គណនីទៅធុងសំរាម'); logActivity('លុបគណនី (Soft)', '@' + u.username);
     }
 
@@ -8741,7 +9037,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div><label class="block font-bold text-slate-700 mb-1">Role</label><select id="ud-role" onchange="udApplyPreset(this.value)" ${dis} class="${sel}">${roles.map(([v, l]) => `<option value="${v}" ${v === u.role ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
           <div><label class="block font-bold text-slate-700 mb-1">ការិយាល័យ</label><select id="ud-bureau" ${dis} class="${sel}">${bureaus.map(([v, l]) => `<option value="${v}" ${v === u.bureau ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
           <div><label class="block font-bold text-slate-700 mb-1">ស្ថានភាព</label><select id="ud-status" ${dis} class="${sel}">${STATUS_OPTS.map(([v, l]) => `<option value="${v}" ${v === u.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-          <div><label class="block font-bold text-slate-700 mb-1">លេខសម្ងាត់ថ្មី (ទុកទទេ = មិនប្តូរ)</label><input id="ud-password" type="text" minlength="6" autocomplete="off" ${dis} class="${sel}" placeholder="យ៉ាងតិច ៦ តួ"></div>
+          <div><label class="block font-bold text-slate-700 mb-1">លេខសម្ងាត់ថ្មី (ទុកទទេ = មិនប្តូរ) <span class="font-normal text-emerald-700">· មន្ត្រីត្រូវប្តូរម្តងទៀតពេល Login</span></label><input id="ud-password" type="text" minlength="6" autocomplete="off" ${dis} class="${sel}" placeholder="យ៉ាងតិច ៦ តួ"></div>
         </div>
         <div>
           <div class="text-xs font-bold text-slate-700 mb-2">🔐 សិទ្ធិ</div>
@@ -8792,12 +9088,12 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       if (!changes.length) return showToast('មិនមានការផ្លាស់ប្ដូរ', true);
       const prev = (u.permissions?._prev_usernames || []).filter(n => String(n).toLowerCase() !== username.toLowerCase());
       if (renamed) prev.push(oldName);
-      const upd = normalizeUserFromRecord({ ...u, username, fullname, role, bureau, status, password: pw || u.password, permissions: { ...(u.permissions || {}), ...flags, _role: role, _status: status, _prev_usernames: prev } });
-      Object.assign(u, upd);
-      await saveUsersLocal(); renderUsersTable();
-      const ok = await pushUsersToCloud([u]);
-      logActivity('កែគណនី: ' + changes.join(' • '), '@' + u.username);
-      showToast(ok ? 'បានធ្វើបច្ចុប្បន្នភាព @' + u.username : 'បានរក្សាទុកក្នុងឧបករណ៍ (មិនទាន់ឡើង Cloud)', !ok);
+      const upd = normalizeUserFromRecord({ ...u, username, fullname, role, bureau, status, permissions: { ...(u.permissions || {}), ...flags, _role: role, _status: status, _prev_usernames: prev } });
+      const r = await saveUserCloud(upd, pw || null);
+      if (!r.ok) return alert('⚠️ មិនអាចរក្សាទុក៖ ' + r.error);
+      renderUsersTable();
+      logActivity('កែគណនី: ' + changes.join(' • '), '@' + r.user.username);
+      showToast('បានធ្វើបច្ចុប្បន្នភាព @' + r.user.username + (pw ? ' (មន្ត្រីត្រូវប្តូរពាក្យសម្ងាត់ពេល Login ម្តងទៀត)' : ''));
       openUserDetail(u.id);
     }
 
@@ -8812,7 +9108,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const actions = editBtn + (canManageUser(u)
           ? `<button onclick="toggleUserStatus(${u.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs mr-3 form-input-focus">${u.status === 'Active' ? 'ផ្អាក (Suspend)' : 'បើកវិញ (Activate)'}</button><button onclick="deleteUser(${u.id})" class="text-rose-600 hover:underline font-bold text-xs form-input-focus">លុប</button>`
           : `<span class="text-slate-400 text-xs">${String(u.username).toLowerCase() === 'admin' ? 'Master Account' : (u.username.toLowerCase() === currentUser.username.toLowerCase() ? 'គណនីរបស់អ្នក' : 'Protected')}</span>`);
-        return `<tr ondblclick="if(!event.target.closest('button'))openUserDetail(${u.id})" title="Double-click ដើម្បីមើល/កែ" class="hover:bg-emerald-50 transition cursor-pointer select-none"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
+        return `<tr ondblclick="if(!event.target.closest('button'))openUserDetail(${u.id})" title="Double-click ដើម្បីមើល/កែ" class="hover:bg-emerald-50 transition cursor-pointer select-none"><td class="p-3.5"><div class="flex items-center gap-2.5">${av}<div><div class="font-bold text-slate-800 text-sm">${esc(u.fullname)}</div><div class="text-xs text-slate-500 font-semibold">${esc(u.role)}</div></div></div></td><td class="p-3.5 font-mono text-emerald-700 font-bold text-sm">@${esc(u.username)}</td><td class="p-3.5"><span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-700">${esc(bLabel)}</span></td><td class="p-3.5 text-xs">${st}${u.auth_id ? '' : ' <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold" title="គណនីនេះមិនទាន់មាន Login — ចុច ✏️ រួចកំណត់លេខសម្ងាត់ថ្មី">⚠️ គ្មាន Login</span>'}${u.permissions && u.permissions._must_change ? ' <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-bold" title="មន្ត្រីមិនទាន់ប្តូរពាក្យសម្ងាត់ដំបូង — Cloud មិនទាន់ឱ្យអានទិន្នន័យទេ">🔑 រង់ចាំប្តូរពាក្យសម្ងាត់</span>' : ''}</td><td class="p-3.5 text-right whitespace-nowrap">${actions}</td></tr>`;
       }).join('');
     }
 
@@ -8876,10 +9172,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // [EXT:backup] Backup/Restore៖ តារាងថ្មីត្រូវចូលក្នុង JSON backup (ពិនិត្យ DATA_TABLES)
     function backupEntireSystem() {
       const strip = r => { const c = { ...r }; delete c._pending; if (c.driveLink) delete c.fileDataUrl; return c; };
-      const full = { app: 'HRDD DMS', version: 'V2.5', exportedAt: nowISO(), exportedBy: currentUser?.username,
-        users: usersData, countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
-        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip), seat_plans: store.seat_plans.map(strip), exam_plans: store.exam_plans.map(strip) };
-      downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'DHRD_SYSTEM_BACKUP_V2.5_' + todayISO() + '.json');
+      const full = { app: 'HRDD DMS', version: APP_VERSION, exportedAt: nowISO(), exportedBy: currentUser?.username,
+        users: usersData.map(u => { const c = { ...u }; delete c.auth_id; return c; }), countries: countriesData, documents: store.docs.map(strip), dispatches: store.dispatches.map(strip),
+        exams: store.exams.map(strip), trainings: store.trainings.map(strip), certificates: store.certs.map(strip), report_notes: store.report_notes.map(strip), exam_tasks: store.exam_tasks.map(strip), cert_courses: store.cert_courses.map(strip), workshops: store.workshops.map(strip), seat_plans: store.seat_plans.map(strip), exam_plans: store.exam_plans.map(strip),
+        app_lists: Object.keys(LIST_DEFS).filter(k => Array.isArray(appLists[k])).map(k => ({ key: k, items: appLists[k] })), settings: sysSettings };
+      downloadBlob(new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' }), 'HRDD_DMS_BACKUP_' + APP_VERSION + '_' + todayISO() + '.json');
       try { localStorage.setItem('hrd_last_backup', nowISO()); } catch (e) { }
       showToast('បាន Export Backup ជោគជ័យ!'); logActivity('Export Backup JSON', 'Full system');
     }
@@ -8903,9 +9200,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       });
       const users = Array.isArray(data.users) ? data.users : [];
       const countries = Array.isArray(data.countries) ? data.countries.filter(c => c && c.code) : [];
-      const total = DATA_TABLES.reduce((s, t) => s + clean[t].length, 0) + users.length + countries.length;
+      const lists = (Array.isArray(data.app_lists) ? data.app_lists : []).filter(l => l && LIST_DEFS[l.key] && Array.isArray(l.items));
+      const bSettings = (data.settings && typeof data.settings === 'object' && !Array.isArray(data.settings) && Object.keys(data.settings).length) ? data.settings : null;
+      const total = DATA_TABLES.reduce((s, t) => s + clean[t].length, 0) + countries.length + lists.length + (bSettings ? 1 : 0);
       if (!total) return alert('⚠️ មិនមានទិន្នន័យក្នុងហ្វាល Backup នេះទេ!');
-      const summary = `ឯកសារ: ${clean.docs.length}\nលិខិត: ${clean.dispatches.length}\nប្រឡង: ${clean.exams.length}\nវគ្គ: ${clean.trainings.length}\nសញ្ញាបត្រ: ${clean.certs.length}\nគណនី: ${users.length}\nប្រទេស: ${countries.length}`;
+      const summary = `ឯកសារ: ${clean.docs.length}\nលិខិត: ${clean.dispatches.length}\nប្រឡង: ${clean.exams.length}\nវគ្គ: ${clean.trainings.length}\nសញ្ញាបត្រ: ${clean.certs.length}\nគណនី: ${users.length} (មិន Restore — ប្រើ Import មន្ត្រី)\nប្រទេស: ${countries.length}\nបញ្ជីកំណត់: ${lists.length}\nការកំណត់ប្រព័ន្ធ (Settings/Logo): ${bSettings ? 'មាន' : 'គ្មាន'}`;
       if (!confirm('♻️ Restore ពី Backup (' + (data.version || '?') + ', ' + (data.exportedAt || '?') + ')\n\n' + summary + '\n\nកំណត់ត្រាដែលមាន ID ដូចគ្នានឹងត្រូវជំនួស។ បន្ត?')) return;
       showToast('កំពុង Restore... សូមរង់ចាំ');
       for (const t of DATA_TABLES) { if (clean[t].length) await persistMany(t, clean[t]); }
@@ -8914,7 +9213,10 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         countriesData = Array.from(map.values()); await localDB.countries.bulkPut(countriesData).catch(() => {});
         if (db) await cloudUpsert('countries', countriesData, { onConflict: 'code' });
       }
-      if (users.length) { usersData = mergeUserLists(usersData, users); await saveUsersLocal(); await pushUsersToCloud(usersData, false); }
+      // V4.0: គណនីមិន Restore ពី Backup ទេ (Backup គ្មានពាក្យសម្ងាត់) — ប្រើ «📥 Import មន្ត្រី» ជំនួស
+      for (const l of lists) { appLists[l.key] = l.items; await localDB.app_lists.put({ key: l.key, items: l.items }).catch(() => { }); await pushList(l.key); }
+      if (lists.length) { applyLists(); fillDocCatFilter(); }
+      if (bSettings) { sysSettings = bSettings; await localDB.app_lists.put({ key: SETTINGS_KEY, items: sysSettings }).catch(() => { }); applySettings(); await pushSettings(); }
       renderTablesAndStatsOnly(); populateCountryDropdowns(); refreshOpenSystemTab();
       const pending = DATA_TABLES.reduce((s, t) => s + store[t].filter(r => r._pending).length, 0);
       showToast(pending ? ('Restore រួច — ' + pending + ' កំណត់ត្រារង់ចាំ Sync ឡើង Cloud') : 'Restore ជោគជ័យ និង Sync ឡើង Cloud រួចរាល់!', pending > 0);
