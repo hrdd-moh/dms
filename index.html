@@ -8967,7 +8967,11 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
 
     // ===================== V4.1: បញ្ជីមន្ត្រី (Staff roster) — រក្សាក្នុង app_lists key='staff' =====================
     // វាល៖ {id, staff_id(អត្តលេខ), name, gender, dob, position, contact, bureau, username, status}
-    const STAFF_HEAD = ['ល.រ', 'អត្តលេខមន្ត្រី', 'គោត្តនាមនិងនាម', 'ភេទ', 'ថ្ងៃខែឆ្នាំកំណើត', 'មុខតំណែង', 'ការិយាល័យ', 'លេខទូរស័ព្ទ / Email', 'Username'];
+    const STAFF_HEAD = ['ល.រ', 'អត្តលេខមន្ត្រី', 'គោត្តនាមនិងនាម', 'ភេទ', 'ថ្ងៃខែឆ្នាំកំណើត', 'មុខតំណែង', 'ការិយាល័យ', 'ថ្ងៃខែចូលបម្រើការងារ', 'កាំប្រាក់', 'ឋានន្តរស័ក្តិ/ក្របខ័ណ្ឌ', 'កម្រិតវប្បធម៌', 'ជំនាញ/បច្ចេកទេស', 'ស្ថានភាពការងារ', 'លេខទូរស័ព្ទ / Email', 'កំណត់ចំណាំ', 'Username'];
+    const STAFF_KEYS = ['staff_id', 'name', 'gender', 'dob', 'position', 'bureau', 'start_date', 'grade', 'rank', 'edu', 'skill', 'work_status', 'contact', 'note', 'username'];
+    const WORK_STATUS = ['កំពុងបម្រើការងារ', 'ឈប់សម្រាក', 'បេសកកម្ម/សិក្សា', 'និវត្តន៍'];
+    const STAFF_SENSITIVE = ['dob', 'grade', 'contact'];   // លាក់ពីអ្នកមិនមែន Admin
+    function stYears(d) { const m = /(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/.exec(normalizeKhmerDigits(d || '')); if (!m) return ''; const s = new Date(+m[3], +m[2] - 1, +m[1]), n = new Date(); if (isNaN(s) || s > n) return ''; let y = n.getFullYear() - s.getFullYear(); if (n < new Date(n.getFullYear(), s.getMonth(), s.getDate())) y--; return y; }
     const STAFF_SYN = {
       staff_id: ['អត្តលេខមន្ត្រី', 'អត្តលេខ', 'លេខសម្គាល់មន្ត្រី', 'លេខសម្គាល់', 'staffid', 'id', 'employeeid'],
       name: ['គោត្តនាមនិងនាម', 'គោត្តនាម', 'ឈ្មោះពេញ', 'ឈ្មោះមន្ត្រី', 'ឈ្មោះ', 'fullname', 'name'],
@@ -8976,6 +8980,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       position: ['មុខតំណែង', 'តួនាទី', 'តួនាទី/មុខតំណែង', 'position', 'title', 'jobtitle'],
       contact: ['លេខទូរស័ព្ទ/email', 'លេខទូរស័ព្ទ', 'ទូរស័ព្ទ', 'email', 'phone', 'contact', 'tel'],
       bureau: ['ការិយាល័យ', 'bureau', 'office', 'ការិ'],
+      start_date: ['ថ្ងៃខែចូលបម្រើការងារ', 'ថ្ងៃចូលបម្រើការងារ', 'ថ្ងៃខែចូលបម្រើ', 'ចូលបម្រើការងារ', 'startdate', 'hiredate', 'joindate'],
+      grade: ['កាំប្រាក់', 'កាំប្រាក់ខែ', 'ក្របខ័ណ្ឌកាំប្រាក់', 'salarygrade', 'grade'],
+      rank: ['ឋានន្តរស័ក្តិ/ក្របខ័ណ្ឌ', 'ឋានន្តរស័ក្តិនិងក្របខ័ណ្ឌ', 'ឋានន្តរស័ក្តិ', 'ក្របខ័ណ្ឌ', 'rank', 'category'],
+      edu: ['កម្រិតវប្បធម៌', 'កម្រិតសិក្សា', 'ការសិក្សា', 'វុឌ្ឍិ', 'education', 'degree'],
+      skill: ['ជំនាញ/បច្ចេកទេស', 'ជំនាញនិងបច្ចេកទេស', 'ជំនាញ', 'បច្ចេកទេស', 'skill', 'specialty'],
+      work_status: ['ស្ថានភាពការងារ', 'ស្ថានភាព', 'workstatus', 'status'],
+      note: ['កំណត់ចំណាំ', 'ចំណាំ', 'note', 'notes', 'remark'],
       username: ['username', 'user', 'ឈ្មោះគណនី', 'account', 'login']
     };
     const stNorm = v => normalizeKhmerDigits(String(v == null ? '' : v)).replace(/\s+/g, '').toLowerCase();
@@ -8992,7 +9003,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     function renderStaffPanel() {
       const el = document.getElementById('sub-lists'); if (!el) return;
       const adm = isAdmin(), all = staffList(), q = stNorm(STF.q);
-      const rows = all.map((s, i) => ({ s, i })).filter(({ s }) => (STF.bureau === 'all' || s.bureau === STF.bureau) && (!q || stNorm([s.staff_id, s.name, s.position, s.contact, s.username].join(' ')).includes(q)));
+      const rows = all.map((s, i) => ({ s, i })).filter(({ s }) => (STF.bureau === 'all' || s.bureau === STF.bureau) && (!q || stNorm([s.staff_id, s.name, s.position, s.skill, s.rank, s.edu, s.contact, s.username].join(' ')).includes(q)));
       el.innerHTML = `<div class="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4 space-y-3">
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <input id="stf-q" value="${esc(STF.q)}" oninput="STF.q=this.value;stfRefresh()" placeholder="🔍 ស្វែងរក ឈ្មោះ / អត្តលេខ / មុខតំណែង…" class="form-input-focus flex-1 min-w-[180px] border border-slate-200 rounded-xl p-2.5 bg-white">
@@ -9004,13 +9015,13 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         </div>
         <p class="text-[11px] text-slate-500">👥 មន្ត្រីសរុប <b id="stf-count">${toKhmerDigits(rows.length)}</b>/${toKhmerDigits(all.length)} នាក់ · ${adm ? 'ចុច 🔑 ដើម្បីបង្កើតគណនី Login ពីបញ្ជីនេះ (ពាក្យសម្ងាត់ដំបូង = @Username + ៣ខ្ទង់ចុងអត្តលេខ ហើយមន្ត្រីត្រូវប្តូរពេល Login លើកដំបូង)' : 'មានតែ Admin ទេដែលអាចកែបញ្ជីនេះ'}</p></div>
       <div class="border border-slate-200 rounded-2xl overflow-auto max-h-[58vh] text-xs"><table class="w-full text-left">
-        <thead class="bg-emerald-50 text-emerald-900 font-bold border-b border-emerald-100 sticky top-0 whitespace-nowrap"><tr><th class="p-2.5 w-12 text-center">ល.រ</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">គោត្តនាមនិងនាម</th><th class="p-2.5">ភេទ</th><th class="p-2.5">ថ្ងៃកំណើត</th><th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ទូរស័ព្ទ/Email</th><th class="p-2.5">គណនី Login</th>${adm ? '<th class="p-2.5 text-right">សកម្មភាព</th>' : ''}</tr></thead>
-        <tbody id="stf-body" class="divide-y divide-slate-100">${rows.length ? rows.map(({ s, i }) => stfRow(s, i, adm)).join('') : `<tr><td colspan="10" class="p-6 text-center text-slate-400">${all.length ? 'រកមិនឃើញ' : 'មិនទាន់មានមន្ត្រី — ចុច ➕ ឬ 📥 Import Excel'}</td></tr>`}</tbody></table></div>`;
+        <thead class="bg-emerald-50 text-emerald-900 font-bold border-b border-emerald-100 sticky top-0 whitespace-nowrap"><tr><th class="p-2.5 w-12 text-center">ល.រ</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">គោត្តនាមនិងនាម</th><th class="p-2.5">ភេទ</th>${adm ? '<th class="p-2.5">ថ្ងៃកំណើត</th>' : ''}<th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ជំនាញ/បច្ចេកទេស</th><th class="p-2.5">ចូលបម្រើ (ឆ្នាំ)</th>${adm ? '<th class="p-2.5">កាំប្រាក់</th>' : ''}<th class="p-2.5">ឋានន្តរស័ក្តិ</th><th class="p-2.5">វប្បធម៌</th><th class="p-2.5">ស្ថានភាព</th>${adm ? '<th class="p-2.5">ទូរស័ព្ទ/Email</th>' : ''}<th class="p-2.5">គណនី Login</th>${adm ? '<th class="p-2.5 text-right">សកម្មភាព</th>' : ''}</tr></thead>
+        <tbody id="stf-body" class="divide-y divide-slate-100">${rows.length ? rows.map(({ s, i }) => stfRow(s, i, adm)).join('') : `<tr><td colspan="16" class="p-6 text-center text-slate-400">${all.length ? 'រកមិនឃើញ' : 'មិនទាន់មានមន្ត្រី — ចុច ➕ ឬ 📥 Import Excel'}</td></tr>`}</tbody></table></div>`;
     }
     function stfRow(s, i, adm) {
       const a = stAcct(s);
       const acct = a ? `<span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 font-bold">@${esc(a.username)}</span> <span class="text-slate-500">${esc(a.role)}</span>${a.status !== 'Active' ? ` <span class="text-rose-600 font-bold">${esc(a.status)}</span>` : ''}` : '<span class="text-slate-400">— គ្មាន</span>';
-      return `<tr class="hover:bg-slate-50/60"><td class="p-2.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-2.5 font-mono">${esc(s.staff_id)}</td><td class="p-2.5 font-bold text-slate-800">${esc(s.name)}</td><td class="p-2.5">${esc(s.gender)}</td><td class="p-2.5 whitespace-nowrap">${esc(s.dob)}</td><td class="p-2.5">${esc(s.position)}</td><td class="p-2.5 whitespace-nowrap">${esc(stBureauName(s.bureau))}</td><td class="p-2.5">${esc(s.contact)}</td><td class="p-2.5 whitespace-nowrap">${acct}</td>${adm ? `<td class="p-2.5 text-right whitespace-nowrap"><button title="${a ? 'កែ Role/សិទ្ធិ' : 'បង្កើតគណនី Login'}" onclick="stfAcct('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-amber-50">🔑</button><button title="កែ" onclick="stfEdit('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-sky-50">✏️</button><button title="លុប" onclick="stfDel('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-rose-50">🗑️</button></td>` : ''}</tr>`;
+      return `<tr class="hover:bg-slate-50/60"><td class="p-2.5 text-center text-slate-500">${toKhmerDigits(i + 1)}</td><td class="p-2.5 font-mono">${esc(s.staff_id)}</td><td class="p-2.5 font-bold text-slate-800">${esc(s.name)}</td><td class="p-2.5">${esc(s.gender)}</td>${adm ? `<td class="p-2.5 whitespace-nowrap">${esc(s.dob)}</td>` : ''}<td class="p-2.5">${esc(s.position)}</td><td class="p-2.5 whitespace-nowrap">${esc(stBureauName(s.bureau))}</td><td class="p-2.5">${esc(s.skill)}</td><td class="p-2.5 whitespace-nowrap">${esc(s.start_date)}${stYears(s.start_date) !== '' ? ` <span class="text-slate-400">(${toKhmerDigits(stYears(s.start_date))} ឆ្នាំ)</span>` : ''}</td>${adm ? `<td class="p-2.5 whitespace-nowrap">${esc(s.grade)}</td>` : ''}<td class="p-2.5">${esc(s.rank)}</td><td class="p-2.5">${esc(s.edu)}</td><td class="p-2.5 whitespace-nowrap">${s.work_status && s.work_status !== WORK_STATUS[0] ? `<span class="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-800 font-bold">${esc(s.work_status)}</span>` : esc(s.work_status)}</td>${adm ? `<td class="p-2.5">${esc(s.contact)}</td>` : ''}<td class="p-2.5 whitespace-nowrap">${acct}</td>${adm ? `<td class="p-2.5 text-right whitespace-nowrap"><button title="${a ? 'កែ Role/សិទ្ធិ' : 'បង្កើតគណនី Login'}" onclick="stfAcct('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-amber-50">🔑</button><button title="កែ" onclick="stfEdit('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-sky-50">✏️</button><button title="លុប" onclick="stfDel('${esc(s.id)}')" class="px-2 py-1 rounded-lg hover:bg-rose-50">🗑️</button></td>` : ''}</tr>`;
     }
     function stfRefresh() { const pos = document.getElementById('stf-q')?.selectionStart; renderStaffPanel(); const q = document.getElementById('stf-q'); if (q) { q.focus(); try { q.setSelectionRange(pos, pos); } catch (e) { } } }
     function stfClose(id) { document.getElementById(id)?.remove(); }
@@ -9021,8 +9032,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     }
     function stfEdit(id) {
       if (!isAdmin()) return;
-      const s = staffList().find(x => x.id === id) || { id: '', staff_id: '', name: '', gender: '', dob: '', position: '', contact: '', bureau: '', username: '' };
-      stfModal('stf-edit', `<form onsubmit="stfSave(event,'${esc(s.id)}')" class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-3 text-xs">
+      const s = staffList().find(x => x.id === id) || { id: '', staff_id: '', name: '', gender: '', dob: '', position: '', contact: '', bureau: '', username: '', start_date: '', grade: '', rank: '', edu: '', skill: '', work_status: WORK_STATUS[0], note: '' };
+      const wsOpts = [...new Set([...WORK_STATUS, s.work_status].filter(Boolean))].map(w => `<option ${s.work_status === w ? 'selected' : ''}>${esc(w)}</option>`).join('');
+      stfModal('stf-edit', `<form onsubmit="stfSave(event,'${esc(s.id)}')" class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-3 text-xs">
         <h3 class="text-base font-bold text-slate-900">${s.id ? '✏️ កែព័ត៌មានមន្ត្រី' : '➕ បន្ថែមមន្ត្រី'}</h3>
         <div class="grid grid-cols-2 gap-3">
           <div><label class="block font-bold mb-1">អត្តលេខមន្ត្រី</label><input id="sf-staff_id" value="${esc(s.staff_id)}" class="${stfInp}"></div>
@@ -9031,7 +9043,14 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
           <div><label class="block font-bold mb-1">ថ្ងៃខែឆ្នាំកំណើត</label><input id="sf-dob" value="${esc(s.dob)}" placeholder="ឧ. 15/01/1985" class="${stfInp}"></div>
           <div><label class="block font-bold mb-1">ការិយាល័យ</label><select id="sf-bureau" class="${stfInp}"><option value=""></option>${[1, 2, 3, 4].map(n => `<option value="bureau_${n}" ${s.bureau === 'bureau_' + n ? 'selected' : ''}>ការិយាល័យទី${toKhmerDigits(n)}</option>`).join('')}<option value="all" ${s.bureau === 'all' ? 'selected' : ''}>គ្រប់ការិយាល័យ</option></select></div>
           <div class="col-span-2"><label class="block font-bold mb-1">មុខតំណែង / តួនាទី</label><input id="sf-position" value="${esc(s.position)}" class="${stfInp}"></div>
-          <div class="col-span-2"><label class="block font-bold mb-1">លេខទូរស័ព្ទ / Email</label><input id="sf-contact" value="${esc(s.contact)}" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ថ្ងៃខែចូលបម្រើការងារ</label><input id="sf-start_date" value="${esc(s.start_date)}" placeholder="ឧ. 01/03/2010" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">កាំប្រាក់</label><input id="sf-grade" value="${esc(s.grade)}" placeholder="ឧ. ក.៣.៥" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ឋានន្តរស័ក្តិ / ក្របខ័ណ្ឌ</label><input id="sf-rank" value="${esc(s.rank)}" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">កម្រិតវប្បធម៌</label><input id="sf-edu" value="${esc(s.edu)}" placeholder="ឧ. បរិញ្ញាបត្រ / ថ្នាក់បណ្ឌិត" class="${stfInp}"></div>
+          <div class="col-span-2"><label class="block font-bold mb-1">ជំនាញ / បច្ចេកទេស</label><input id="sf-skill" value="${esc(s.skill)}" class="${stfInp}"></div>
+          <div><label class="block font-bold mb-1">ស្ថានភាពការងារ</label><select id="sf-work_status" class="${stfInp}">${wsOpts}</select></div>
+          <div><label class="block font-bold mb-1">លេខទូរស័ព្ទ / Email</label><input id="sf-contact" value="${esc(s.contact)}" class="${stfInp}"></div>
+          <div class="col-span-2"><label class="block font-bold mb-1">កំណត់ចំណាំ</label><input id="sf-note" value="${esc(s.note)}" class="${stfInp}"></div>
         </div>
         <div class="flex justify-end gap-2 pt-2"><button type="button" onclick="stfClose('stf-edit')" class="px-4 py-2.5 rounded-xl border border-slate-300 font-bold">បោះបង់</button><button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold">💾 រក្សាទុក</button></div></form>`);
       setTimeout(() => document.getElementById('sf-name')?.focus(), 50);
@@ -9039,7 +9058,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     async function stfSave(e, id) {
       e.preventDefault(); if (!isAdmin()) return;
       const v = k => document.getElementById('sf-' + k).value.trim(), list = staffList().slice();
-      const o = { staff_id: normalizeKhmerDigits(v('staff_id')), name: v('name'), gender: v('gender'), dob: v('dob'), position: v('position'), contact: v('contact'), bureau: v('bureau') };
+      const o = { staff_id: normalizeKhmerDigits(v('staff_id')), name: v('name'), gender: v('gender'), dob: v('dob'), position: v('position'), contact: v('contact'), bureau: v('bureau'), start_date: v('start_date'), grade: v('grade'), rank: v('rank'), edu: v('edu'), skill: v('skill'), work_status: v('work_status'), note: v('note') };
       if (!o.name) return;
       if (o.staff_id && list.some(x => x.id !== id && stNorm(x.staff_id) === stNorm(o.staff_id))) return alert('អត្តលេខនេះមានរួចហើយ!');
       const i = list.findIndex(x => x.id === id);
@@ -9090,15 +9109,15 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
     // ---- Excel ----
     function stfTemplate() {
       if (!uiNeedXLSX()) return;
-      const aoa = [STAFF_HEAD, [1, '1234567', 'សុខ សុភា', 'ប្រុស', '15/01/1985', 'ប្រធានការិយាល័យ', 1, '012 345 678', ''], [2, '7654321', 'ចាន់ ដារា', 'ស្រី', '03/07/1990', 'មន្ត្រី', 2, 'dara@example.com', '']];
-      const help = [['ជួរឈរ', 'ការពន្យល់'], ['ល.រ', 'លេខរៀង (មិនចាំបាច់ — ប្រព័ន្ធរៀបលេខឱ្យ)'], ['អត្តលេខមន្ត្រី', 'ប្រើផ្គូផ្គងពេល Import ម្តងទៀត (កែព័ត៌មានដែលមានរួច) និងប្រើ ៣ខ្ទង់ចុងសម្រាប់ពាក្យសម្ងាត់ដំបូង'], ['គោត្តនាមនិងនាម', 'ចាំបាច់'], ['ភេទ', 'ប្រុស / ស្រី'], ['ការិយាល័យ', '1–4 ឬ all (មិនចាំបាច់)'], ['Username', 'មិនចាំបាច់ — បើដាក់ ត្រូវតែជា Username របស់គណនីដែលមានរួច ដើម្បីភ្ជាប់']];
-      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = [{ wch: 6 }, { wch: 16 }, { wch: 26 }, { wch: 8 }, { wch: 18 }, { wch: 26 }, { wch: 12 }, { wch: 22 }, { wch: 16 }];
+      const aoa = [STAFF_HEAD, [1, '1234567', 'សុខ សុភា', 'ប្រុស', '15/01/1985', 'ប្រធានការិយាល័យ', 1, '01/03/2010', 'ក.៣.៥', 'ក្របខ័ណ្ឌ ក', 'បរិញ្ញាបត្រ', 'គ្រប់គ្រងសុខាភិបាល', 'កំពុងបម្រើការងារ', '012 345 678', '', ''], [2, '7654321', 'ចាន់ ដារា', 'ស្រី', '03/07/1990', 'មន្ត្រី', 2, '15/09/2015', 'ខ.១.២', 'ក្របខ័ណ្ឌ ខ', 'បរិញ្ញាបត្រជាន់ខ្ពស់', 'គិលានុបដ្ឋាក', 'កំពុងបម្រើការងារ', 'dara@example.com', '', '']];
+      const help = [['ជួរឈរ', 'ការពន្យល់'], ['ល.រ', 'លេខរៀង (មិនចាំបាច់ — ប្រព័ន្ធរៀបលេខឱ្យ)'], ['អត្តលេខមន្ត្រី', 'ប្រើផ្គូផ្គងពេល Import ម្តងទៀត (កែព័ត៌មានដែលមានរួច) និងប្រើ ៣ខ្ទង់ចុងសម្រាប់ពាក្យសម្ងាត់ដំបូង'], ['គោត្តនាមនិងនាម', 'ចាំបាច់'], ['ភេទ', 'ប្រុស / ស្រី'], ['ការិយាល័យ', '1–4 ឬ all (មិនចាំបាច់)'], ['ថ្ងៃខែចូលបម្រើការងារ', 'ទម្រង់ ថ្ង/ខែ/ឆ្នាំ ឧ. 01/03/2010 — ប្រព័ន្ធគណនាឆ្នាំបម្រើឱ្យ'], ['កាំប្រាក់ · ឋានន្តរស័ក្តិ · កម្រិតវប្បធម៌ · ជំនាញ · ស្ថានភាពការងារ · កំណត់ចំណាំ', 'អត្ថបទសេរី (ស្ថានភាពការងារ ឧ. កំពុងបម្រើការងារ / ឈប់សម្រាក / បេសកកម្ម/សិក្សា / និវត្តន៍) — មិនចាំបាច់ទាំងអស់'], ['Username', 'មិនចាំបាច់ — បើដាក់ ត្រូវតែជា Username របស់គណនីដែលមានរួច ដើម្បីភ្ជាប់']];
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = [6, 16, 26, 8, 18, 26, 12, 20, 12, 20, 20, 24, 18, 22, 20, 16].map(w => ({ wch: w }));
       const wh = XLSX.utils.aoa_to_sheet(help); wh['!cols'] = [{ wch: 18 }, { wch: 90 }];
       XLSX.utils.book_append_sheet(wb, ws, 'បញ្ជីមន្ត្រី'); XLSX.utils.book_append_sheet(wb, wh, 'របៀបបំពេញ'); XLSX.writeFile(wb, 'HRDD-DMS-គំរូ-បញ្ជីមន្ត្រី.xlsx');
     }
     function stfExport() {
       if (!uiNeedXLSX()) return; const l = staffList(); if (!l.length) return showToast('មិនទាន់មានមន្ត្រី', true);
-      const aoa = [STAFF_HEAD].concat(l.map((s, i) => [i + 1, s.staff_id, s.name, s.gender, s.dob, s.position, s.bureau === 'all' ? 'all' : String(s.bureau || '').replace('bureau_', ''), s.contact, s.username || '']));
+      const aoa = [STAFF_HEAD].concat(l.map((s, i) => [i + 1, s.staff_id, s.name, s.gender, s.dob, s.position, s.bureau === 'all' ? 'all' : String(s.bureau || '').replace('bureau_', ''), s.start_date || '', s.grade || '', s.rank || '', s.edu || '', s.skill || '', s.work_status || '', s.contact, s.note || '', s.username || '']));
       const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(aoa); XLSX.utils.book_append_sheet(wb, ws, 'បញ្ជីមន្ត្រី'); XLSX.writeFile(wb, 'HRDD-DMS-បញ្ជីមន្ត្រី-' + todayISO() + '.xlsx');
       logActivity('Export បញ្ជីមន្ត្រី', l.length + ' នាក់');
     }
@@ -9128,7 +9147,7 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
       const cell = (r, k) => map[k] == null ? '' : String(r[map[k]] == null ? '' : r[map[k]]).trim();
       const cur = staffList(), seen = new Set();
       const rows = body.map((r, i) => {
-        const o = { line: hi + 2 + i, staff_id: normalizeKhmerDigits(cell(r, 'staff_id')), name: cell(r, 'name').replace(/\s+/g, ' '), gender: '', dob: cell(r, 'dob'), position: cell(r, 'position'), contact: cell(r, 'contact'), bureau: '', username: cell(r, 'username').replace(/^@/, ''), kind: 'error', note: '', rec: null };
+        const o = { line: hi + 2 + i, staff_id: normalizeKhmerDigits(cell(r, 'staff_id')), name: cell(r, 'name').replace(/\s+/g, ' '), gender: '', dob: cell(r, 'dob'), position: cell(r, 'position'), contact: cell(r, 'contact'), bureau: '', start_date: cell(r, 'start_date'), grade: cell(r, 'grade'), rank: cell(r, 'rank'), edu: cell(r, 'edu'), skill: cell(r, 'skill'), work_status: cell(r, 'work_status'), remark: cell(r, 'note'), username: cell(r, 'username').replace(/^@/, ''), kind: 'error', note: '', rec: null };
         const errs = [], g = stGender(cell(r, 'gender')), b = uiBureau(cell(r, 'bureau'));
         if (!o.name) errs.push('ខ្វះឈ្មោះ'); if (g === null) errs.push('ភេទមិនត្រឹមត្រូវ'); if (b === null) errs.push('ការិយាល័យមិនត្រឹមត្រូវ (1–4 / all)');
         o.gender = g || ''; o.bureau = b || '';
@@ -9138,8 +9157,9 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         const ex = cur.find(x => o.staff_id ? stNorm(x.staff_id) === stNorm(o.staff_id) : (stNorm(x.name) === stNorm(o.name) && stNorm(x.dob) === stNorm(o.dob)));
         if (errs.length) { o.note = errs.join(' • '); return o; }
         const rec = { id: ex ? ex.id : 's' + generateSafeId(), status: ex ? ex.status : 'Active', username: o.username || (ex ? ex.username : ''), staff_id: o.staff_id, name: o.name, gender: o.gender || (ex ? ex.gender : ''), dob: o.dob || (ex ? ex.dob : ''), position: o.position || (ex ? ex.position : ''), contact: o.contact || (ex ? ex.contact : ''), bureau: o.bureau || (ex ? ex.bureau : '') };
+        ['start_date', 'grade', 'rank', 'edu', 'skill'].forEach(k => { rec[k] = o[k] || (ex ? ex[k] || '' : ''); }); rec.note = o.remark || (ex ? ex.note || '' : ''); rec.work_status = o.work_status || (ex ? ex.work_status : '') || WORK_STATUS[0];
         if (ex) {
-          const ch = ['staff_id', 'name', 'gender', 'dob', 'position', 'contact', 'bureau', 'username'].filter(k => String(rec[k] || '') !== String(ex[k] || ''));
+          const ch = STAFF_KEYS.filter(k => String(rec[k] || '') !== String(ex[k] || ''));
           if (!ch.length) { o.kind = 'same'; o.note = 'គ្មានការផ្លាស់ប្តូរ'; return o; }
           o.kind = 'update'; o.note = 'កែ៖ ' + ch.length + ' វាល';
         } else { o.kind = 'new'; o.note = 'មន្ត្រីថ្មី'; }
@@ -9157,8 +9177,8 @@ const C=M["QRCode"];return {matrix:function(text){for(let t=1;t<=40;t++){try{con
         <div class="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3"><div><h3 class="text-base font-bold text-slate-900">📥 Import បញ្ជីមន្ត្រី — ពិនិត្យមុនរក្សាទុក</h3><p class="text-slate-500 mt-0.5">📄 ${esc(I.file)} · ${toKhmerDigits(I.rows.length)} ជួរ</p></div>
           <div class="flex flex-wrap gap-2 font-bold"><span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800">🆕 ថ្មី ${toKhmerDigits(n('new'))}</span><span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800">✏️ កែ ${toKhmerDigits(n('update'))}</span><span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">＝ ដដែល ${toKhmerDigits(n('same'))}</span><span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800">❌ កំហុស ${toKhmerDigits(n('error'))}</span></div></div>
         ${n('error') ? '<div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold">ជួរដែលមានកំហុសនឹងត្រូវរំលង — Import តែជួរត្រឹមត្រូវ</div>' : ''}
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-auto max-h-[62vh]"><table class="w-full text-left"><thead class="bg-slate-100 font-bold sticky top-0 whitespace-nowrap"><tr><th class="p-2.5">ជួរ</th><th class="p-2.5">សកម្មភាព</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">ឈ្មោះ</th><th class="p-2.5">ភេទ</th><th class="p-2.5">ថ្ងៃកំណើត</th><th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ចំណាំ</th></tr></thead>
-        <tbody class="divide-y divide-slate-100">${I.rows.map(r => `<tr class="${r.kind === 'error' ? 'bg-rose-50/60' : ''}"><td class="p-2.5 font-mono text-slate-500">${r.line}</td><td class="p-2.5 whitespace-nowrap font-bold">${bd[r.kind]}</td><td class="p-2.5 font-mono">${esc(r.staff_id)}</td><td class="p-2.5 font-bold">${esc(r.name)}</td><td class="p-2.5">${esc(r.gender)}</td><td class="p-2.5">${esc(r.dob)}</td><td class="p-2.5">${esc(r.position)}</td><td class="p-2.5">${esc(stBureauName(r.bureau))}</td><td class="p-2.5 ${r.kind === 'error' ? 'text-rose-700 font-bold' : 'text-slate-500'}">${esc(r.note)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-auto max-h-[62vh]"><table class="w-full text-left"><thead class="bg-slate-100 font-bold sticky top-0 whitespace-nowrap"><tr><th class="p-2.5">ជួរ</th><th class="p-2.5">សកម្មភាព</th><th class="p-2.5">អត្តលេខ</th><th class="p-2.5">ឈ្មោះ</th><th class="p-2.5">ភេទ</th><th class="p-2.5">ថ្ងៃកំណើត</th><th class="p-2.5">មុខតំណែង</th><th class="p-2.5">ការិយាល័យ</th><th class="p-2.5">ចូលបម្រើ</th><th class="p-2.5">កាំប្រាក់</th><th class="p-2.5">ជំនាញ</th><th class="p-2.5">ចំណាំ</th></tr></thead>
+        <tbody class="divide-y divide-slate-100">${I.rows.map(r => `<tr class="${r.kind === 'error' ? 'bg-rose-50/60' : ''}"><td class="p-2.5 font-mono text-slate-500">${r.line}</td><td class="p-2.5 whitespace-nowrap font-bold">${bd[r.kind]}</td><td class="p-2.5 font-mono">${esc(r.staff_id)}</td><td class="p-2.5 font-bold">${esc(r.name)}</td><td class="p-2.5">${esc(r.gender)}</td><td class="p-2.5">${esc(r.dob)}</td><td class="p-2.5">${esc(r.position)}</td><td class="p-2.5">${esc(stBureauName(r.bureau))}</td><td class="p-2.5">${esc(r.start_date)}</td><td class="p-2.5">${esc(r.grade)}</td><td class="p-2.5">${esc(r.skill)}</td><td class="p-2.5 ${r.kind === 'error' ? 'text-rose-700 font-bold' : 'text-slate-500'}">${esc(r.note)}</td></tr>`).join('')}</tbody></table></div>
         <div class="flex justify-end gap-2 pb-6"><button onclick="stfImpClose()" class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white font-bold">បោះបង់</button><button id="stf-go" onclick="stfImpCommit()" ${todo ? '' : 'disabled'} class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold">✅ Import ${toKhmerDigits(todo)} នាក់</button></div></div>`;
     }
     async function stfImpCommit() {
